@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="files/tweb/images/tweb.ico"/>
+	<title>TWeb UHttpd2</title> 
+ 
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script> 
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">	
+	<link href="https://fonts.googleapis.com/css?family=Architects+Daughter&display=swap" rel="stylesheet"> 
+
+</head>
+
+<style>
+
+	#logo {
+		width:80px;
+	}
+	
+	#header {
+		margin-top:10px;
+	
+	}
+	
+	#title {
+	    font-family: 'Architects Daughter';
+		font-size: 28px;		
+		vertical-align: top;
+	}
+	
+	.mycard {
+		box-shadow: 5px 5px 5px;	
+	}
+	
+</style>
+
+<body>	
+
+	<div class='container pt-2'>
+	
+		<div id="header">
+			<!--<i class="fa fa-home" aria-hidden="true"></i>-->
+			<img id="logo" src="files/tweb/images/tweb.png">
+			<span id="title">&nbsp;for Httpd2</span>
+		</div>
+		
+		<hr>
+
+		<div class="row">
+			<div class="col-6">
+				<div class="card mycard">
+					<div class="card-header alert-warning">
+						<h4><b><i class="fa fa-folder-open"></i>&nbsp;Installation</b></h4>
+					</div>	
+					<div class="card-body">										
+						This version of <b>TWeb</b> is only for Httpd2. <br><br>We have 2 libraries, one to link with harbour to our server and another one to use with the user's frontend.
+						<br><br><b>Backend</b><br>
+						Install the library to compile with harbour in lib/tweb
+						<br>
+						To compile, add the tweb.lib library
+						<br>
+						-Llib\tweb
+						<br>
+						-ltweb
+						<br><br><b>Frontend</b><br>
+						The library for the frontend can be installed in files/tweb
+					</div>
+				</div>	
+			</div>
+			
+				<br>
+				
+			
+			
+				<div class="col-6 ">
+					
+					<div class="card mycard">
+						<div class="card-header alert-primary">
+							<h4><b><i class="fa fa-list"></i>&nbsp;Examples</b></h4>
+						</div>	
+						<div class="card-body">										
+							<ul>
+								<li><a href="readme">Readme !</a>
+								<li><a href="tutor"><b>TUTORS</b></a>
+								<li><a href="splash">Splash</a>
+								<li><a href="menu">Menu</a>
+								<li><a href="browse">Browsers</a>
+								<hr>
+								<li><a href="msg">Test Messages</a>
+								<li><a href="tpl">Test Templates</a>
+								<hr>
+								<li><a href="screens">Screens test...</a>
+							</ul>
+						</div>
+					</div>					
+					
+					<br>					
+					
+				</div>
+				
+		</div>
+
+	
+	</div>
+	
+	<div class="alert alert-dark fixed-bottom p-1" style="margin:0px;border-radius: 0;">
+		<small style="margin:0px;">
+			<b>Version Httpd2:</b> {{ UVersion()}}
+			<br>
+			<b>Version TWeb:</b> {{ TWebVersion()}}	
+		</small>
+	</div>
+	
+<body>

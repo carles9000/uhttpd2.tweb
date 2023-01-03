@@ -1,0 +1,28 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+#define IS_DESSIGN 	.T.
+
+    LOCAL o, oWeb
+	local hData := { 'title' => 'My App', 'version' => '(Vrs.1.23b)', 'user' => 'charly' }	
+	
+	DEFINE WEB oWeb TITLE 'Tpl 2'
+	
+		HTML oWeb FILE 'tpl\header2.tpl' PARAMS hData
+		HTML oWeb FILE 'tpl\footer.tpl'
+		
+		DEFINE FORM o OF oWeb
+			o:lDessign 	:= .F.
+			o:lFluid 	:= .F.			
+			
+		INIT FORM o
+		
+			//	success, danger, primary,... -> https://getbootstrap.com/docs/4.0/components/alerts/
+		
+			HTML o FILE 'tpl\msg2.tpl' PARAMS '<b>Alert</b> message...', 'danger', 'files/images/alert.png'
+			
+		ENDFORM o				
+	
+	INIT WEB oWeb RETURN 
+
+
+?>

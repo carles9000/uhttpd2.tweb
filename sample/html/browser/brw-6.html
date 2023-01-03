@@ -1,0 +1,80 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Add events'
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_basic' OF oWeb 
+		
+		INIT FORM o 
+		
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'			, 'setdata'	, nil },;
+				{ 'btn-2', 'Clean'			, 'clean'	, nil };				
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns			
+			
+			
+			COL o CLASS 'p-0' GRID 12
+			
+				//	https://tabulator.info/docs/5.4/options
+			
+				aOptions := { ;
+					'height' => '300px',				;					
+					'index' => 'id',   					;	// Default id
+					'layout' => 'fitColumns'			;
+				}
+
+				aEvents := { ;
+							{ 'name' => 'rowDblClick', 'function' => 'MyDblClick'}, ;
+							{ 'name' => 'cellEdited' , 'function' => 'MyUpdated'},;							
+							{ 'name' => 'tableBuilt' , 'function' => 'MyTableBuilt'} ;
+						}
+				
+				DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions EVENTS aEvents TITLE '<h5>Customer list - dblClick for test</h5>' OF o 
+
+					COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200, 'editor' => 'input' }
+					COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200 }
+					COL oCol TO oBrw CONFIG { 'title' => "Street", 'field' => "STREET", 'width' => 200 }
+					COL oCol TO oBrw CONFIG { 'title' => "City", 'field' => "CITY", 'width' => 200  }
+					COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE", 'print' => .f. }
+					COL oCol TO oBrw CONFIG { 'title' => "Zip", 'field' => "ZIP", 'width' => 200}
+					
+				INIT BROWSE oBrw 
+		
+			ENDCOL o					
+
+		ENDFORM o
+		
+		HTML o 
+		
+			<script>
+			
+				function MyUpdated(row ) {
+					MsgInfo( 'Check console...' )
+					console.log( 'cellEdited', row.getData() ) 													
+					console.log( 'cellEdited', row ) 													
+				}				
+			
+				function MyDblClick(e,row) {
+					MsgInfo( 'Check console...' )
+					console.log( 'rowDblClick', row.getData() ) 
+				}
+				
+				function MyTableBuilt() {
+					console.info( 'tableBuilt event done !' ) 
+				}	
+				
+			</script>
+		
+		ENDTEXT 
+
+	INIT WEB oWeb RETURN
+?>
+

@@ -1,0 +1,48 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions
+	LOCAL aData := {;
+		{ 'FIRST' => 'Homer'		, 'LAST' => 'Hoaks', 'AGE' => 38 },;
+		{ 'FIRST' => 'Jean-Piere'	, 'LAST' => 'Thain', 'AGE' => 58 },;
+		{ 'FIRST' => 'Steve'		, 'LAST' => 'Staro', 'AGE' => 26 } ;
+	}
+
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Basic'
+		
+		DEFINE FORM o OF oWeb 			
+		
+		INIT FORM o 					
+			
+			ROW o 					
+				
+				COL o GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',	;					
+						'index' => 'id'   		;		// Default id
+					}															
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+						
+						//	https://tabulator.info/docs/5.4/columns 
+						
+						COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200 }
+						COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200 }
+						COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE" }
+						
+					INIT BROWSE oBrw DATA aData																				
+			
+				ENDCOL o				
+				
+			ENDROW o		
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

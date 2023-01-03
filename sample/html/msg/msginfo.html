@@ -1,0 +1,53 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+#define IS_DESSIGN 	.T.
+
+    LOCAL o, oWeb 
+	LOCAL cIcon := "<i class='far fa-address-card'></i>"
+	
+	DEFINE WEB oWeb TITLE 'MsgInfo'
+	
+		DEFINE FORM o OF oWeb
+			o:lDessign 	:= IS_DESSIGN
+			
+			HTML o INLINE '<h3>Test MsgInfo</h3><hr>'	
+			
+			INIT FORM o
+			
+				ROWGROUP o
+					BUTTON LABEL 'MsgInfo( cMsg )' GRID 12 ACTION "MsgInfo( 'Hello !' )" OF o        
+				ENDROW o	
+
+				ROWGROUP o
+					BUTTON LABEL 'MsgInfo( cMsg, cTitle )' GRID 12 ACTION "MsgInfo( 'Hello !', 'My Card' )" OF o        
+				ENDROW o	
+
+				ROWGROUP o
+					BUTTON LABEL 'MsgInfo( cMsg, cTitle, fCallback )' GRID 12 ACTION "MsgInfo( 'Hello World', 'My Card', MyFunc )" OF o        
+				ENDROW o					
+				
+				ROWGROUP o
+					BUTTON LABEL 'MsgInfo( cMsg, cTitle, null, Icon )' GRID 12 ACTION "Test()" OF o        
+				ENDROW o
+
+			
+				HTML o
+					<script>
+					
+						function Test() {
+							MsgInfo( 'Hello World', 'My Card', null, '<i class="far fa-address-card"></i>' )
+						}
+						
+						function MyFunc() {
+							alert( "I'm MyFunc !")
+						}
+					
+					</script>
+				ENDTEXT		
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN
+
+
+?>

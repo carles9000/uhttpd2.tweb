@@ -1,0 +1,20 @@
+# incremental mode
+-inc
+-head=full
+-workdir=lib/${hb_compiler}/.hbmk
+
+# create library
+-hblib
+
+# output filename
+-olib/${hb_compiler}/${hb_name}
+
+# harbour compiler flags
+-n
+-w2
+-es2
+-q0
+-gc2
+
+# files
+src/tweb.prg

@@ -1,0 +1,382 @@
+<style>
+/*Horizontally center header and footer*/
+.tabulator-print-header, tabulator-print-footer {
+    text-align:center;
+}
+</style>
+<script>
+
+	function MyFirst( cell, formatterParams, onRendered){
+		//cell - the cell component
+		//formatterParams - parameters set for the column
+		//onRendered - function to call when the formatter has been rendered
+	
+		return "Mr. " + cell.getValue() ; //return the contents of the cell;
+	}
+	
+	function  printIcon(cell, formatterParams, onRendered){ //plain text value
+		return "<i class='fa fa-print'></i>";
+	};
+	
+	function MyPrint( e, cell ){
+	
+		alert("Printing row data for: " + cell.getRow().getData().STREET )
+	}
+	
+//	Client calls...
+
+	function getData() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( 'GETDATA', o.Proc( 'getData' ) )	
+	}
+	
+	function getDataDeleted() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( 'GETDATADELETED', o.Proc( 'getDataDeleted' ) )	
+	}	
+	
+	function deleteRow() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( 'DELETEROW', o.Proc( 'deleteRow', null, 'Eliminar ?' ) )	
+	}
+	
+	function getDataChanged() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( 'GETDATACHANGED', o.Proc( 'deleteRow', null, 'Eliminar ?' ) )	
+	}	
+	
+	function dbg_deleted() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( o.getDel() )
+	
+	}
+
+//	--------------------------	
+
+
+
+	class UTabulator {
+	
+		id = null 
+		table = null
+		
+		static count = 0
+
+		//if (typeof UT.rowsDeleted === 'undefined') 
+		//	UT.rowsDeleted = {};		
+		
+		constructor( id ) {  // Constructor
+			this.id = id;
+			this.table = Tabulator.findTable("#" + id )[0];			
+			console.log( 'Contructor', id )
+			console.log( 'Contructor2', this.table )				
+
+			if ( typeof UTabulator.rowsDeleted == 'undefined') {			
+			console.log( 'NO EXISTEIX UTabulator.rowsDeleted')
+				UTabulator.rowsDeleted = new Object()
+				
+			}
+				
+			if ( !( id in UTabulator.rowsDeleted ) ){
+			console.log( 'NO EXISTEIX ' + id + ' INDEX ID a UTabulator.rowsDeleted')
+				UTabulator.rowsDeleted[ id ] = {}
+			}
+			
+		}
+		
+		getDel() {	return UTabulator.rowsDeleted }
+	
+		Init( options, events ) {
+			console.log( 'Init' )
+		
+			
+			var table = new Tabulator( '#' + this.id, options ) 
+			
+			//	DEfine Events...
+			
+				for (let i = 0; i < events.length; i++) {			
+					table.on( events[i][ 'name' ],events[i][ 'function' ] )					
+				}			
+			
+			console.log( 'Init2', table )
+		}
+		
+		Exec( cMethod, value  ){					
+		
+			if ( $.type( this.table ) == 'undefined' ) {
+				console.error( "Table don't exist: " + this.id )
+				return null 
+			}
+			
+			// Versió 1
+			
+				//	Recover parameters
+				
+					var p = []
+					for (let i = 1; i < arguments.length; i++) {
+						p.push( arguments[i] )
+					}
+				
+				console.log( 'Parameters', p )
+				//	Execute method
+				
+					try {
+						return this.table[ cMethod ].apply( this.table, p );
+					} catch (e) {
+						console.error( 'Method: ' + cMethod )
+						console.log( e)
+					}
+
+			//	Versio 2
+			
+				console.log( 'PROC', cCmd )
+				console.log( value )
+				console.log( $.type( value ) )
+				console.log( 'METHOD', $.type( this.table[cCmd] ) ) 
+				
+				var aValues = []
+				
+				console.log( $.type( value ) )
+				console.log(1)
+				if ( $.type( value ) == 'object' ){ 
+				console.log(2)
+					aValues = Object.values(value);
+				console.log(3)
+				} 
+					
+				console.log( 'VALUES', aValues )
+				
+				if ( $.type( this.table[cCmd] ) == 'function' ) {
+			
+					try {
+							var uRet = this.table[ cCmd ].apply( this.table, aValues );
+							console.log( 'RET', uRet )
+						} catch (e) {
+							console.error( 'Method: ' + cCmd )
+							console.log( e)
+						}
+					
+				} else {			
+					
+					MsgError( 'Error en metodo: ' + cCmd )
+				}			
+			
+			
+		}
+		
+		Proc( cCmd, value, cMessage ) {		
+		
+			console.log( 'VALUE', value)
+		
+			if ( $.type( this.table ) == 'undefined' ) {
+				console.error( "Table don't exist: " + this.id )
+				return null 
+			}		
+		
+			switch ( cCmd ) {
+			
+				case 'setData':
+				
+					this.table.setData( value.data );
+					this.table.clearCellEdited();				
+					UTabulator.rowsDeleted[ this.id ] = {}	
+				
+					break;	
+					
+				case 'addData':				
+					this.table.addData( value.data, value.index, value.top );				
+					break;						
+
+				case 'clean':				
+					this.table.setData();
+					this.table.clearCellEdited();				
+					UTabulator.rowsDeleted[ this.id ] = {}	
+				
+					break;
+
+				case 'getData': 		
+					
+					var nIndex
+					var o 		= this.table.getRows()	
+					var oRows 	= {}				
+					
+					o.forEach(function (cell) { 
+
+						nIndex = cell.getIndex()					
+						
+						oRows[ nIndex ] = cell.getData()										
+					});				
+
+					return oRows
+					break;	
+
+				case 'getDataDeleted': 							
+				
+					return this.table.rowsDeleted[ this.id ]
+					
+					break;	
+
+				case 'deleteRow': 
+				
+					
+					var selectedData = this.table.getSelectedData();					
+					
+					if ( selectedData.length == 0 )
+						return null
+						
+						
+					if ( cMessage && ! confirm( cMessage ) )
+						return null
+					
+					var aIds = []				
+					
+					for (const index in selectedData ) {
+						aIds.push( selectedData[ index ].id )
+					
+						UTabulator.rowsDeleted[ this.id ][ index ] = selectedData[ index ] 
+					}
+	
+					this.table.deleteRow( aIds );				
+					
+					break;
+
+				case 'clearEdited': 
+
+					this.table.clearCellEdited();
+					
+					UTabulator.rowsDeleted[ this.id ] = {}	
+
+					break;					
+
+				case 'print':				
+					this.table.print( value.par1, value.par2);														
+					break;	
+			}									
+		}		
+	}
+
+</script>
+
+<?prg
+#include "lib/tweb/tweb.ch" 
+#define IS_DESSIGN 	.T.
+
+    LOCAL o, oWeb	
+
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Basic. Load from array'
+		
+		DEFINE FORM o ID 'brw' API 'web_brw' OF oWeb 
+		
+		INIT FORM o 
+		
+			HTML o  
+
+				<div class="card " >
+				  <div class="card-header">
+						<input id="btn-1" type="button" data-onclick="setdata" value="setData">
+						<input id="btn-2" type="button" data-onclick="clean" value="clean">
+						<input id="btn-3" type="button" data-onclick="adddata" value="addData">
+						<input id="btn-4" type="button" data-onclick="error" value="Error">
+						<input id="btn-5" type="button" onclick="getData()" value="getData()">
+						<input id="btn-6" type="button" onclick="deleteRow()" value="deleteRow()">
+						<input id="btn-7" type="button" onclick="getDataDeleted()" value="getDataDeleted()">
+						<input id="btn-8" type="button" data-onclick="print" value="Print">
+						<input id="btn-9" type="button" data-onclick="getdatachanged" value="getDataChanged">
+						<input id="btn-x5" type="button" data-onclick="searchrows" value="searchRows">
+						<input id="btn-x9" type="button" onclick="dbg_deleted()" value="Dbg_Deleted()">
+						
+						
+				  </div>
+				  <div id="brw-mytable" class="card-body---">
+
+				  </div>
+				</div>																
+				
+			ENDTEXT
+			
+			
+			HTML o 
+				<script>
+					var columns = [
+						{formatter:"rowSelection", titleFormatter:"rowSelection", align:"center", headerSort:false, print:false},
+						{rowHandle:true, formatter:"handle", headerSort:false, frozen:true, width:30, minWidth:30},
+						{title:"Id", field:"id", width:100, titlePrint:"My Id"},
+						{title:"First", field:"FIRST", width:200, editor:"input", formatter: MyFirst },
+						{title:"Last", field:"LAST", width:200},
+						{title:"Street", field:"STREET", width:200, formatter: printIcon, width:40, hozAlign:"center", cellClick: MyPrint },   
+						{title:"Age", field:"AGE", width:100},   
+						{title:"Married", field:"MARRIED", width:100, hozAlign:"center", formatter:"tickCross", formatterPrint:false},
+						//{title:"Edit", formatter: printIcon, width:40, hozAlign:"center", cellClick: MyEdit }
+					]				
+				/*
+					var columns = [
+						{title:"Id", field:"id", width:100},
+						{title:"Name", field:"name", width:200},
+						{title:"Location", field:"location", hozAlign:"right", width:200},
+						{title:"Gender", field:"gender", widthGrow:2},
+						{title:"Rating", field:"rating", hozAlign:"center", width:100},
+						{title:"Favourite Color", field:"col", widthGrow:3},
+						{title:"Date Of Birth", field:"dob", hozAlign:"center", sorter:"date", widthGrow:2}    
+					]
+
+					var tabledata = [
+						{id:1, name:"Oli Bob", location:"United Kingdom", gender:"male", rating:1, col:"red", dob:"14/04/1984"},
+						{id:2, name:"Mary May", location:"Germany", gender:"female", rating:2, col:"blue", dob:"14/05/1982"},
+						{id:3, name:"Christine Lobowski", location:"France", gender:"female", rating:0, col:"green", dob:"22/05/1982"},
+						{id:4, name:"Brendon Philips", location:"USA", gender:"male", rating:1, col:"orange", dob:"01/08/1980"},
+						{id:5, name:"Margret Marmajuke", location:"Canada", gender:"female", rating:5, col:"yellow", dob:"31/01/1999"},
+						{id:6, name:"Frank Harbours", location:"Russia", gender:"male", rating:4, col:"red", dob:"12/05/1966"},
+						{id:7, name:"Jamie Newhart", location:"India", gender:"male", rating:3, col:"green", dob:"14/05/1985"},
+						{id:8, name:"Gemma Jane", location:"China", gender:"female", rating:0, col:"red", dob:"22/05/1982"},
+						{id:9, name:"Emily Sykes", location:"South Korea", gender:"female", rating:1, col:"maroon", dob:"11/11/1970"},
+						{id:10, name:"James Newman", location:"Japan", gender:"male", rating:5, col:"red", dob:"22/03/1998"},
+					];		
+				*/
+					tabledata = []
+
+					var options = { 
+						height: "300px",
+						columns: columns,
+						data: tabledata,
+						layout: "fitColumns",
+						movableColumns:true,
+						movableRows:true,
+						selectable: true,						// Podem posar 1 (sols 1 col)
+						selectableRollingSelection: true,
+						selectableRangeMode:"click",						
+						printAsHtml:true,
+						printHeader:"<h1>Example Table Header<h1>",
+						printFooter:"<h2>Example Table Footer<h2>",
+						index: 'id' , //id es default index. Set the index field to the "age" field.
+					}
+					
+					var events = [ 
+							{ 'name': 'rowDblClick', 'function': MyDblClick },
+							{ 'name': 'tableBuilt' , 'function': MyTableBuilt }
+						]
+
+					console.log( 'Call UTabulator()', 'brw-mytable' )
+				
+					o = new UTabulator( 'brw-mytable' )		
+					
+					o.Init( options, events )	
+
+					function MyDblClick(e,row) { console.log( 'rowDblClick', row.getData() ) }
+					function MyTableBuilt(e,row) { console.log( 'tableBuilt event' ) }													
+				
+				</script>
+			ENDTEXT 
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+
+?>
+

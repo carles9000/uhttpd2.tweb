@@ -1,0 +1,4 @@
+incpaths=./include
+libpaths=./lib/${hb_compiler}
+
+libs=${hb_name}${__HB_DYN__}

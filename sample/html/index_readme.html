@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="files/tweb/images/tweb.ico"/>
+	<title>TWeb UHttpd2</title> 
+ 
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script> 
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">	
+</head>
+<body>	
+
+	<div class='container pt-3'>
+	
+		<h3 onClick="location.href='/'" style="cursor: pointer;" >
+			<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+			&nbsp;Readme !
+		</h3><hr>
+		
+		<div class="row">
+			<div class="col-4">
+				<div class="card">
+					<div class="card-header">
+						<h4><b><i class="fa fa-book" aria-hidden="true"></i>
+						&nbsp;Short summary</b></h4>											
+					</div>	
+					<div class="card-body">	
+						Basically TWeb is a set of commands that parse the different tags, functions,... 
+						of html/js/css and that helps any programmer to make the leap to the web in 
+						an easier way.		
+						<br><br>
+						The best way to learn how to use TWeb is by testing and experimenting with 
+						the different examples found in this repository.
+						<br><br>
+						
+						<br>
+
+
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-8">
+				<div class="card">
+					<div class="card-header">
+						<h4><b><i class="fa fa-code" aria-hidden="true"></i>
+						&nbsp;Code example</b></h4>											
+					</div>	
+					<div class="card-body " style="background-color: black;">	
+					<pre style="line-height:14px;overflow:hidden;color:#a1ace9;"><small>&#60;?prg
+#include "lib/tweb/tweb.ch" 
+
+  LOCAL o, oWeb
+  
+  DEFINE WEB oWeb TITLE 'Init TWeb'
+		
+  DEFINE FORM o OF oWeb
+
+  INIT FORM o
+    SAY VALUE '&#60;h1>Welcome to TWeb !&#60;hr>' ALIGN 'center' GRID 12  OF o
+  ENDFORM o	
+	
+  INIT WEB oWeb RETURN 	
+?&#62;				</small></pre>
+					</div>
+					<div class="card-footer">						
+						<a href="t0">Run example</a>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+	
+<body>

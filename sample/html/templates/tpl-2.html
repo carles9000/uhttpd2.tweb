@@ -1,0 +1,15 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+#define IS_DESSIGN 	.T.
+
+    LOCAL oWeb
+	local hData := { 'title' => 'My App', 'version' => '(Vrs.1.23b)', 'user' => 'charly' }	
+	
+	DEFINE WEB oWeb TITLE 'Tpl 2'
+	
+		HTML oWeb FILE 'tpl\header2.tpl' PARAMS hData
+		HTML oWeb FILE 'tpl\footer.tpl' 			
+	
+	INIT WEB oWeb RETURN 
+
+?>

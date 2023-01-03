@@ -1,0 +1,152 @@
+<style>
+/*Horizontally center header and footer*/
+.tabulator-print-header, tabulator-print-footer {
+    text-align:center;
+}
+</style>
+<script>
+
+	function MyFirst( cell, formatterParams, onRendered){
+		//cell - the cell component
+		//formatterParams - parameters set for the column
+		//onRendered - function to call when the formatter has been rendered
+	
+		return "Mr. " + cell.getValue() ; //return the contents of the cell;
+	}
+	
+	function  printIcon(cell, formatterParams, onRendered){ //plain text value
+		return "<i class='fa fa-print'></i>";
+	};
+	
+	function MyPrint( e, cell ){
+	
+		alert("Printing row data for: " + cell.getRow().getData().STREET )
+	}
+	
+//	Client calls...
+
+	function getData() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( 'GETDATA', o.Proc( 'getData' ) )	
+	}
+	
+	function getDataDeleted() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( 'GETDATADELETED', o.Proc( 'getDataDeleted' ) )	
+	}	
+	
+	function deleteRow() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( 'DELETEROW', o.Proc( 'deleteRow', null, 'Eliminar ?' ) )	
+	}
+	
+	function getDataChanged() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( 'GETDATACHANGED1', o.Proc( 'getDataChanged' ) )	
+		o.Proc( 'clearEdited' )	
+		console.log( 'GETDATACHANGED2', o.Proc( 'getDataChanged' ) )	
+	}	
+		
+	
+	function dbg_deleted() {
+	
+		o = new UTabulator( 'brw-mytable' )			
+		console.log( o.getDel() )
+	
+	}
+
+//	--------------------------	
+
+</script>
+
+<?prg
+#include "lib/tweb/tweb.ch" 
+#define IS_DESSIGN 	.T.
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	LOCAL aData := {;
+		{ 'FIRST' => 'a', 'LAST' => 'a2', 'AGE' => 1 },;
+		{ 'FIRST' => 'b', 'LAST' => 'b2', 'AGE' => 2 },;
+		{ 'FIRST' => 'c', 'LAST' => 'c2', 'AGE' => 3 } ;
+	}
+
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Basic. Load from array'
+		
+		DEFINE FORM o ID 'brw' API 'web_brw' OF oWeb 
+			o:lDessign := .f.
+		
+		INIT FORM o 
+		
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'	, 'setdata'		, nil },;
+				{ 'btn-2', 'Clean'	, 'clean'		, nil },;			
+				{ 'btn-3', 'Add'	, 'adddata'		, nil };			
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns
+		
+			
+			HTML o 								
+				
+			<!--
+			/*
+				<div class="card " >
+				  <div class="card-header">
+						<input id="btn-1" type="button" data-onclick="setdata" value="setData">
+						<input id="btn-2" type="button" data-onclick="clean" value="clean">
+						<input id="btn-3" type="button" data-onclick="adddata" value="addData">
+						<input id="btn-4" type="button" data-onclick="error" value="Error">
+						<input id="btn-5" type="button" onclick="getData()" value="getData()">
+						<input id="btn-6" type="button" onclick="deleteRow()" value="deleteRow()">
+						<input id="btn-7" type="button" onclick="getDataDeleted()" value="getDataDeleted()">
+						<input id="btn-8" type="button" data-onclick="print" value="Print">
+						<input id="btn-9" type="button" onclick="getDataChanged()" value="getDataChanged()">
+						<input id="btn-x5" type="button" data-onclick="searchrows" value="searchRows">
+						<input id="btn-x9" type="button" onclick="dbg_deleted()" value="Dbg_Deleted()">														
+				  </div>
+				</div>																			
+			*/
+			-->
+				
+			ENDTEXT	
+			
+			ROW o 			
+			
+				//ROW o 
+				COL o CLASS 'p-0' GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',	;					
+						'index' => 'id'   		;		// Default id
+					}															
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+						
+						//	https://tabulator.info/docs/5.4/columns 
+						
+						COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200, 'editor' => "input", 'formatter' => 'MyFirst'  }
+						COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200, 'editor' => "input" }
+						COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE", 'width' => 200, 'editor' => "input" }
+						
+					INIT BROWSE oBrw DATA aData																				
+			
+				ENDCOL o
+				//ENDROW o
+				
+			ENDROW o		
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

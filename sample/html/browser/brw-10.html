@@ -1,0 +1,84 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Edit inputs'
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_crud' OF oWeb 
+		
+		INIT FORM o 
+		
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'			, 'setdata'	, nil },;
+				{ 'btn-2', 'Clean'			, 'clean'	, nil },;										
+				{ 'btn-3', 'Delete'			, 'delete'  , nil },;										
+				{ 'btn-4', 'Save'			, 'save'	, nil },;										
+				{ 'btn-5', 'Process'		, 'myproc'	, nil },;										
+				{ 'btn-6', 'Add'			, 'add'		, nil };										
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns			
+			
+			
+			COL o CLASS 'p-0' GRID 12
+			
+				//	https://tabulator.info/docs/5.4/options
+			
+				aOptions := { ;
+					'height' => '300px',				;					
+					'index' => 'id',   					;	// Default id
+					'layout' => 'fitColumns', 			;					
+					'selectable' => .T., 				;	// Podem posar 1 (sols 1 col)
+					'selectableRollingSelection' => .T.,;
+					'selectableRangeMode' => "click"	;					
+				}																							
+				
+				aItems 		:= { 'values' => LoadStates() }
+				
+				hParamsDate := { 'mask' => "99/99/9999", 'inputFormat' => "DD/MM/YYYY" }
+				//hParamsDate := { 'inputFormat' => "DD/MM/YYYY" }
+				
+				
+				hValidDate	:= { 'type' => 'UValidDate', 'parameters' => { 'mask' => "99/99/9999", 'inputFormat' => "DD/MM/YYYY" } }				
+				
+				DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+				
+					//	https://tabulator.info/docs/5.4/select#setup-formatting
+					COL oCol TO oBrw CONFIG { 'formatter' => "rowSelection", 'titleFormatter' =>"rowSelection", 'align' => "center", 'headerSort' => .F. }
+						
+					COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200, 'editor' => 'input'}										
+					COL oCol TO oBrw CONFIG { 'title' => "State", 'field' => "STATE", 'width' => 200, 'editor' => 'list', 'editorParams' => aItems  }
+					COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE", 'editor' => 'number' }
+					COL oCol TO oBrw CONFIG { 'title' => "Married", 'field' => "MARRIED", 'hozAlign' => 'center', 'editor' => 'tickCross', 'formatter' => 'tickCross' }
+					COL oCol TO oBrw CONFIG { 'title' => "Hiredate", 'field' => "HIREDATE", 'width' => 200, 'hozAlign' => 'center', 'editor' => 'input', 'validator' => hValidDate, 'editorParams' => hParamsDate }
+					
+				INIT BROWSE oBrw 
+		
+			ENDCOL o				
+
+		ENDFORM o
+		
+		HTML o 
+			<script>
+			
+				function MyDelete() {					
+					
+					var o 	 = new UTabulator( 'brw-mytable' )	
+					var rows = o.Proc( 'deleteRow' )														
+							
+					console.log( rows )				
+				}
+			
+			</script>
+		
+		ENDTEXT 
+
+	INIT WEB oWeb RETURN	
+
+?>
+

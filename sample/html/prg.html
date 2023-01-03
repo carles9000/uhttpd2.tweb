@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+ <!--<meta charset="utf-8">--> 
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="shortcut icon" type="image/png" href="files/uhttpd2/images/favicon.ico"/>
+ <title>UHttpd2</title>
+ 
+
+ 
+	<!-- Httpd2 environment -->
+ 
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+		<script src="files/uhttpd2/uhttpd2.min.js"></script>
+		<link href="files/uhttpd2/uhttpd2.css" rel="stylesheet" >
+ 
+	<!-- ------------------ -->
+
+</head>
+
+
+
+
+<body>
+
+	<div id="basic" data-dialog data-api="web_prg">
+	  <hr>
+	  <label>File PRG</label>
+	  <input id="basic-prg" data-live value="" >
+	  <button  id="basic-btn_prg" data-onclick="exe_prg" >Execute</button>
+	  <button  id="basic-btn_clean"  data-onclick="exe_clean" >Clean</button>
+	  <hr>
+	  <div id="basic-info"></div>
+	</div>
+
+	<script>
+	   $(document).ready( function(){ 
+		UInitDialog("basic");
+	   });
+	</script>
+
+</body>
+

@@ -1,0 +1,75 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Select rows'
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_basic' OF oWeb 
+		
+		INIT FORM o 
+		
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'			, 'setdata'		, nil },;
+				{ 'btn-2', 'Clean'			, 'clean'		, nil },;			
+				{ 'btn-3', 'get Selected'	, nil			, 'getSelected()' };				
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns
+			
+			ROW o
+			
+				COL o CLASS 'p-0' GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',				;					
+						'index' => 'id',   					;	// Default id
+						'selectable' => .T., 				;	// Podem posar 1 (sols 1 col)
+						'selectableRollingSelection' => .T.,;
+						'selectableRangeMode' => "click"	;
+					}															
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+						
+						
+						//	https://tabulator.info/docs/5.4/select#setup-formatting
+						COL oCol TO oBrw CONFIG { 'formatter' => "rowSelection", 'titleFormatter' =>"rowSelection", 'align' => "center", 'headerSort' => .F. }
+						
+						COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200 }
+						COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200 }
+						COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "STREET", 'width' => 100 }
+						COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE"}
+						
+					INIT BROWSE oBrw 
+			
+				ENDCOL o	
+
+				HTML o 
+					<script>
+
+						function getSelected() {
+						
+							var o 	 = new UTabulator( 'brw-mytable' )	
+							var rows = o.Proc( 'getSelectedData' )
+							
+							MsgInfo( 'Check console...' )
+						
+							console.log( 'Rows Selected', rows )
+						}
+						
+				</script>								
+			ENDTEXT 
+			
+			ENDROW o
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

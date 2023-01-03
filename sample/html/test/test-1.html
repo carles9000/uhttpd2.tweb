@@ -1,0 +1,224 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+#define IS_DESSIGN 	.T.
+
+    LOCAL o, oWeb 
+	LOCAL cIcon := "<i class='far fa-address-card'></i>"
+	
+	DEFINE WEB oWeb TITLE 'Testing'
+	
+		oWeb:AddJs( 'files/tweb/bootbox/bootbox.all.min.js' )
+		
+		//oWeb:AddJs( 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js')
+		//oWeb:AddCss( 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' )
+	
+		DEFINE FORM o OF oWeb
+			o:lDessign 	:= IS_DESSIGN
+			
+			HTML o INLINE '<h3>Test...</h3><hr>'	
+			
+			INIT FORM o
+			
+				ROWGROUP o
+					BUTTON LABEL 'Message' GRID 12 ACTION "Message()" OF o        
+					BUTTON LABEL 'Activa Dialog' GRID 12 ACTION "Activa()" OF o        
+					BUTTON LABEL 'Nou Msg' GRID 12 ACTION "NouMsg()" OF o        
+				ENDROW o	
+			
+				HTML o
+				
+				<style>
+					.modal { 
+					  position: fixed;
+					  top: 0;
+					  left: 0;
+					  right: 0;
+					  bottom: 0;
+					  display: flex;
+					  align-items: center;
+					  justify-content: center;
+					  padding: 1rem;
+					  /*background: black;*/
+					  cursor: pointer;
+					  visibility: hidden;					  
+					  opacity: 0;
+					  transition: all 0.35s ease-in;
+					  z-index:5000;
+					}
+
+					.modal.is-visible {
+					  visibility: visible;					
+					  opacity: 1;
+					}					
+
+					.modal-dialog {
+					  position: relative;
+					  max-width: 800px;
+					  max-height: 80vh;
+					  border-radius: 5px;
+					  background: white;
+					  overflow: auto;
+					  cursor: default;
+					  pointer-events: auto;
+					}	
+
+					.modal-dialog > * {
+					  padding: 1rem;
+					}
+					 
+					.modal-header,
+					.modal-footer {
+					  background: lightgray;
+					}
+					 
+					.modal-header {
+					  display: flex;
+					  align-items: center;
+					  justify-content: space-between;
+					}
+					 
+					.modal-header .modal-close {
+					  font-size: 1.5rem;
+					}
+					 
+					.modal p + p {
+					  margin-top: 1rem;
+					}
+
+					.open-modal {
+					  font-weight: bold;
+					  background: blue;
+					  color: white;
+					  padding: .75rem 1.75rem;
+					  margin-bottom: 1rem;
+					  border-radius: 5px;
+					}	
+
+					button {
+					  cursor: pointer;
+					  /*background: transparent;*/
+					  /*border: none;*/
+					  outline: none;
+					  /*font-size: inherit;*/
+					}
+					.close-modal {
+						float:right;
+						border: 1px solid red;
+					}					
+				
+				
+				</style>
+				
+					<script>
+					
+						var nId = 0
+					
+						function NouMsg() {
+						
+							nId++
+							var cId 		= '_dlg' + nId
+							var cIdHeader 	= '_dlgHeader' + nId
+							var cIdContent 	= '_dlgContent' + nId
+							var cIdBtn 		= '_dlgBtn' + nId
+						
+							var oDlg = document.createElement('div');					
+							oDlg.id 	= cId ;	
+							oDlg.classList.add("modal");
+							document.body.appendChild(oDlg);
+							
+							
+							var cHtml = '<div class="modal-dialog">' + 							           
+										'  <div class="modal-header">' +										
+										'  	 <span id="' + cIdHeader + '"></span>' +										
+										'    <button id="' + cIdBtn + '" class="modal-close---">X</button>' + 
+										'  </div>' + 
+										'  <div id="' + cIdContent + '" class="modal-content">...</div>' +
+										'  <div class="modal-footer">...</div>' + 										
+										'</div>' 
+
+										
+							$(oDlg).html( cHtml )
+							
+							$('#' + cIdHeader ).html( 'El meu titul' )
+							
+							$('#' + cIdContent ).html( 'Hola que hases... fi y loren ipsum and forever' )
+							
+						
+							$('#' + cIdBtn ).on( "click", function() {
+							
+								//$('#' + cId ).removeClass("is-visible");
+								
+								$( '#' + cId).fadeOut(function() {
+									console.log( 'fi')
+									$( '#' + cId).remove()
+								})
+								
+							})
+										
+
+							
+							oDlg.classList.add("is-visible");
+							//$( '#' + cId).fadeIn()
+						
+							console.log( 'Ep', oDlg )
+						
+						}
+					
+					
+					
+						function NewMsg( cBody, cTitle, oOptions ){
+						
+							var dialog = bootbox.dialog({
+								title: 'My Title',
+								message: cBody,
+								size: 'medium',
+								backdrop: false,
+								onEscape: true, 
+								className: 'bounce fadeOut',								
+								buttons: {
+									confirm: {
+										label: '<i class="fa fa-check"></i> Accept.....',
+										className: 'btn-outline-success',
+										callback: function(result) {									
+											if ( typeof fCallback === "function") {					
+												fCallback.apply(null, [result] );
+											}
+										}
+									}
+								}								
+							});																			
+						}
+					
+						function Message() {
+						
+							var o = new UHttpd2()
+							
+							var x = o.dlg()
+							
+							console.log( x )
+							
+							if ( x[ 'function' ] ) {
+								x[ 'function' ].call( null, 'Yeahhhh' )
+							} else {						
+								UMsg( 'Test...')
+							}
+						}
+						
+						function Activa() {
+						
+							var o = new UHttpd2()																		
+							
+							o.SetDialog( NewMsg )														
+						}
+						
+						
+	
+					</script>
+				ENDTEXT		
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN
+
+
+?>

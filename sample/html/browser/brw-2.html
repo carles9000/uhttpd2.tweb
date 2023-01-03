@@ -1,0 +1,91 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Load from backend'
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_basic' OF oWeb 
+		
+		INIT FORM o 
+		
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'	, 'setdata'		, nil },;
+				{ 'btn-2', 'Clean'	, 'clean'		, nil },;			
+				{ 'btn-3', 'Add'	, 'adddata'		, nil };								
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns
+			
+			ROW o 			
+			
+				COL o CLASS 'p-0' GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',	;					
+						'index' => 'id'   		;		// Default id
+					}															
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+						
+						//	https://tabulator.info/docs/5.4/columns 
+						
+						COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200, 'editor' => "input"  }
+						COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200, 'editor' => "input" }
+						COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE", 'editor' => "number", 'formatter' => '_formatAge' }
+						COL oCol TO oBrw CONFIG { 'title' => "Address", 'formatter' => '_formatAddress' }
+						COL oCol TO oBrw CONFIG { 'title' => "Married", 'field' => "MARRIED", 'hozAlign' => "center", 'formatter' => 'tickCross'  }
+						
+						
+					INIT BROWSE oBrw 
+			
+				ENDCOL o	
+
+				HTML o 
+<script>
+
+	// https://tabulator.info/docs/5.4/format#format-custom 
+	
+	function _formatAge( cell, formatterParams, onRendered ) { 
+	
+		//cell - the cell component
+		//formatterParams - parameters set for the column
+		//onRendered - function to call when the formatter has been rendered				
+		
+		console.log( cell.getData() )
+		console.log( formatterParams )
+		console.log( onRendered )
+		
+		if ( cell.getValue() > 50 )
+			return '<span style="font-weight:bold;color:red;">' + cell.getValue() + '</span>'
+		else
+			return cell.getValue()				
+	}
+	
+	function _formatAddress( cell, formatterParams, onRendered ) { 
+	
+		var cHtml = '<b>Street: </b>' + cell.getData().STREET + 					
+					'<br><b>City: </b>' + cell.getData().CITY + ' (' + cell.getData().STATE + ')'
+	
+		return '<span style="font-size: small;">' + cHtml + '</span>'	
+	}	
+	
+				
+</script>
+				
+				
+				ENDTEXT 
+				
+			ENDROW o		
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

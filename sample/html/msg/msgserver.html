@@ -1,0 +1,83 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+#define IS_DESSIGN 	.T.
+
+    LOCAL o, oWeb 	
+	
+	DEFINE WEB oWeb TITLE 'MsgServer'
+	
+		DEFINE FORM o OF oWeb
+			o:lDessign 	:= IS_DESSIGN
+			
+			HTML o INLINE '<h3>Test MsgServer</h3><hr>'	
+			
+			INIT FORM o
+			
+				ROWGROUP o                        
+					GET ID 'mytext' VALUE 'James Brown...'   GRID 6 LABEL 'String' BUTTON 'Test String' ACTION 'TestString()' OF o             
+				ENDROW o
+				
+				ROWGROUP o                        
+					GET ID 'mynumber' VALUE '1234.56'   GRID 6 LABEL 'Number' BUTTON 'Test Number' ACTION 'TestNumber()' OF o             
+				ENDROW o    
+
+				ROWGROUP o                                                
+					SWITCH ID 'mylogic' LABEL 'OnOff'  ACTION 'TestLogic()' GRID 6 OF o						
+				ENDROW o  					
+				
+				ROWGROUP o
+					BUTTON ID 'btn'  LABEL 'Send All' GRID 0 ACTION 'TestAll()' OF o    
+				ENDROW o 	
+
+			
+				HTML o
+					<script>
+					
+						function TestString() {
+							
+							var cValue = $('#mytext').val()
+
+							MsgServer( 'ping_data', PostView, cValue )
+						}
+						
+						function TestNumber() {
+							
+							var cValue = parseFloat( $('#mynumber').val() )         // Check parseInt() also...
+
+							MsgServer( 'ping_data', PostView, cValue )
+						}   
+						
+						function TestLogic() {
+							
+							var cValue = $('#mylogic').prop('checked' )
+
+							MsgServer( 'ping_data', PostView, cValue )
+						}  
+						
+						function TestAll() {
+							
+							var oParam = new Object()
+								oParam[ 'mytext'    ] = $('#mytext').val()
+								oParam[ 'mynumber'  ] = parseFloat( $('#mynumber').val() )
+								oParam[ 'mylogic'   ] = $('#mylogic').prop('checked' )
+								
+								MsgServer( 'ping_data', PostView, oParam )
+						}
+						
+						
+						//  Funcion Callback que se ejecutará cuando el servidor devuelva
+						//  un resultado.
+						
+						function PostView( dat ) {
+						
+							MsgInfo( dat, null, 'Check console...' )
+							console.log( dat )
+						}	
+					</script>
+				ENDTEXT		
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+
+?>

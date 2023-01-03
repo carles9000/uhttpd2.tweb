@@ -1,0 +1,86 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+#define IS_DESSIGN 	.T.
+
+    LOCAL o
+
+	DEFINE WEB oWeb TITLE 'MsgNotify' 
+
+    DEFINE FORM o OF oWeb
+	
+		HTML o INLINE '<h3>Test MsgNotify</h3><hr>'	
+
+		INIT FORM o  
+		
+			ROWGROUP o
+				SAY VALUE "MsgNotify()" GRID 6 ALIGN 'right' OF o
+				BUTTON LABEL 'Test' GRID 4 ACTION "MsgNotify( 'Hello! I\'m a notify' )"  OF o        			
+			ENDROW o
+			
+			ROWGROUP o
+				SAY VALUE "Test all types" GRID 6 ALIGN 'right' OF o
+				BUTTON LABEL 'Test' GRID 4 ACTION "TestTypes()"  OF o        			
+			ENDROW o		
+			
+			ROWGROUP o
+				SAY VALUE "Example native function $.notify()" GRID 6 ALIGN 'right' OF o
+				BUTTON LABEL 'Test' GRID 4 ACTION "TestNative()"  OF o        			
+			ENDROW o	
+			
+			ROWGROUP o
+				SAY VALUE "Page from author" GRID 6 ALIGN 'right' OF o
+				BUTTON LABEL 'Test' GRID 4 ACTION "TestUrl()"  OF o        			
+			ENDROW o			
+			
+			
+			HTML o
+				<script>
+				
+					function TestTypes() {
+					
+						MsgNotify( '<b>success</b> Test MsgNotify()', 'success' )
+						MsgNotify( '<b>danger</b> Test MsgNotify()', 'danger' )
+						MsgNotify( '<b>info</b> Test MsgNotify()', 'info' )
+						MsgNotify( '<b>warning</b> Test MsgNotify()', 'warning', "files/tweb/images/tweb_mini.png" )
+					
+					}			
+				 
+
+					function TestNative() {
+					
+						$.notify({
+							icon: "files/tweb/images/tweb_mini.png",
+							title: " <b>I am using TWeb</b><br>",
+							message: " Click me & go to main screen. The <b>TWeb</b> help page !",
+							url: "/"											
+						},{
+							icon_type: 'image',
+							type: 'success',
+							animate: {
+									enter: 'animated fadeInRight',
+									exit: 'animated fadeOutRight'
+								}	
+						});
+						
+					}	
+
+					function TestUrl() {
+					
+						$.notify({
+							title: "<b>Bootstrap Notify</b><br>",
+							message: "The <b>TWeb</b> help page !",
+							url: "/",
+							target: "_self"
+						});				
+					}			
+					
+					
+				</script>		
+			ENDTEXT	
+				
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN
+	
+	
+?>

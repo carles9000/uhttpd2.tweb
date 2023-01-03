@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="files/tweb/images/tweb.ico"/>
+	<title>TWeb UHttpd2</title> 
+ 
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script> 
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">	
+</head>
+<body>	
+
+	<div class='container pt-3'>
+	
+		<h3 onClick="location.href='/'" style="cursor: pointer;" >
+			<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+			&nbsp;Tutor
+		</h3><hr>
+		
+		<div class="row">
+			<div class="col-12">
+In this section we can see 2 ways of working.
+<br><br>
+<ul>
+<li>Creating our web outputs from functions compiled together with our exe server</li>
+<li>Creating our outputs from html files, being able to embed all our code similar to how php works.</li>
+</ul>
+Both ways are completely valid and functional. Although, the first one has all the code embedded in 
+the server, this implies that no one can see it, while the second option, whoever has access to the 
+server can see the code. It is not a handicap because systems with php work in this way and nothing 
+happens, because in principle nobody has access to the server.
+<br><br>
+On the other hand, the second way of working avoids having to compile every time we change the code 
+at development time, since we compile on-fly. It really is my favorite option, once you try it you 
+can not forget it.
+<br><br>
+And for the most expert, they can route to a function that we have in the exe (controller) that when 
+it has processed the data, execute an html (view) passing it the parameters. All the logic of the 
+program is embedded in the exe without anyone being able to see it.
+<br><br>
+In summary we have several ways of working. Enjoy it !	
+<br><hr>		
+			</div>			
+		</div>		
+		
+		<div class="row">
+		
+			<div class="col-6">
+			
+				<div class="card">
+					<div class="card-header">
+						<h4><b><i class="fa fa-info-circle"></i>
+						&nbsp;Via function compiled</b></h4>(source app/tutors.prg)
+					</div>
+					<div class="card-body">
+					<ul>
+						<li><a href="tutor1">Tutor 1</a>
+						<li><a href="tutor2">Tutor 2</a>
+						<li><a href="tutor3">Tutor 3</a>
+						<li><a href="tutor4">Tutor 4</a>
+						<li><a href="tutor5">Tutor 5</a>
+						<li><a href="tutor6">Tutor 6</a>
+						<li><a href="tutor7">Tutor 7</a>
+						<li><a href="tutor8">Tutor 8</a>
+						<li><a href="tutor9">Tutor 9</a>
+						<li><a href="tutor10">Tutor 10</a>
+						<li><a href="tutor11">Tutor 11</a>
+						<li><a href="tutor12">Tutor 12</a>
+						<li><a href="tutor13">Tutor 13</a>
+					</ul>
+					</div>
+				</div>
+			
+			</div>
+		
+			<div class="col-6">
+				<div class="card">
+					<div class="card-header">
+						<h4><b><i class="fa fa-info-circle"></i>
+						&nbsp;Via Html files</b></h4>(source html/tutors)
+						
+					</div>
+					<div class="card-body">
+					<ul>
+					<li><a href="t1">Tutor 1</a>
+					<li><a href="t2">Tutor 2</a>
+					<li><a href="t3">Tutor 3</a>
+					<li><a href="t4">Tutor 4</a>
+					<li><a href="t5">Tutor 5</a>
+					<li><a href="t6">Tutor 6</a>
+					<li><a href="t7">Tutor 7</a>
+					<li><a href="t8">Tutor 8</a>
+					<li><a href="t9">Tutor 9</a>
+					<li><a href="t10">Tutor 10</a>
+					<li><a href="t11">Tutor 11</a>
+					<li><a href="t12">Tutor 12</a>
+					<li><a href="t13">Tutor 13</a>
+					</ul>
+					</div>
+				</div>		
+			
+			</div>
+	
+		</div>
+		
+	</div>
+	
+<body>

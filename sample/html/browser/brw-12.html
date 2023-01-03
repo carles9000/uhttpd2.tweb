@@ -1,0 +1,126 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Order/Detail'
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_order' OF oWeb 
+		
+		INIT FORM o 	
+
+			ROW o 
+			
+				COL o CLASS 'p-1' GRID 6
+				
+					//	   id 	 , Label 	, data-onclick	, onclick 
+				
+					aBtns := {	;
+						{ 'btn-1', 'Load'			, 'setdata'	, nil },;
+						{ 'btn-2', 'Clean'			, 'clean'	, nil };				
+					}			
+					
+					HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns			
+					
+					
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',				;					
+						'index' => 'id',   					;	// Default id
+						'layout' => 'fitColumns'			;
+					}
+
+					aEvents := { ;													
+								{ 'name' => 'rowClick' , 'function' => 'MyMove'};							
+							}
+					
+					DEFINE BROWSE oBrw ID 'myorder' OPTIONS aOptions EVENTS aEvents TITLE '<h5>Orders</h5>' OF o 
+
+						COL oCol TO oBrw CONFIG { 'title' => "Id", 'field' => "ID_ORDER" }
+						COL oCol TO oBrw CONFIG { 'title' => "Date", 'field' => "DATE" }
+						COL oCol TO oBrw CONFIG { 'title' => "Total", 'field' => "TOTAL" }						
+						
+					INIT BROWSE oBrw 
+			
+				ENDCOL o	
+
+				COL o CLASS 'p-1' GRID 6
+				
+					//	   id 	 , Label 	, data-onclick	, onclick 
+				
+					aBtns := {	;
+							{ 'btn-11', '<i class="fa fa-info-circle" ></i>&nbsp;Info Detail', nil	, 'MyDetail()' };						
+						}			
+					
+					HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns			
+					
+					
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',				;					
+						'index' => 'id',   					;	// Default id
+						'layout' => 'fitColumns',			;
+						'selectable' => 1, 					;	
+						'selectableRollingSelection' => .T.,;
+						'selectableRangeMode' => "click"	;						
+					}
+					
+					DEFINE BROWSE oBrw ID 'mydetail' OPTIONS aOptions  TITLE '<h5>Detail</h5>' OF o 
+						//	https://tabulator.info/docs/5.4/select#setup-formatting
+						COL oCol TO oBrw CONFIG { 'formatter' => "rowSelection", 'titleFormatter' =>"rowSelection", 'align' => "center", 'headerSort' => .F. }
+						
+						COL oCol TO oBrw CONFIG { 'title' => "Id.Prod", 'field' => "ID_PROD" }
+						COL oCol TO oBrw CONFIG { 'title' => "Description", 'field' => "PROD_TXT" }
+						COL oCol TO oBrw CONFIG { 'title' => "Price", 'field' => "PRICE" }
+						COL oCol TO oBrw CONFIG { 'title' => "Qty", 'field' => "QTY"}
+						
+					INIT BROWSE oBrw 
+			
+				ENDCOL o
+			
+			ENDROW o			
+
+		ENDFORM o
+		
+		HTML o 
+		
+			<script>
+			
+		
+				function MyMove(e, row ) {
+				
+					var o = row.getData()
+					
+					console.log( 'ROW---', o)
+					
+					var oPar = new Object()
+						oPar[ 'id_order' ] = o.ID_ORDER
+
+					MsgApi( 'api_brw_order', 'relation', oPar )										
+				}
+				
+				function MyDetail() {
+					var o 	 = new UTabulator( 'brw-mydetail' )	
+					var rows = o.Proc( 'getSelectedData' )	
+
+					if ( rows.length == 1 ) {
+					
+						cInfo = '<b>Class: </b>' + rows[0].PROD_CLASS + '<br>' + 
+								'<b>Size: </b>' + rows[0].PROD_SIZE 
+								
+						MsgInfo( cInfo, null, 'Info Detail' )					
+					}				
+				}
+				
+				
+			</script>
+		
+		ENDTEXT 
+
+	INIT WEB oWeb RETURN
+?>
+

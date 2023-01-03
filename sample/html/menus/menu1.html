@@ -1,0 +1,20 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb 	
+	
+	DEFINE WEB oWeb TITLE 'Basic Nav'
+	
+		NAV oNav ID 'nav' TITLE '&nbsp;Order v1.0' LOGO 'files/images/mini-mercury.png' ROUTE 'menu' WIDTH 30 HEIGHT 30 OF oWeb
+
+			MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE '/' 		OF oNav
+			MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' 	OF oNav
+	
+	
+	
+		DEFINE FORM o ID 'myform' API 'api_msg' OF oWeb					
+			
+			HTML o INLINE '<h3>My container...</h3><hr>'	
+	
+	INIT WEB oWeb RETURN 
+?>

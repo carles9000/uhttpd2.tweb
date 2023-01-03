@@ -1,0 +1,17 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL oWeb 		
+	LOCAL cFile 	:= 'tpl\splash.tpl'
+	LOCAL cLogo 	:= 'files/images/mini-httpd2.png'
+	LOCAL cRoute	:= 'splash'
+	LOCAL cColor	:= '#7e94a7;'
+	
+	//	Example Splash via parameters	
+	
+	DEFINE WEB oWeb TITLE 'Splash'						
+		
+		HTML oWeb FILE cFile PARAMS cLogo, cRoute, cColor
+
+	INIT WEB oWeb RETURN
+?>

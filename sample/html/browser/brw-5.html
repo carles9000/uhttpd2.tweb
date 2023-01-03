@@ -1,0 +1,64 @@
+<style>
+	/*Horizontally center header and footer*/
+	
+	.tabulator-print-header, tabulator-print-footer {
+		text-align:center;
+	}
+	
+</style>
+
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Quick print'
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_basic' OF oWeb 
+		
+		INIT FORM o 
+		
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'			, 'setdata'	, nil },;
+				{ 'btn-2', 'Clean'			, 'clean'	, nil },;						
+				{ 'btn-3', 'Print'			, 'print'	, nil } ;						
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns			
+			
+			
+			COL o CLASS 'p-0' GRID 12
+			
+				//	https://tabulator.info/docs/5.4/options
+			
+				aOptions := { ;
+					'height' => '300px',				;					
+					'index' => 'id',   					;	// Default id
+					'layout' => 'fitColumns',			;
+					'printAsHtml' => .t.,				;
+					'printHeader' => '<h2>Example Table Header<h2><hr>',;
+					'printFooter' => '<br><h3>Example Table Footer<h3>' ;
+				}															
+				
+				DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+
+					COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200 }
+					COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200 }
+					COL oCol TO oBrw CONFIG { 'title' => "Street", 'field' => "STREET", 'width' => 200 }
+					COL oCol TO oBrw CONFIG { 'title' => "City", 'field' => "CITY", 'width' => 200  }
+					COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE", 'print' => .f. }
+					COL oCol TO oBrw CONFIG { 'title' => "Zip", 'field' => "ZIP", 'width' => 200}
+					
+				INIT BROWSE oBrw 
+		
+			ENDCOL o					
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

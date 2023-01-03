@@ -1,0 +1,55 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Movable rows & cols'
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_basic' OF oWeb 
+		
+		INIT FORM o 
+		
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'			, 'setdata'		, nil },;
+				{ 'btn-2', 'Clean'			, 'clean'		, nil } ;						
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns
+					
+			COL o CLASS 'p-0' GRID 12
+			
+				//	https://tabulator.info/docs/5.4/options
+			
+				aOptions := { ;
+					'height' => '300px',				;					
+					'index' => 'id',   					;	// Default id
+					'layout' => 'fitColumns',			;
+					'movableColumns' => .t.,			;
+					'movableRows' => .t.				;
+				}															
+				
+				DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+					
+					
+					//	https://tabulator.info/docs/5.4/columns 
+					//	https://tabulator.info/docs/5.4/format#formatter-rowhandle
+					COL oCol TO oBrw CONFIG { 'rowHandle' => .t., 'formatter' => "handle", 'headerSort' => .f., 'frozen' => .t., 'width' => 30, 'minWidth' => 30 }
+					
+					COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200 }
+					COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200 }
+					COL oCol TO oBrw CONFIG { 'title' => "Street", 'field' => "STREET", 'width' => 100 }
+					COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE"}
+					
+				INIT BROWSE oBrw 
+		
+			ENDCOL o	
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

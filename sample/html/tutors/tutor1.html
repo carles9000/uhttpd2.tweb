@@ -1,0 +1,23 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+#define IS_DESSIGN 	.T.
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Tutor1' 
+	
+		DEFINE FORM o OF oWeb
+			o:lDessign 	:= IS_DESSIGN
+			o:lFluid 	:= .T.
+			
+		INIT FORM o
+		
+			ROW o
+				SAY VALUE 'Hello' ALIGN 'right' OF o
+			ENDROW o
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 	
+
+?>
