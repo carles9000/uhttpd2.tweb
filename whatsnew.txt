@@ -1,0 +1,4 @@
+04/01/23 Enchanced. Add clausule ON INIT to DEFINE FORM
+	See example -> Test controls - from function (The Concept) 
+	
+03/01/23 First version TWeb for Uhttpd2

@@ -22,12 +22,12 @@
 
 
 
-#xcommand DEFINE FORM <oForm> [ID <cId> ] [ACTION <cAction>] [METHOD <cMethod>] [API <cApi>] OF <oWeb> ;
-=> <oForm> := TWebForm():New( <oWeb>, [<cId>], [<cAction>], [<cMethod>], [<cApi>] )
+#xcommand DEFINE FORM <oForm> [ID <cId> ] [ACTION <cAction>] [METHOD <cMethod>] ;
+	[API <cApi>] [ON INIT <cProc>] OF <oWeb> ;
+=> <oForm> := TWebForm():New( <oWeb>, [<cId>], [<cAction>], [<cMethod>], [<cApi>], [<cProc>] )
 
 #xcommand INIT FORM <oForm> [ CLASS <cClass>] => <oForm>:InitForm( [<cClass> ] )
-//#xcommand ENDFORM <oForm> [ START <fOnInit> ] => <oForm>:Activate( <fOnInit> )
-#xcommand ENDFORM <oForm> [ START <fOnInit> ] => <oForm>:End()
+#xcommand ENDFORM <oForm>  => <oForm>:End()
 
 
 

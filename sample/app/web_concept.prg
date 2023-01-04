@@ -34,7 +34,7 @@ including versions of Lorem Ipsum.
 			MENUITEM 'List' 	ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' 			OF oNav
 			MENUITEM 'Reload Dessign (on/off)'	ICON '<i class="fa fa-retweet" aria-hidden="true"></i>' ROUTE cRoute	OF oNav
 
-    DEFINE FORM o ID 'concept' API 'api_concept' OF oWeb
+    DEFINE FORM o ID 'concept' API 'api_concept' ON INIT 'hello' OF oWeb
 		o:lDessign 	:= lDessign
 
 		INIT FORM o  
@@ -115,6 +115,7 @@ function Api_Concept( oDom )
 		case oDom:GetProc() == 'showqty'	; oDom:SetAlert( oDom:Get( 'qty' ), 'Answer from server' )
 		case oDom:GetProc() == 'power'		; oDom:SetAlert( if( oDom:Get( 'power' ) == .t., 'Si','No'), 'Answer from server' )
 		case oDom:GetProc() == 'combo'		; oDom:SetAlert( oDom:Get( 'cars' ), 'Answer from server' )
+		case oDom:GetProc() == 'hello' 	; oDom:SetAlert( 'Hello friend!', 'Event oninit' )
 		case oDom:GetProc() == 'testspan'	
 			nCount++
 			oDom:Set( 'myspan', ltrim(str(nCount)) )

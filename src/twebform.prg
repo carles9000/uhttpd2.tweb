@@ -25,6 +25,7 @@ CLASS TWebForm FROM TWebControl
 	DATA cAction					INIT ''		
 	DATA cMethod					INIT 'POST'
 	DATA cApi						INIT ''
+	DATA cProc						INIT ''
 	DATA cType						INIT ''		//	sm, md, lg, xl, xs
 	DATA cSizing					INIT ''		//	sm, lg
 	DATA lFluid						INIT .F. 
@@ -51,12 +52,13 @@ CLASS TWebForm FROM TWebControl
 	
 ENDCLASS 
 
-METHOD New( oWeb, cId, cAction, cMethod, cApi ) CLASS TWebForm		
+METHOD New( oWeb, cId, cAction, cMethod, cApi, cProc ) CLASS TWebForm		
 
 	DEFAULT cId 	TO ''
 	DEFAULT cAction TO ''
 	DEFAULT cMethod TO 'POST'
 	DEFAULT cApi TO ''
+	DEFAULT cProc TO ''
 	
 	::oWeb 			:= oWeb
 	::cId	 		:= cId
@@ -64,6 +66,7 @@ METHOD New( oWeb, cId, cAction, cMethod, cApi ) CLASS TWebForm
 	::cAction 		:= cAction
 	::cMethod 		:= cMethod
 	::cApi 			:= cApi
+	::cProc 		:= cProc
 	
 	::oWeb:AddControl( SELF )
 
@@ -77,8 +80,9 @@ METHOD InitForm( cClass ) CLASS TWebForm
 
 	::Html( '<div class="' + cClassForm + ' ' + cClass + '" ' + ;
 			IF( ::lDessign, 'style="border:2px solid green;"', '' ) + ;
-			IF( !empty( ::cId ), ' id="' + ::cId + '" ', '' ) + ;
-			IF( !empty( ::cApi ), ' data-dialog data-api="' + ::cApi + '" ', '' ) + ;
+			IF( !empty( ::cId )  , ' id="' + ::cId + '" ', '' ) + ;
+			IF( !empty( ::cApi ) , ' data-dialog data-api="' + ::cApi + '" ', '' ) + ;
+			IF( !empty( ::cProc ), ' data-oninit="' + ::cProc + '" ', '' ) + ;
 			'>' + CRLF   )
 			
 	if !empty( ::cId ) .and. !empty( ::cApi ) 
