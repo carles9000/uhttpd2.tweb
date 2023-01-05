@@ -6,7 +6,7 @@
 
 @echo +
 @echo +-- Copy lib harbour...
-xcopy sample\lib\uhttpd2.* dist\lib\tweb\ /Y/Q
+xcopy sample\lib\tweb\ dist\lib\tweb\ /Y/Q
 
 
 @echo +
