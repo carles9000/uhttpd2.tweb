@@ -1,0 +1,47 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+	local o, oWeb, oNote
+
+	DEFINE WEB oWeb TITLE 'List' 
+	
+		NAV oNav ID 'nav' TITLE '&nbsp;Notes' LOGO "files/images/mini-mercury.png" ;
+			ROUTE '/' WIDTH 30 HEIGHT 30 OF oWeb
+
+			MENUITEM 'Home' 	ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE '/'		OF oNav
+			MENUITEM 'List' 	ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'list' 	OF oNav
+			
+
+		DEFINE FORM o ID 'note' API 'api_notes' OF oWeb
+			o:lDessign 	:= .f.
+			o:lFluid 	:= .f.
+			//o:cClass 	:= 'p-0'
+			
+		INIT FORM o  CLASS 'p-5'
+		
+			ROWGROUP o 			
+				GET ID 'name' PROMPT 'Alias' VALUE '' GRID 12 PLACEHOLDER 'Enter your alias...' OF o				
+			ENDROW o	
+
+			ROWGROUP o 			
+				GET MEMO ID 'text' LABEL 'Note' VALUE '' ROWS 3 GRID 12  OF o				
+			ENDROW o
+			
+			ROWGROUP o 			
+				GET ID 'key' TYPE 'password' PROMPT 'Id. key' VALUE '' GRID 12 PLACEHOLDER 'Key is... MAGIC' OF o				
+			ENDROW o	
+
+			ROWGROUP o 			
+				CHECKBOX ID 'terms' LABEL 'Accept Terms & Conditions' GRID 12 OF o				
+			ENDROW o	
+
+			ROWGROUP o HALIGN 'center'
+				BUTTON ID 'btn' LABEL ' Send Note' GRID 6 ACTION 'exe_note' ;					
+					ICON '<i class="fas fa-clipboard-check"></i>' CLASS 'btn-primary btnticket' OF o
+				
+			ENDCOL o				
+		
+		ENDFORM o
+	
+	INIT WEB oWeb RETURN
+?>
