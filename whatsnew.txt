@@ -1,3 +1,5 @@
+05/01/23 Minor change. getmemo, checkbox
+
 04/01/23 Enchanced. Add clausule ON INIT to DEFINE FORM
 	See example -> Test controls - from function (The Concept) 
 	

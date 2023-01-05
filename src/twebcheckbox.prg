@@ -53,11 +53,12 @@ METHOD Activate() CLASS TWebCheckbox
 	cHtml += '<div class="custom-control custom-checkbox " >'
 	cHtml += '<input type="checkbox" class="custom-control-input tweb_pointer" id="' + cIdPrefix + ::cId + '" ' 
 	
+	cHtml += ' data-live '
 	IF !empty( ::cAction )
 		if AT( '(', ::cAction ) >  0 		//	Exist function ?
 			cHtml += ' onchange="' + ::cAction + '" '
 		else
-			cHtml += ' data-live data-onchange="' + ::cAction + '" '
+			cHtml += ' data-onchange="' + ::cAction + '" '
 		endif 
 		
 	ENDIF

@@ -91,12 +91,13 @@ METHOD Activate() CLASS TWebGetMemo
 	ENDIF
 	
 	cHtml += ' data-control="tgetmemo" '
+	cHtml += ' data-live '
 
 	IF !empty( ::cChange )
 		if AT( '(', ::cChange ) >  0 		//	Exist function ?
 			cHtml += ' onchange="' + ::cChange + '" '
 		else
-			cHtml += ' data-live data-onchange="' + ::cChange + '" '
+			cHtml += ' data-onchange="' + ::cChange + '" '
 		endif 
 		
 	ENDIF
