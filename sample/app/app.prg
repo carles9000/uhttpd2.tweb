@@ -25,6 +25,8 @@ function WebServer()
 	local oServer 	:= Httpd2()
 	
 	oServer:SetPort( 81 )
+	oServer:SetDirFiles( 'examples', .T. )		//	.t. == Index list
+	
 	
 	//	Routing...			
 
@@ -37,6 +39,7 @@ function WebServer()
 		oServer:Route( 'browse'	, 'index_brw.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
 		oServer:Route( 'splash'	, 'index_splash.html' )  			
+		oServer:Route( 'examples'	, 'examples/*' )  			
 
 
 	//	TUTORS

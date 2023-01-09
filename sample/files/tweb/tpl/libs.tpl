@@ -15,11 +15,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.3/bootbox.min.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
 	
-	<script src="files/tweb/notify/bootstrap-notify.js"></script>
-	<script src="files/tweb/bootbox/bootbox.all.min.js"></script>
+	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/bootstrap-notify.js"></script>
+	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/bootbox/bootbox.all.min.js"></script>
 	
-	<script src="files/tweb/tweb.js"></script>
-	<link href="files/tweb/tweb.css" rel="stylesheet" >		
+	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/tweb.js"></script>
+	<link href="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/tweb.css" rel="stylesheet" >		
 
 	<!-- Httpd2 environment -->
 			
@@ -32,12 +32,12 @@
 			<link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator_bootstrap4.min.css" rel="stylesheet">
 			
 			<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
-			<script type="text/javascript" src="files/uhttpd2/moment/moment.js"></script> 
+			<script type="text/javascript" src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/uhttpd2/moment/moment.js"></script> 
 		
 		<!-- -->
 
-		<script src="files/uhttpd2/uhttpd2.min.js"></script>
-		<script src="files/uhttpd2/uhttpd2.tabulator.js"></script>
-		<link href="files/uhttpd2/uhttpd2.css" rel="stylesheet" >		
+		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/uhttpd2/uhttpd2.min.js"></script>
+		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/uhttpd2/uhttpd2.tabulator.js"></script>
+		<link href="{{ hb_GetEnv( "ROOTRELATIVE") }}files/uhttpd2/uhttpd2.css" rel="stylesheet" >		
 
 	<!-- ------------------ -->		

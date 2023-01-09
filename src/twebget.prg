@@ -205,6 +205,7 @@ METHOD Activate() CLASS TWebGet
 	
 		cHtml += '<div class="input-group-append">'
 	
+		
 		for nI := 1 to nBtn 
 		
 			cLabel  := ::aBtnLabel[nI]
@@ -216,15 +217,17 @@ METHOD Activate() CLASS TWebGet
 			endif
 
 			cHtml += '<button id="' + cBtnId + '" class="btn btn-outline-secondary ' + cBtnSize + '" type="button" '
-			
-			
+		
 			if empty( ::cLink )
-				cAction := ::aBtnAction[nI]
-	
-				if AT( '(', cAction ) >  0 		//	Exist function ?
-					cHtml += 'onclick="' + cAction + '" '				
-				else
-					cHtml += 'data-live data-onclick="' + cAction + '" '					
+			
+				if valtype( ::aBtnAction ) == 'A' .and. len( ::aBtnAction ) >= nI 
+					cAction := ::aBtnAction[nI]
+		
+					if AT( '(', cAction ) >  0 		//	Exist function ?
+						cHtml += 'onclick="' + cAction + '" '				
+					else
+						cHtml += 'data-live data-onclick="' + cAction + '" '					
+					endif				
 				endif				
 				
 			else	

@@ -8,7 +8,7 @@
 
 
 
-#define TWEB_VERSION 			'1.0a'
+#define TWEB_VERSION 			'1.0b'
 
 
 
@@ -67,7 +67,8 @@ CLASS TWeb
 	DATA cTitle		 			
 	DATA cIcon 						
 	DATA cLang						INIT 'en' 						
-	DATA cPathTpl  					INIT '' 						
+	DATA cPathTpl  				INIT '' 						
+	DATA cRootRelative				INIT '' 	
 	DATA cCharset					INIT 'ISO-8859-1'			//	'utf-8'
 	DATA lActivated					INIT .F.
 	DATA lHeader					INIT .T.
@@ -104,7 +105,8 @@ RETU SELF
 
 METHOD Activate() CLASS TWeb
 
-	local cHtml := ''
+	local cHtml 	:= ''
+	local cTpl		:= ''
 	local nI 
 	
 	IF ::lActivated
@@ -122,8 +124,15 @@ METHOD Activate() CLASS TWeb
 		cHtml 	+= '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">' + CRLF	
 		cHtml 	+= '<link rel="shortcut icon" type="image/png" href="' + ::cIcon + '"/>' + CRLF
 		
-		cHtml   += hb_memoread( ::cPathTpl + 'libs.tpl' ) + CRLF 		
+		//cHtml   += hb_memoread( ::cPathTpl + 'libs.tpl' ) + CRLF 		
+
+		cTpl 	:= hb_memoread( ::cPathTpl + 'libs.tpl' ) + CRLF 
 		
+		hb_SetEnv( "ROOTRELATIVE", ::cRootRelative )
+
+		UReplaceBlocks( @cTpl, "{{", "}}" )			
+		
+		cHtml   += cTpl 		
 		/*
 		IF ::lTables
 			cHtml += LoadTWebTables()

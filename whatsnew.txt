@@ -1,6 +1,10 @@
+09/01/23 New folder examples. You can test directly code from folder \examples 
+
 05/01/23 Minor change. getmemo, checkbox
 
 04/01/23 Enchanced. Add clausule ON INIT to DEFINE FORM
 	See example -> Test controls - from function (The Concept) 
 	
+*--------------------------------------	
 03/01/23 First version TWeb for Uhttpd2
+*--------------------------------------	
