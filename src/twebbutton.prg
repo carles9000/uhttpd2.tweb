@@ -4,6 +4,7 @@ CLASS TWebButton FROM TWebControl
 
 	DATA cType		 				INIT 'text'
 	DATA cPlaceHolder 				INIT ''
+	DATA cConfirm	 				INIT ''
 	DATA lOutline 					INIT .T.
 	DATA lSubmit					INIT .F.
 	DATA cLink						INIT ''
@@ -15,7 +16,7 @@ CLASS TWebButton FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cLink, cClass, cFont, lFiles, nWidth  ) CLASS TWebButton
+METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cLink, cClass, cFont, lFiles, nWidth, cConfirm ) CLASS TWebButton
 
 	DEFAULT cId TO ''
 	DEFAULT cLabel TO ''
@@ -33,6 +34,7 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 	DEFAULT cFont TO ''		
 	DEFAULT lFiles TO .F.
 	DEFAULT nWidth TO ''
+	DEFAULT cConfirm TO ''
 	
 	if empty( cClass ) 
 		cClass := if( ::lOutline, 'btn-outline-primary' , 'btn-primary')	
@@ -56,6 +58,7 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 	::cFont 		:= cFont	
 	::lFiles 		:= lFiles
 	::nWidth 		:= nWidth
+	::cConfirm 		:= cConfirm
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )		
@@ -141,14 +144,18 @@ METHOD Activate() CLASS TWebButton
 		cHtml += 'style="width: '  + ::nWidth + '; " '
 	endif
 		
-
+	cHtml += ' data-live '
+	
+	if !empty( ::cConfirm )
+		cHtml += ' data-confirm="' + ::cConfirm + '" '
+	endif 
 	
 	IF !empty( ::cAction )
 
 		if AT( '(', ::cAction ) >  0 		//	Exist function ?
 			cHtml += 'onclick="' + ::cAction + '" '				
 		else
-			cHtml += 'data-live data-onclick="' + ::cAction + '" '					
+			cHtml += ' data-onclick="' + ::cAction + '" '					
 		endif	
 	ENDIF
 		

@@ -18,8 +18,16 @@
 	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/bootstrap-notify.js"></script>
 	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/bootbox/bootbox.all.min.js"></script>
 	
-	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/tweb.js"></script>
-	<link href="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/tweb.css" rel="stylesheet" >		
+			
+	<!-- LIGTHBOX -->
+		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/lightbox/lightbox.js"></script>
+		<link href="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/lightbox/css/lightbox.css" rel="stylesheet" >		
+		
+	<!-- TWEB -->
+	
+		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/tweb.js"></script>
+		<link href="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/tweb.css" rel="stylesheet" >		
+	
 
 	<!-- Httpd2 environment -->
 			
