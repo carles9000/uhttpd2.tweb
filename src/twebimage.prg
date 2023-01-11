@@ -49,12 +49,19 @@ METHOD Activate() CLASS TWebImage
 
 	LOCAL cHtml
 	LOCAL cSize 	:= ''
+	local cIdPrefix	
 	
 	
 	DO CASE
 		CASE upper(::oParent:cSizing) == 'SM' ;	cSize 		:= 'form-control-sm'			
 		CASE upper(::oParent:cSizing) == 'LG' ;	cSize 		:= 'form-control-lg'			
 	ENDCASE	
+	
+	if !empty( ::oParent:cId_Dialog )
+		cIdPrefix :=  ::oParent:cId_Dialog + '-'
+	else
+		cIdPrefix :=  ''
+	endif	
 
 	cHtml := '<div class="col-' + ltrim(str(::nGrid)) 
 	
@@ -86,7 +93,7 @@ METHOD Activate() CLASS TWebImage
 		cHtml += '<a id="twebimg_' + ::cId + '" href="' + ::cBigSrc + '" '
 		
 		if  empty( ::cGallery ) 				
-			cHtml += 'data-lightbox="twebimg_' + ::cId + '" '
+			cHtml += 'data-lightbox="twebimg_' + cIdPrefix + ::cId + '" '
 		else 
 			cHtml += 'data-lightbox="' + ::cGallery + '" '
 		endif
@@ -100,7 +107,7 @@ METHOD Activate() CLASS TWebImage
 	endif
 
 	
-	cHtml += '<img id="' + ::cId + '" src="' + ::cSrc + '" class="rounded " '
+	cHtml += '<img id="' + cIdPrefix + ::cId + '" src="' + ::cSrc + '" class="rounded " '
 	
 	if ::nWidth > 0
 		cHtml += ' style="width:' + ltrim(str(::nWidth)) + 'px; '

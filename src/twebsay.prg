@@ -39,12 +39,19 @@ METHOD Activate() CLASS TWebSay
 
 	LOCAL cHtml
 	LOCAL cSize 	:= ''
+	local cIdPrefix	
 
 	
 	DO CASE
 		CASE upper(::oParent:cSizing) == 'SM' ;	cSize 		:= 'form-control-sm'			
 		CASE upper(::oParent:cSizing) == 'LG' ;	cSize 		:= 'form-control-lg'			
 	ENDCASE	
+	
+	if !empty( ::oParent:cId_Dialog )
+		cIdPrefix :=  ::oParent:cId_Dialog + '-'
+	else
+		cIdPrefix :=  ''
+	endif		
 
 	cHtml := '<div class="col-' + ltrim(str(::nGrid)) 
 	
@@ -76,7 +83,7 @@ METHOD Activate() CLASS TWebSay
 	endif
 
 	
-	cHtml += '<span id="' + ::cId + '">' + ::uValue + '</span>'
+	cHtml += '<span id="' + cIdPrefix + ::cId + '">' + ::uValue + '</span>'
 	
 	if !empty( ::cLink )
 		cHtml += '</a>'
