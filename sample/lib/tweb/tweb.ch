@@ -23,7 +23,7 @@
 
 
 #xcommand DEFINE FORM <oForm> [ID <cId> ] [ACTION <cAction>] [METHOD <cMethod>] ;
-	[API <cApi>] [ON INIT <cProc>] OF <oWeb> ;
+	[API <cApi>] [<chg: ONINIT,ON INIT> <cProc>] OF <oWeb> ;
 => <oForm> := TWebForm():New( <oWeb>, [<cId>], [<cAction>], [<cMethod>], [<cApi>], [<cProc>] )
 
 #xcommand INIT FORM <oForm> [ CLASS <cClass>] => <oForm>:InitForm( [<cClass> ] )

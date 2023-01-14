@@ -6,6 +6,7 @@
 -mt
 
 app\app.prg
+app\myapi.prg
 
 
 -Llib\uhttpd2

@@ -4,9 +4,9 @@
     LOCAL o, oWeb
 	LOCAL cMsg := 'Now is ' + dtoc(date()) + ', ' + time()
 	
-	DEFINE WEB oWeb TITLE 'Init TWeb' 			
+	DEFINE WEB oWeb TITLE 'TWeb' 			
 		
-		DEFINE FORM o OF oWeb							
+		DEFINE FORM o ID 'myform' API 'myapi' ON INIT 'hello' OF oWeb							
 
 		INIT FORM o					
 			SAY VALUE '<h1>Welcome to TWeb !' ALIGN 'center' GRID 12  OF o									
