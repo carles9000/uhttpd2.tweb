@@ -36,6 +36,7 @@ function WebServer()
 		oServer:Route( 'screens'	, 'index_screens.html' )  	
 		oServer:Route( 'msg'		, 'index_msg.html' )  	
 		oServer:Route( 'tpl'		, 'index_tpl.html' )  	
+		oServer:Route( 'pluggin'	, 'index_pluggin.html' )  	
 		oServer:Route( 'browse'	, 'index_brw.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
 		oServer:Route( 'splash'	, 'index_splash.html' )  			
@@ -120,6 +121,12 @@ function WebServer()
 		oServer:Route( 'tpl2'		, 'templates/tpl-2.html' ) 
 		oServer:Route( 'tpl3'		, 'templates/tpl-3.html' ) 
 		oServer:Route( 'tpl4'		, 'templates/tpl-4.html' ) 
+		
+	//	Pluggin
+	
+		oServer:Route( 'plug1'		, 'pluggin/plug-1.html' ) 		
+		
+		oServer:Route( 'getdogs'	, 'getdogs' ) 		
 		
 	//	Testing
 	

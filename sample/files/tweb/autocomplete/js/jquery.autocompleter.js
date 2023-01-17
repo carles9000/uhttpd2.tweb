@@ -338,10 +338,14 @@
 				}
 
 				_this.trigger('beforeSearch', {val:value});
-
+console.log( 'ep', variants.constructor.name )
 				if(variants.constructor.name == 'String')
 				{
-					$.get(variants, options['ajaxData'](value), function(response){ filtering(value, response); });
+console.log( 'dins')				
+console.log( variants)				
+console.log( options)				
+					$.get( 'getdogs', function(u){ console.log(u) } );
+					// $.get(variants, options['ajaxData'](value), function(response){ filtering(value, response); });
 				}
 				else
 				{

@@ -18,6 +18,7 @@ app\web_brw.prg
 app\web_prg.prg
 app\tutors.prg
 app\web_concept.prg
+app\web_tools.prg
 
 
 -Llib
