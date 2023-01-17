@@ -6,14 +6,9 @@
 ** MIT license https://github.com/carles9000/tweb.uhttpd2/blob/master/LICENSE
 */
 
-
-
-#define TWEB_VERSION 			'1.0b'
-
-
+#define TWEB_VERSION 			'1.0c'
 
 #include 'hbclass.ch'	
-//#include 'hbhrb.ch'	
 #include 'common.ch'
 #include 'error.ch'
 
@@ -79,8 +74,8 @@ CLASS TWeb
 	METHOD Activate()
 	METHOD AddControl( uValue )		INLINE Aadd( ::aControls, uValue )
 	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
-	METHOD AddJs( cFile ) 			INLINE Aadd( ::aInclude, '<script src="' + cFile + '"></script>' )
-	METHOD AddCss( cFile ) 			INLINE Aadd( ::aInclude, '<link rel="stylesheet" href="' + cFile + '">' )
+	METHOD AddJs( cFile ) 			INLINE Aadd( ::aInclude, '<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}' + cFile + '"></script>' )
+	METHOD AddCss( cFile ) 			INLINE Aadd( ::aInclude, '<link rel="stylesheet" href="{{ hb_GetEnv( "ROOTRELATIVE") }}' + cFile + '">' )
 
 ENDCLASS 
 
@@ -122,29 +117,30 @@ METHOD Activate() CLASS TWeb
 		cHtml	+= '<meta charset="' + ::cCharset + '">' + CRLF			
 		cHtml 	+= '<meta http-equiv="X-UA-Compatible" content="IE=edge">' + CRLF
 		cHtml 	+= '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">' + CRLF	
-		cHtml 	+= '<link rel="shortcut icon" type="image/png" href="' + ::cIcon + '"/>' + CRLF
+		cHtml 	+= '<link rel="shortcut icon" type="image/png" href="{{ hb_GetEnv( "ROOTRELATIVE") }}' + ::cIcon + '"/>' + CRLF
 		
 		//cHtml   += hb_memoread( ::cPathTpl + 'libs.tpl' ) + CRLF 		
 
-		cTpl 	:= hb_memoread( ::cPathTpl + 'libs.tpl' ) + CRLF 
+		cHtml 	+= hb_memoread( ::cPathTpl + 'libs.tpl' ) + CRLF 				
+		
+		FOR nI := 1 To len( ::aInclude )	
+	
+			cHtml += ::aInclude[ nI ] + CRLF 
+		next				
 		
 		hb_SetEnv( "ROOTRELATIVE", ::cRootRelative )
 
-		UReplaceBlocks( @cTpl, "{{", "}}" )			
+		UReplaceBlocks( @cHtml, "{{", "}}" )
+
+
 		
-		cHtml   += cTpl 		
 		/*
 		IF ::lTables
 			cHtml += LoadTWebTables()
 		ELSE
 			cHtml += LoadTWeb()	
-		ENDIF		
+		ENDIF				
 		*/
-
-		FOR nI := 1 To len( ::aInclude )
-		
-			cHtml += ::aInclude[ nI ] + CRLF 
-		next
 		
 	endif
 	

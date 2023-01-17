@@ -1,3 +1,4 @@
+17/01/23 Review load scripts...
 14/01/23 Review template base -> \sample.tpl
 
 09/01/23 New folder examples. You can test directly code from folder \examples 
