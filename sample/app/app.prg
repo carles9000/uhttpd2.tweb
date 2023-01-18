@@ -126,7 +126,9 @@ function WebServer()
 	
 		oServer:Route( 'plug1'		, 'pluggin/plug-1.html' ) 		
 		
-		oServer:Route( 'getdogs'	, 'getdogs' ) 		
+		//	autocomplete route. Alert! -> function
+		
+			oServer:Route( 'getidcustomer'	, 'getidcustomer' ) 		
 		
 	//	Testing
 	

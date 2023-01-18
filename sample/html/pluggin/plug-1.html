@@ -7,40 +7,49 @@
 	DEFINE WEB oWeb TITLE 'Get Autocomplete' 	
 		
 	//	Load pluggin...
-	
-		oWeb:AddJs( 'https://code.jquery.com/jquery-3.6.0.js' )
+	//	Existen un monton pero cojeremos jquery ui que hay mucha doc
+	//	https://jqueryui.com/autocomplete/	
+		
 		oWeb:AddJs( 'https://code.jquery.com/ui/1.13.2/jquery-ui.js' )
 		oWeb:AddCss('https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css' )
 		
+		HTML oWeb
+			<style>
+			
+				.ui-autocomplete {
+					overflow: auto;
+					height: 300px;
+				}
+			
+			</style>							
+		ENDTEXT 
+		
 	//	--------------------------------------------------------------------------------------------	
 
-    DEFINE FORM o  API 'api_test.prg' OF oWeb
+    DEFINE FORM o OF oWeb
 		o:lDessign 	:= .T.	
 
 		INIT FORM o  	
 
 			ROWGROUP o					
-				GET ID 'myget' VALUE '' GRID 12 OF o			
+				GET ID 'myget' VALUE '' LABEL 'Id. Customer' ;
+				PLACEHOLDER 'Example: al...' GRID 12 OF o			
 			ENDROW o	
-			   			
 			
 			HTML o
 				<script>
-				  $( function() {
+					$( function() {
+					
+						//	getIdCustomer() in \app\web_tools.prg
 						
 						$( "#myget" ).autocomplete({
-							  source: "getdogs",
+							  source: "getidcustomer",
 							  minLength: 2,
-							  complete: function() {
-							  
-							  },
-							  select: function( event, ui ) {
-								console.log( ui.item, ui.value );
-								console.log( ui );
+							  select: function( event, ui ) {								
+									console.log( ui );
 							  }
 						});
-				  });												
-				
+					});																
 				</script>		
 			ENDTEXT
 			
