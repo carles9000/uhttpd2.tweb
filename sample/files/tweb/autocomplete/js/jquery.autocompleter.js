@@ -3,6 +3,8 @@
  * @author Gozoro <gozoro@yandex.ru>
  * @version 1.0.1
  */
+ 
+ // https://packagist.org/packages/gozoro/jquery-autocompleter
 
 ;(function($)
 {
@@ -338,13 +340,14 @@
 				}
 
 				_this.trigger('beforeSearch', {val:value});
-console.log( 'ep', variants.constructor.name )
+
 				if(variants.constructor.name == 'String')
 				{
-console.log( 'dins')				
-console.log( variants)				
-console.log( options)				
-					$.get( 'getdogs', function(u){ console.log(u) } );
+					var oPar = new Object()
+						oPar[ 'value' ] = options['ajaxData'](value)
+
+					$.get( variants, options['ajaxData'](value), function(response){ filtering(value, response); } );
+					//$.get( variants, oPar, function(u){ console.log(u) } );
 					// $.get(variants, options['ajaxData'](value), function(response){ filtering(value, response); });
 				}
 				else
@@ -357,15 +360,20 @@ console.log( options)
 
 			function filtering(value, variants)
 			{
+			
+			console.log( 'FILTERING', value )
+			console.log( variants )
 				var regexp = options['matchRegexp'](value, escapeRegExp);
 				var fullregexp = RegExp('^'+escapeRegExp(value)+'$', regexp.flags);
 				var i = 0;
 
 				for(var itemIndex in variants)
 				{
+console.log( itemIndex )				
 					var item = variants[itemIndex];
+console.log( item )					
 					var matchValue = options['matchValue'](item, itemIndex);
-
+console.log( matchValue )
 					if(useHiddenInput)
 						var itemValue = options['itemValue'](item, itemIndex);
 					else

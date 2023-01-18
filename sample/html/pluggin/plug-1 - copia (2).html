@@ -1,0 +1,241 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+
+    LOCAL o, oWeb
+
+	DEFINE WEB oWeb TITLE 'Get Autocomplete' 	
+		
+	//	Load pluggin...
+	
+		oWeb:AddJs( 'https://code.jquery.com/jquery-3.6.0.js' )
+		oWeb:AddJs( 'https://code.jquery.com/ui/1.13.2/jquery-ui.js' )
+		oWeb:AddCss( 'https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css' )
+		
+	//	--------------------------------------------------------------------------------------------	
+
+    DEFINE FORM o ID 'form' API 'api_test.prg' OF oWeb
+		o:lDessign 	:= .T.	
+
+		INIT FORM o  	
+
+			ROWGROUP o	
+				//	Try to enter al, ca, ...			
+				GET ID 'myget' VALUE '' GRID 12 OF o			
+			ENDROW o	
+			   			
+			
+			HTML o
+				<script>
+					$(document).ready(function(){
+					var availableTags = [
+					  "ActionScript",
+					  "AppleScript",
+					  "Asp",
+					  "BASIC",
+					  "C",
+					  "C++",
+					  "Clojure",
+					  "COBOL",
+					  "ColdFusion",
+					  "Erlang",
+					  "Fortran",
+					  "Groovy",
+					  "Haskell",
+					  "Java",
+					  "JavaScript",
+					  "Lisp",
+					  "Perl",
+					  "PHP",
+					  "Python",
+					  "Ruby",
+					  "Scala",
+					  "Scheme"
+					];
+					$( "#myget" ).autocomplete({
+					  source: availableTags
+					});					
+					
+						/*
+						var o = new TGetComplete( 'myget',  'getdogs', My_Select_Ok );			
+							
+							o.minLength = 2;		//	Valor per defecte
+							o.delay 	= 300;		//	Valor per defecte
+							o.trigger 	= '='		//	Valor per defecte
+							o.Init();					
+						*/
+					})
+					
+				/* 	TGetComplete -----------------------------------------------------------------------------------
+						
+					El webservice devolvera un array de array asociativo con los valores:
+						value:	Valor clave que buscamos
+						item:	Texto que aparecerá en el desplegable
+					----------------------------------------------------------------------------------------------*/
+					
+					var TGetComplete = function( cId, cPhp, bSelect, oParameters ){
+
+						this.cId   			= cId;
+						this.cPhp 			= cPhp;
+						this.cType 			= 'POST';
+						this.bSelect		= bSelect;
+						this.minLength		= 2;
+						this.delay			= 300;
+						this.trigger		= '=';
+						//this.oParam 		= null;
+						this.bBefore		= null;
+						this.bSignal		= null;
+						this.bHelp			= null;
+						this.cHelp			= null;
+						this.cId_Dialog		= '';
+						
+						var oGet = this;
+						
+						this.Init = function(){
+						
+							oGet.oParam = new Object();
+console.log( 'Init----<', this.cId )
+							$( "#" + this.cId ).autocomplete({			  
+							  delay: this.delay, 		
+							  focus: function( event, ui ) {
+								 // prevent value inserted on focus		
+								return false;
+							  },		  
+							  minLength: this.minLength + 1,		// 1 = longitud del trigger -> =
+							  source: TWeb_TGet_Source,
+							  select: TWeb_TGet_Select,
+							  search: TWeb_TGet_Search			  
+							});
+							
+							if ( this.cId_Dialog !== '' )
+								$( "#" + this.cId ).autocomplete( 'option', 'appendTo', '#' + this.cId_Dialog );	//	IMPORTANTE si se ejecuta desde un Dialog
+						
+						};
+						
+						function TWeb_TGet_Search() {
+console.log( 'TWeb_TGet_Search')
+							if ( oGet.trigger === '' )
+								return true;
+
+							var cValue = this.value;
+						  
+							if ( cValue.length < 4 )
+								return false;
+							
+							if ( cValue.substr(0,1) !== oGet.trigger )
+								return false;									
+						};
+
+						function TWeb_TGet_Source( request, response ) {
+console.log( 'TWeb_TGet_Source')						
+							var uValue = request.term;	
+							
+							if ( oGet.trigger !== '' ){						
+								uValue = uValue.substr(1);										
+							}	
+										
+							var oParam = new Object();
+								oParam[ 'search' ] = uValue			
+							
+							var fn = oGet.bBefore;
+							var oNewParam = null
+							
+						
+							if (typeof fn === "function") {				
+
+								var fnparams = null;
+								oNewParam = fn.apply(null, fnparams );								
+							}
+							
+							if ( $.type( oNewParam ) == 'object' ) {
+								for( var key in oNewParam ) {			
+									oParam[ key ] = oNewParam[ key ]			
+								}
+							}
+					
+							if ( $.type( oParameters ) == 'object' ) {
+								for( var key in oParameters ) {					
+									oParam[ key ] = oParameters[ key ]			
+								}
+							}										
+							
+							//	Importante: Si TGetcomplete lo usamos desde un dialog, MsgSignal() hace que 
+							//	no muestra el resultado. Pendiente
+							//	MsgSignal( true );					
+								
+								/*
+								if (typeof oGet.bSignal === "function") {	
+									var fnparams = [ true ];
+									oGet.bSignal.apply(null, fnparams );			
+								}			
+								*/
+
+							$.ajax({
+							  type: oGet.cType,
+							  url: oGet.cPhp,
+							  data: oParam,
+							  success: response,
+							  complete: function() { 
+							  
+								//MsgSignal() 
+								/*
+								if (typeof oGet.bSignal === "function") {	
+									var fnparams = [ false ];
+									oGet.bSignal.apply(null, fnparams );			
+								}
+								*/								
+								
+							  },
+							  error: function( oError ) {
+
+								if ( oError.status == 404 ) 
+									MsgError( _( '_error_no_file' ) + ' ' + oGet.cPhp )
+								else 
+									MsgError( oError.responseText )
+
+							  },			  
+							  dataType: 'json'
+							});			
+						
+						} ;			
+						
+						function TWeb_TGet_Select( event, ui ) {
+console.log( 'TWeb_TGet_Select')						
+
+							// 	prevent autocomplete from updating the textbox
+								event.preventDefault();	
+							
+							var fn = oGet.bSelect;
+							
+							if (typeof fn === "function") {				
+								var fnparams = [ui.item];
+								fn.apply(null, fnparams );								
+							}														
+						}									
+						
+					}	
+
+
+					function My_Select_Ok( item ) {
+						
+						console.log( 'My_Select_OK', item );
+
+						/*
+						var o = new TControl();
+
+						o.Set( 'nombre' , item.value );	// item.label
+						
+						o.Set( 'first'  , item.first );	
+						o.Set( 'last'   , item.last );	
+						o.Set( 'street' , item.street);	
+						*/
+					}					
+				
+				
+				</script>		
+			ENDTEXT
+			
+		ENDFORM o
+	
+	INIT WEB oWeb RETURN	
+?>

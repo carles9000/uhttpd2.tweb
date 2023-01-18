@@ -14,8 +14,31 @@ retu oDom:Send()
 
 function getDogs()
 
-	local a := UGet()
+	//local cAlias := OpenDbf( 'test.dbf', 'test.cdx' )		
+	local cDbf := AppPathData() + 'test.dbf'
+	local cCdx := AppPathData() + 'test.cdx'
+	local cAlias
+	local b := { ;
+				{ 'value' => '1', 'label' => 'casa' },;
+				{ 'value' => '2', 'label' => 'perro' },;
+				{ 'value' => '3', 'label' => 'gato' } ;
+				}
+
 	
-	_d( a )
+	_d( cDbf )
+	_d( cCdx )
 	
-return time() 
+	USE (cDbf) shared new VIA 'DBFCDX'
+	SET INDEX TO (cCdx)
+	
+	cAlias := Alias()
+	
+	_d( 'ALIAS:' + cAlias )
+	_d( UGet() )
+	_d( UPost() )
+	
+	UAddHeader("Content-Type", "application/json")
+
+	UWrite( hb_jsonencode( b ) )
+	
+return nil
