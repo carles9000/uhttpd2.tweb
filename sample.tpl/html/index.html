@@ -1,8 +1,7 @@
 <?prg
 #include "lib/tweb/tweb.ch" 
 
-    LOCAL o, oWeb
-	LOCAL cMsg := 'Now is ' + dtoc(date()) + ', ' + time()
+    LOCAL o, oWeb	
 	
 	DEFINE WEB oWeb TITLE 'TWeb' 			
 		
@@ -11,7 +10,8 @@
 		INIT FORM o					
 			SAY VALUE '<h1>Welcome to TWeb !' ALIGN 'center' GRID 12  OF o									
 			SAY VALUE '<h4>Engine loaded, version {{ TWebVersion() }}<hr>' ALIGN 'center' GRID 12  OF o									
-			SAY VALUE cMsg ALIGN 'center' GRID 12  OF o									
+			
+			BUTTON ID 'btn' LABEL 'Click me!' ALIGN 'center' GRID 12 ACTION 'clickme' OF o
 		ENDFORM o	
 	
 	INIT WEB oWeb RETURN 
