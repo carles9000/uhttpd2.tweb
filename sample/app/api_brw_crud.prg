@@ -1,9 +1,9 @@
 /*
 	|				|	Tabulator	|  API 	| Selected | Updated
 	| Init			|				| 		|			|
-	| setdata		|	addData		|	X	|			|
+	| setdata		|	addData	|	X	|			|
 	| delete		|	deleteRow	|   X 	| 	  X		|
-	| Clean			|	setData		|	X	|			|
+	| Clean		|	setData	|	X	|			|
 	| Save			|	MySave		|		|			|    X
 	| UpdateRow	|	updateData	|	X	|			|
 	| MyProc		|	MyProc		|		|	  X		|
@@ -30,6 +30,8 @@ function Api_Brw_Crud( oDom )
 retu oDom:Send()	
 
 // -------------------------------------------------- //
+// Aqui llenamos la tabla de datos
+//
 
 static function DoData( oDom )
 
@@ -41,6 +43,8 @@ static function DoData( oDom )
 retu nil
 
 // -------------------------------------------------- //
+// Vaciamos toda la tabla. Reset, clean 
+//
 
 static function DoClean( oDom )
 	
@@ -61,6 +65,8 @@ return 'ID' + ltrim(str(nInd))
 	
 
 // -------------------------------------------------- //
+// Aqui simulamos añadir tantas rows como necesitemos
+// 
 
 static function DoAdd( oDom )
 
@@ -81,6 +87,10 @@ static function DoAdd( oDom )
 retu nil
 
 // -------------------------------------------------- //
+// Aqui simulamos eliminar
+// oDom:TableDelete() manda eliminar una row del cliente
+// 		aRows := oDom:Get( 'mytable' )[ 'selected' ]
+// 
 
 static function DoDelete( oDom )
 
@@ -102,6 +112,9 @@ static function DoDelete( oDom )
 retu nil
 
 // -------------------------------------------------- //
+// Aqui simulamos hacer alguna cosa con los registros seleccionados
+// 		aRows := oDom:Get( 'mytable' )[ 'selected' ]
+//
 
 static function DoMyProc( oDom )
 
@@ -134,6 +147,12 @@ static function DoMyProc( oDom )
 retu nil
 
 // -------------------------------------------------- //
+// Aqui simulamos salvar los datos (No lo hacemos)
+// 		aRows := oDom:Get( 'mytable' )[ 'updated' ]
+// Recordad que este proceso tiene que tener si ok, 
+// oDom:TableClearEdited() para decirle al browse del cliente
+// que todo se ha procesado y no volverlo a enviar
+//
 
 static function DoSave( oDom )
 
@@ -157,9 +176,9 @@ static function DoSave( oDom )
 	oDom:Console( aTrace, 'IDs procesed' )
 	
 	if len( aTrace ) > 0
-		oDom:SetAlert( 'Save total ID ' + ltrim(str(nLen)) )
+		oDom:SetAlert( 'We pretended to save: ' + ltrim(str(nLen)) + '. Check console' )
 	else
-		oDom:SetAlert( 'No data' )
+		oDom:SetAlert( 'No data to save' )
 	endif
 	
 retu nil 
