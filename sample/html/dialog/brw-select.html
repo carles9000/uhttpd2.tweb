@@ -1,0 +1,81 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oDlg, oBrw, aOptions
+	local aFilter 
+	LOCAL aData := {;
+		{ 'FIRST' => 'Homer'		, 'LAST' => 'Hoaks', 'AGE' => 38 },;
+		{ 'FIRST' => 'Jean-Piere'	, 'LAST' => 'Thain', 'AGE' => 58 },;
+		{ 'FIRST' => 'Steve'		, 'LAST' => 'Staro', 'AGE' => 26 } ;
+	}
+
+	DEFINE DIALOG oDlg 			
+		
+		DEFINE FORM o ID 'seed' API 'api_dialog' OF oDlg 			
+		
+		INIT FORM o 	
+			
+			ROWGROUP o 	VALIGN 'bottom'				
+				GET ID 'mysearch' LABEL 'City' VALUE '' GRID 6 PLACEHOLDER 'ex. NY, LA, VA, OH,...' ;
+					BUTTON '<i class="fas fa-search"></i>' ACTION 'search' OF o							
+			ENDROW o 												
+			
+			ROWGROUP o 					
+				
+				COL o GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '280px',				;					
+						'index' => 'id',   					;	// Default id
+						'selectable' => 1, 					;	// Podem posar 1 (sols 1 col)
+						'selectableRollingSelection' => .T.,;
+						'selectableRangeMode' => "click"	;
+					}	
+
+					HTML o INLINE '<div id="seed-myfilter"></div>'
+								
+					aFilter := { 'FIRST', 'LAST', 'AGE' }											
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions FILTER aFilter FILTER_ID 'myfilter' TITLE '<h5>Customer list</h5>' OF o 					
+						
+						//	https://tabulator.info/docs/5.4/columns 
+						//	https://tabulator.info/docs/5.4/select#setup-formatting
+						COL oCol TO oBrw CONFIG { 'formatter' => "rowSelection", 'align' => "center", 'headerSort' => .F. }
+												
+						COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST" }
+						COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST"}
+						COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE" }
+						
+					INIT BROWSE oBrw //DATA aData																				
+			
+				ENDCOL o				
+				
+			ENDROW o
+			
+			ROWGROUP o 	HALIGN 'center'								
+				BUTTON LABEL 'Select' ACTION 'getSelected()' ALIGN 'center' WIDTH '200px'  GRID 12 OF o 
+			ENDROW o 				
+
+				HTML o 
+					<script>
+
+						function getSelected() {
+						
+							var o 	 	= new UTabulator( 'seed-mytable' )	
+							var row 	= o.Proc( 'getSelectedData' )
+							
+							if ( row.length > 0 )							
+								MsgInfo( row[0].FIRST )						
+							
+						}
+						
+					</script>								
+				ENDTEXT 			
+
+		ENDFORM o
+ 
+	INIT DIALOG oDlg RETURN
+?>
+

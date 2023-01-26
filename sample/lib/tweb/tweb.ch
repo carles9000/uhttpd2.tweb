@@ -8,6 +8,11 @@
 #xcommand INIT WEB <oWeb>  => <oWeb>:Activate()
 #xcommand INIT WEB <oWeb> RETURN =>  return <oWeb>:Activate()
 
+#xcommand DEFINE DIALOG <oDlg> => <oDlg> := TWebDialog():New()
+#xcommand INIT DIALOG <oDlg> => <oDlg>:Activate()
+#xcommand INIT DIALOG <oDlg> RETURN => return <oDlg>:Activate()
+
+
 #xcommand CSS <oForm> => #pragma __cstream| <oForm>:Html( '<style>' + %s + '</style>' )
 
 #xcommand TEXT TO <var> => #pragma __stream|<var> += %s

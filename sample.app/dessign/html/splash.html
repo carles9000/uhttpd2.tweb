@@ -1,0 +1,19 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL oWeb 		
+	LOCAL cFile 	:= 'tpl\splash_hash.tpl'
+	LOCAL hCfg 		:= {=>}
+	
+	//	Example Splash via hash
+	
+	hCfg[ 'file'  ] := 'files/images/mini-httpd2.png'
+	hCfg[ 'route' ] := 'test'	
+	hCfg[ 'color' ] := '#7e94a7;'		
+	
+	DEFINE WEB oWeb TITLE 'Splash'						
+		
+		HTML oWeb FILE cFile PARAMS hCfg
+
+	INIT WEB oWeb RETURN
+?>

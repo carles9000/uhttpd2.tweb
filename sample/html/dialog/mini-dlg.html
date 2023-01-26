@@ -1,0 +1,18 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+	LOCAL o, oDlg			
+	
+	DEFINE DIALOG oDlg
+		
+		DEFINE FORM o ID 'abc' API 'api_dialog' OF oDlg							
+
+		INIT FORM o					
+			SAY VALUE '<h1>Welcome to Dialogs !' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>Basic sample (from file)<hr>' ALIGN 'center' GRID 12  OF o									
+			
+			BUTTON ID 'btn' LABEL 'Click me!' ALIGN 'center' GRID 12 ACTION 'hello' OF o
+		ENDFORM o	
+
+	
+	INIT DIALOG oDlg RETURN 	
+?>

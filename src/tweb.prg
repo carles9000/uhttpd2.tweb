@@ -48,6 +48,7 @@
 #include 'twebnav.prg'
 #include 'twebcommon.prg'
 #include 'twebbrowse.prg'
+#include 'twebdialog.prg'
 //#include 'mc_prepro.prg'
 //#include 'mh.prg'
 //	----------------------------------------------------------
@@ -72,10 +73,10 @@ CLASS TWeb
 
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
-	METHOD AddControl( uValue )		INLINE Aadd( ::aControls, uValue )
-	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
-	METHOD AddJs( cFile ) 			INLINE Aadd( ::aInclude, '<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}' + cFile + '"></script>' )
-	METHOD AddCss( cFile ) 			INLINE Aadd( ::aInclude, '<link rel="stylesheet" href="{{ hb_GetEnv( "ROOTRELATIVE") }}' + cFile + '">' )
+	METHOD AddControl( uValue )			INLINE Aadd( ::aControls, uValue )
+	METHOD Html( cCode ) 				INLINE Aadd( ::aControls, cCode )
+	METHOD AddJs( cFile, lAbsolute ) 	
+	METHOD AddCss( cFile, lAbsolute ) 	
 
 ENDCLASS 
 
@@ -164,6 +165,30 @@ METHOD Activate() CLASS TWeb
 	
 
 RETU cHtml
+
+METHOD AddJs( cFile, lAbsolute ) CLASS TWeb
+
+	hb_default( @lAbsolute, .f. )
+	
+	if lAbsolute
+		Aadd( ::aInclude, '<script src="' + cFile + '"></script>')		
+	else 		
+		Aadd( ::aInclude, '<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}' + cFile + '"></script>' )		
+	endif
+	
+RETU NIL
+
+METHOD AddCss( cFile, lAbsolute ) CLASS TWeb
+
+	hb_default( @lAbsolute, .f. )
+	
+	if lAbsolute
+		Aadd( ::aInclude, '<link rel="stylesheet" href="' + cFile + '">' )		
+	else 
+		Aadd( ::aInclude, '<link rel="stylesheet" href="{{ hb_GetEnv( "ROOTRELATIVE") }}' + cFile + '">' )		
+	endif
+	
+RETU NIL
 
 
 function JS( cCode ) 

@@ -1,0 +1,89 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'CS' //	ICON 'files\images\trash.png'		
+		
+		NAV oNav ID 'nav' TITLE '&nbsp;Notes' LOGO "files/images/mini-mercury.png" ;
+			ROUTE '/' WIDTH 30 HEIGHT 30 OF oWeb	
+			
+		DEFINE FORM o ID 'myform' API 'myapi' OF oWeb	
+			o:lDessign 	:= .t.
+			o:lFluid 	:= .f.
+			o:cSizing   := 'LG'	//	SM/LG
+			
+		DEFINE FONT NAME 'MyFontSay'   COLOR 'blue' BOLD SIZE 18 OF o
+		DEFINE FONT NAME 'MyFontValue' COLOR 'green' BOLD ITALIC SIZE 18 OF o			
+			
+			
+		HTML o 
+			<style>
+				.mybar {
+					/*margin-top:10px;*/
+					background-color: gray;
+					color:white;
+				}
+			</style>		
+		ENDTEXT 
+		
+
+		INIT FORM o			
+		
+			ROWGROUP o CLASS 'mybar'
+				SAY VALUE '<h4>Center System' ALIGN 'center' GRID 12  OF o		
+			ENDROW o
+
+			ROWGROUP o VALIGN 'center'
+			
+				GET ID 'myid' VALUE '1' LABEL 'Reference' GRID 6 PLACEHOLDER 'Id.' BUTTON '<i class="fas fa-search"></i>' ACTION 'getid' OF o
+				SAY ID 'mymsg' PROMPT 'messages...' GRID 6 OF o
+			
+			ENDROW o	
+
+			ROWGROUP o VALIGN 'top'
+			
+				
+				COL o GRID 5
+					IMAGE ID 'image' FILE 'data/images/nox.jpg' ALIGN 'center' GRID 12 OF o
+				ENDCOL o
+				
+			
+			
+				COL o GRID 7
+				
+					ROW o 
+						SAY PROMPT 'Name' GRID 6 ALIGN 'right' FONT 'MyFontSay' OF o
+						SAY ID 'name' PROMPT '' GRID 6 FONT 'MyFontValue' OF o
+					ENDROW o
+					
+					ROWGROUP o 
+						SAY PROMPT 'Type' GRID 6 ALIGN 'right' FONT 'MyFontSay' OF o
+						SAY ID 'type' PROMPT '' GRID 6 FONT 'MyFontValue' OF o
+					ENDROW o
+					
+					ROW o 
+						SAY PROMPT 'PVP' GRID 6 ALIGN 'right' FONT 'MyFontSay' OF o
+						SAY ID 'pvp' PROMPT '' GRID 6 FONT 'MyFontValue' OF o
+					ENDROW o						
+				
+				ENDCOL o 								
+			
+			ENDROW o	
+
+			ROWGROUP o HALIGN 'center'
+
+				BUTTON ID 'btn' LABEL ' Info' GRID 4 ALIGN 'center' ACTION 'info' ;
+					ICON '<i class="fas fa-clipboard-check"></i>' CLASS 'btn-success' OF o	
+				//BUTTON ID 'btn2' LABEL ' About' GRID 4 ALIGN 'center' CLASS 'btn-danger' ACTION 'about' OF o	
+				//BUTTON ID 'btn3' LABEL ' Accept' GRID 4 ALIGN 'center' CLASS 'btn-success' ACTION 'accept';
+				//	CONFIRM 'Are you sure?' OF o	
+				
+
+			ENDROW o 
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+ 
+?>

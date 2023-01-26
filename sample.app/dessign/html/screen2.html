@@ -1,0 +1,33 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'CS' 
+		
+		NAV oNav ID 'nav' TITLE '&nbsp;Notes' LOGO "files/images/mini-mercury.png" ;
+			ROUTE '/' WIDTH 30 HEIGHT 30 OF oWeb	
+			
+		DEFINE FORM o ID 'myform' API 'myapi' OF oWeb																	
+			
+		HTML o 
+			<style>
+				.mybar {
+					/*margin-top:10px;*/
+					background-color: gray;
+					color:white;
+				}
+			</style>		
+		ENDTEXT 		
+
+		INIT FORM o			
+		
+			ROWGROUP o CLASS 'mybar'
+				SAY VALUE '<h4>Screen 2' ALIGN 'center' GRID 12  OF o		
+			ENDROW o			
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+ 
+?>

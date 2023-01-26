@@ -13,6 +13,8 @@ app\api_brw_crud.prg
 app\api_brw_order.prg
 app\api_brw_dbu.prg
 app\api_msg.prg
+app\api_controls.prg
+app\api_dialog.prg
 app\web_msg.prg
 app\web_brw.prg
 app\web_prg.prg

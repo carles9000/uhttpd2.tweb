@@ -1,0 +1,108 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oDlg
+
+	DEFINE DIALOG oDlg 
+
+		DEFINE FORM o ID 'mydlg' API 'api_dialog' OF oDlg 
+			o:lDessign := .F.
+			o:cSizing   := ''       //  SM/LG
+
+			INIT FORM o  
+			
+			HTML o
+				<div class="alert alert-dark form_title" role="alert">
+					<h5 style="margin:0px;">
+						<i class="far fa-share-square"></i>
+						Form example II
+					</h5>
+				</div>
+			ENDTEXT		
+		   
+		   
+			ROWGROUP o
+			   
+				SEPARATOR o LABEL 'Datos de Salida'
+
+				CAPTION o LABEL 'Identficador' GRID 6
+				CAPTION o LABEL '<b>Información</b>' GRID 6
+			
+				GET ID 'id-1' VALUE '11' GRID 6 PLACEHOLDER 'Id.' BUTTON '<i class="fas fa-search"></i>' ACTION 'GetId()' OF o
+
+				SMALL o ID 'id-2'  Label 'Test...' GRID 6
+			
+			ENDROW o
+			
+			
+			ROWGROUP o
+			   
+				GET ID 'id-3' VALUE '22' GRID 6 PLACEHOLDER 'Id.' LABEL 'Chofer'  ;
+					BUTTON '<i class="fas fa-search"></i>' ACTION 'getValues' OF o
+
+			ENDROW o
+			
+			ROWGROUP o VALIGN 'bottom'
+
+				
+				SEPARATOR o LABEL 'Crear Ticket de Salida'
+
+				GET  ID 'id-4' VALUE '555' GRID 4 LABEL 'Test de label' ACTION 'getValues' OF o
+				
+				BUTTON ID 'id-5' LABEL ' Test Button' ACTION 'getValues' GRID 4 ICON '<i class="fas fa-clipboard-check"></i>' CLASS 'btn-danger btnticket' OF o
+				
+				SWITCH ID 'id-6' VALUE .T. LABEL 'Ready' ACTION 'getValues' OF o		
+
+			ENDROW o          
+			
+			cLoren := "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. "
+
+			
+			ROWGROUP o
+			
+				SEPARATOR o LABEL 'Crear Ticket de Salida'
+				
+				COL o GRID 8 
+				
+					ROWGROUP o
+
+						BUTTON ID 'id-7' LABEL ' Test' ACTION 'getValues' GRID 6 ICON '<i class="fas fa-clipboard-check"></i>' CLASS 'btn-primary btnticket' OF o
+			
+						SWITCH ID 'id-8' VALUE .T. LABEL 'Ready' ACTION 'getValues' GRID 6 OF o
+					
+					ENDCOL o
+				
+				ENDCOL o
+				
+				COL o GRID 4
+					ROWGROUP o
+						 SMALL o ID 'id-9' Label cLoren  GRID 12
+					ENDROW o
+				ENDCOL o            
+
+			ENDROW o                   	
+			
+			
+			ROW o VALIGN 'bottom'
+				SEPARATOR o LABEL 'Test bottom'
+				SELECT oSelect  ID 'id-10'  LABEL 'Cars' PROMPT 'Volvo', 'Seat', 'Renault' VALUES  'V', 'S', 'R'  GRID 6  ONCHANGE 'getValues' OF o
+				SELECT oSelect  ID 'id-11'               PROMPT 'Volvo', 'Seat', 'Renault' VALUES  'V', 'S', 'R'  GRID 6  ONCHANGE 'getValues' OF o            
+			ENDROW o		
+			
+			HTML o
+				<script>
+				
+					function GetId() {
+					
+						var cId = $('#mydlg-id-1').val() 
+					
+						MsgInfo( cId )
+					}		
+					
+				</script>		
+			ENDTEXT
+		ENDFORM o	
+	
+	INIT DIALOG oDlg RETURN
+	
+?>

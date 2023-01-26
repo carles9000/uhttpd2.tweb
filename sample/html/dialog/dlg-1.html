@@ -1,0 +1,38 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+
+	DEFINE WEB oWeb TITLE 'Basic' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Dialogs', ''
+		
+		DEFINE FORM o ID 'myform' API 'api_dialog' OF oWeb 			
+		
+		INIT FORM o
+
+			ROWGROUP o 								
+				BUTTON LABEL 'Hello - Compiled ' WIDTH '200px' ACTION 'dlg0' OF o 
+			ENDROW o			
+			
+			ROWGROUP o 								
+				BUTTON ID 'btn1' LABEL 'Hello - from file' WIDTH '200px' ACTION 'dlg1' OF o 
+			ENDROW o		
+				
+			ROWGROUP o 								
+				BUTTON ID 'btn2' LABEL 'Browse' WIDTH '200px' ACTION 'dlg2' OF o 
+			ENDROW o	
+
+			ROWGROUP o 								
+				BUTTON ID 'btn3' LABEL 'Big Dialog' WIDTH '200px' ACTION 'dlg3' OF o 
+			ENDROW o	
+
+			ROWGROUP o 								
+				BUTTON ID 'btn4' LABEL 'Browse Search & Select' WIDTH '200px' ACTION 'dlg4' OF o 
+			ENDROW o																								
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

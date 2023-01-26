@@ -1,0 +1,97 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Get' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Controls', 'Input/Get'
+		
+		DEFINE FORM o ID 'myform' API 'api_controls' OF oWeb 			
+		
+		INIT FORM o 
+		
+  			ROWGROUP o			
+				GET ID 'get_hidden' 	TYPE 'hidden'	VALUE 'I am a hidden value' GRID 6 OF o			
+			ENDROW o	
+			
+  			ROWGROUP o			
+				GET ID 'get_text'  VALUE "I'm a text" GRID 6 LABEL 'Text' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o			
+
+  			ROWGROUP o			
+				GET ID 'get_date' 	TYPE 'date'	VALUE '2023-01-19' GRID 6 LABEL 'Date' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o
+			
+  			ROWGROUP o			
+				GET ID 'get_time' 	TYPE 'time'	VALUE '21:18' GRID 6 LABEL 'Time' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o
+
+  			ROWGROUP o			
+				GET ID 'get_month' 	TYPE 'month'	VALUE '' GRID 6 LABEL 'Month' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o			
+			
+  			ROWGROUP o			
+				GET ID 'get_datetime' 	TYPE 'datetime-local' VALUE '' GRID 6 LABEL 'DateTime' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o			
+
+  			ROWGROUP o			
+				GET ID 'get_week' 	TYPE 'week'	VALUE '12' GRID 6 LABEL 'Week' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o				
+
+
+  			ROWGROUP o			
+				GET ID 'get_number'	TYPE 'number'	VALUE '10' GRID 6 LABEL 'Number' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o	
+
+  			ROWGROUP o			
+				GET ID 'get_password'	TYPE 'password'	VALUE 'ABC123' GRID 6 LABEL 'Password' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o
+			
+  			ROWGROUP o			
+				GET ID 'get_email'	TYPE 'email' VALUE 'test@gmail.com' GRID 6 LABEL 'Mail' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o
+
+  			ROWGROUP o			
+				GET ID 'get_tel'	TYPE 'tel' VALUE '696948989' GRID 6 LABEL 'Phone' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o
+
+  			ROWGROUP o			
+				GET ID 'get_search'	TYPE 'search' VALUE '' GRID 6 LABEL 'Search' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o			
+
+  			ROWGROUP o			
+				GET ID 'get_url'	TYPE 'url' VALUE 'https://google.com' GRID 6 LABEL 'Url' ;				
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o	
+			
+  			ROWGROUP o			
+				GET ID 'get_range' 	TYPE 'range'	VALUE '100' GRID 6 LABEL 'Range' ;
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o	
+
+			/*	No chuta
+
+			*/
+			
+  			ROWGROUP o			
+				GET ID 'get_color' 	TYPE 'color'	VALUE '' GRID 6 LABEL 'Color' ;
+					BUTTON 'Value' ACTION 'ping' OF o			
+			ENDROW o			
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

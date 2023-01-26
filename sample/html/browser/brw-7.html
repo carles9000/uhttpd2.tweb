@@ -1,0 +1,113 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns, cStyle, cCss
+	LOCAL aStyles := {=>}
+	
+	aStyles[ '' ]   := ''
+	aStyles[ 'S' ]  := 'Simple'
+	aStyles[ 'B3' ] := 'Bootstrap 3'
+	aStyles[ 'B4' ] := 'Bootstrap 4 (*) Default'
+	aStyles[ 'B5' ] := 'Bootstrap 5'
+	aStyles[ 'ST' ] := 'Semantic UI'
+	aStyles[ 'BL' ] := 'Bulma'
+	aStyles[ 'M' ] := 'Materialize'
+	aStyles[ 'MN' ] := 'Midnight'
+	aStyles[ 'MD' ] := 'Modern'
+	
+	DEFINE WEB oWeb TITLE 'Browse' 	
+		
+		cStyle := UGet( 'style' )
+		
+		do case 
+			case cStyle == 'S'   ; cCss := 'tabulator_simple.min.css'
+			case cStyle == 'B3'  ; cCss := 'tabulator_bootstrap.min.css'
+			case cStyle == 'B4'  ; cCss := 'tabulator_bootstrap4.min.css'
+			case cStyle == 'B5'  ; cCss := 'tabulator_bootstrap5.min.css'
+			case cStyle == 'ST'  ; cCss := 'tabulator_semanticui.min.css'
+			case cStyle == 'BL'  ; cCss := 'tabulator_bulma.min.css'
+			case cStyle == 'M'   ; cCss := 'tabulator_materialize.min.css'
+			case cStyle == 'MN'  ; cCss := 'tabulator_midnight.css'
+			case cStyle == 'MD'  ; cCss := 'tabulator_modern.css'
+			otherwise
+				cCss := 'tabulator_bootstrap4.min.css'
+		endcase
+
+		//	Load Css Style. You can see --> https://tabulator.info/docs/5.4/theme#framework-boot4 	
+		
+		oWeb:AddCss( 'https://unpkg.com/tabulator-tables@5.4.3/dist/css/' + cCss )
+	
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Styles'
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_basic' OF oWeb 
+		
+		INIT FORM o 
+		
+			ROWGROUP o 								
+				SELECT oSelect  ID 'style'  LABEL 'Style' KEYVALUE aStyles  ;
+					VALUE cStyle GRID 6  ONCHANGE 'Select()' OF o				
+			ENDROW o		
+		
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'	, 'setdata'		, nil },;
+				{ 'btn-2', 'Clean'	, 'clean'		, nil };					
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns
+			
+			ROW o 			
+			
+				COL o CLASS 'p-0' GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',	;					
+						'index' => 'id'   		;		// Default id
+					}															
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+						
+						//	https://tabulator.info/docs/5.4/columns 
+						
+						COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST" }
+						COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST" }
+						COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE" }
+						COL oCol TO oBrw CONFIG { 'title' => "City", 'field' => "CITY" }
+						COL oCol TO oBrw CONFIG { 'title' => "State", 'field' => "STATE" }
+						COL oCol TO oBrw CONFIG { 'title' => "ZIP", 'field' => "ZIP" }
+						COL oCol TO oBrw CONFIG { 'title' => "Hiredate", 'field' => "HIREDATE" }
+						COL oCol TO oBrw CONFIG { 'title' => "Married", 'field' => "MARRIED" }
+						COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE" }
+						COL oCol TO oBrw CONFIG { 'title' => "Salary", 'field' => "SALARY" }						
+						
+					INIT BROWSE oBrw 
+			
+				ENDCOL o				
+				
+			ENDROW o		
+
+		ENDFORM o
+		
+		HTML o 
+		
+			<script>
+			
+				function Select() {
+				
+					var cStyle = $('#brw-style').val()
+
+					location.replace( 'brw-7?style=' + cStyle )
+				}
+			
+			</script>
+		
+		
+		ENDTEXT 
+
+	INIT WEB oWeb RETURN
+?>
+

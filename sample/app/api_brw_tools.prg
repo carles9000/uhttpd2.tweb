@@ -16,7 +16,7 @@ function OpenDbf( cFile, cCdx )
 
 	cPathFile 	:= AppPathData() + cFile	
 	
-_d( 'CDX', cCdx )
+
 	use ( cPathFile ) shared new alias (cAlias) VIA 'DBFCDX' 
 	
 	if !empty( cCdx )

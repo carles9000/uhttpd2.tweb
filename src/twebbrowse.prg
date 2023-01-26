@@ -34,7 +34,7 @@ METHOD New( oParent, cId, hOptions, aEvents, aFilter, cFilter_Id, cLabel  ) CLAS
 	::aEvents		:= aEvents
 	::aFilter		:= aFilter
 	::cFilter_Id	:= cFilter_Id
-	::cLabel 		:= cLabel	
+	::cLabel 		:= cLabel		
 	
 	IF Valtype( oParent ) == 'O'
 	
@@ -55,8 +55,11 @@ METHOD Activate() CLASS TWebBrowse
 	//	Check Filter...
 	
 		for n := 1 to len( ::aFilter )
+		
+			// Podemos tener una columna sin field p.e.
+			// 	COL oCol TO oBrw CONFIG { 'formatter' => "rowSelection", 'align' => "center", 'headerSort' => .F. }			
 
-			nPos := Ascan( ::aCols, {|x| x[ 'field'] == ::aFilter[n] } )
+			nPos := Ascan( ::aCols, {|x| hb_hhaskey(x, 'field' ) .and. x[ 'field' ] == ::aFilter[n] } )
 			
 			if nPos > 0
 			

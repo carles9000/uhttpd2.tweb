@@ -1,6 +1,7 @@
 #include 'lib/uhttpd2.ch'
 
 REQUEST DBFCDX
+ 
 
 #define VK_ESCAPE	27
 
@@ -36,8 +37,10 @@ function WebServer()
 		oServer:Route( 'screens'	, 'index_screens.html' )  	
 		oServer:Route( 'msg'		, 'index_msg.html' )  	
 		oServer:Route( 'tpl'		, 'index_tpl.html' )  	
-		oServer:Route( 'pluggin'	, 'index_pluggin.html' )  	
+		oServer:Route( 'pluggin'	, 'index_pluggin.html' )
+		oServer:Route( 'controls'	, 'index_controls.html' ) 		
 		oServer:Route( 'browse'	, 'index_brw.html' )  	
+		oServer:Route( 'dialog'	, 'index_dialog.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
 		oServer:Route( 'splash'	, 'index_splash.html' )  			
 		oServer:Route( 'examples'	, 'examples/*' )  			
@@ -76,7 +79,10 @@ function WebServer()
 
 	//	Menus			
 
-		oServer:Route( 'menu1'		, 'menus/menu1.html' ) 		
+		oServer:Route( 'menu1'		, 'menus/menu1.html' ) 	
+
+	//	Controls
+		oServer:Route( 'get-types'	, 'controls/get-types.html' ) 		
 
 	//	Browsers
 	
@@ -89,12 +95,18 @@ function WebServer()
 		oServer:Route( 'brw-4'		, 'browser/brw-4.html' ) 
 		oServer:Route( 'brw-5'		, 'browser/brw-5.html' ) 
 		oServer:Route( 'brw-6'		, 'browser/brw-6.html' ) 
+		oServer:Route( 'brw-7'		, 'browser/brw-7.html' ) 
 		oServer:Route( 'brw-10'	, 'browser/brw-10.html' ) 
 		oServer:Route( 'brw-10b'	, 'browser/brw-10b.html' ) 
 		oServer:Route( 'brw-11'	, 'browser/brw-11.html' ) 
 		oServer:Route( 'brw-12'	, 'browser/brw-12.html' ) 
 		
 		oServer:Route( 'brw_ok'	, 'browser/brw_ok.html' ) 
+		
+	//	Dialogs			
+		
+		oServer:Route( 'dlg-1'		, 'dialog/dlg-1.html' ) 		
+		
 		
 	//	Screens
 	
