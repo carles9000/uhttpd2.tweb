@@ -20,14 +20,7 @@ function Api_Dialog( oDom )
 retu oDom:Send()	
 
 // -------------------------------------------------- //
-
-static function DoPing( oDom )
-
-	oDom:SetAlert( _w( oDom:GetAll() ) )				
-	oDom:Console( oDom:GetList( .f. ), 'Parameteres received' )				
-	
-retu nil
-
+// Screens 
 // -------------------------------------------------- //
 
 static function DoDlg0( oDom )
@@ -67,7 +60,6 @@ retu nil
 
 // -------------------------------------------------- //
 
-
 static function DoDlg3( oDom )
 
 	local cHtml := ULoadHtml( 'dialog\screen1.html'  )
@@ -91,6 +83,17 @@ static function DoDlg4( oDom )
 	local cHtml := ULoadHtml( 'dialog\brw-select.html'  )
 	
 	oDom:SetDialog( 'xxx', cHtml, 'Search customer')
+	
+retu nil
+
+// -------------------------------------------------- //
+// API Listeners	
+// -------------------------------------------------- //
+
+static function DoPing( oDom )
+
+	oDom:SetAlert( _w( oDom:GetAll() ) )				
+	oDom:Console( oDom:GetList( .f. ), 'Parameteres received' )				
 	
 retu nil
 
@@ -137,9 +140,7 @@ static function DoSearch( oDom )
 	
 retu nil
 
-
 // -------------------------------------------------- //
-
 
 static function MyScreen()
 
@@ -159,4 +160,4 @@ static function MyScreen()
 	
 	INIT DIALOG oDlg RETURN 
 
-retu nil
+retu nil 
