@@ -10,15 +10,16 @@ CLASS TWebSay FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cCaption, nGrid, cAlign, cClass, cFont, cLink ) CLASS TWebSay
+METHOD New( oParent, cId, cCaption, nGrid, cAlign, cClass, cFont, cLink, cStyle ) CLASS TWebSay
 
-	DEFAULT cId TO ''
+	DEFAULT cId TO ::GetId()
 	DEFAULT cCaption TO ''
 	DEFAULT nGrid TO 4
 	DEFAULT cAlign TO ''
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''
 	DEFAULT cLink TO ''
+	DEFAULT cStyle TO ''
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -28,6 +29,7 @@ METHOD New( oParent, cId, cCaption, nGrid, cAlign, cClass, cFont, cLink ) CLASS 
 	::cClass 		:= cClass
 	::cFont 		:= cFont
 	::cLink 		:= cLink
+	::cStyle		:= cStyle
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -83,7 +85,13 @@ METHOD Activate() CLASS TWebSay
 	endif
 
 	
-	cHtml += '<span id="' + cIdPrefix + ::cId + '">' + ::uValue + '</span>'
+	cHtml += '<span id="' + cIdPrefix + ::cId + '" '
+	
+	if !empty( ::cStyle )	
+		cHtml += ' style="' + ::cStyle + '" '
+	endif	
+	
+	cHtml += '>' + ::uValue + '</span>'
 	
 	if !empty( ::cLink )
 		cHtml += '</a>'

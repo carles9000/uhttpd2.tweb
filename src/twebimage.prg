@@ -15,9 +15,9 @@ CLASS TWebImage FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery, lNoZoom ) CLASS TWebImage
+METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery, lNoZoom, cStyle ) CLASS TWebImage
 
-	DEFAULT cId TO ''
+	DEFAULT cId TO ::GetId()
 	DEFAULT cSrc TO ''
 	DEFAULT cBigSrc TO ''
 	DEFAULT nGrid TO 4
@@ -26,6 +26,7 @@ METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery
 	DEFAULT nWidth TO 0
 	DEFAULT cGallery TO ''
 	DEFAULT lNoZoom TO .F.
+	DEFAULT cStyle TO ''
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -37,6 +38,7 @@ METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery
 	::nWidth 		:= nWidth
 	::cGallery		:= cGallery
 	::lZoom			:= !lNoZoom
+	::cStyle 		:= cStyle 
 
 
 	IF Valtype( oParent ) == 'O'	
@@ -67,11 +69,6 @@ METHOD Activate() CLASS TWebImage
 	
 	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '') 
 	cHtml += ' tweb_image' 
-	
-	do case
-		case ::cAlign == 'center' ; cHtml += ' text-center'
-		case ::cAlign == 'right'  ; cHtml += ' text-right'
-	endcase
 
 	
 	if !empty( ::cClass )	
@@ -83,6 +80,14 @@ METHOD Activate() CLASS TWebImage
 	cHtml += '" '
 	cHtml += IF( ::oParent:lDessign, 'style="border:1px solid black;"', '' ) 		
 	cHtml += ' >'
+	
+	cHtml += '<div class="input-group" '
+	
+	if !empty( ::cStyle )	
+		cHtml += ' style="' + ::cStyle + '" '
+	endif				
+	
+	cHtml += '>'
 	
 	if ( !empty( ::cBigSrc ) .or. ::lZoom  )
 	
@@ -102,6 +107,11 @@ METHOD Activate() CLASS TWebImage
 			cHtml += 'data-title="' + ::cCaption + '" '
 		endif
 		
+		do case
+			case ::cAlign == 'center' ; cHtml += ' style="margin:auto;" '
+			case ::cAlign == 'right'  ; cHtml += ' style="margin-left:auto;" '
+		endcase		
+		
 		cHtml += ' >'		
 	
 	endif
@@ -119,6 +129,7 @@ METHOD Activate() CLASS TWebImage
 		cHtml += '</a>'
 	endif	
 
+	cHtml += '</div>'
 	cHtml += '</div>'
 
 RETU cHtml

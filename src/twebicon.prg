@@ -10,15 +10,16 @@ CLASS TWebIcon FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cSrc, nGrid, cAlign, cClass, cFont, cLink ) CLASS TWebIcon
+METHOD New( oParent, cId, cSrc, nGrid, cAlign, cClass, cFont, cLink, cStyle ) CLASS TWebIcon
 
-	DEFAULT cId TO ''
+	DEFAULT cId TO ::GetId()
 	DEFAULT cSrc TO ''
 	DEFAULT nGrid TO 1
 	DEFAULT cAlign TO ''
 	DEFAULT cClass TO ''	
 	DEFAULT cFont TO ''
 	DEFAULT cLink TO ''
+	DEFAULT cStyle TO ''
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -28,6 +29,7 @@ METHOD New( oParent, cId, cSrc, nGrid, cAlign, cClass, cFont, cLink ) CLASS TWeb
 	::cClass 		:= cClass
 	::cFont 		:= cFont
 	::cLink 		:= cLink
+	::cStyle 		:= cStyle
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -66,7 +68,19 @@ METHOD Activate() CLASS TWebIcon
 	endif		
 	
 	cHtml += '" '
-	cHtml += IF( ::oParent:lDessign, 'style="border:1px solid brown;"', '' ) 		
+	
+	//cHtml += IF( ::oParent:lDessign, 'style="border:1px solid brown;"', '' )
+	IF ::oParent:lDessign 
+		::cStyle += "border:1px solid brown;"
+	ENDIF
+
+	if !empty( ::cStyle )	
+		cHtml += ' style="' + ::cStyle + '" '
+	endif	
+
+
+
+	
 	cHtml += ' >'
 	
 	if !empty( ::cLink )

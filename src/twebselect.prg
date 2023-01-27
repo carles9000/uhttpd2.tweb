@@ -13,9 +13,9 @@ CLASS TWebSelect FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup ) CLASS TWebSelect
+METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle ) CLASS TWebSelect
 
-	DEFAULT cId TO ''
+	DEFAULT cId TO ::GetId()
 	DEFAULT aItems TO {}
 	DEFAULT aValues TO {}
 	DEFAULT aKeyValue TO NIL
@@ -26,6 +26,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''	
 	DEFAULT cGroup TO ''	
+	DEFAULT cStyle TO ''	
 
 	::oParent 		:= oParent	
 	::cId			:= cId
@@ -38,6 +39,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	::cClass 		:= cClass
 	::cFont 		:= cFont	
 	::cGroup 		:= cGroup
+	::cStyle 		:= cStyle
 
 	
 	if valtype( aKeyValue ) == 'H' 
@@ -136,7 +138,18 @@ METHOD Activate() CLASS TWebSelect
 	endif	
 
 	
-	cHtml += '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;" ', '' ) 
+	cHtml += '" ' 
+
+	if ::oParent:lDessign 
+		::cStyle += "border:1px solid blue;" 
+	endif
+	
+	if !empty( ::cStyle )	
+		cHtml += ' style="' + ::cStyle + '" '
+	endif	
+	
+	
+	
 	cHtml += 'id="' + cIdPrefix + ::cId + '" name="' + cIdPrefix + ::cId + '" '
 	
 	cHtml += ' data-live '

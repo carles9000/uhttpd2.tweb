@@ -7,15 +7,16 @@ CLASS TWebCheckbox FROM TWebControl
 
 ENDCLASS 
 
-METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont     ) CLASS TWebCheckbox
+METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle ) CLASS TWebCheckbox
 
-	DEFAULT cId TO ''
+	DEFAULT cId TO ::GetId()
 	DEFAULT lValue TO .F.
 	DEFAULT nGrid TO 4
 	DEFAULT cLabel TO ''
 	DEFAULT cAction TO ''
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''
+	DEFAULT cStyle TO ''
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -25,6 +26,7 @@ METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont     ) C
 	::cAction		:= cAction
 	::cClass 		:= cClass
 	::cFont 		:= cFont	
+	::cStyle 		:= cStyle
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -50,6 +52,13 @@ METHOD Activate() CLASS TWebCheckbox
 	endif	
 
 	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + ' tweb_checkbox" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) + '>'
+	
+	if !empty( ::cStyle )
+		cHtml += '<div  style="' + ::cStyle + '" >'
+	endif
+	
+	
+	
 	cHtml += '<div class="custom-control custom-checkbox " >'
 	cHtml += '<input type="checkbox" class="custom-control-input tweb_pointer" id="' + cIdPrefix + ::cId + '" ' 
 	
@@ -61,7 +70,7 @@ METHOD Activate() CLASS TWebCheckbox
 			cHtml += ' data-onchange="' + ::cAction + '" '
 		endif 
 		
-	ENDIF
+	ENDIF	
 	
 	cHtml += cChecked
 	cHtml += '> '
@@ -84,6 +93,10 @@ METHOD Activate() CLASS TWebCheckbox
 		cHtml += 'for="' + cIdPrefix + ::cId + '">' + ::cLabel + '</label>'
 	
 	ENDIF	
+	
+	if !empty( ::cStyle )
+		cHtml += '</div>'
+	endif
 
 	cHtml += '</div>'
 	cHtml += '</div>'

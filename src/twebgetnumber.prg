@@ -11,9 +11,9 @@ CLASS TWebGetNumber FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cPlaceHolder, lRequired, cChange, cClass, cFont ) CLASS TWebGetNumber
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cPlaceHolder, lRequired, cChange, cClass, cFont, cStyle ) CLASS TWebGetNumber
 
-	DEFAULT cId TO ''
+	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
 	DEFAULT nGrid TO 6
 	DEFAULT cLabel TO ''
@@ -24,6 +24,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cPlaceHolder
 	DEFAULT cChange TO ''
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''
+	DEFAULT cStyle TO ''
 
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -36,6 +37,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cPlaceHolder
 	::cChange 		:= cChange
 	::cClass 		:= cClass
 	::cFont 		:= cFont
+	::cStyle 		:= cStyle
 
 
 	IF Valtype( oParent ) == 'O'	
@@ -89,7 +91,13 @@ METHOD Activate() CLASS TWebGetNumber
 	ENDIF	
 	
 	
-	cHtml += '<div class="input-group">'	
+	cHtml += '<div class="input-group" '	
+	
+		if !empty( ::cStyle )	
+			cHtml += ' style="' + ::cStyle + '" '
+		endif		
+		
+	cHtml += '>'
 	
 		cHtml += '<div class="input-group-prepend">'
 		
@@ -134,6 +142,10 @@ METHOD Activate() CLASS TWebGetNumber
 		endif 
 		
 	ENDIF
+	
+	//if !empty( ::cStyle )	
+	//	cHtml += ' style="' + ::cStyle + '" '
+	//endif		
 	
 	cHtml += ' value="' + ::uValue + '">'	
 	

@@ -1,0 +1,79 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	local cStyle := 'border: 1px solid red; box-shadow: 4px 4px 4px grey;'
+	local cStyle_Icon := 'border: 1px solid #058232; box-shadow: 4px 4px 4px grey; margin-left: 15px; padding:0px;'
+	
+	DEFINE WEB oWeb TITLE 'Style' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Controls', 'Styles'
+		
+		DEFINE FORM o  OF oWeb 
+			o:lDessign 	:= .f.
+			o:lFluid 	:= .t.
+		
+		INIT FORM o 
+		
+			ROW o //VALIGN 'top'	
+		
+				COL o GRID 6
+			
+					ROWGROUP o			
+						SAY VALUE 'Hello world' STYLE cStyle GRID 12 OF o			
+					ENDROW o		
+				
+					ROWGROUP o			
+						GET VALUE 'I am a input/get' STYLE cStyle GRID 12 OF o			
+					ENDROW o	
+					
+					ROWGROUP o				
+						GETNUMBER VALUE '123' STYLE cStyle GRID 12 OF o		
+					ENDROW o			
+					
+					ROWGROUP o			
+						GET MEMO VALUE 'I am a input/get' STYLE cStyle GRID 12 OF o			
+					ENDROW o			
+
+					ROWGROUP o			
+						BUTTON LABEL 'Send Request' STYLE cStyle GRID 12 OF o			
+					ENDROW o			
+
+					ROWGROUP o			
+						CHECKBOX LABEL 'Accept' STYLE cStyle GRID 12 OF o			
+					ENDROW o
+
+					ROWGROUP o			
+						SELECT LABEL 'Cars' PROMPT 'Volvo', 'Seat', 'Renault' VALUES  'V', 'S', 'R'  GRID 12  STYLE cStyle OF o
+					ENDROW o	
+
+					ROWGROUP o			
+						RADIO PROMPT 'Soltero', 'Casado' VALUES  'S', 'C'  GRID 12 INLINE STYLE cStyle OF o				
+					ENDROW o	
+				
+				ENDCOL o 
+				
+				COL o GRID 6 		
+			
+					ROWGROUP o
+						IMAGE FILE '../files/images/tokyo.jpg' BIGFILE '../files/images/tokyo_big.jpg' ;
+							ALIGN 'center' GRID 12 STYLE cStyle OF o
+					ENDROW o 
+					
+					ROWGROUP o
+						ICON SRC '<i class="fas fa-ban"></i>'  STYLE cStyle_Icon  ALIGN 'center' LINK 'https://carles9000.github.io' OF o			
+						ICON SRC '<i class="far fa-trash-alt"></i>' STYLE cStyle_Icon  ALIGN 'left' LINK 'https://carles9000.github.io' OF o			
+						ICON SRC '<i class="fa fa-paper-plane" aria-hidden="true"></i>' ALIGN 'right' STYLE cStyle_Icon  LINK 'https://carles9000.github.io' OF o			
+					ENDROW o
+					
+				ENDCOL o
+			
+			ENDROW o
+			
+			
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

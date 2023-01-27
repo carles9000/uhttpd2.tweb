@@ -12,9 +12,9 @@ CLASS TWebRadio FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, aItems, aValues, nGrid, cAction, lInline, cClass, cFont   ) CLASS TWebRadio
+METHOD New( oParent, cId, uValue, aItems, aValues, nGrid, cAction, lInline, cClass, cFont, cStyle ) CLASS TWebRadio
 
-	DEFAULT cId TO ''
+	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''	
 	DEFAULT aItems TO {}
 	DEFAULT aValues TO {}
@@ -23,6 +23,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, nGrid, cAction, lInline, cCla
 	DEFAULT lInline TO .F.
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''	
+	DEFAULT cStyle TO ''
 
 	::oParent 		:= oParent	
 	::cId			:= cId
@@ -34,6 +35,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, nGrid, cAction, lInline, cCla
 	::lInline		:= lInline
 	::cClass 		:= cClass
 	::cFont 		:= cFont	
+	::cStyle 		:= cStyle
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -46,6 +48,7 @@ METHOD Activate() CLASS TWebRadio
 
 	LOCAL cHtml 	:= ''
 	LOCAL cChecked	:= ''
+	LOCAL cSt		:= ''
 	LOCAL nI, cIdPrefix	
 	
 	if !empty( ::oParent:cId_Dialog )
@@ -59,7 +62,21 @@ METHOD Activate() CLASS TWebRadio
 		cChecked := ''
 	//ENDIF	
 
-	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + ' custom-control " ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )   + ' >'
+	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + ' custom-control " ' 
+	
+	if ::oParent:lDessign
+		cSt += "border:1px solid blue;"
+	endif
+	
+	cSt += "padding-left: 15px;"
+	
+	cHtml += ' style="' + cSt + '" '
+
+	cHtml += ' >'
+	
+	if !empty( ::cStyle )	
+		cHtml += '<div style="' + ::cStyle + '" >'
+	endif				
 	
 	FOR nI := 1 TO len( ::aItems )
 	
@@ -98,6 +115,10 @@ METHOD Activate() CLASS TWebRadio
 		cHtml += '</div>' 
 		
 	NEXT	
+	
+	if !empty( ::cStyle )	
+		cHtml += '</div>'
+	endif		
 
 	cHtml += '</div>'
 

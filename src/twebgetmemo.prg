@@ -15,9 +15,9 @@ CLASS TWebGetMemo FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClass, cFont, cChange  ) CLASS TWebGetMemo
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClass, cFont, cChange, cStyle  ) CLASS TWebGetMemo
 
-	DEFAULT cId TO ''
+	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
 	DEFAULT nGrid TO 4
 	DEFAULT cLabel TO ''
@@ -27,6 +27,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClas
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''
 	DEFAULT cChange TO ''
+	DEFAULT cStyle TO cStyle
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -39,6 +40,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClas
 	::cClass 		:= cClass
 	::cFont 		:= cFont	
 	::cChange 		:= cChange	
+	::cStyle 		:= cStyle
 	
 
 	IF Valtype( oParent ) == 'O'	
@@ -101,6 +103,10 @@ METHOD Activate() CLASS TWebGetMemo
 		endif 
 		
 	ENDIF
+	
+	if !empty( ::cStyle )	
+		cHtml += ' style="' + ::cStyle + '" '
+	endif	
 	
 	
 	//cHtml += ' value="' + ::uValue + '">'

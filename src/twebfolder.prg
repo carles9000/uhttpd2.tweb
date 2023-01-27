@@ -19,16 +19,17 @@ CLASS TWebFolder FROM TWebForm
 
 ENDCLASS 
 
-METHOD New( oParent, cId, aTabs, aPrompts, nGrid, cInitTab, lAdjust, cClass, cFont  ) CLASS TWebFolder
+METHOD New( oParent, cId, aTabs, aPrompts, nGrid, cInitTab, lAdjust, cClass, cFont, cStyle  ) CLASS TWebFolder
 
-	DEFAULT cId 			TO ''
+	DEFAULT cId 			TO ::GetId()
 	DEFAULT nGrid 			TO 12
 	DEFAULT aPrompts 		TO { { "One", "Two", "Three" } }
 	//DEFAULT cClass 		TO ''
 	DEFAULT cInitTab 		TO ''
 	DEFAULT lAdjust 		TO .F.
-	DEFAULT cClass TO ''
-	DEFAULT cFont TO ''	
+	DEFAULT cClass 			TO ''
+	DEFAULT cFont 			TO ''	
+	DEFAULT cStyle 			TO ''	
 		
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -40,6 +41,7 @@ METHOD New( oParent, cId, aTabs, aPrompts, nGrid, cInitTab, lAdjust, cClass, cFo
 	::lAdjust		:= lAdjust
 	::cClass 		:= cClass
 	::cFont 		:= cFont	
+	::cStyle 		:= cStyle
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	

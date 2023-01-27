@@ -82,7 +82,9 @@ function WebServer()
 		oServer:Route( 'menu1'		, 'menus/menu1.html' ) 	
 
 	//	Controls
+	
 		oServer:Route( 'get-types'	, 'controls/get-types.html' ) 		
+		oServer:Route( 'styles'		, 'controls/styles.html' ) 		
 
 	//	Browsers
 	

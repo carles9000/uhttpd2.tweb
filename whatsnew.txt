@@ -1,4 +1,9 @@
-26/01/23 Review:
+27/01/23 Vrs. 1.0d
+	 Add clausule STYLE almost to every controls
+	 See \samples\controls
+
+26/01/23 Vrs. 1.0c
+	 Review:
          * \samples\controls
          * \samples\browse (Styles)
          * \samples\dialogs
