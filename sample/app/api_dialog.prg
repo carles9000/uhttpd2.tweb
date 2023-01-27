@@ -38,6 +38,11 @@ static function DoDlg1( oDom )
 	local cHtml := ULoadHtml( 'dialog\mini-dlg.html'  )
 	local o 	:= {=>}	
 	
+	//	-------------------------------------------------------------------------------------
+	//	TWeb usa el pluggin bootbox para creaar diálogos.
+	//	Todos los paràmetros los puedes encontrar aqui -> http://bootboxjs.com/examples.html 
+	//	-------------------------------------------------------------------------------------
+	
 	//o[ 'title' ] 		:= 'My Title...'	
 	//o[ 'backdrop' ] 	:= .t.
 	//o[ 'onEscape' ] 	:= .f.
