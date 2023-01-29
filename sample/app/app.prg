@@ -108,6 +108,7 @@ function WebServer()
 	//	Dialogs			
 		
 		oServer:Route( 'dlg-1'		, 'dialog/dlg-1.html' ) 		
+		oServer:Route( 'dlg-2'		, 'dialog/dlg-2.html' ) 		
 		
 		
 	//	Screens

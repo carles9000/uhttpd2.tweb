@@ -1,0 +1,30 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+  LOCAL o, oDlg, oBrw, aOptions	
+
+	DEFINE DIALOG oDlg
+		
+		DEFINE FORM o ID 'pagos' API 'api_dialog' OF oDlg
+		o:lDessign := .t.
+		o:cSizing   := 'sm'       //  SM/LG
+		
+		INIT FORM o 				
+			
+			ROWGROUP o HALIGN 'center'	
+				SELECT oSelect  ID 'formaPago'  LABEL 'Forma de pago' PROMPT 'Efectivo', 'Tarjeta de débito', 'Tarjeta de crédito', 'Cheque nominativo' VALUES  'E', 'D', 'C', 'N'  GRID 10 OF o
+			ENDROW o			
+			
+			ROWGROUP o HALIGN 'center'	
+				COL o GRID 10 
+					ROW o HALIGN 'center'
+					   BUTTON LABEL 'Cancelar'		ACTION "alert( 'Aceptar' )" ALIGN 'center' 	GRID 6  WIDTH '100px' CLASS 'btn-secondary' 	OF o
+					   BUTTON LABEL 'Aceptar'	 	ACTION "alert( 'Aceptar' )" ALIGN 'center' 	GRID 6  WIDTH '100px' CLASS 'btn-primary' 	OF o
+					ENDROW o
+				ENDCOL o
+			ENDROW o
+
+		ENDFORM o
+ 
+	INIT DIALOG oDlg RETURN
+?>

@@ -5,7 +5,7 @@
 
 	DEFINE WEB oWeb TITLE 'Basic' 	
 
-		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Dialogs', ''
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Dialogs', 'Base'
 		
 		DEFINE FORM o ID 'myform' API 'api_dialog' OF oWeb 			
 		
@@ -29,7 +29,8 @@
 
 			ROWGROUP o 								
 				BUTTON ID 'btn4' LABEL 'Browse Search & Select' WIDTH '200px' ACTION 'dlg4' OF o 
-			ENDROW o																								
+			ENDROW o	
+		
 
 		ENDFORM o
 

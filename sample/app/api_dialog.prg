@@ -9,6 +9,8 @@ function Api_Dialog( oDom )
 		case oDom:GetProc() == 'dlg3'		; DoDlg3( oDom )						
 		case oDom:GetProc() == 'dlg4'		; DoDlg4( oDom )						
 		
+		case oDom:GetProc() == 'pagos'		; DoPagos( oDom )						
+		
 		case oDom:GetProc() == 'hello'		; oDom:SetAlert( 'Hello at ' + time() )
 		case oDom:GetProc() == 'getValues'	; ( oDom:SetAlert( 'Check console!' ), oDom:Console( oDom:GetList(.f.) ) )
 		case oDom:GetProc() == 'search'	    ; DoSearch( oDom )						
@@ -46,7 +48,7 @@ static function DoDlg1( oDom )
 	//o[ 'title' ] 		:= 'My Title...'	
 	//o[ 'backdrop' ] 	:= .t.
 	//o[ 'onEscape' ] 	:= .f.
-	o[ 'closeButton' ]:= .f.
+	//o[ 'closeButton' ]:= .t.
 	//o[ 'className' ] 	:= 'bounceIn fadeOutRight'
 	
 	oDom:SetDialog( 'xxx', cHtml, nil, o )
@@ -88,6 +90,20 @@ static function DoDlg4( oDom )
 	local cHtml := ULoadHtml( 'dialog\brw-select.html'  )
 	
 	oDom:SetDialog( 'xxx', cHtml, 'Search customer')
+	
+retu nil
+
+// -------------------------------------------------- //
+
+static function DoPagos( oDom )
+
+	local o := {=>}
+
+	local cHtml := ULoadHtml( 'dialog\pagos.html'  )
+	
+	o[ 'size' ] 		:= '400px'
+	
+	oDom:SetDialog( 'xxx', cHtml, nil, o )
 	
 retu nil
 
@@ -150,6 +166,7 @@ retu nil
 static function MyScreen()
 
 	LOCAL o, oDlg			
+	
 	
 	DEFINE DIALOG oDlg
 		
