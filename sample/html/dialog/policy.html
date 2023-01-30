@@ -1,0 +1,25 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+  LOCAL o, oDlg, oRadio
+
+	DEFINE DIALOG oDlg
+		
+		DEFINE FORM o ID 'mypolicy' API 'api_dialog' OF oDlg
+			o:lDessign := .f.
+			o:cSizing   := 'sm'       //  SM/LG
+		
+		INIT FORM o 				
+			
+			ROWGROUP o HALIGN 'center'	
+				RADIO oRadio ID 'type'  PROMPT 'Economy', 'Complet', 'Premium' VALUES  'E', 'C', 'P'  GRID 10 INLINE ONCHANGE 'policy_view'  OF o
+			ENDROW o			
+			
+			ROWGROUP o HALIGN 'center'	
+			   BUTTON LABEL 'Aceptar'	 	ACTION 'policy_accept'  ALIGN 'center' 	GRID 6  WIDTH '100px' CLASS 'btn-primary' 	OF o
+			ENDROW o
+
+		ENDFORM o
+ 
+	INIT DIALOG oDlg RETURN
+?>

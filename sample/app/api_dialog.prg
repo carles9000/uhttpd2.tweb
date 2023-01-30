@@ -7,11 +7,19 @@ function Api_Dialog( oDom )
 		case oDom:GetProc() == 'dlg1'		; DoDlg1( oDom )						
 		case oDom:GetProc() == 'dlg2'		; DoDlg2( oDom )						
 		case oDom:GetProc() == 'dlg3'		; DoDlg3( oDom )						
-		case oDom:GetProc() == 'dlg4'		; DoDlg4( oDom )						
+		case oDom:GetProc() == 'dlg4'		; DoDlg4( oDom )	
+
+		//	2 ejemplos (iguales) que colocan datos en otro FORM
 		
-		case oDom:GetProc() == 'pagos'			; DoPagos( oDom )						
-		case oDom:GetProc() == 'pagos_info'	; DoPagosInfo( oDom )						
-		case oDom:GetProc() == 'pagos_close'	; DoPagosClose( oDom )						
+			case oDom:GetProc() == 'pagos'			; DoPagos( oDom )						
+			case oDom:GetProc() == 'pagos_info'	; DoPagosInfo( oDom )						
+			case oDom:GetProc() == 'pagos_close'	; DoPagosClose( oDom )	
+
+			case oDom:GetProc() == 'policy'		; DoPolicy( oDom )						
+			case oDom:GetProc() == 'policy_view'	; DoPolicyView( oDom )									
+			case oDom:GetProc() == 'policy_accept'	; DoPolicyAccept( oDom )									
+
+		//	-------------------------------------------------------------
 		
 		case oDom:GetProc() == 'hello'		; oDom:SetAlert( 'Hello at ' + time() )
 		case oDom:GetProc() == 'getValues'	; ( oDom:SetAlert( 'Check console!' ), oDom:Console( oDom:GetList(.f.) ) )
@@ -105,7 +113,7 @@ static function DoPagos( oDom )
 	
 	o[ 'size' ] 		:= '400px'
 	
-	oDom:SetDialog( 'xxx', cHtml, nil, o )
+	oDom:SetDialog( 'xxx', cHtml,nil , o )
 	
 retu nil
 
@@ -115,7 +123,7 @@ static function DoPagosInfo( oDom )
 
 	local cPago := oDom:Get( 'formaPago' )
 
-	oDom:SetDlg( 'myform' )
+	oDom:SetDlg( 'myform' )			//	We select scope (FORM)
 	
 	oDom:Set( 'info', 'Forma de pago: ' + cPago  )			
 	oDom:DialogClose( 'xxx' )			
@@ -130,6 +138,59 @@ static function DoPagosClose( oDom )
 
 retu nil 
 
+// -------------------------------------------------- //
+
+static function DoPolicy( oDom )
+
+	local cHtml := ULoadHtml( 'dialog\policy.html'  )
+	local o 	 := {=>}
+	
+	o[ 'size' ] 		:= '450px'	
+
+	oDom:SetDialog( 'mypolicy', cHtml, 'Select policy type' , o )
+	
+retu nil
+
+// -------------------------------------------------- //
+
+static function DoPolicyView( oDom )
+	local cType := oDom:Get( 'type' )
+	local cName, cDescription, cPrice 
+	
+	do case
+		case cType = 'E'
+			cName 			:= 'Economy'
+			cDescription	:= 'Policy very economy'
+			cPrice			:= '96€'
+		case cType = 'C'
+			cName 			:= 'Complete'
+			cDescription	:= 'Complete services'
+			cPrice			:= '228€'		
+		case cType = 'P'
+			cName 			:= 'Premium'
+			cDescription	:= 'No limits'
+			cPrice			:= '487€'		
+	endcase	
+
+	oDom:SetDlg( 'myform' )		//	We select scope (FORM)
+	
+	oDom:Set( 'name', cName )	
+	oDom:Set( 'description', cDescription )	
+	oDom:Set( 'price', cPrice )	
+	
+retu nil 
+
+static function DoPolicyAccept( oDom )
+
+	//	Do process...
+	
+	
+	//	Finally Close dialog
+	
+	oDom:SetAlert( "You're accepted policy" )
+	oDom:DialogClose( 'mypolicy' )			
+
+retu nil 
 
 // -------------------------------------------------- //
 // API Listeners	

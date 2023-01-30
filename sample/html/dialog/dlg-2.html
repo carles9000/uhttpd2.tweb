@@ -2,6 +2,7 @@
 #include "lib/tweb/tweb.ch" 
 
     LOCAL o, oWeb	
+	//LOCAL cStyle  := 'disable:
 
 	DEFINE WEB oWeb TITLE 'Basic' 	
 
@@ -11,12 +12,24 @@
 		
 		INIT FORM o
 
+			SEPARATOR o LABEL 'Pagos example'
 			ROWGROUP o 								
-				BUTTON ID 'btn1' LABEL 'Pagos' WIDTH '200px' ACTION 'pagos' OF o 
+				BUTTON LABEL 'Pagos' WIDTH '200px' ACTION 'pagos' OF o 
 			ENDROW o				
 			
-			HTML o INLINE '<div id="myform-info"></div>'						
-
+			HTML o INLINE '<div id="myform-info"></div>'
+			
+			SEPARATOR o LABEL 'Policy example'
+			ROWGROUP o 								
+				BUTTON LABEL 'Policy' WIDTH '200px' ACTION 'policy' OF o 
+			ENDROW o			
+			
+			ROWGROUP o 								
+				GET ID 'name'        LABEL 'Name' 		 VALUE '' GRID 3 OF o
+				GET ID 'description' LABEL 'Description' VALUE '' GRID 6 OF o
+				GET ID 'price' 		 LABEL 'Price' 		 VALUE '' GRID 3 ALIGN 'center' OF o
+			ENDROW o						
+			
 		ENDFORM o
 
 	INIT WEB oWeb RETURN
