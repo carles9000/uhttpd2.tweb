@@ -9,7 +9,9 @@ function Api_Dialog( oDom )
 		case oDom:GetProc() == 'dlg3'		; DoDlg3( oDom )						
 		case oDom:GetProc() == 'dlg4'		; DoDlg4( oDom )						
 		
-		case oDom:GetProc() == 'pagos'		; DoPagos( oDom )						
+		case oDom:GetProc() == 'pagos'			; DoPagos( oDom )						
+		case oDom:GetProc() == 'pagos_info'	; DoPagosInfo( oDom )						
+		case oDom:GetProc() == 'pagos_close'	; DoPagosClose( oDom )						
 		
 		case oDom:GetProc() == 'hello'		; oDom:SetAlert( 'Hello at ' + time() )
 		case oDom:GetProc() == 'getValues'	; ( oDom:SetAlert( 'Check console!' ), oDom:Console( oDom:GetList(.f.) ) )
@@ -106,6 +108,28 @@ static function DoPagos( oDom )
 	oDom:SetDialog( 'xxx', cHtml, nil, o )
 	
 retu nil
+
+// -------------------------------------------------- //
+
+static function DoPagosInfo( oDom )
+
+	local cPago := oDom:Get( 'formaPago' )
+
+	oDom:SetDlg( 'myform' )
+	
+	oDom:Set( 'info', 'Forma de pago: ' + cPago  )			
+	oDom:DialogClose( 'xxx' )			
+
+retu nil 
+
+// -------------------------------------------------- //
+
+static function DoPagosClose( oDom )
+		
+	oDom:DialogClose( 'xxx' )			
+
+retu nil 
+
 
 // -------------------------------------------------- //
 // API Listeners	
