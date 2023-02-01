@@ -23,7 +23,7 @@ app\web_concept.prg
 app\web_tools.prg
 
 
--Llib
+-Llib\uhttpd2
 -luhttpd2
 
 -Llib\tweb

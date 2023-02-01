@@ -82,7 +82,7 @@ METHOD Activate() CLASS TWebGetNumber
 	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '') 		
 	cHtml += '" '
 	chtml += IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) 
-	cHtml += ' >'
+	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 	
 	IF !empty( ::cLabel )
 

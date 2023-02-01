@@ -41,14 +41,21 @@ METHOD Activate() CLASS TWebIcon
 
 	LOCAL cHtml
 	LOCAL cSize 	:= ''
+	local cIdPrefix
 	
 	
 	DO CASE
 		CASE upper(::oParent:cSizing) == 'SM' ;	cSize 		:= 'form-control-sm'			
 		CASE upper(::oParent:cSizing) == 'LG' ;	cSize 		:= 'form-control-lg'			
 	ENDCASE	
+	
+	if !empty( ::oParent:cId_Dialog )
+		cIdPrefix :=  ::oParent:cId_Dialog + '-'
+	else
+		cIdPrefix :=  ''
+	endif	
 
-	cHtml := '<div id="' + ::cId + '" class="col-' + ltrim(str(::nGrid)) 
+	cHtml := '<div id="' + cIdPrefix + ::cId + '" class="col-' + ltrim(str(::nGrid)) 
 	
 	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '') 
 	cHtml += ' tweb_icon' 
@@ -78,10 +85,8 @@ METHOD Activate() CLASS TWebIcon
 		cHtml += ' style="' + ::cStyle + '" '
 	endif	
 
+	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 
-
-	
-	cHtml += ' >'
 	
 	if !empty( ::cLink )
 		cHtml += '<a href="' + ::cLink + '">'

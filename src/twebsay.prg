@@ -77,8 +77,9 @@ METHOD Activate() CLASS TWebSay
 	endif	
 	
 	cHtml += '" '
-	cHtml += IF( ::oParent:lDessign, 'style="border:1px solid brown;"', '' ) 		
-	cHtml += ' >'
+	cHtml += IF( ::oParent:lDessign, 'style="border:1px solid brown;"', '' ) 
+	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'	
+	
 	
 	if !empty( ::cLink )
 		cHtml += '<a href="' + ::cLink + '">'
@@ -90,6 +91,8 @@ METHOD Activate() CLASS TWebSay
 	if !empty( ::cStyle )	
 		cHtml += ' style="' + ::cStyle + '" '
 	endif	
+	
+	cHtml += ' data-live '
 	
 	cHtml += '>' + ::uValue + '</span>'
 	

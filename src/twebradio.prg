@@ -12,9 +12,10 @@ CLASS TWebRadio FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, aItems, aValues, nGrid, cAction, lInline, cClass, cFont, cStyle ) CLASS TWebRadio
+METHOD New( oParent, cId, cLabel, uValue, aItems, aValues, nGrid, cAction, lInline, cClass, cFont, cStyle, hProp ) CLASS TWebRadio
 
 	DEFAULT cId TO ::GetId()
+	DEFAULT cLabel TO ''	
 	DEFAULT uValue TO ''	
 	DEFAULT aItems TO {}
 	DEFAULT aValues TO {}
@@ -24,9 +25,11 @@ METHOD New( oParent, cId, uValue, aItems, aValues, nGrid, cAction, lInline, cCla
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''	
 	DEFAULT cStyle TO ''
+	DEFAULT hProp TO {=>}
 
 	::oParent 		:= oParent	
 	::cId			:= cId
+	::cLabel		:= cLabel	
 	::uValue		:= uValue	
 	::aItems 		:= aItems	//IF( valtype( aItems ) == 'A', aItems, {} )
 	::aValues		:= aValues	//IF( valtype( aValues ) == 'A' .AND. len( aValues ) == len( aItems ), aValues, aItems )
@@ -36,6 +39,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, nGrid, cAction, lInline, cCla
 	::cClass 		:= cClass
 	::cFont 		:= cFont	
 	::cStyle 		:= cStyle
+	::hProp 		:= hProp
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -72,22 +76,46 @@ METHOD Activate() CLASS TWebRadio
 	
 	cHtml += ' style="' + cSt + '" '
 
-	cHtml += ' >'
+	cHtml += ' data-control="radio">'
 	
 	if !empty( ::cStyle )	
 		cHtml += '<div style="' + ::cStyle + '" >'
-	endif				
+	endif	
+
+	IF !empty( ::cLabel )
+	
+		cHtml += '<label class="custom-control-label tweb_pointer '
+		
+		if !empty( ::cClass )	
+			cHtml += ' ' + ::cClass
+		endif
+		
+		if !empty( ::cFont )	
+			cHtml += ' ' + ::cFont
+		endif
+
+		cHtml += '" '
+
+		
+		cHtml +=  '">' + ::cLabel + '&nbsp;</label> '
+		
+		IF ! ::lInline
+			cHtml += '<br>'
+		ENDIF
+	
+	ENDIF	
 	
 	FOR nI := 1 TO len( ::aItems )
 	
 		cHtml += '<div class="custom-control custom-radio ' + IF( ::lInline, 'custom-control-inline', '' ) + '">'
 		cHtml += '	<input type="radio" class="custom-control-input tweb_pointer" id="' + cIdPrefix + ::cId + '_' + ltrim(str(ni)) + '" name="' +  cIdPrefix + ::cId  + '" value="' +  ::aValues[nI] + '" ' + IF( ::lDisabled, 'disabled', '' )
+		cHtml += ' data-live '
 		
 		IF !empty( ::cAction )
 			if AT( '(', ::cAction ) >  0 		//	Exist function ?
 				cHtml += ' onchange="' + ::cAction + '" '
 			else
-				cHtml += ' data-live data-onchange="' + ::cAction + '" '
+				cHtml += ' data-onchange="' + ::cAction + '" '
 			endif 
 			
 		ENDIF		
@@ -121,5 +149,7 @@ METHOD Activate() CLASS TWebRadio
 	endif		
 
 	cHtml += '</div>'
+	
+	cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
 
 RETU cHtml

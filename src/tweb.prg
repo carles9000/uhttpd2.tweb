@@ -6,7 +6,7 @@
 ** MIT license https://github.com/carles9000/tweb.uhttpd2/blob/master/LICENSE
 */
 
-#define TWEB_VERSION 			'1.0d'
+#define TWEB_VERSION 			'1.0e'
 
 #include 'hbclass.ch'	
 #include 'common.ch'

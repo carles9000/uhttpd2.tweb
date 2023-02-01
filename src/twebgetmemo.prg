@@ -15,7 +15,7 @@ CLASS TWebGetMemo FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClass, cFont, cChange, cStyle  ) CLASS TWebGetMemo
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClass, cFont, cChange, cStyle, hProp  ) CLASS TWebGetMemo
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
@@ -27,7 +27,8 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClas
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''
 	DEFAULT cChange TO ''
-	DEFAULT cStyle TO cStyle
+	DEFAULT cStyle TO ''
+	DEFAULT hProp TO {=>}
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -41,6 +42,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClas
 	::cFont 		:= cFont	
 	::cChange 		:= cChange	
 	::cStyle 		:= cStyle
+	::hProp 		:= hProp
 	
 
 	IF Valtype( oParent ) == 'O'	
@@ -66,7 +68,8 @@ METHOD Activate() CLASS TWebGetMemo
 		cIdPrefix :=  ''
 	endif
 	
-	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )   + ' >'
+	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )  
+    cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 	
 	IF !empty( ::cLabel )
 	
@@ -92,7 +95,7 @@ METHOD Activate() CLASS TWebGetMemo
 		cHtml += ' readonly '
 	ENDIF
 	
-	cHtml += ' data-control="tgetmemo" '
+	
 	cHtml += ' data-live '
 
 	IF !empty( ::cChange )
@@ -116,5 +119,7 @@ METHOD Activate() CLASS TWebGetMemo
 	cHtml += '</textarea>'
 
 	cHtml += '</div>'
+	
+	cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
 
 RETU cHtml

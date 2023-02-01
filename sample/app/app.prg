@@ -83,8 +83,9 @@ function WebServer()
 
 	//	Controls
 	
-		oServer:Route( 'get-types'	, 'controls/get-types.html' ) 		
+		oServer:Route( 'get-types'		, 'controls/get-types.html' ) 		
 		oServer:Route( 'styles'		, 'controls/styles.html' ) 		
+		oServer:Route( 'properties'	, 'controls/properties.html' ) 		
 
 	//	Browsers
 	

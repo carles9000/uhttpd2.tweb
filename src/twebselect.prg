@@ -13,7 +13,7 @@ CLASS TWebSelect FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle ) CLASS TWebSelect
+METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle, hProp ) CLASS TWebSelect
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT aItems TO {}
@@ -27,6 +27,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	DEFAULT cFont TO ''	
 	DEFAULT cGroup TO ''	
 	DEFAULT cStyle TO ''	
+	DEFAULT hProp TO {=>}
 
 	::oParent 		:= oParent	
 	::cId			:= cId
@@ -40,6 +41,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	::cFont 		:= cFont	
 	::cGroup 		:= cGroup
 	::cStyle 		:= cStyle
+	::hProp 		:= hProp
 
 	
 	if valtype( aKeyValue ) == 'H' 
@@ -107,7 +109,9 @@ METHOD Activate() CLASS TWebSelect
 		cIdPrefix :=  ''
 	endif	
 
-	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )   + ' >'
+	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) 
+	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
+	
 
 	IF !empty( ::cLabel )
 	
@@ -117,13 +121,15 @@ METHOD Activate() CLASS TWebSelect
 	
 	cHtml += '<div class="input-group">'	
 	
-	//cHtml += '<select class="col-' + ltrim(str(::nGrid)) + ' custom-select form-control ' + cSize + '" id="' + ::cId + '" onchange="' + ::cAction + '" >'
-	//cHtml += '<select class="col-' + ltrim(str(::nGrid)) + ' form-control ' + cSize + IF( ::oParent:lDessign, ' tweb_dessign', '')  + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) + ' id="' + ::cId + '" onchange="' + ::cAction + '" >'
+	
+	
 	cHtml += '<select data-control="tcombobox" '
 	
+	/*
 	if !empty( ::cGroup )
 		cHtml += 'data-group="' + ::cGroup + '" '
 	endif
+	*/
 		
 		
 	cHtml += 'class="col-12 form-control ' + cSize + IF( ::oParent:lDessign, ' tweb_dessign', '') 
@@ -191,5 +197,8 @@ METHOD Activate() CLASS TWebSelect
 	
 	cHtml += '	</div>'
 	cHtml += '</div>'	
+	
+	cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
+	
 
 RETU cHtml

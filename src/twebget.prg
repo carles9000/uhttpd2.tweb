@@ -20,7 +20,7 @@ CLASS TWebGet FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle ) CLASS TWebGet
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle, hProp ) CLASS TWebGet
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
@@ -46,6 +46,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	DEFAULT aSpan TO {}
 	DEFAULT aSpanId TO {}
 	DEFAULT cStyle TO ''
+	DEFAULT hProp TO {=>}
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -72,6 +73,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	::aSpan			:= aSpan
 	::aSpanId		:= aSpanId
 	::cStyle		:= cStyle
+	::hProp			:= hProp
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )			
@@ -116,7 +118,7 @@ METHOD Activate() CLASS TWebGet
 	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '') 		
 	cHtml += '" '
 	chtml += IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) 
-	cHtml += ' >'
+	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 	
 	IF !empty( ::cLabel )
 
@@ -277,6 +279,8 @@ METHOD Activate() CLASS TWebGet
 		CASE hCtrl[ 'align' ] == 'right'  ; cHtml += ' text-right '						
 	ENDCASE	
 */	
+
+	cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
 
 	IF !Empty( ::uSource )
 	

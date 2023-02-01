@@ -1,0 +1,95 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	local cStyle := 'border: 1px solid red; box-shadow: 4px 4px 4px grey;'
+	local cStyle_Icon := 'border: 1px solid #058232; box-shadow: 4px 4px 4px grey; margin-left: 15px; padding:0px;'
+	
+	DEFINE WEB oWeb TITLE 'Style' 
+	
+		HTML oWeb 
+			<style>
+				.btn-primary:disabled {
+					background-color:gray;
+				}
+			</style>
+		ENDTEXT 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Controls', 'Properties'
+		
+		DEFINE FORM o ID 'myform' API 'api_controls' OF oWeb 
+			o:lDessign 	:= .f.
+			o:lFluid 	:= .t.
+		
+		INIT FORM o 
+		
+			ROWGROUP o //VALIGN 'top'	
+		
+				COL o GRID 6
+			
+					ROWGROUP o			
+						SAY ID 'mysay' VALUE 'Hello world' GRID 12 OF o			
+					ENDROW o		
+				
+					ROWGROUP o			
+						GET ID 'myget' LABEL "I'm a get" VALUE 'I am a input/get' PROP { 'disabled' => .T. } GRID 12 OF o			
+					ENDROW o	
+					
+					ROWGROUP o			
+						GET MEMO ID 'mymemo' LABEL "I'm a get memo" VALUE 'I am a input/get' PROP { 'disabled' => .T. } GRID 12 OF o			
+					ENDROW o			
+
+					ROWGROUP o			
+						BUTTON ID 'mybtn' LABEL 'Send Request' PROP { 'disabled' => .T. } GRID 12 OF o			
+					ENDROW o			
+
+					ROWGROUP o			
+						CHECKBOX ID 'mycheck' LABEL 'Accept' PROP { 'disabled' => .T. } GRID 12 OF o			
+					ENDROW o
+
+					ROWGROUP o			
+						SELECT ID 'mycombo' LABEL 'Cars' PROMPT 'Volvo', 'Seat', 'Renault' VALUES  'V', 'S', 'R'  GRID 12  PROP { 'disabled' => .T. } OF o
+					ENDROW o	
+
+					ROWGROUP o			
+						RADIO ID 'myradio' PROMPT 'Soltero', 'Casado' VALUES  'S', 'C'  GRID 12 INLINE  PROP { 'disabled' => .T. } OF o				
+					ENDROW o	
+				
+				ENDCOL o 
+				
+				COL o GRID 6 		
+			
+					ROWGROUP o
+						IMAGE ID 'myimg' FILE '../files/images/tokyo.jpg' BIGFILE '../files/images/tokyo_big.jpg' ;
+							ALIGN 'center' GRID 12  OF o
+					ENDROW o 
+					
+					ROWGROUP o HALIGN 'center'
+						ICON ID 'ico1' SRC '<i class="fas fa-ban"></i>'  STYLE cStyle_Icon  ALIGN 'center' LINK 'https://carles9000.github.io' OF o			
+						ICON ID 'ico2' SRC '<i class="far fa-trash-alt"></i>' STYLE cStyle_Icon  ALIGN 'left' LINK 'https://carles9000.github.io' OF o			
+						ICON ID 'ico3' SRC '<i class="fa fa-paper-plane" aria-hidden="true"></i>' ALIGN 'right' STYLE cStyle_Icon  LINK 'https://carles9000.github.io' OF o			
+					ENDROW o
+					
+				ENDCOL o
+			
+			ENDROW o
+			
+			ROWGROUP o HALIGN 'center'	
+			
+				HTML o INLINE '<div class="btn-group" role="group" aria-label="Basic example">'
+					BUTTON LABEL 'Enable'  ACTION 'enable' OF o			
+					BUTTON LABEL 'Disable' ACTION 'disable' OF o			
+				HTML o INLINE '</div>'
+				
+				HTML o INLINE '<div class="btn-group" role="group" aria-label="Basic example">'
+					BUTTON LABEL 'Show'  ACTION 'show' OF o			
+					BUTTON LABEL 'Hide'  ACTION 'hide' OF o			
+				HTML o INLINE '</div>'				
+			
+			ENDROW o												
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

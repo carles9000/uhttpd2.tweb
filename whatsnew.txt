@@ -1,3 +1,7 @@
+01/02/23 Vrs. 1.0e
+	 Add clausule PROP (Properties) to every controls
+	 See samples\controles  Properties
+
 27/01/23 Vrs. 1.0d
 	 Add clausule STYLE almost to every controls
 	 See \samples\controls

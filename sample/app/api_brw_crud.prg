@@ -22,7 +22,7 @@ function Api_Brw_Crud( oDom )
 		case oDom:GetProc() == 'add'		; DoAdd( oDom )						
 		case oDom:GetProc() == 'save'		; DoSave( oDom )						
 		case oDom:GetProc() == 'myproc'		; DoMyProc( oDom )						
-						
+					
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
 	endcase

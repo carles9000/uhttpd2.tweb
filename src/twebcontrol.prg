@@ -29,6 +29,7 @@ CLASS TWebControl
 	DATA nHeight					INIT 0
 	DATA nWidth						INIT 0
 	DATA cStyle						INIT ''
+	DATA hProp						INIT {=>}
 	CLASSDATA nId					INIT 0 
 		
     METHOD New()					CONSTRUCTOR
@@ -38,8 +39,37 @@ CLASS TWebControl
 	METHOD End() 					INLINE ::Html( '</div>' )	
 	METHOD GetId() 					INLINE ( ::nId++, 'id' + ltrim(str(::nId)) )
 	
+	METHOD Properties( cId, hProp )
+	
 ENDCLASS
 
 METHOD New() CLASS TWebControl
 
 RETU SELF
+
+METHOD Properties( cId, hProp ) CLASS TWebControl
+
+	local cHtml := ''
+	local hSource
+
+	IF !Empty( hProp )
+	
+		hSource := hb_jsonencode( hProp )
+		
+		cHtml += '<script>'
+		cHtml += "  UtoProp( '" + hSource + "', '" + cId  + "' );"		
+		cHtml += '</script>'		
+	/*
+		cHtml += '<script>'
+		cHtml += "  var _hProp = JSON.parse( '" + hSource + "' );"	
+		cHtml += "  console.log( 'PROP " + cId + "', _hProp );"	
+		cHtml += "  for ( const key in _hProp) { "			
+		
+		cHtml += "   $('#" + cId + "').prop( key, _hProp[key] );"		
+		cHtml += "  }"		
+		cHtml += '</script>'
+	*/
+	
+	ENDIF
+
+RETU cHtml

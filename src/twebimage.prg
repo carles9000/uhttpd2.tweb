@@ -79,7 +79,7 @@ METHOD Activate() CLASS TWebImage
 	
 	cHtml += '" '
 	cHtml += IF( ::oParent:lDessign, 'style="border:1px solid black;"', '' ) 		
-	cHtml += ' >'
+	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 	
 	cHtml += '<div class="input-group" '
 	
