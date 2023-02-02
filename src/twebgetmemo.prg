@@ -15,7 +15,7 @@ CLASS TWebGetMemo FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClass, cFont, cChange, cStyle, hProp  ) CLASS TWebGetMemo
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClass, cFont, cChange, cStyle, cProp  ) CLASS TWebGetMemo
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
@@ -28,7 +28,8 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClas
 	DEFAULT cFont TO ''
 	DEFAULT cChange TO ''
 	DEFAULT cStyle TO ''
-	DEFAULT hProp TO {=>}
+	DEFAULT cProp TO ''
+	
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -42,7 +43,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClas
 	::cFont 		:= cFont	
 	::cChange 		:= cChange	
 	::cStyle 		:= cStyle
-	::hProp 		:= hProp
+	::cProp 		:= cProp
 	
 
 	IF Valtype( oParent ) == 'O'	
@@ -110,6 +111,10 @@ METHOD Activate() CLASS TWebGetMemo
 	if !empty( ::cStyle )	
 		cHtml += ' style="' + ::cStyle + '" '
 	endif	
+
+	if !empty( ::cProp )	
+		cHtml += ' ' + ::cProp + ' ' 
+	endif
 	
 	
 	//cHtml += ' value="' + ::uValue + '">'
@@ -120,6 +125,6 @@ METHOD Activate() CLASS TWebGetMemo
 
 	cHtml += '</div>'
 	
-	cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
+	//cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
 
 RETU cHtml

@@ -7,7 +7,7 @@ CLASS TWebCheckbox FROM TWebControl
 
 ENDCLASS 
 
-METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle, hProp ) CLASS TWebCheckbox
+METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle, cProp ) CLASS TWebCheckbox
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT lValue TO .F.
@@ -17,7 +17,7 @@ METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''
 	DEFAULT cStyle TO ''
-	DEFAULT hProp TO {=>}
+	DEFAULT cProp TO ''
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -28,7 +28,7 @@ METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle
 	::cClass 		:= cClass
 	::cFont 		:= cFont	
 	::cStyle 		:= cStyle
-	::hProp 		:= hProp
+	::cProp 		:= cProp
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -65,8 +65,14 @@ METHOD Activate() CLASS TWebCheckbox
 	
 	cHtml += '<div class="custom-control custom-checkbox " >'
 	cHtml += '<input type="checkbox" class="custom-control-input tweb_pointer" id="' + cIdPrefix + ::cId + '" ' 
+
+	
+	if !empty( ::cProp )	
+		cHtml += ' ' + ::cProp + ' ' 
+	endif
 	
 	cHtml += ' data-live '
+	
 	IF !empty( ::cAction )
 		if AT( '(', ::cAction ) >  0 		//	Exist function ?
 			cHtml += ' onchange="' + ::cAction + '" '
@@ -105,6 +111,6 @@ METHOD Activate() CLASS TWebCheckbox
 	cHtml += '</div>'
 	cHtml += '</div>'
 	
-	cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
+	//cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
 
 RETU cHtml

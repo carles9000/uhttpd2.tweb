@@ -98,14 +98,17 @@ METHOD InitForm( cClass ) CLASS TWebForm
 	
 RETU NIL
 
-METHOD Col( nCol, cType, cClass ) CLASS TWebForm
+METHOD Col( cId, nCol, cType, cClass, cStyle ) CLASS TWebForm
 
 	local cHtml := ''
 	local cPrefix := IF( empty(::cType), '', ::cType + '-' )
 	
 	
+	DEFAULT nCol TO 12
 	DEFAULT cType TO ''
 	DEFAULT cClass TO ''	
+	DEFAULT cId TO ''	
+	DEFAULT cStyle TO ''	
 	
 	IF !Empty( cType )
 		cPrefix := cType + '-' 	
@@ -113,19 +116,33 @@ METHOD Col( nCol, cType, cClass ) CLASS TWebForm
 		cPrefix := IF( empty(::cType), '', ::cType + '-' )
 	ENDIF		
 	
-	DEFAULT nCol TO 12
 
 	//	Si ponemos e- -sm, responsive y pone 1 debajo de otro...
 	//::Html ( '<div class="col-sm-' + ltrim(str(nCol)) + '"' + IF( ::lDessign, 'style="border:1px solid blue;"', '' ) + '>' )	
 	
-	cHtml := '<div class="col-' + cPrefix + ltrim(str(nCol)) 
+	cHtml := '<div '
+	
+	if !empty( cId )
+		cHtml += 'id="' + ::cId_Dialog +'-' + cId + '" '
+	endif
+	
+	
+	cHtml += ' class="col-' + cPrefix + ltrim(str(nCol)) 
 	
 	if !empty( cClass )
 		cHtml += ' ' + cClass
 	endif	
 	
-	cHtml += '" ' + IF( ::lDessign, 'style="border:1px solid blue;"', '' )
+	cHtml += '" ' 
 	
+	IF ::lDessign 
+		cStyle +=  ';border:1px solid blue;'
+	ENDIF
+	
+	IF !empty(cStyle)
+		cHtml += ' style="' + cStyle + '" '
+	endif	
+
 	cHtml += '>' + CRLF 
 	
 	//::Html ( '<div class="col-' + cPrefix + ltrim(str(nCol)) + '"' + IF( ::lDessign, 'style="border:1px solid blue;"', '' ) + '>' )
@@ -133,22 +150,34 @@ METHOD Col( nCol, cType, cClass ) CLASS TWebForm
 	
 RETU NIL
 
-METHOD Div( cId, cClass ) CLASS TWebForm
+METHOD Div( cId, cClass, cStyle, cProp ) CLASS TWebForm
 
 	local cHtml := ''
+	
 
 	DEFAULT cId TO ''
 	DEFAULT cClass TO ''
+	DEFAULT cStyle TO ''
+	DEFAULT cProp TO ''
 
-	cHtml += '<div id="' + cId + '" '
+	cHtml += '<div id="' + ::cId_Dialog + '-' + cId + '" '
 	
 	if !empty( cClass )
 		cHtml += ' class="' + cClass + '" '
 	endif	
 	
 	if ::lDessign
-		cHtml += ' style="border:1px solid red;" '
+		cStyle += ";border:1px solid red;" 
 	endif
+	
+	if !empty( cStyle )	
+		cHtml += ' style="' + cStyle + '" '
+	endif	
+
+	if !empty( cProp )	
+		cHtml += ' ' + cProp + ' ' 
+	endif	
+	
 	
 	cHtml += '>'  + CRLF 
 	
@@ -214,13 +243,15 @@ METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom ) CLASS TWebForm
 RETU NIL
 
 
-METHOD RowGroup( cVAlign, cHAlign, cClass ) CLASS TWebForm
+METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle ) CLASS TWebForm
 
 	local cHtml := ''
 
+	DEFAULT cId  TO ''
 	DEFAULT cVAlign TO 'center'
 	DEFAULT cHAlign TO 'left'
 	DEFAULT cClass TO ''
+	DEFAULT cStyle TO ''
 	
 	cVAlign 	:= lower( cVAlign )
 	cHAlign 	:= lower( cHAlign )
@@ -238,13 +269,29 @@ METHOD RowGroup( cVAlign, cHAlign, cClass ) CLASS TWebForm
 	endcase	
 
 
-	cHtml += '<div class="form-group row ' + cVAlign + ' ' + cHAlign 
+	cHtml += '<div '
+	
+	if !empty( cId )
+		cHtml += 'id="' + ::cId_Dialog +'-' + cId + '" '
+	endif
+	
+	cHtml += ' class="form-group row ' + cVAlign + ' ' + cHAlign 
 	
 	if !empty( cClass )
 		cHtml += ' ' + cClass
 	endif
 	
-	cHtml += '" ' + IF( ::lDessign, 'style="border:1px solid red;"', '' ) + ' >'  + CRLF 
+	cHtml += '" ' 
+	
+	IF ::lDessign 
+		cStyle +=  ';border:1px solid red;'
+	ENDIF
+	
+	IF !empty(cStyle)
+		cHtml += ' style="' + cStyle + '" '
+	endif
+		
+	cHtml += ' >'  + CRLF 
 	
 	::Html( cHtml )
 	

@@ -15,6 +15,7 @@ app\api_brw_dbu.prg
 app\api_msg.prg
 app\api_controls.prg
 app\api_dialog.prg
+app\api_security.prg
 app\web_msg.prg
 app\web_brw.prg
 app\web_prg.prg

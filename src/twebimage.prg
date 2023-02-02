@@ -15,7 +15,7 @@ CLASS TWebImage FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery, lNoZoom, cStyle ) CLASS TWebImage
+METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery, lNoZoom, cStyle, cProp ) CLASS TWebImage
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT cSrc TO ''
@@ -27,6 +27,7 @@ METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery
 	DEFAULT cGallery TO ''
 	DEFAULT lNoZoom TO .F.
 	DEFAULT cStyle TO ''
+	DEFAULT cProp TO ''
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -39,6 +40,7 @@ METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery
 	::cGallery		:= cGallery
 	::lZoom			:= !lNoZoom
 	::cStyle 		:= cStyle 
+	::cProp 		:= cProp 
 
 
 	IF Valtype( oParent ) == 'O'	
@@ -82,10 +84,11 @@ METHOD Activate() CLASS TWebImage
 	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 	
 	cHtml += '<div class="input-group" '
-	
+	/*
 	if !empty( ::cStyle )	
 		cHtml += ' style="' + ::cStyle + '" '
-	endif				
+	endif	
+	*/
 	
 	cHtml += '>'
 	
@@ -120,7 +123,16 @@ METHOD Activate() CLASS TWebImage
 	cHtml += '<img id="' + cIdPrefix + ::cId + '" src="' + ::cSrc + '" class="rounded " '
 	
 	if ::nWidth > 0
-		cHtml += ' style="width:' + ltrim(str(::nWidth)) + 'px; '
+		//cHtml += ' style="width:' + ltrim(str(::nWidth)) + 'px; '
+		::cStyle += ';width:' + ltrim(str(::nWidth)) + 'px; '
+	endif
+	
+	if !empty( ::cStyle )	
+		cHtml += ' style="' + ::cStyle + '" '
+	endif	
+
+	if !empty( ::cProp )	
+		cHtml += ' ' + ::cProp + ' ' 
 	endif
 		
 	cHtml += ' alt="...">'

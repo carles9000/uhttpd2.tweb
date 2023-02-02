@@ -60,10 +60,10 @@ static function DoShow( oDom )
 	oDom:Show( 'mycheck' )
 	oDom:Show( 'mycombo' )
 	oDom:Show( 'myradio' )	
-	oDom:Show( 'myimg' )	
-	oDom:Show( 'ico1' )	
-	oDom:Show( 'ico2' )	
-	oDom:Show( 'ico3' )	
+
+	
+	oDom:Show( 'myrowgroup' )	
+	oDom:Show( 'mycol' )	
 	
 retu nil
 
@@ -78,11 +78,9 @@ static function DoHide( oDom )
 	oDom:Hide( 'mycheck' )
 	oDom:Hide( 'mycombo' )
 	oDom:Hide( 'myradio' )	
-	oDom:Hide( 'myimg' )	
-	oDom:Hide( 'ico1' )	
-	oDom:Hide( 'ico2' )	
-	oDom:Hide( 'ico3' )	
 	
+	oDom:Hide( 'myrowgroup'   )
+	oDom:Hide( 'mycol'   )
 retu nil
 
 // -------------------------------------------------- //

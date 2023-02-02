@@ -1,0 +1,51 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Security' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Security', 'Token'
+		
+		DEFINE FORM o ID 'myform' API 'api_security' OF oWeb 
+			o:lDessign := .f.
+		
+		INIT FORM o 
+			
+			SEPARATOR o LABEL 'Token'			
+			
+  			ROWGROUP o			
+				GET ID 'myvar'  VALUE 'My value...' GRID 12 LABEL 'Value' ;				
+					BUTTON 'Data to Token' ACTION 'test1' OF o			
+			ENDROW o		
+
+  			ROWGROUP o			
+				GET ID 'mytoken'  VALUE '' GRID 12 LABEL 'Token' ;				
+					BUTTON 'Token to Data' ACTION 'test2' OF o			
+			ENDROW o
+
+			SEPARATOR o LABEL 'Token Hash'	
+
+  			ROWGROUP o			
+				GET ID 'myname'  VALUE 'Charles Bronson' GRID 4 LABEL 'Name' OF o			
+				GET ID 'myage'    TYPE 'number' VALUE '64' GRID 4 LABEL 'Age' OF o			
+				GET ID 'mydate'   TYPE 'date' VALUE '' GRID 4 LABEL 'Date' OF o			
+			ENDROW o	
+
+  			ROWGROUP o			
+				COL o GRID 6
+					GET MEMO ID 'mycrypt' LABEL "Token" VALUE '' GRID 12 OF o													
+					BUTTON LABEL 'Data to Token' WIDTH '100%' GRID 12 ACTION 'test3' OF o	
+				ENDCOL o
+				
+				COL o GRID 6
+					GET MEMO ID 'mydecrypt' LABEL "Data" VALUE '' GRID 12 OF o													
+					BUTTON LABEL 'Token to Data' WIDTH '100%' GRID 12 ACTION 'test4' OF o	
+				ENDCOL o				
+			ENDROW o	
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

@@ -1,4 +1,4 @@
-#include 'lib/uhttpd2.ch'
+#include 'lib/uhttpd2/uhttpd2.ch'
 
 REQUEST DBFCDX
  
@@ -38,6 +38,7 @@ function WebServer()
 		oServer:Route( 'msg'		, 'index_msg.html' )  	
 		oServer:Route( 'tpl'		, 'index_tpl.html' )  	
 		oServer:Route( 'pluggin'	, 'index_pluggin.html' )
+		oServer:Route( 'security'	, 'index_security.html' )
 		oServer:Route( 'controls'	, 'index_controls.html' ) 		
 		oServer:Route( 'browse'	, 'index_brw.html' )  	
 		oServer:Route( 'dialog'	, 'index_dialog.html' )  	
@@ -145,6 +146,10 @@ function WebServer()
 		//	autocomplete route. Alert! -> function
 		
 			oServer:Route( 'getidcustomer'	, 'getidcustomer' ) 		
+		
+	//	Security
+	
+		oServer:Route( 'token'	, 'security/token.html' ) 
 		
 	//	Testing
 	

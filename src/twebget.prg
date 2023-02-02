@@ -20,7 +20,7 @@ CLASS TWebGet FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle, hProp ) CLASS TWebGet
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle, cProp ) CLASS TWebGet
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
@@ -46,7 +46,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	DEFAULT aSpan TO {}
 	DEFAULT aSpanId TO {}
 	DEFAULT cStyle TO ''
-	DEFAULT hProp TO {=>}
+	DEFAULT cProp TO ''
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -73,7 +73,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	::aSpan			:= aSpan
 	::aSpanId		:= aSpanId
 	::cStyle		:= cStyle
-	::hProp			:= hProp
+	::cProp			:= cProp
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )			
@@ -151,10 +151,6 @@ METHOD Activate() CLASS TWebGet
 	cHtml += '" '
 	
 	
-	if !empty( ::cStyle )	
-		cHtml += ' style="' + ::cStyle + '" '
-	endif	
-	
 
 	cHtml += 'id="' + cIdPrefix + ::cId + '"	 name="' + cIdPrefix + ::cId + '" ' 
 	
@@ -167,6 +163,14 @@ METHOD Activate() CLASS TWebGet
 	IF ::lRequired
 		cHtml += ' required '
 	ENDIF	
+	
+	if !empty( ::cStyle )	
+		cHtml += ' style="' + ::cStyle + '" '
+	endif	
+
+	if !empty( ::cProp )	
+		cHtml += ' ' + ::cProp + ' ' 
+	endif
 	
 	cHtml += ' data-live '
 	
@@ -280,7 +284,7 @@ METHOD Activate() CLASS TWebGet
 	ENDCASE	
 */	
 
-	cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
+	//cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
 
 	IF !Empty( ::uSource )
 	

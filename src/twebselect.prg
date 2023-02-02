@@ -13,7 +13,7 @@ CLASS TWebSelect FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle, hProp ) CLASS TWebSelect
+METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle, cProp ) CLASS TWebSelect
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT aItems TO {}
@@ -27,7 +27,8 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	DEFAULT cFont TO ''	
 	DEFAULT cGroup TO ''	
 	DEFAULT cStyle TO ''	
-	DEFAULT hProp TO {=>}
+	DEFAULT cProp TO ''	
+	
 
 	::oParent 		:= oParent	
 	::cId			:= cId
@@ -41,7 +42,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	::cFont 		:= cFont	
 	::cGroup 		:= cGroup
 	::cStyle 		:= cStyle
-	::hProp 		:= hProp
+	::cProp 		:= cProp
 
 	
 	if valtype( aKeyValue ) == 'H' 
@@ -152,6 +153,10 @@ METHOD Activate() CLASS TWebSelect
 	
 	if !empty( ::cStyle )	
 		cHtml += ' style="' + ::cStyle + '" '
+	endif
+
+	if !empty( ::cProp )	
+		cHtml += ' ' + ::cProp + ' ' 
 	endif	
 	
 	
@@ -198,7 +203,7 @@ METHOD Activate() CLASS TWebSelect
 	cHtml += '	</div>'
 	cHtml += '</div>'	
 	
-	cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
+	//cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
 	
 
 RETU cHtml

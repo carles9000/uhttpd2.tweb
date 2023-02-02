@@ -36,13 +36,27 @@
 
 
 
+#xcommand COL <oForm> [ ID <cId> ] [GRID <nGrid>] [TYPE <cType>]  [ CLASS <cClass> ] [ STYLE <cStyle> ] ;
+=> ;
+	<oForm>:Col( [<cId>], [<nGrid>], [<cType>], [<cClass>], [<cStyle>] )
+	
 #xcommand ROW <oForm> [ ID <cId> ] [ VALIGN <cVAlign> ] [ HALIGN <cHAlign> ] [ CLASS <cClass> ] [ TOP <cTop> ] [ BOTTOM <cBottom>] ;
 => ;
 	<oForm>:Row( [<cId>], [<cVAlign>], [<cHAlign>], [<cClass>], [<cTop>], [<cBottom>] )
 	
-#xcommand COL <oForm> [GRID <nGrid>] [TYPE <cType>]  [ CLASS <cClass> ] => <oForm>:Col( [<nGrid>], [<cType>], [<cClass>] )
-#xcommand ROWGROUP <oForm> [ VALIGN <cVAlign> ] [ HALIGN <cHAlign> ] [ CLASS <cClass> ] => <oForm>:RowGroup( <cVAlign>, <cHAlign>, <cClass> )
-#xcommand DIV <oForm> [ ID <cId> ] [ CLASS <cClass> ] => <oForm>:Div( [<cId>], [<cClass>] )
+#xcommand ROWGROUP <oForm> [ ID <cId> ] [ VALIGN <cVAlign> ] [ HALIGN <cHAlign> ] [ CLASS <cClass> ] [ STYLE <cStyle> ] ;
+=> ;
+	<oForm>:RowGroup( [<cId>], <cVAlign>, <cHAlign>, <cClass>, [<cStyle>] )
+	
+#xcommand DIV <oForm> [ ID <cId> ] [ CLASS <cClass> ] ;
+	[ STYLE <cStyle> ] [ PROP <cProp> ];
+=> ;
+	<oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>])
+	
+#xcommand DIV [<oDiv>] [ ID <cId> ] [ CLASS <cClass> ] ;
+	[ STYLE <cStyle> ] [ PROP <cProp> ] OF <oForm> ;
+=> ;
+	[<oDiv> := ] <oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>])
 
 #xcommand ENDROW <oForm> => <oForm>:End()
 #xcommand ENDCOL <oForm> => <oForm>:End()
@@ -116,9 +130,9 @@
 	
 #xcommand IMAGE [<oImg>] [ ID <cId> ] [ FILE <cFile> ] [ BIGFILE <cBigFile> ] [ ALIGN <cAlign> ] ;
 	[GRID <nGrid>] [ CLASS <cClass> ] [ WIDTH <nWidth>] [ GALLERY <cGallery> ] ;
-	[ <nozoom: NOZOOM> ] [ STYLE <cStyle> ] OF <oForm> ;
+	[ <nozoom: NOZOOM> ] [ STYLE <cStyle> ] [ PROP <cProp> ] OF <oForm> ;
 => ;
-	[<oImg> := ] TWebImage():New( <oForm>, [<cId>], [<cFile>], [<cBigFile>], [<nGrid>], [<cAlign>], [<cClass>], [<nWidth>], [<cGallery>], [<.nozoom.>], [<cStyle>] )
+	[<oImg> := ] TWebImage():New( <oForm>, [<cId>], [<cFile>], [<cBigFile>], [<nGrid>], [<cAlign>], [<cClass>], [<nWidth>], [<cGallery>], [<.nozoom.>], [<cStyle>], [<cProp>] )
 	
 	
 #xcommand SWITCH [<oSwitch>] [ ID <cId> ] [ <lValue: ON> ] [ VALUE <lValue> ] [ LABEL <cLabel> ] [GRID <nGrid>] [ <act:ACTION,ONCHANGE> <cAction> ] OF <oForm> ;

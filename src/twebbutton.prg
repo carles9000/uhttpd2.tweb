@@ -16,7 +16,7 @@ CLASS TWebButton FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cLink, cClass, cFont, lFiles, nWidth, cConfirm, cStyle, hProp ) CLASS TWebButton
+METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cLink, cClass, cFont, lFiles, nWidth, cConfirm, cStyle, cProp ) CLASS TWebButton
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT cLabel TO ''
@@ -36,7 +36,8 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 	DEFAULT nWidth TO ''
 	DEFAULT cConfirm TO ''
 	DEFAULT cStyle TO ''
-	DEFAULT hProp TO {=>}
+	DEFAULT cProp TO ''
+	
 	
 	if empty( cClass ) 
 		cClass := if( ::lOutline, 'btn-outline-primary' , 'btn-primary')	
@@ -62,7 +63,7 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 	::nWidth 		:= nWidth
 	::cConfirm 		:= cConfirm
 	::cStyle 		:= cStyle
-	::hProp			:= hProp 
+	::cProp			:= cProp 
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )		
@@ -152,6 +153,10 @@ METHOD Activate() CLASS TWebButton
 	if !empty( ::cStyle )	
 		cHtml += ' style="' + ::cStyle + '" '
 	endif	
+
+	if !empty( ::cProp )	
+		cHtml += ' ' + ::cProp + ' ' 
+	endif
 		
 	cHtml += ' data-live '
 	
@@ -179,6 +184,6 @@ METHOD Activate() CLASS TWebButton
 	cHtml += '</button>'
 	cHtml += '</div>'
 
-	cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
+	//cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
 
 RETU cHtml
