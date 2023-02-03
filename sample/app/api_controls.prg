@@ -4,10 +4,13 @@ function Api_Controls( oDom )
 		case oDom:GetProc() == 'ping'		; DoPing( oDom )						
 		
 		case oDom:GetProc() == 'enable'	; DoEnable( oDom )						
-		case oDom:GetProc() == 'disable'	; DoDisable( oDom )						
+		case oDom:GetProc() == 'disable'	; DoDisable( oDom )	
+		
 		case oDom:GetProc() == 'show'		; DoShow( oDom )						
 		case oDom:GetProc() == 'hide'		; DoHide( oDom )						
-
+		
+		case oDom:GetProc() == 'showrc'	; ( oDom:Show( 'myrowgroup' ), oDom:Show( 'mycol' ) )
+		case oDom:GetProc() == 'hiderc'	; ( oDom:Hide( 'myrowgroup' ), oDom:Hide( 'mycol' ) )
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
 	endcase
