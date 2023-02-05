@@ -27,6 +27,7 @@ function WebServer()
 	
 	oServer:SetPort( 81 )
 	oServer:SetDirFiles( 'examples', .T. )		//	.t. == Index list
+	oServer:SetDirFiles( 'data.repository' )	
 	
 	
 	//	Routing...			
@@ -87,6 +88,8 @@ function WebServer()
 		oServer:Route( 'get-types'		, 'controls/get-types.html' ) 		
 		oServer:Route( 'styles'		, 'controls/styles.html' ) 		
 		oServer:Route( 'properties'	, 'controls/properties.html' ) 		
+		oServer:Route( 'upload'		, 'controls/upload.html' ) 		
+		oServer:Route( 'upload_basic'	, 'controls/upload_basic.html' ) 		
 
 	//	Browsers
 	
@@ -187,6 +190,7 @@ retu nil
 
 //----------------------------------------------------------------------------//
 
-function AppPathData() ; retu HB_DIRBASE() + 'data\'
+function AppPathData() 		; retu HB_DIRBASE() + 'data\'
+function AppPathRepository() 	; retu HB_DIRBASE() + 'data.repository\'
 
 //----------------------------------------------------------------------------//

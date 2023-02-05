@@ -1,0 +1,60 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Upload' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Controls', 'Upload'
+		
+		DEFINE FORM o ID 'myform' API 'api_controls' OF oWeb 			
+		
+		INIT FORM o 
+		
+			ROWGROUP o VALIGN 'top'
+			
+				COL o GRID 6 
+					ROWGROUP o				
+						SELECT ID 'year' LABEL 'Repository' PROMPT '2023', '2022', '2021', '2020' GRID 6  OF o				
+					ENDROW o			
+					
+						
+					HTML o INLINE '<div class="btn-group" role="group" >'
+					
+						BUTTON FILE ID 'btnselect'  LABEL 'Select' ACTION 'myfiles'    MULTIPLE GRID 0 OF o 
+						
+						BUTTON      ID 'upload'     LABEL 'Upload' ACTION 'fileupload' UPLOAD 'btnselect' ;
+							CONFIRM 'Upload files?' GRID 0 OF o 
+							
+					HTML o INLINE '</div>'
+				
+				ENDCOL o
+				
+				COL o GRID 6 	
+
+					SEPARATOR o LABEL 'Files Selected'			
+				
+					DIV ID 'info' OF o 
+					ENDDIV o
+				
+				ENDCOL o
+			
+			ENDROW o
+
+			
+			HTML o  
+
+				<script>
+
+					function myfiles() { 								
+						console.log(  $('#_myform-btnselect' )[0].files )			//	Ojo "_" !!!
+					}
+					
+				</script>
+			ENDTEXT 
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

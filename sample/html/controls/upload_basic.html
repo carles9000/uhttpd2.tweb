@@ -1,0 +1,24 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Upload' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Controls', 'Upload'
+		
+		DEFINE FORM o ID 'myform' API 'api_controls' OF oWeb 			
+		
+		INIT FORM o 
+			
+			ROW o
+				BUTTON FILE ID 'btnselect'  LABEL 'Select' ACTION 'myfiles' OF o 
+					
+				BUTTON      ID 'upload'     LABEL 'Upload' ACTION 'fileupload_basic' UPLOAD 'btnselect' OF o 
+			ENDROW o 
+			
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+
