@@ -119,13 +119,24 @@
     [ GRID <nGrid> ] [ ALIGN <cAlign> ]  ;
 	[ ICON <cIcon> ] [ <ds: DISABLED> ] [ <sb: SUBMIT> ] [ LINK <cLink> ] ;
 	[ CLASS <cClass> ] [ FONT <cFont> ] ;
-	[ <files: FILES> ] ;
+	[ UPLOAD <cId_Btn_Files> ] ;
 	[ WIDTH <cWidth> ] ;
 	[ CONFIRM <cConfirm> ] ;
 	[ STYLE <cStyle> ] [ PROP <hProp> ];	
 	OF <oForm> ;
 => ;
-	[ <oBtn> := ] TWebButton():New( <oForm>, [<cId>], <cLabel>, <cAction>, <cName>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ds.>], [<.sb.>], [<cLink>], [<cClass>], [<cFont>], [<.files.>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>] )	
+	[ <oBtn> := ] TWebButton():New( <oForm>, [<cId>], <cLabel>, <cAction>, <cName>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ds.>], [<.sb.>], [<cLink>], [<cClass>], [<cFont>], [<cId_Btn_Files>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>] )	
+	
+#xcommand BUTTON FILE [<oBtn>] [ ID <cId> ] [ LABEL <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
+    [ GRID <nGrid> ] [ ALIGN <cAlign> ]  ;
+	[ ICON <cIcon> ] [ <ds: DISABLED> ] [ <sb: SUBMIT> ] ;
+	[ CLASS <cClass> ] [ FONT <cFont> ] ;	
+	[ WIDTH <cWidth> ] ;
+	[ CONFIRM <cConfirm> ] ;
+	[ STYLE <cStyle> ] [ PROP <hProp> ] [ <mu: MULTIPLE> ];	
+	OF <oForm> ;
+=> ;
+	[ <oBtn> := ] TWebButtonFile():New( <oForm>, [<cId>], <cLabel>, <cName>, <cAction>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ds.>], [<.sb.>], [<cClass>], [<cFont>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.mu.>] )	
 	
 	
 #xcommand IMAGE [<oImg>] [ ID <cId> ] [ FILE <cFile> ] [ BIGFILE <cBigFile> ] [ ALIGN <cAlign> ] ;

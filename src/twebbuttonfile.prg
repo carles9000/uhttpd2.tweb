@@ -1,14 +1,15 @@
 //	-------------------------------------------------------------
 
-CLASS TWebButton FROM TWebControl
+CLASS TWebButtonFile FROM TWebControl
 
 	DATA cType		 				INIT 'text'
 	DATA cPlaceHolder 				INIT ''
 	DATA cConfirm	 				INIT ''
 	DATA lOutline 					INIT .T.
 	DATA lSubmit					INIT .F.
-	DATA cLink						INIT ''
-	DATA cId_Btn_Files				INIT ''
+
+	DATA lMultiple					INIT .F.
+	
 
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
@@ -16,32 +17,32 @@ CLASS TWebButton FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cLink, cClass, cFont, cId_Btn_Files, nWidth, cConfirm, cStyle, cProp ) CLASS TWebButton
+METHOD New( oParent, cId, cLabel, cName, cAction, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cClass, cFont, nWidth, cConfirm, cStyle, cProp, lMultiple ) CLASS TWebButtonFile
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT cLabel TO ''
-	DEFAULT cAction TO ''
+	DEFAULT cAction TO ''	
 	DEFAULT cName TO ''
 	DEFAULT cValue TO ''
 	DEFAULT nGrid TO 4
 	DEFAULT cAlign TO ''
 	DEFAULT cIcon TO ''		// '<i class="fas fa-check"></i>'
-	DEFAULT cClass TO 'btn-primary'				
+	DEFAULT cClass TO 'btn-warning'				
 	DEFAULT lDisabled TO .F.				
 	DEFAULT lSubmit TO .F.				
-	DEFAULT cLink TO ''
+
 	DEFAULT cClass TO ''
 	DEFAULT cFont TO ''		
-	DEFAULT cId_Btn_Files TO ''		
-
+	
 	DEFAULT nWidth TO ''
 	DEFAULT cConfirm TO ''
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
+	DEFAULT lMultiple TO .f.
 	
 	
 	if empty( cClass ) 
-		cClass := if( ::lOutline, 'btn-outline-primary' , 'btn-primary')	
+		cClass := if( ::lOutline, 'btn btn-warning' , 'btn-primary')	
 	endif
 	
 
@@ -50,21 +51,23 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 	::nGrid			:= nGrid
 	::cAlign 		:= lower( cAlign )
 	::cLabel 		:= cLabel
-	::cAction		:= cAction	
+	::cAction 		:= cAction
+	
 	::cName			:= cName
 	::uValue		:= cValue
 	::cClass		:= cClass
 	::cIcon			:= cIcon
 	::lDisabled		:= lDisabled
 	::lSubmit		:= lSubmit
-	::cLink			:= cLink
+
 	::cClass 		:= cClass
 	::cFont 		:= cFont	
-	::cId_Btn_Files:= cId_Btn_Files
+	
 	::nWidth 		:= nWidth
 	::cConfirm 		:= cConfirm
 	::cStyle 		:= cStyle
 	::cProp			:= cProp 
+	::lMultiple		:= lMultiple
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )		
@@ -72,7 +75,7 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 
 RETU SELF
 
-METHOD Activate() CLASS TWebButton
+METHOD Activate() CLASS TWebButtonFile
 
 	LOCAL cHtml := ''
 	LOCAL cSize := ''
@@ -94,35 +97,46 @@ METHOD Activate() CLASS TWebButton
 		cType := 'submit'
 	ENDIF	
 
-	IF !empty( ::cLink )
-		::cAction := "location.href='" + ::cLink + "' "
-	ENDIF
 
 	IF empty( ::cName )
 		::cName := ::cId
 	ENDIF
 
 
-	IF ::nGrid > 0 
-		cHtml += '<div class="col-' + ltrim(str(::nGrid)) 
-		cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '')  
-		
-		do case
-			case ::cAlign == 'center' ; cHtml += ' text-center'
-			case ::cAlign == 'right'  ; cHtml += ' text-right'
-		endcase	
-		
-			
-		cHtml += '" ' 
-
-		cHtml += IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )
-		cHtml += '>'
+	cHtml += '<div class="col-' + ltrim(str(::nGrid)) 
+	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '')  
 	
+	do case
+		case ::cAlign == 'center' ; cHtml += ' text-center'
+		case ::cAlign == 'right'  ; cHtml += ' text-right'
+	endcase	
+	
+		
+	cHtml += '" ' 
+
+	cHtml += IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )
+	cHtml += '>'
+	
+	cHtml += '<input type="file" id="_' + cIdPrefix + ::cId + '" style="display:none;" '
+	
+	IF !empty( ::cAction )
+
+		if AT( '(', ::cAction ) >  0 		//	Exist function ?
+			cHtml += 'onchange="' + ::cAction + '" '				
+		else
+			cHtml += ' data-onchange="' + ::cAction + '" '					
+		endif	
 	ENDIF
 	
+	cHtml += IF( ::lMultiple, ' multiple ', '')
 	
+	//cHtml += ' data-live '
+	cHtml += ' data-live >'
+
 	cHtml += '<button type="' + cType + '" '
-	//cHtml += 'id="' + cIdPrefix + ::cId + '" '  
+	
+	cHtml += 'id="' + cIdPrefix + ::cId + '" name="' + ::cName + '" value="' + ::uValue + '" ' 
+	
 	cHtml += 'class="btn ' + cSize 
 	
 	
@@ -134,16 +148,10 @@ METHOD Activate() CLASS TWebButton
 		cHtml += ' ' + ::cFont
 	endif	
 
-	/*
-	if ::nGrid > 0
-		cHtml += ' col-' + ltrim(str(::nGrid))
-	endif
-	*/
 	
 	cHtml += '" ' 
 	
-	if !empty( ::nWidth )
-		// cHtml += 'style="width: '  + ::nWidth + '; " '
+	if !empty( ::nWidth )		
 		::cStyle += 'width: '  + ::nWidth + '; '
 	endif
 	
@@ -161,30 +169,14 @@ METHOD Activate() CLASS TWebButton
 		cHtml += ' data-confirm="' + ::cConfirm + '" '
 	endif 
 	
-	if !empty( ::cId_Btn_Files )
-		cHtml += ' data-upload="_' + cIdPrefix + ::cId_Btn_Files + '" '
-	endif 
-	
-	IF !empty( ::cAction )
-
-		if AT( '(', ::cAction ) >  0 		//	Exist function ?
-			cHtml += 'onclick="' + ::cAction + '" '				
-		else
-			cHtml += ' data-onclick="' + ::cAction + '" '					
-		endif	
-	ENDIF
-		
-
-		cHtml += 'id="' + cIdPrefix + ::cId + '" name="' + ::cName + '" value="' + ::uValue + '" ' 
 
 	
+	cHtml += ' onclick="TDoClick(' + "'_" + cIdPrefix + ::cId + "' )" + '" ' 
+
 	cHtml += IF( ::lDisabled, 'disabled', '' ) + ' >' 
 	cHtml += ::cIcon + ::cLabel
 	cHtml += '</button>'
-	IF ::nGrid > 0 
-		cHtml += '</div>'
-	ENDIF
-
-	//cHtml += ::Properties( cIdPrefix + ::cId, ::hProp )	
+	cHtml += '</div>'
+	
 
 RETU cHtml

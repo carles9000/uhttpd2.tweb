@@ -39,7 +39,8 @@ METHOD Activate() CLASS TWebDialog
 			cHtml += ::aControls[nI]
 		ENDIF
 	
-	NEXT		
+	NEXT	
+
 
 	//UReplaceBlocks( @cHtml, "{{", "}}" )
 	

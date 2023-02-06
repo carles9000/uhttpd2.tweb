@@ -39,6 +39,7 @@
 #include 'twebimage.prg'
 #include 'twebcheckbox.prg'
 #include 'twebbutton.prg'
+#include 'twebbuttonfile.prg'
 #include 'twebswitch.prg'
 #include 'twebradio.prg'
 #include 'twebbox.prg'
@@ -163,6 +164,7 @@ METHOD Activate() CLASS TWeb
 	
 	NEXT		
 	
+	cHtml += JSReady( 'SetTWeb()' ) 
 
 RETU cHtml
 

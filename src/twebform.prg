@@ -331,10 +331,11 @@ METHOD Activate( fOnInit ) CLASS TWebForm
 		*/
 		c := 'UInitDialog("' + ::cId + '");'
 		::Html( JSReady( c ) )
+		
+						
+		
 	endif 
-	
-	
-	
+
 	FOR nI := 1 To len( ::aControls )
 	
 		IF Valtype( ::aControls[nI] ) == 'O'			
