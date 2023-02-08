@@ -182,7 +182,7 @@ RETURN 0
 function ShowInfo( hInfo ) 
 
 	HB_HCaseMatch( hInfo, .f. )
-	
+
 	CConsole '---------------------------------'	
 	Console  'Server Harbour9000 was started...'
 	Console  '---------------------------------'
@@ -197,7 +197,7 @@ function ShowInfo( hInfo )
 	Console  'Trace............: ' + if( hInfo[ 'debug' ], 'Yes', 'No' )
 	Console  '---------------------------------'
 	Console  'Escape for exit...' 		
-	
+
 retu nil 
 
 //----------------------------------------------------------------------------//
