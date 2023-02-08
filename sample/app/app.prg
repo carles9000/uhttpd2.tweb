@@ -28,6 +28,7 @@ function WebServer()
 	oServer:SetPort( 81 )
 	oServer:SetDirFiles( 'examples', .T. )		//	.t. == Index list
 	oServer:SetDirFiles( 'data.repository' )	
+	oServer:bInit := {|hInfo| ShowInfo( hInfo ) }
 	
 	
 	//	Routing...			
@@ -176,6 +177,28 @@ function WebServer()
 	
 RETURN 0
 
+//----------------------------------------------------------------------------//
+
+function ShowInfo( hInfo ) 
+
+	HB_HCaseMatch( hInfo, .f. )
+	
+	CConsole '---------------------------------'	
+	Console  'Server Harbour9000 was started...'
+	Console  '---------------------------------'
+	Console  'Version httpd2...: ' + hInfo[ 'version' ]
+	Console  'Start............: ' + hInfo[ 'start' ]
+	Console  'Port.............: ' + ltrim(str(hInfo[ 'port' ]))
+	Console  'OS...............: ' + OS()
+	Console  'Harbour..........: ' + VERSION()
+	Console  'Build date.......: ' + HB_BUILDDATE()
+	Console  'Compiler.........: ' + HB_COMPILER()
+	Console  'SSL..............: ' + if( hInfo[ 'ssl' ], 'Yes', 'No' )
+	Console  'Trace............: ' + if( hInfo[ 'debug' ], 'Yes', 'No' )
+	Console  '---------------------------------'
+	Console  'Escape for exit...' 		
+	
+retu nil 
 
 //----------------------------------------------------------------------------//
 

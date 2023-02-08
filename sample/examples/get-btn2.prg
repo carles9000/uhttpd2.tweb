@@ -14,13 +14,13 @@ function main()
 		
 	//	--------------------------------------------------------------------------------------------	
 	
-		DEFINE FORM o OF oWeb 
+		DEFINE FORM o ID 'myform' API 'api_examples'  OF oWeb 
 			o:lDessign 	:= .T.
 			
 		INIT FORM o  		
 			
 			ROWGROUP o 			
-				GET VALUE '123' BUTTON 'Search' ACTION "alert('Search')" OF o
+				GET ID 'myget' VALUE '' BUTTON 'Search' ACTION "test1" OF o
 			ENDROW o		
 			
 		ENDFORM o	

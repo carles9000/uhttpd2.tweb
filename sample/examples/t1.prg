@@ -14,7 +14,7 @@ function main()
 		
 	//	--------------------------------------------------------------------------------------------	
 
-    DEFINE FORM o ID 'order' API 'api_test.prg' OF oWeb
+    DEFINE FORM o  OF oWeb
 		o:lDessign 	:= .T.	
 
 		INIT FORM o  

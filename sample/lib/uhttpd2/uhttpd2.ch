@@ -7,6 +7,9 @@
 #xcommand THREAD STATIC function <FuncName>([<params,...>]) => STAT FUNCTION <FuncName>( [<params>] )
 #xcommand THREAD STATIC procedure <ProcName>([<params,...>]) => STAT PROCEDURE <ProcName>( [<params>] )
 
+#xcommand CConsole [<explist,...>] => QQout( [<explist>] )
+#xcommand Console [<explist,...>] => Qout( [<explist>] )
+
 #xcommand ? [<explist,...>] => UWrite( '<br>' [,<explist>] )
 #xcommand ?? [<explist,...>] => UWrite( [<explist>] )
 #xcommand TEXT <into:TO,INTO> <v> => #pragma __cstream|<v>+=%s
