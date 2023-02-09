@@ -19,7 +19,7 @@ static function DoTest1( oDom )
 	oDom:Set( 'myget', time() )
 	
 	//	Cas 1. Alert() syncrono y final focus
-		//oDom:SetAlert( 'Ep' )
+		//oDom:SetMsg( 'Ep' )
 		//oDom:Focus( 'myget' )
 	
 	//	Cas 2. Simple message. No puedes meter foco fuera del dialogo

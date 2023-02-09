@@ -13,7 +13,7 @@ retu oDom:Send()
 
 static function DoPing( oDom )
 
-	oDom:SetAlert( _w( oDom:GetAll() ) )				
+	oDom:SetMsg( _w( oDom:GetAll() ) )				
 	oDom:Console( oDom:GetAll(), 'Parameteres received' )				
 	
 retu nil

@@ -107,15 +107,15 @@ function Api_Concept( oDom )
 
 	do case
 		case oDom:GetProc() == 'showid' 	; ShowId( oDOm )
-		case oDom:GetProc() == 'showdni' 	; oDom:SetAlert( oDom:Get( 'dni' ), 'Answer from server' )
+		case oDom:GetProc() == 'showdni' 	; oDom:SetMsg( oDom:Get( 'dni' ), 'Answer from server' )
 		case oDom:GetProc() == 'send' 		; MySend( oDom )
-		case oDom:GetProc() == 'active'	; oDom:SetAlert( if( oDom:Get( 'active' ) == .t., 'Si','No'), , 'Answer from server')
-		case oDom:GetProc() == 'status'	; oDom:SetAlert( oDom:Get( 'status' ), 'Answer from server' )
-		case oDom:GetProc() == 'showmemo'	; oDom:SetAlert( oDom:Get( 'memo' ), 'Answer from server' )
-		case oDom:GetProc() == 'showqty'	; oDom:SetAlert( oDom:Get( 'qty' ), 'Answer from server' )
-		case oDom:GetProc() == 'power'		; oDom:SetAlert( if( oDom:Get( 'power' ) == .t., 'Si','No'), 'Answer from server' )
-		case oDom:GetProc() == 'combo'		; oDom:SetAlert( oDom:Get( 'cars' ), 'Answer from server' )
-		case oDom:GetProc() == 'hello' 	; oDom:SetAlert( 'Hello friend!', 'Event oninit' )
+		case oDom:GetProc() == 'active'	; oDom:SetMsg( if( oDom:Get( 'active' ) == .t., 'Si','No'), , 'Answer from server')
+		case oDom:GetProc() == 'status'	; oDom:SetMsg( oDom:Get( 'status' ), 'Answer from server' )
+		case oDom:GetProc() == 'showmemo'	; oDom:SetMsg( oDom:Get( 'memo' ), 'Answer from server' )
+		case oDom:GetProc() == 'showqty'	; oDom:SetMsg( oDom:Get( 'qty' ), 'Answer from server' )
+		case oDom:GetProc() == 'power'		; oDom:SetMsg( if( oDom:Get( 'power' ) == .t., 'Si','No'), 'Answer from server' )
+		case oDom:GetProc() == 'combo'		; oDom:SetMsg( oDom:Get( 'cars' ), 'Answer from server' )
+		case oDom:GetProc() == 'hello' 	; oDom:SetMsg( 'Hello friend!', 'Event oninit' )
 		case oDom:GetProc() == 'testspan'	
 			nCount++
 			oDom:Set( 'myspan', ltrim(str(nCount)) )
@@ -134,7 +134,7 @@ function ShowId( oDOm )
 
 	local cId := oDom:Get( 'myid' )
 	
-	oDom:SetAlert( '<b>Id: </b>' + cId, 'Answer from server' )
+	oDom:SetMsg( '<b>Id: </b>' + cId, 'Answer from server' )
 
 retu nil 
 
@@ -144,6 +144,6 @@ function MySend( oDom )
 	local a := oDom:Get( 'dni' )
 	local b := oDom:Get( 'myid' )
 
-	oDom:SetAlert( '<b>Dni: </b>' + a + '<br>' + '<b>Id: </b>' + b, 'Send' )
+	oDom:SetMsg( '<b>Dni: </b>' + a + '<br>' + '<b>Id: </b>' + b, 'Send' )
 
 retu nil

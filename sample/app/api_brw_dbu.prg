@@ -107,7 +107,7 @@ static function DoMyProc( oDom )
 	
 	oDom:TableUpdate( 'mytable', aSelected )
 	
-	oDom:SetAlert( 'Process num registers ' + str(nLen) + '. Check console' )
+	oDom:SetMsg( 'Process num registers ' + str(nLen) + '. Check console' )
 	
 	
 retu nil

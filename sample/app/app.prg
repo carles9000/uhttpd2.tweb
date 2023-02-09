@@ -46,6 +46,7 @@ function WebServer()
 		oServer:Route( 'dialog'	, 'index_dialog.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
 		oServer:Route( 'splash'	, 'index_splash.html' )  			
+		oServer:Route( 'functional', 'index_functional.html' )  			
 		oServer:Route( 'examples'	, 'examples/*' )  			
 
 
@@ -121,6 +122,11 @@ function WebServer()
 	
 		oServer:Route( 'screen1'	, 'screens/screen1.html' ) 		
 		oServer:Route( 'screen2'	, 'concept' ) 					//	<<--- Function !
+		
+	//	Functional 
+	
+		oServer:Route( 'upd_sec'	, 'functional/upd_sec.html' )
+
 		
 	//	Messages	
 	

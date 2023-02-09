@@ -141,7 +141,7 @@ static function DoMyProc( oDom )
 	
 	oDom:TableUpdate( 'mytable', aSelected )
 	
-	oDom:SetAlert( 'Process num registers ' + str(nLen) + '. Check console' )
+	oDom:SetMsg( 'Process num registers ' + str(nLen) + '. Check console' )
 	
 	
 retu nil
@@ -176,9 +176,9 @@ static function DoSave( oDom )
 	oDom:Console( aTrace, 'IDs procesed' )
 	
 	if len( aTrace ) > 0
-		oDom:SetAlert( 'We pretended to save: ' + ltrim(str(nLen)) + '. Check console' )
+		oDom:SetMsg( 'We pretended to save: ' + ltrim(str(nLen)) + '. Check console' )
 	else
-		oDom:SetAlert( 'No data to save' )
+		oDom:SetMsg( 'No data to save' )
 	endif
 	
 retu nil 

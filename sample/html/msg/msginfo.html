@@ -19,15 +19,15 @@
 				ENDROW o	
 
 				ROWGROUP o
-					BUTTON LABEL 'MsgInfo( cMsg, cTitle )' GRID 12 ACTION "MsgInfo( 'Hello !', 'My Card' )" OF o        
+					BUTTON LABEL 'MsgInfo( cMsg, null, cTitle )' GRID 12 ACTION "MsgInfo( 'Hello !', null,  'My Card' )" OF o        
 				ENDROW o	
 
 				ROWGROUP o
-					BUTTON LABEL 'MsgInfo( cMsg, cTitle, fCallback )' GRID 12 ACTION "MsgInfo( 'Hello World', 'My Card', MyFunc )" OF o        
+					BUTTON LABEL 'MsgInfo( cMsg, fCallback, cTitle )' GRID 12 ACTION "MsgInfo( 'Hello World', MyFunc, 'My Card' )" OF o        
 				ENDROW o					
 				
 				ROWGROUP o
-					BUTTON LABEL 'MsgInfo( cMsg, cTitle, null, Icon )' GRID 12 ACTION "Test()" OF o        
+					BUTTON LABEL 'MsgInfo( cMsg, null, cTitle, Icon )' GRID 12 ACTION "Test()" OF o        
 				ENDROW o
 
 			

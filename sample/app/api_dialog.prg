@@ -22,8 +22,8 @@ function Api_Dialog( oDom )
 
 		//	-------------------------------------------------------------
 		
-		case oDom:GetProc() == 'hello'		; oDom:SetAlert( 'Hello at ' + time() )
-		case oDom:GetProc() == 'getValues'	; ( oDom:SetAlert( 'Check console!' ), oDom:Console( oDom:GetList(.f.) ) )
+		case oDom:GetProc() == 'hello'		; oDom:SetMsg( 'Hello at ' + time() )
+		case oDom:GetProc() == 'getValues'	; ( oDom:SetMsg( 'Check console!' ), oDom:Console( oDom:GetList(.f.) ) )
 		case oDom:GetProc() == 'search'	    ; DoSearch( oDom )						
 
 		otherwise 				
@@ -198,7 +198,7 @@ static function DoPolicyAccept( oDom )
 	
 	//	Finally Close dialog
 	
-	oDom:SetAlert( "You're accepted policy" )
+	oDom:SetMsg( "You're accepted policy" )
 	oDom:DialogClose( 'mypolicy' )			
 
 retu nil 
@@ -209,7 +209,7 @@ retu nil
 
 static function DoPing( oDom )
 
-	oDom:SetAlert( _w( oDom:GetAll() ) )				
+	oDom:SetMsg( _w( oDom:GetAll() ) )				
 	oDom:Console( oDom:GetList( .f. ), 'Parameteres received' )				
 	
 retu nil

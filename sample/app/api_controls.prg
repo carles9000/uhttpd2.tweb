@@ -26,7 +26,7 @@ retu oDom:Send()
 
 static function DoPing( oDom )
 
-	oDom:SetAlert( oDom:GetList(.t.) , 'Parameteres received' )				
+	oDom:SetMsg( oDom:GetList(.t.) , 'Parameteres received' )				
 	oDom:Console( oDom:GetList(.f.), 'Parameteres received' )				
 	
 retu nil
@@ -217,7 +217,7 @@ static function DoUpload( oDom )
 	
 	oDom:Set( 'info', '' )
 	oDom:Console( { 'files' => aFiles, 'proc' => aProc } ) 		// Trace vars...
-	oDom:SetAlert( cInfo, 'Resumen')
+	oDom:SetMsg( cInfo, 'Resumen')
 	
 retu nil 
 
@@ -255,6 +255,6 @@ static function DoUpload_Basic( oDom )
 	//	---------------------------------------------------
 	
 	oDom:Console( { 'files' => aFiles, 'proc' => aProc } ) 		// Trace vars...
-	oDom:SetAlert( 'Files upload!' )
+	oDom:SetMsg( 'Files upload!' )
 	
 retu nil 

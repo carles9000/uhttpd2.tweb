@@ -32,7 +32,7 @@ static function SetData( oDom )
 	oDom:TableSetData( 'mytable', aRows )	
 
 	
-	//oDom:SetAlert( time() )		
+	//oDom:SetMsg( time() )		
 	
 retu nil
 

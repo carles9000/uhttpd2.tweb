@@ -39,9 +39,9 @@ static function DoTest2( oDom )
 	local cVar 	:= UGetToken( cToken )					
 	
 	if cVar == nil 
-		oDom:SetAlert( 'Error token !' )
+		oDom:SetMsg( 'Error token !' )
 	else
-		oDom:SetAlert( cVar, 'Data value' )
+		oDom:SetMsg( cVar, 'Data value' )
 	endif
 		
 retu nil
