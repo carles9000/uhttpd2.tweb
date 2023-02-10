@@ -1,0 +1,72 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Update Sec.' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Funcional', 'Security'
+		
+		DEFINE FORM o ID 'myform' API 'api_functional' OF oWeb 
+			o:lDessign := .f.
+		
+		INIT FORM o 
+		
+			ROWGROUP o VALIGN 'top'
+			
+				COL o GRID 4 
+
+					SEPARATOR o LABEL '<i class="fa fa-folder-open" aria-hidden="true"></i>&nbsp;Select Customer'	
+
+					ROWGROUP o	
+					
+						GET id 'keyid' TYPE 'hidden' VALUE '' OF o
+						
+						GET ID 'id'  VALUE '' GRID 12 LABEL 'Id.' ;				
+							BUTTON 'Search' ACTION 'getid' OF o
+					ENDROW o					
+				
+				ENDCOL o
+				
+				COL o GRID 8 	
+
+					SEPARATOR o LABEL '<i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Confidential'
+					
+					ROWGROUP o
+						GET ID 'salary'  VALUE '' GRID 6 LABEL 'Salary' PROP 'disabled="" ' ;				
+							BUTTON 'Update' BTNID 'btn_upd' ACTION 'upd_salary()' OF o										
+					ENDROW o 
+					
+					DIV o ID 'data' STYLE 'display:none;'
+					
+						SEPARATOR o LABEL '<i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;Customer Card'
+						
+						SAY ID 'first' GRID 12 OF o 
+						SAY ID 'last' GRID 12 OF o 
+						SAY ID 'street' GRID 12 OF o 
+					
+					ENDDIV o
+					
+				ENDCOL o
+			
+			ENDROW o
+
+		ENDFORM o
+		
+		HTML o 
+			<script>
+			
+				function upd_salary() {				
+				
+					var oPar = new Object()
+						oPar[ 'id' ] 		= $( '#myform-id' ).val()
+						oPar[ 'salary' ] 	= $( '#myform-salary' ).val()						
+					
+					MsgApi( 'api_functional', 'upd_salary' , oPar)
+				}			
+			
+			</script>		
+		ENDTEXT
+
+	INIT WEB oWeb RETURN
+?>

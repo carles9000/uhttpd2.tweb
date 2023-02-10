@@ -239,3 +239,16 @@ function MsgNotify( cMsg, cType, cIcon, lSound ) {
 function TDoClick( cId ){ $('#' + cId).click() }
 
 //	---------------------------------------------------------------------------- //
+
+function TWebIntro( cId, fFunction ) {
+
+	$("#" + cId ).on('keyup', function (e) {
+		if (e.key === 'Enter' || e.keyCode === 13) {
+			if ( typeof fFunction === "function") {					
+				fFunction.apply(null);
+			}		
+		}
+	});
+}
+
+//	---------------------------------------------------------------------------- //

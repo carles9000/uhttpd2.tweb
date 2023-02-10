@@ -212,12 +212,9 @@ METHOD Activate() CLASS TWebGet
 	nBtn := len( ::aBtnLabel )
 
 	
-	if nBtn > 0 
+	if nBtn > 0 	
 	
-
-	
-		cHtml += '<div class="input-group-append">'
-	
+		cHtml += '<div class="input-group-append">'	
 		
 		for nI := 1 to nBtn 
 		
@@ -315,6 +312,17 @@ METHOD Activate() CLASS TWebGet
 		cHtml += '</script>'
 	
 	ENDIF	
+	
+	/*
+	if nBtn == 1 
+	
+		cBtnId := 'btn_' + ::cId + '_1'
+
+		cCmd := "TWebIntro( '" + cIdPrefix + ::cId + "', function(){ $('#" + cBtnID + "').click(); } )" 
+_d( cCmd )		
+		cHtml += JS( cCmd )
+	endif
+	*/
 
 	
 	//Aadd( ::aHtml, cHtml )		

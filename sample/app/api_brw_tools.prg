@@ -1,29 +1,50 @@
+#include "../lib/uhttpd2/uhttpd2.ch"
+
 //	Public Functions 
 
 thread static nInd := 1000
 
 // -------------------------------------------------- //
 
-function OpenDbf( cFile, cCdx )
+function OpenDbf( cFile, cCdx, cTag )
 
 	static n := 1
 	
 	local cAlias 		:= 'ALIAS' + ltrim(str(++n))
-	local cPathFile 	
+	local cPathFile, oError	
 	
 	hb_default( @cFile, 'test.dbf')
 	hb_default( @cCdx, '')
+	hb_default( @cTag, '')
 
 	cPathFile 	:= AppPathData() + cFile	
 	
+	TRY
 
-	use ( cPathFile ) shared new alias (cAlias) VIA 'DBFCDX' 
+		use ( cPathFile ) shared new alias (cAlias) VIA 'DBFCDX' 
+		
+		cAlias := alias()
+		
+		if !empty( cCdx )
+		
+			SET INDEX TO ( AppPathData() + cCdx )
+			
+			if !empty( cTag )			
+				(cAlias)->( OrdSetFocus( cTag ) )
+				
+				if (cAlias)->( IndexOrd() ) == 0
+					UDo_Error( "Tag doesn't exist " + cTag )
+				endif
+				
+			endif
+		endif 
+		
 	
-	if !empty( cCdx )
-		SET INDEX TO ( AppPathData() + cCdx )
-	endif 
+	CATCH oError 
+
+		Eval( ErrorBlock(), oError )
 	
-	cAlias := alias()
+	END
 
 retu cAlias
 

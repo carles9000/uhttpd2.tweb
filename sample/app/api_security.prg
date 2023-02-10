@@ -17,7 +17,7 @@ retu oDom:Send()
 
 static function DoTest1( oDom )
 
-	local cVar 	:= oDom:Get( 'myvar' )
+	local cVar 		:= oDom:Get( 'myvar' )
 	local cToken 	:= USetToken( cVar )
 	
 	local hData 	:= {=>}
