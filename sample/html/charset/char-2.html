@@ -1,0 +1,66 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	LOCAL aBtns 
+	LOCAL cTxt := "" 
+	
+	TEXT TO cTxt
+Para poder ejecutar correctamente este ejemplo debes inciar el servidor con la propiedad 
+lUTF8 a .T. ->  oServer:lUtf8 := .t.
+<hr>
+In order to run this example correctly, you must start the server with the property
+lUTF8 to .T. ->  oServer:lUtf8 := .t.
+	ENDTEXT
+	
+	DEFINE WEB oWeb TITLE 'Charset' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Charset.', 'UTF-8'
+		
+		DEFINE FORM o ID 'myform' API 'api_charset' OF oWeb 			
+		
+		INIT FORM o 
+		
+			HTML o FILE 'tpl\msg2.tpl' PARAMS cTxt, 'secondary', .f.
+
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'	, 'setdatautf8'	},;
+				{ 'btn-2', 'Clean'	, 'clean'		};							
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns	
+			
+			ROW o 			
+			
+				COL o CLASS 'p-0' GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',	;					
+						'index' => 'id'   		;		// Default id
+					}
+
+					//	Way B. Via API direct
+						aEvents := { { 'name' => 'cellEdited' , 'proc' => 'saveutf8'} }						
+					
+					DEFINE BROWSE oBrw ID 'mytable' EVENTS aEvents OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+						
+						//	https://tabulator.info/docs/5.4/columns 
+						
+						COL oCol TO oBrw CONFIG { 'title' => "Nick", 'field' => "NICK", 'width' => 200, 'editor' => "input"  }
+						COL oCol TO oBrw CONFIG { 'title' => "Name", 'field' => "NAME", 'width' => 200, 'editor' => "input" }
+						
+					INIT BROWSE oBrw 
+			
+				ENDCOL o				
+				
+			ENDROW o
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+
