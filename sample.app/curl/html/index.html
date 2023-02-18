@@ -1,0 +1,26 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'TWeb' 			
+		
+		DEFINE FORM o ID 'myform' API 'api_curl' OF oWeb							
+
+		INIT FORM o					
+			SAY VALUE '<h1>CURL examples test !' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>Engine loaded, version {{ TWebVersion() }}<hr>' ALIGN 'center' GRID 12  OF o									
+			
+			HTML o
+				<div class="card-body">					
+					<ul>
+						<li><a href="curl1"	>Get public IP</a>
+						<li><a href="curl2"	>Get images</a>
+					</ul>
+				</div>			
+			ENDTEXT
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+?>

@@ -1,0 +1,23 @@
+-n
+-w1
+-es2
+-inc
+-head=full
+-mt
+
+app\app.prg
+app\api_curl.prg
+
+-i=c:\harbour\include
+
+-Llib\uhttpd2
+-luhttpd2
+
+-Llib\tweb
+-ltweb
+
+
+# WAPI_OutputDebugString()
+hbwin.hbc
+xhb.hbc
+hbcurl.hbc

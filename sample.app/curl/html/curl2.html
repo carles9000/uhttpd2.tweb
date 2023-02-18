@@ -1,0 +1,63 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions
+	LOCAL hFormatImage 	:= {=>}
+	LOCAL hFormatLink 	:= {=>}
+	
+	DEFINE WEB oWeb TITLE 'Curl' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Curl', 'Get images'
+		
+		DEFINE FORM o ID 'myform' API 'api_curl' OF oWeb 
+		
+		INIT FORM o 
+			
+			ROW o 		
+				
+				HTML o INLINE '<div class="btn-group" role="group" aria-label="Basic example">'
+				
+					SELECT ID 'mypage' PROMPT '1','2','3','4','5' VALUES  '1','2','3','4','5';
+						GRID 0 OF o
+						
+					BUTTON LABEL 'Load'  ACTION 'brwsetdata' GRID 0 OF o	
+					BUTTON LABEL 'Clean' ACTION 'brwclean' GRID 0 OF o	
+					
+				HTML o INLINE '</div><br><br>'
+			
+			
+				COL o CLASS 'p-0' GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',	;					
+						'index' => 'id'   		;		// Default id
+					}	
+
+					hFormatImage := { 'height' => '60px', 'width' => '60px' }
+					hFormatLink	 := { 'target' => '_blank' }
+			
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+						
+						//	https://tabulator.info/docs/5.4/columns 
+						
+						COL oCol TO oBrw CONFIG { 'title' => 'Id', 'field' => 'id' }
+						COL oCol TO oBrw CONFIG { 'title' => 'Author', 'field' => 'author' }
+						COL oCol TO oBrw CONFIG { 'title' => 'Width', 'field' => 'width' }
+						COL oCol TO oBrw CONFIG { 'title' => 'Height', 'field' => 'height' }
+						COL oCol TO oBrw CONFIG { 'title' => 'Image', 'field' => 'download_url', 'formatter' => 'image', 'formatterParams' => hFormatImage }
+						COL oCol TO oBrw CONFIG { 'title' => 'Url', 'field' => 'url', 'formatter' => 'link', 'formatterParams' => hFormatLink  }
+						
+					INIT BROWSE oBrw 
+			
+				ENDCOL o				
+				
+			ENDROW o		
+
+		ENDFORM o	
+
+	INIT WEB oWeb RETURN
+?>
+

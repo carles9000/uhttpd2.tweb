@@ -1,3 +1,9 @@
+18/02/23 Vrs. 1.0j
+	 New examples & functionalities
+	 * All security example. How to protect our module by verifying parameters and access.
+	   Session system prepared. See  samples\functional 
+	 * Curl example. See sample.app\curl	
+
 05/02/23 Vrs. 1.0f
 	 Add upload files. See  samples\controls 
 

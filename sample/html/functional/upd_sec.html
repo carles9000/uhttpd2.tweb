@@ -3,27 +3,43 @@
 
     LOCAL o, oWeb
 	
-	DEFINE WEB oWeb TITLE 'Update Sec.' 
+	if ! USessionReady()
+		URedirect( 'upd_login' )
+		retu nil
+	endif		
 	
-		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Funcional', 'Security'
-		
+	
+	DEFINE WEB oWeb TITLE 'Update Sec.' 								
+	
+	
+		NAV oNav ID 'nav' TITLE '&nbsp;Salary v1.0' LOGO 'files/images/mini-mercury.png' ;
+			ROUTE 'upd' WIDTH 30 HEIGHT 30 OF oWeb
+			
+			MENUITEM 'Info'   ROUTE 'upd_info'   OF oNav
+			MENUITEM 'Logout' ROUTE 'upd_logout' OF oNav
+	
+			
+			
 		DEFINE FORM o ID 'myform' API 'api_functional' OF oWeb 
 			o:lDessign := .f.
+			
+				
 		
-		INIT FORM o 
+		INIT FORM o 				
 		
-			ROWGROUP o VALIGN 'top'
+			ROWGROUP o VALIGN 'top' CLASS 'pt-4'
 			
 				COL o GRID 4 
 
 					SEPARATOR o LABEL '<i class="fa fa-folder-open" aria-hidden="true"></i>&nbsp;Select Customer'	
 
-					ROWGROUP o	
-					
+					ROWGROUP o						
+						
+						GET ID 'id'  VALUE '' GRID 8 LABEL 'Id.' ;				
+							BUTTON 'Search' ACTION 'getid' OF o
+							
 						GET id 'keyid' TYPE 'hidden' VALUE '' OF o
 						
-						GET ID 'id'  VALUE '' GRID 12 LABEL 'Id.' ;				
-							BUTTON 'Search' ACTION 'getid' OF o
 					ENDROW o					
 				
 				ENDCOL o
@@ -33,7 +49,7 @@
 					SEPARATOR o LABEL '<i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Confidential'
 					
 					ROWGROUP o
-						GET ID 'salary'  VALUE '' GRID 6 LABEL 'Salary' PROP 'disabled="" ' ;				
+						GET ID 'salary'  VALUE '' GRID 8 LABEL 'Salary' PROP 'disabled="" ' ;				
 							BUTTON 'Update' BTNID 'btn_upd' ACTION 'upd_salary()' OF o										
 					ENDROW o 
 					

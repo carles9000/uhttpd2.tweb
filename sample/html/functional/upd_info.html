@@ -1,0 +1,32 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	LOCAL hData := PValue(1)
+	
+	if ! USessionReady()
+		URedirect( 'upd_login' )
+		retu nil
+	endif		
+	
+	DEFINE WEB oWeb TITLE 'Info'
+
+		NAV oNav ID 'nav' TITLE '&nbsp;Salary v1.0' LOGO 'files/images/mini-mercury.png' ;
+		ROUTE 'upd' WIDTH 30 HEIGHT 30 OF oWeb
+		
+		MENUITEM 'Update Salary'   ROUTE 'upd_sec'    OF oNav
+		MENUITEM 'Logout'          ROUTE 'upd_logout' OF oNav
+		
+		DEFINE FORM o ID 'myform' API 'api_functional' OF oWeb 
+			o:lDessign := .f.							
+		
+		INIT FORM o 				
+
+			GET ID 'user' LABEL 'User' VALUE hData[ 'user' ] OF o
+			GET ID 'name' LABEL 'Name' VALUE hData[ 'name' ] OF o
+			GET ID 'rol'  LABEL 'Rol'  VALUE hData[ 'rol'  ] OF o
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>

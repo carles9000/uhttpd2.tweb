@@ -50,6 +50,7 @@
 #include 'twebcommon.prg'
 #include 'twebbrowse.prg'
 #include 'twebdialog.prg'
+#include 'twebunicode.prg'
 //#include 'mc_prepro.prg'
 //#include 'mh.prg'
 //	----------------------------------------------------------
@@ -66,7 +67,7 @@ CLASS TWeb
 	DATA cLang						INIT 'en' 						
 	DATA cPathTpl  				INIT '' 						
 	DATA cRootRelative				INIT '' 	
-	DATA cCharset					INIT 'ISO-8859-1'			//	'utf-8'
+	DATA cCharset					INIT 'UTF-8'	//	'ISO-8859-1'	
 	DATA lActivated					INIT .F.
 	DATA lHeader					INIT .T.
 	DATA aInclude					INIT {}
@@ -86,7 +87,7 @@ METHOD New( cTitle, cIcon, lTables, cCharset,  cPathTpl ) CLASS TWeb
 	DEFAULT cTitle 			TO 'TWeb'
 	//DEFAULT cIcon 			TO __TWebGlobal[ 'url_tweb' ] + 'images/tweb.png'
 	DEFAULT lTables			TO .F.
-	DEFAULT cCharSet		TO 'ISO-8859-1'
+	DEFAULT cCharSet		TO 'UTF-8' 		//	'ISO-8859-1'
 	
 	//DEFAULT cIcon 			TO HB_Dirbase() + 'files\tweb\images\tweb.png'
 	DEFAULT cIcon 			TO 'files/tweb/images/tweb.ico'

@@ -1,12 +1,18 @@
 #include 'lib/uhttpd2/uhttpd2.ch'
 
 REQUEST DBFCDX
+
+REQUEST HB_CODEPAGE_ES850  // Se añade el idioma español
+REQUEST HB_LANG_ES
+REQUEST HB_CODEPAGE_ESWIN  // Para reconocer la EÑE y ACENTOS en los índices
+REQUEST HB_CODEPAGE_UTF8EX
+REQUEST HB_CODEPAGE_UTF8EX
  
 
 #define VK_ESCAPE	27
 
-request hb_threadId					//	for testing...
-request __vmCountThreads				//	for testing...
+//request hb_threadId					//	for testing...
+//request __vmCountThreads				//	for testing...
 
 function main()
 
@@ -27,9 +33,13 @@ function WebServer()
 	
 	oServer:SetPort( 81 )
 	oServer:SetDirFiles( 'examples', .T. )		//	.t. == Index list
+	
 	oServer:SetDirFiles( 'data.repository' )	
 	oServer:bInit := {|hInfo| ShowInfo( hInfo ) }
 	
+	//	Example Charset UTF8. Active to .T. Default .f.
+	//	oServer:lUtf8 := .T.							
+	//	-----------------------------------
 	
 	//	Routing...			
 
@@ -42,12 +52,14 @@ function WebServer()
 		oServer:Route( 'pluggin'	, 'index_pluggin.html' )
 		oServer:Route( 'security'	, 'index_security.html' )
 		oServer:Route( 'controls'	, 'index_controls.html' ) 		
+		oServer:Route( 'charset'	, 'index_charset.html' ) 		
 		oServer:Route( 'browse'	, 'index_brw.html' )  	
 		oServer:Route( 'dialog'	, 'index_dialog.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
 		oServer:Route( 'splash'	, 'index_splash.html' )  			
 		oServer:Route( 'functional', 'index_functional.html' )  			
 		oServer:Route( 'examples'	, 'examples/*' )  			
+	
 
 
 	//	TUTORS
@@ -91,11 +103,17 @@ function WebServer()
 		oServer:Route( 'styles'		, 'controls/styles.html' ) 		
 		oServer:Route( 'properties'	, 'controls/properties.html' ) 		
 		oServer:Route( 'upload'		, 'controls/upload.html' ) 		
-		oServer:Route( 'upload_basic'	, 'controls/upload_basic.html' ) 		
+		oServer:Route( 'upload_basic'	, 'controls/upload_basic.html' ) 
+
+	//	Charset
+	
+		oServer:Route( 'char-1'		, 'charset/char-1.html' ) 
+		oServer:Route( 'char-2'		, 'charset/char-2.html' ) 
+	
 
 	//	Browsers
 	
-		oServer:Route( 'brw'		, 'browser/brw.html' ) 
+		oServer:Route( 'brw'			, 'browser/brw.html' ) 
 							
 		oServer:Route( 'brw-0'		, 'browser/brw-0.html' ) 
 		oServer:Route( 'brw-1'		, 'browser/brw-1.html' ) 
@@ -123,9 +141,13 @@ function WebServer()
 		oServer:Route( 'screen1'	, 'screens/screen1.html' ) 		
 		oServer:Route( 'screen2'	, 'concept' ) 					//	<<--- Function !
 		
-	//	Functional 
+	//	Functional (Mini App with security)
 	
+		oServer:Route( 'upd'		, 'functional/upd_splash.html' )
+		oServer:Route( 'upd_login'	, 'functional/upd_login.html' )
+		oServer:Route( 'upd_logout', 'upd_logout' )
 		oServer:Route( 'upd_sec'	, 'functional/upd_sec.html' )
+		oServer:Route( 'upd_info'	, 'upd_info' )
 
 		
 	//	Messages	
@@ -201,6 +223,8 @@ function ShowInfo( hInfo )
 	Console  'Compiler.........: ' + HB_COMPILER()
 	Console  'SSL..............: ' + if( hInfo[ 'ssl' ], 'Yes', 'No' )
 	Console  'Trace............: ' + if( hInfo[ 'debug' ], 'Yes', 'No' )
+	Console  'Codepage.........: ' + hb_SetCodePage() + '/' + hb_cdpUniID( hb_SetCodePage() )
+	Console  'UTF8 (actived)...: ' + if( hInfo[ 'utf8' ], 'Yes', 'No' )
 	Console  '---------------------------------'
 	Console  'Escape for exit...' 		
 
@@ -209,12 +233,38 @@ retu nil
 //----------------------------------------------------------------------------//
 
 function Config()
+	local cdp				
+	
+	HB_LANGSELECT('ES')
+    HB_SetCodePage ( "ESWIN" )			
+	
+	RddSetDefault( 'DBFCDX' )
+    SET( _SET_DBCODEPAGE, 'CP850' )		//	IMPORTANT == Clausula USE ... CODEPAGE 'CP850'
+    
+  
 
 	SET DATE FORMAT TO 'DD/MM/YYYY'
 	SET DELETE OFF 
-	RddSetDefault( 'DBFCDX' )
+
+/*
+    FOR EACH cdp IN get_list_of_real_codepages()
+		_d( hb_cdpUniID( cdp ) )
+    NEXT	
+	*/
+	_d( get_list_of_real_codepages() )
+   
 	
 retu nil 
+
+ 
+FUNCTION get_list_of_real_codepages()
+   LOCAL s_uni := { => }
+   LOCAL cdp
+   s_uni := { => }
+   FOR EACH cdp IN hb_cdpList()
+      s_uni[ hb_cdpUniID( cdp ) ] := cdp
+   NEXT
+   RETURN s_uni
 
 
 //----------------------------------------------------------------------------//

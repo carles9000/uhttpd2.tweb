@@ -24,7 +24,7 @@
 	#pragma __cstream |<o>:Html( UInlinePrg( UReplaceBlocks( %s, '<$', "$>" [,<(v1)>][+","+<(vn)>] [, @<v1>][, @<vn>] ) ) )
 
 #xcommand HTML <oForm> FILE <cFile> [ <prm: PARAMS, VARS> <cValues,...> ]  => <oForm>:Html( TWebHtmlInline( <cFile>, [<cValues>]  ) )
-
+#xcommand TEMPLATE <oForm> FILE <cFile> [ <prm: PARAMS, VARS> <cValues,...> ]  => <oForm>:Html( TWebHtmlInline( <cFile>, [<cValues>]  ) )
 
 
 #xcommand DEFINE FORM <oForm> [ID <cId> ] [ACTION <cAction>] [METHOD <cMethod>] ;
@@ -198,7 +198,7 @@
 => ;
 	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>] )
 
-#xcommand MENUITEM <cItem> [ ICON <cIcon> ] ROUTE <cRoute> OF <oNav>  => <oNav>:AddMenuItem( <cItem>, <cRoute>, [<cIcon>] )
+#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>] )
 
 
 		 

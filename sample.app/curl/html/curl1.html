@@ -1,0 +1,23 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Curl' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Curl', 'Get public IP'
+		
+		DEFINE FORM o ID 'myform' API 'api_curl' OF oWeb 			
+		
+		INIT FORM o 
+			
+  			ROWGROUP o			
+				GET ID 'getip'  VALUE '' GRID 6 LABEL 'Public IP' ;				
+					BUTTON 'Get', 'Clean' ACTION 'getip', 'clean' OF o			
+			ENDROW o			
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

@@ -1,0 +1,24 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	LOCAL hData := {=>}
+	
+	DEFINE WEB oWeb TITLE 'Login' 					
+		
+		DEFINE FORM o ID 'myform' API 'api_functional' OF oWeb 
+			o:lDessign := .f.			
+			o:lFluid := .t.			
+		
+		INIT FORM o 		
+			
+			hData[ 'id_user' ] 	:= 'user'
+			hData[ 'id_psw' ]  	:= 'psw'
+			//hData[ 'image' ] 	:= 'files/images/img_parallax.jpg'
+		
+			TEMPLATE o FILE 'tpl\login\login-2.tpl' PARAMS o, hData
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>

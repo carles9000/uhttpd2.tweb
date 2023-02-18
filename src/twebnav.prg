@@ -11,7 +11,7 @@ CLASS TWebNav FROM TWebControl
 
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
-	METHOD AddMenuItem( cItem, cLink )
+	METHOD AddMenuItem( cItem, cLink, cAction, cIcon  )
 
 
 ENDCLASS 
@@ -91,8 +91,23 @@ METHOD Activate() CLASS TWebNav
 		cHtml += ' <li class="nav-item active">'
 		
 		for n := 1 to nLen 		
-			cHtml += '<a class="nav-link" href="' + ::aMenuItem[n][ 'link' ] + '">' 
+			//cHtml += '<a class="nav-link" href="' + ::aMenuItem[n][ 'link' ] + '">' 
+			cHtml += '<a id="dummy" 		class="nav-link" ' 
 			
+			if !empty( ::aMenuItem[n][ 'link' ] )
+				cHtml += ' href="' + ::aMenuItem[n][ 'link' ] + '" '
+			elseif !empty( ::aMenuItem[n][ 'action' ] ) 
+			
+				if AT( '(', ::aMenuItem[n][ 'action' ] ) >  0 		//	Exist function ?
+					cHtml += 'onclick="' + ::aMenuItem[n][ 'action' ] + '" '				
+				else
+					cHtml += ' data-live data-globalonclick="' + ::aMenuItem[n][ 'action' ] + '" '					
+				endif			
+				
+			endif
+			
+			cHtml += ' >' 
+		
 			if !empty( ::aMenuItem[n][ 'icon' ])
 				cHtml += ::aMenuItem[n][ 'icon' ] + '&nbsp;'
 			endif 
@@ -115,7 +130,9 @@ RETU cHtml
 
 METHOD AddMenuItem( cMenu, cLink, cIcon ) CLASS TWebNav
 
+	hb_default( @cLink, '' )
 	hb_default( @cIcon, '' )
+	
 
 	Aadd( ::aMenuItem, { 'item' => cMenu, 'link' => cLink, 'icon' => cIcon } )
 	

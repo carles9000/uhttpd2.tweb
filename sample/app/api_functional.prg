@@ -1,10 +1,20 @@
 function Api_Functional( oDom )
-
-	//	Acceso a API Security
+	
+	if oDom:GetProc() != 'login'
+	
+		//	Acceso a API Security
+			if ! USessionReady()
+				URedirect( 'upd_login' )
+				retu nil
+			endif	
+	
+	endif
 
 	do case
 		case oDom:GetProc() == 'getid'			; GetId( oDom )						
 		case oDom:GetProc() == 'upd_salary'	; Upd_Salary( oDom )						
+		
+		case oDom:GetProc() == 'login'			; Upd_Login( oDom )								
 
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
@@ -16,12 +26,20 @@ retu oDom:Send()
 
 static function GetId( oDom )
 
-	local cAlias 	:= OpenDbf( 'test.dbf', 'test.cdx', 'ID' )
+	local cAlias
 	local nId 		:= Val( oDom:Get( 'id' ) )		
 	local h			:= {=>}
 	local lFound
 	local cKeyId	:= ''
 	
+	//	Acceso a API Security
+	
+		if ! USessionReady()
+			URedirect( 'upd_login' )
+			retu nil
+		endif	
+		
+	//	-----------------------
 	
 	
 	h[ 'first' ] 	:= ''
@@ -44,6 +62,7 @@ static function GetId( oDom )
 
 	//	Proceso
 	
+	cAlias 	:= OpenDbf( 'test.dbf', 'test.cdx', 'ID' )
 	lFound := (cAlias)->( DbSeek( nId ) )	
 	
 	if lFound
@@ -83,11 +102,20 @@ retu nil
 
 static function Upd_Salary( oDom )
 
-	local cAlias 	:= OpenDbf( 'test.dbf', 'test.cdx' )
+	local cAlias
 	local cKeyId 	:= oDom:Get( 'keyid' ) 	
 	local nId 		:= Val( oDom:Get( 'id' ) )	
 	local nSalary	:= Val( oDom:Get( 'salary' ) )	
 	local lFound
+	
+	//	Acceso a API Security
+	
+		if ! USessionReady()
+			URedirect( 'upd_login' )
+			retu nil
+		endif	
+		
+	//	-----------------------	
 	
 	//	Validacion datos de entrada
 	//	id type N
@@ -112,7 +140,8 @@ static function Upd_Salary( oDom )
 		retu nil
 	endif
 //--------------	
-	
+
+	cAlias 	:= OpenDbf( 'test.dbf', 'test.cdx' )
 	(cAlias)->( OrdSetFocus( 'ID' ) )
 	
 	lFound := (cAlias)->( DbSeek( nId ) )
@@ -131,4 +160,86 @@ static function Upd_Salary( oDom )
 	endif		
 
 retu nil 
+
+// -------------------------------------------------- //
+
+static function Upd_Login( oDom )
+
+	local cUser 	:= oDom:Get( 'user' )
+	local cPsw 	:= oDom:Get( 'psw' )
+	local hData	:= {=>}
+	
+	//	Validate parameters
+	
+		if len( cUser ) > 10 
+			oDom:SetMsg( 'User too long. Max. 10 characters' )
+			oDom:Focus( 'user' )
+			retu nil
+		endif
+		
+		if empty( cUser ) 
+			oDom:SetMsg( 'User is empty' )
+			oDom:Focus( 'user' )
+			retu nil
+		endif		
+		
+		if empty( cPsw ) 
+			oDom:SetMsg( 'Psw is empty' )
+			oDom:Focus( 'psw' )
+			retu nil
+		endif
+
+	//	Process 
+	
+		if cUser = 'demo' .and. cPsw = '1234'
+		
+			hData[ 'user' ] := cUser
+			hData[ 'name' ] := 'Mr. Demo'
+			hData[ 'rol'  ] := 'B'			
+		
+			USessionStart()
+			Usession( 'credentials', hData )
+			URedirect( 'upd_sec' )
+			
+		else 
+		
+			oDom:SetError( 'User/Psw is wrong !' )			
+			retu nil			
+		
+		endif
+		
+retu nil
+
+// -------------------------------------------------- //
+//	FUNCTIONS - NO API
+//	------------------------------------------------- //
+function Upd_Info()
+	
+	local cHtml 			:= ''
+	local hCredentials 
+
+	if ! USessionReady()
+		URedirect( 'upd_login' )
+		retu nil
+	endif
+	
+	hCredentials := USession( 'credentials' )
+	
+	cHtml := ULoadHtml( 'functional\upd_info.html', hCredentials )
+	
+	UWrite( cHtml )									
+
+retu nil
+
+// -------------------------------------------------- //
+
+function Upd_Logout()
+
+	USessionEnd()
+	
+	URedirect( 'upd' )
+
+
+retu nil 
+
 // -------------------------------------------------- //

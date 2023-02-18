@@ -14,10 +14,14 @@
 		<?prg 
 			local cHtml := ''
 			
-			if empty( pValue(3) )
-				cHtml := '<img src="files/images/mini-mercury.png" style="width:40px;"></img>'
+			
+			if valtype( pValue(3) ) == 'L' .and. pValue(3) == .F.
+			
 			else
-				cHtml := '<img src="' + pvalue(3) + '" style="width:40px;"></img>'
+				if empty( pValue(3) )
+					cHtml := '<img src="files/images/mini-mercury.png" style="width:40px;"></img>'
+				endif
+
 			endif
 			
 			cHtml += '&nbsp;'
