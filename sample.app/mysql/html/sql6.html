@@ -1,0 +1,27 @@
+<?prg 
+#include "lib/tweb/tweb.ch" 
+
+	LOCAL o, oRs
+	LOCAL n, j			
+	
+		o := WDO():Rdbms( 'MYSQL', "localhost", "harbour", "hb1234", "dbHarbour", 3306 )		
+		
+		IF ! o:lConnect		
+			RETU NIL
+		ENDIF
+		
+		
+		? "<hr><b>==> Fetch  Query( 'select * from sellers limit 10' )</b>"
+		
+		IF !empty( hRes := o:Query( 'select * from sellers limit 10' ) )
+		
+			WHILE ( !empty( hRs := o:Fetch_Assoc( hRes ) ) )
+				? hRs[ 'code' ], hRs[ 'first' ], hRs[ 'address1' ], hRs[ 'zipcode' ], hRs[ 'email' ]
+			END
+			
+			o:Free_Result( hRes )
+		
+		ENDIF						
+		
+	RETU ''
+?>

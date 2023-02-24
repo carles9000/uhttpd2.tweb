@@ -1,0 +1,24 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Mysql' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Mysql', 'Connect'
+		
+		DEFINE FORM o ID 'myform' API 'api_mysql' OF oWeb 
+					
+		INIT FORM o 			
+			
+			ROWGROUP o 
+				
+				BUTTON LABEL 'Connect MYSQL' ACTION 'connect' OF o
+				
+			ENDROW o 
+			
+		ENDFORM o	
+
+	INIT WEB oWeb RETURN
+?>
+

@@ -1,0 +1,48 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw
+	
+	DEFINE WEB oWeb TITLE 'Mysql' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Mysql', 'SQL command'
+		
+		DEFINE FORM o ID 'myform' API 'api_mysql' OF oWeb 
+			o:lDessign := .f.
+		
+		INIT FORM o 			
+				
+			HTML o 
+				<h5>
+				Usamos la base de datos dbharbour con tablas para estudiar como: customer, states, sellers
+				<hr>
+				We use the dbharbour database with tables to study such as: customer, states, sellers				
+				</h5><br>
+			ENDTEXT						
+			
+			ROWGROUP o 
+				
+				GET ID 'sql' VALUE "select * from customer where age > 90 and state = 'NY'" LABEL 'Sql' ;
+					BUTTON 'Execute', 'Clear' ACTION 'execute', 'brwclean' GRID 12 OF o
+				
+			ENDROW o 
+				
+			ROWGROUP o 			
+			
+				COL o  GRID 12
+				
+					aOptions := { 'height' => '300px' }		
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Sql command</h5>' OF o 
+
+					INIT BROWSE oBrw 
+			
+				ENDCOL o				
+				
+			ENDROW o		
+
+		ENDFORM o	
+
+	INIT WEB oWeb RETURN
+?>
+
