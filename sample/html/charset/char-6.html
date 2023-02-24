@@ -1,0 +1,33 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	LOCAL cTxt := "" 
+	
+	TEXT TO cTxt
+Esta página está codificada en UTF-8 con nuestro editor. Nuestra web tiene un charset = 'ISO-8859-1'
+	ENDTEXT
+
+	
+	DEFINE WEB oWeb TITLE 'Charset' 
+		oWeb:cCharset = 'ISO-8859-1'
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Charset', ''
+		
+		DEFINE FORM o ID 'myform' API 'api_charset' OF oWeb 			
+		
+		INIT FORM o 
+		
+			HTML o FILE 'tpl\msg2.tpl' PARAMS cTxt, 'secondary', .f.
+						
+			HTML o
+ANSI characters: àáèéíòóúñç
+<br>
+Caràcteres en otro codepage, p.e. Chino: 这是用中文写的
+			ENDTEXT 
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

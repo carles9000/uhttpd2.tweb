@@ -80,7 +80,7 @@ METHOD Activate() CLASS TWebBrowse
 	cHtml := '<div class="card" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) + ' >'
 	
 	if !empty( ::cLabel )
-		cHtml += '<div class="card-header">' + ::cLabel + '</div>'
+		cHtml += '<div id="' + cIdPrefix + ::cId + '_title' + '" class="card-header">' + ::cLabel + '</div>'
 	endif
 
 	

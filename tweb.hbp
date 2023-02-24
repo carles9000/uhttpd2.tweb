@@ -7,7 +7,7 @@
 -hblib
 
 # output filename
--olib/${hb_compiler}/${hb_name}
+-o${hb_name}
 
 # harbour compiler flags
 -n

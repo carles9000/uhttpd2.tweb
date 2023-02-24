@@ -2,17 +2,14 @@
 
 REQUEST DBFCDX
 
-REQUEST HB_CODEPAGE_ES850  // Se añade el idioma español
+//	-----------------------
+REQUEST HB_CODEPAGE_ES850  	
 REQUEST HB_LANG_ES
-REQUEST HB_CODEPAGE_ESWIN  // Para reconocer la EÑE y ACENTOS en los índices
+REQUEST HB_CODEPAGE_ESWIN  	
 REQUEST HB_CODEPAGE_UTF8EX
-REQUEST HB_CODEPAGE_UTF8EX
- 
+//	-----------------------
 
 #define VK_ESCAPE	27
-
-//request hb_threadId					//	for testing...
-//request __vmCountThreads				//	for testing...
 
 function main()
 
@@ -109,6 +106,11 @@ function WebServer()
 	
 		oServer:Route( 'char-1'		, 'charset/char-1.html' ) 
 		oServer:Route( 'char-2'		, 'charset/char-2.html' ) 
+		oServer:Route( 'char-3'		, 'charset/char-3.html' ) 
+		oServer:Route( 'char-4'		, 'charset/char-4.html' ) 
+		oServer:Route( 'char-5'		, 'charset/char-5.html' ) 
+		oServer:Route( 'char-6'		, 'charset/char-6.html' ) 
+		oServer:Route( 'char-7'		, 'charset/char-7.html' ) 
 	
 
 	//	Browsers
@@ -235,37 +237,17 @@ retu nil
 function Config()
 	local cdp				
 	
-	HB_LANGSELECT('ES')
-    HB_SetCodePage ( "ESWIN" )			
-	
 	RddSetDefault( 'DBFCDX' )
-    SET( _SET_DBCODEPAGE, 'CP850' )		//	IMPORTANT == Clausula USE ... CODEPAGE 'CP850'
-    
-  
+	
+	HB_LANGSELECT('ES')        
+    HB_SetCodePage ( "ESWIN" )		
+	
+	SET( _SET_DBCODEPAGE, 'ESWIN' )		
 
 	SET DATE FORMAT TO 'DD/MM/YYYY'
 	SET DELETE OFF 
 
-/*
-    FOR EACH cdp IN get_list_of_real_codepages()
-		_d( hb_cdpUniID( cdp ) )
-    NEXT	
-	*/
-	_d( get_list_of_real_codepages() )
-   
-	
 retu nil 
-
- 
-FUNCTION get_list_of_real_codepages()
-   LOCAL s_uni := { => }
-   LOCAL cdp
-   s_uni := { => }
-   FOR EACH cdp IN hb_cdpList()
-      s_uni[ hb_cdpUniID( cdp ) ] := cdp
-   NEXT
-   RETURN s_uni
-
 
 //----------------------------------------------------------------------------//
 

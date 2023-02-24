@@ -9,7 +9,7 @@ IF ERRORLEVEL 1 GOTO COMPILEERROR
 @echo Copy Lib to project sample\lib\tweb
 @echo -----------------------------------
 
-copy lib\msvc64\tweb.lib sample\lib\tweb\tweb.lib /Y
+copy tweb.lib sample\lib\tweb\tweb.lib /Y
 
 
 GOTO EXIT

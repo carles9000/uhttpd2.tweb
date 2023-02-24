@@ -1,0 +1,58 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	LOCAL aBtns 
+	
+	DEFINE WEB oWeb TITLE 'Charset' 
+	
+	    //oWeb:AddCss( 'https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator_midnight.css' )
+	    oWeb:AddCss( 'https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator_simple.css' )
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Charset.', 'Ansi Sort'
+		
+		DEFINE FORM o ID 'myform' API 'api_charset' OF oWeb 			
+		
+		INIT FORM o 
+
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'	, 'setdatasort' },;
+				{ 'btn-2', 'Clean'	, 'clean'		 },;							
+				{ 'btn-3', 'Reindex', 'reindexsort'	 };							
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns	
+			
+			ROW o 			
+			
+				COL o CLASS 'p-0' GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '100%',	;	
+						'placeholder' => 'No Data Available',;
+						'layout' => 'fitDataStretch',;
+						'index' => 'id'   		;		// Default id
+					}
+
+					//	Way B. Via API direct
+						aEvents := { { 'name' => 'cellEdited' , 'proc' => 'savesort'} }						
+					
+					DEFINE BROWSE oBrw ID 'mytable' EVENTS aEvents OPTIONS aOptions TITLE '<h5>Word sort</h5>' OF o 
+											
+						COL oCol TO oBrw CONFIG { 'title' => "Word", 'field' => "word", 'editor' => "input", 'headerSort' => .f. }
+						
+					INIT BROWSE oBrw 
+			
+				ENDCOL o				
+				
+			ENDROW o
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+
