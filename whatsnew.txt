@@ -1,3 +1,6 @@
+27/02/2023 Add new example SSL 
+	 * go to \sample.tpl.ssl
+
 24/02/23 Add new examples
 	 * Charset examples
 
