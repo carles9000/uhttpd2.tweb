@@ -1,3 +1,6 @@
+02/03/2023 revised sessions module.
+	* Check test functional
+
 27/02/2023 Add new example SSL 
 	 * go to \sample.tpl.ssl
 
