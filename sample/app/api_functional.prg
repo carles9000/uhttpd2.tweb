@@ -216,7 +216,7 @@ retu nil
 function Upd_Info()
 	
 	local cHtml 			:= ''
-	local hCredentials 
+	local hCredentials, oSession
 
 	if ! USessionReady()
 		URedirect( 'upd_login' )
@@ -225,7 +225,9 @@ function Upd_Info()
 	
 	hCredentials := USession( 'credentials' )
 	
-	cHtml := ULoadHtml( 'functional\upd_info.html', hCredentials )
+	oSession := UGetSession()		
+	
+	cHtml := ULoadHtml( 'functional\upd_info.html', hCredentials, oSession )
 	
 	UWrite( cHtml )									
 
