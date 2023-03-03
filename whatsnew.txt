@@ -1,10 +1,13 @@
-02/03/2023 revised sessions module.
+03/03/2023 Vrs. 1.04 link TButton solved
+	* check samples\examples\button-link.prg
+
+02/03/2023 Vrs. 1.03 revised sessions module.
 	* Check test functional
 
-27/02/2023 Add new example SSL 
+27/02/2023 Vrs. 1.02 Add new example SSL 
 	 * go to \sample.tpl.ssl
 
-24/02/23 Add new examples
+24/02/23 Vrs. 1.01 Add new examples
 	 * Charset examples
 
 18/02/23 Vrs. 1.0j

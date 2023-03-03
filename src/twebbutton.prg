@@ -120,6 +120,10 @@ METHOD Activate() CLASS TWebButton
 	
 	ENDIF
 	
+	if !empty( ::cLink )
+		cHtml += '<a href="' + ::cLink + '">'
+	endif
+	
 	
 	cHtml += '<button type="' + cType + '" '
 	//cHtml += 'id="' + cIdPrefix + ::cId + '" '  
@@ -165,13 +169,15 @@ METHOD Activate() CLASS TWebButton
 		cHtml += ' data-upload="_' + cIdPrefix + ::cId_Btn_Files + '" '
 	endif 
 	
-	IF !empty( ::cAction )
+	if empty( ::cLink )
+		IF !empty( ::cAction )
 
-		if AT( '(', ::cAction ) >  0 		//	Exist function ?
-			cHtml += 'onclick="' + ::cAction + '" '				
-		else
-			cHtml += ' data-onclick="' + ::cAction + '" '					
-		endif	
+			if AT( '(', ::cAction ) >  0 		//	Exist function ?
+				cHtml += 'onclick="' + ::cAction + '" '				
+			else
+				cHtml += ' data-onclick="' + ::cAction + '" '					
+			endif	
+		ENDIF
 	ENDIF
 		
 
@@ -181,6 +187,12 @@ METHOD Activate() CLASS TWebButton
 	cHtml += IF( ::lDisabled, 'disabled', '' ) + ' >' 
 	cHtml += ::cIcon + ::cLabel
 	cHtml += '</button>'
+	
+	if !empty( ::cLink )
+		cHtml += '</a>'
+	endif	
+	
+	
 	IF ::nGrid > 0 
 		cHtml += '</div>'
 	ENDIF
