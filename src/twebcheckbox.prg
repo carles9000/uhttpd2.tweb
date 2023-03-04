@@ -7,7 +7,7 @@ CLASS TWebCheckbox FROM TWebControl
 
 ENDCLASS 
 
-METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle, cProp ) CLASS TWebCheckbox
+METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle, cProp, lReadonly ) CLASS TWebCheckbox
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT lValue TO .F.
@@ -18,6 +18,7 @@ METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle
 	DEFAULT cFont TO ''
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
+	DEFAULT lReadonly TO .f.
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -29,6 +30,7 @@ METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle
 	::cFont 		:= cFont	
 	::cStyle 		:= cStyle
 	::cProp 		:= cProp
+	::lReadOnly 	:= lReadOnly 
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -83,6 +85,11 @@ METHOD Activate() CLASS TWebCheckbox
 	ENDIF	
 	
 	cHtml += cChecked
+
+	IF ::lReadOnly
+		cHtml += ' disabled '
+	ENDIF	
+	
 	cHtml += '> '
 	
 	IF !empty( ::cLabel )

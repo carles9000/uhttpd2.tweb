@@ -12,7 +12,7 @@ CLASS TWebRadio FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cLabel, uValue, aItems, aValues, nGrid, cAction, lInline, cClass, cFont, cStyle, cProp ) CLASS TWebRadio
+METHOD New( oParent, cId, cLabel, uValue, aItems, aValues, lReadOnly, nGrid, cAction, lInline, cClass, cFont, cStyle, cProp ) CLASS TWebRadio
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT cLabel TO ''	
@@ -26,6 +26,7 @@ METHOD New( oParent, cId, cLabel, uValue, aItems, aValues, nGrid, cAction, lInli
 	DEFAULT cFont TO ''	
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
+	DEFAULT lReadOnly TO .F.
 	
 
 	::oParent 		:= oParent	
@@ -41,6 +42,7 @@ METHOD New( oParent, cId, cLabel, uValue, aItems, aValues, nGrid, cAction, lInli
 	::cFont 		:= cFont	
 	::cStyle 		:= cStyle
 	::cProp 		:= cProp
+	::lReadOnly		:= lReadOnly
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -128,9 +130,13 @@ METHOD Activate() CLASS TWebRadio
 		
 		IF ::uValue == ::aValues[nI] 
 			cHtml += ' checked '					
-		ENDIF		
-		
-		
+		ENDIF
+
+		IF ::lReadOnly
+			cHtml += ' disabled '
+		ENDIF					
+	
+	
 		cHtml += '  >' 
 		cHtml += '	<label class="custom-control-label tweb_pointer '
 		

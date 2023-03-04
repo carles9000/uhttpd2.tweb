@@ -244,6 +244,10 @@ METHOD Activate() CLASS TWebGet
 				cHtml += 'style="border-radius: 0px 5px 5px 0px;" '												
 			endif
 			
+			IF ::lReadOnly
+				cHtml += ' disabled '
+			ENDIF			
+			
 			cHtml += ' >'
 			
 			if !empty( ::cLink )

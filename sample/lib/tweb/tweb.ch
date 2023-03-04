@@ -82,7 +82,7 @@
 	[<oFont> := ] TWebFont():New( <oForm>, <cId>, <cColor>, <cBackGround>, <nSize>, [<.bold.>], [<.italic.>], [<cFamily>] )
 
 #xcommand GET [<oGet>] [ ID <cId> ] [ VALUE <uValue> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ ALIGN <cAlign> ] [ <col:GRID, COL> <nGrid>] ;
-	[ <ro: READONLY> ] [TYPE <cType>] [ PLACEHOLDER <cPlaceHolder>] ;
+	[ <ro: READONLY, DISABLED> ] [TYPE <cType>] [ PLACEHOLDER <cPlaceHolder>] ;
 	[ <btn: BUTTON, BUTTONS> <cButton,...> ] [ <act: ACTION, ACTIONS> <cAction,...> ] [ <bid: BTNID, BTNIDS> <cBtnId,...> ] ;
 	[ <rq: REQUIRED> ] [ AUTOCOMPLETE <uSource> [ SELECT <cSelect>] ] ;
 	[ <chg: ONCHANGE,VALID> <cChange> ];
@@ -95,7 +95,7 @@
 	[<oGet> := ] TWebGet():New( <oForm>, [<cId>], [<uValue>], [<nGrid>], [<cLabel>], [<cAlign>], [<.ro.>], [<cType>], [<cPlaceHolder>], [\{<cButton>\}], [\{<cAction>\}], [\{<cBtnId>\}], [<.rq.>], [<uSource>], [<cSelect>], [<cChange>], [<cClass>], [<cFont>], [<cFontLabel>],[<cLink>], [<cGroup>], [<cDefault>], [\{<cSpan>\}], [\{<cSpanId>\}], [<cStyle>], [<cProp>] )
 	
 #xcommand GET [<oGetMemo>] MEMO [ ID <cId> ] [ VALUE <uValue> ] [ LABEL <cLabel> ] [ ALIGN <cAlign> ] [GRID <nGrid>] [ STYLE <cStyle>] ;
-	[ <ro: READONLY> ] [ ROWS <nRows> ] ;	
+	[ <ro: READONLY, DISABLED> ] [ ROWS <nRows> ] ;	
 	[ CLASS <cClass> ] [ FONT <cFont> ] ;
 	[ <chg: ONCHANGE,VALID> <cChange> ];
 	[ STYLE <cStyle> ] [ PROP <hProp> ];	
@@ -104,7 +104,7 @@
 	[<oGetMemo> := ] TWebGetMemo():New( <oForm>, [<cId>], [<uValue>], [<nGrid>], [<cLabel>], [<cAlign>], [<.ro.>], [<nRows>], [<cClass>], [<cFont>], [<cChange>], [<cStyle>], [<hProp>] )
 	
 #xcommand GETNUMBER [<oGet>] [ ID <cId> ] [ VALUE <uValue> ] [ LABEL <cLabel> ] [ ALIGN <cAlign> ] [ <col:GRID, COL> <nGrid>] ;
-	[ <ro: READONLY> ] [ PLACEHOLDER <cPlaceHolder>] ;	
+	[ <ro: READONLY, DISABLED> ] [ PLACEHOLDER <cPlaceHolder>] ;	
 	[ <rq: REQUIRED> ]  ;
 	[ <chg: ONCHANGE,VALID> <cChange> ];
 	[ CLASS <cClass> ] [ FONT <cFont> ] [ STYLE <cStyle> ] ;	
@@ -129,14 +129,15 @@
 	
 #xcommand BUTTON FILE [<oBtn>] [ ID <cId> ] [ LABEL <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
     [ GRID <nGrid> ] [ ALIGN <cAlign> ]  ;
-	[ ICON <cIcon> ] [ <ds: DISABLED> ] [ <sb: SUBMIT> ] ;
+	[ ICON <cIcon> ] [ <sb: SUBMIT> ] ;
 	[ CLASS <cClass> ] [ FONT <cFont> ] ;	
 	[ WIDTH <cWidth> ] ;
 	[ CONFIRM <cConfirm> ] ;
+	[ <ro: READONLY, DISABLED> ];
 	[ STYLE <cStyle> ] [ PROP <hProp> ] [ <mu: MULTIPLE> ];	
 	OF <oForm> ;
 => ;
-	[ <oBtn> := ] TWebButtonFile():New( <oForm>, [<cId>], <cLabel>, <cName>, <cAction>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ds.>], [<.sb.>], [<cClass>], [<cFont>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.mu.>] )	
+	[ <oBtn> := ] TWebButtonFile():New( <oForm>, [<cId>], <cLabel>, <cName>, <cAction>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ro.>], [<.sb.>], [<cClass>], [<cFont>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.mu.>] )	
 	
 	
 #xcommand IMAGE [<oImg>] [ ID <cId> ] [ FILE <cFile> ] [ BIGFILE <cBigFile> ] [ ALIGN <cAlign> ] ;
@@ -146,27 +147,29 @@
 	[<oImg> := ] TWebImage():New( <oForm>, [<cId>], [<cFile>], [<cBigFile>], [<nGrid>], [<cAlign>], [<cClass>], [<nWidth>], [<cGallery>], [<.nozoom.>], [<cStyle>], [<cProp>] )
 	
 	
-#xcommand SWITCH [<oSwitch>] [ ID <cId> ] [ <lValue: ON> ] [ VALUE <lValue> ] [ LABEL <cLabel> ] [GRID <nGrid>] [ <act:ACTION,ONCHANGE> <cAction> ] OF <oForm> ;
+#xcommand SWITCH [<oSwitch>] [ ID <cId> ] [ <lValue: ON> ] [ VALUE <lValue> ] [ LABEL <cLabel> ] ;
+	[GRID <nGrid>] [ <act:ACTION,ONCHANGE> <cAction> ] [ <ro: READONLY, DISABLED> ] OF <oForm> ;
 => ;
-	[ <oSwitch> := ] TWebSwitch():New( <oForm>, [<cId>], [<lValue>], [<cLabel>], [<nGrid>], [<cAction>] ) 	
+	[ <oSwitch> := ] TWebSwitch():New( <oForm>, [<cId>], [<lValue>], [<cLabel>], [<nGrid>], [<cAction>], [<.ro.>] ) 	
 
 #xcommand RADIO [<oRadio>] [ ID <cId> ] [ LABEL <cLabel> ] [ <chk: VALUE, CHECKED> <uValue> ] ;
 		[ <prm: PROMPT, PROMPTS, ITEMS> <cPrompt,...> ] ;
-		[ <tabs: VALUES, KEYS> <cValue,...> ] ;			
+		[ <tabs: VALUES, KEYS> <cValue,...> ] ;	
+		[ <ro: READONLY, DISABLED> ] ;
 		[ GRID <nGrid> ] ;
 		[ ONCHANGE  <cAction> ] ;
 		[ <inline: INLINE> ] ;
-		[ CLASS <cClass> ] [ FONT <cFont> ] [ STYLE <cStyle>] [ PROP <hProp> ];		
+		[ CLASS <cClass> ] [ FONT <cFont> ] [ STYLE <cStyle>] [ PROP <hProp> ] ;		
 		OF <oForm> ;
 => ;
-	[ <oRadio> := ] TWebRadio():New( <oForm>, [<cId>], [<cLabel>], [<uValue>], [\{<cPrompt>\}], [\{<cValue>\}], [<nGrid>], [<cAction>], [<.inline.>], [<cClass>], [<cFont>], [<cStyle>], [<hProp>] )
+	[ <oRadio> := ] TWebRadio():New( <oForm>, [<cId>], [<cLabel>], [<uValue>], [\{<cPrompt>\}], [\{<cValue>\}], [<.ro.>], [<nGrid>], [<cAction>], [<.inline.>], [<cClass>], [<cFont>], [<cStyle>], [<hProp>] )
 		 
 
 #xcommand CHECKBOX [<oCheckbox>] [ ID <cId> ] [ <lValue: ON> ] [ LABEL <cLabel> ] [GRID <nGrid>] [ ACTION  <cAction> ] ;
-	[ CLASS <cClass> ] [ FONT <cFont> ] [ STYLE <cStyle> ] [ PROP <hProp> ];	
+	[ CLASS <cClass> ] [ FONT <cFont> ] [ STYLE <cStyle> ] [ PROP <hProp> ] [ <ro: READONLY, DISABLED> ];	
 	OF <oForm> ;
 => ;
-	[ <oCheckbox> := ] TWebCheckbox():New( <oForm>, [<cId>], [<.lValue.>], [<cLabel>], [<nGrid>], [<cAction>], [<cClass>], [<cFont>], [<cStyle>], [<hProp>] ) 	
+	[ <oCheckbox> := ] TWebCheckbox():New( <oForm>, [<cId>], [<.lValue.>], [<cLabel>], [<nGrid>], [<cAction>], [<cClass>], [<cFont>], [<cStyle>], [<hProp>], [<.ro.>] ) 	
 	
 
 	
@@ -183,10 +186,10 @@
 		[ <tabs: VALUES> <cValue,...> ] ;		
 		[ GRID <nGrid> ] ;
 		[ ONCHANGE  <cAction> ] ;
-		[ CLASS <cClass> ] [ FONT <cFont> ]  [ GROUP <cGroup> ] [ STYLE <cStyle>] [ PROP <cProp> ];			
+		[ CLASS <cClass> ] [ FONT <cFont> ]  [ GROUP <cGroup> ] [ STYLE <cStyle>] [ PROP <cProp> ] [ <ro: READONLY, DISABLED> ];			
 		OF <oForm> ;
 => ;
-	[ <oSelect> := ] TWebSelect():New( <oForm>, [<cId>], [<uValue>], [\{<cPrompt>\}], [\{<cValue>\}], [<aKeyValue>], [<nGrid>], [<cAction>], [<cLabel>], [<cClass>], [<cFont>], [<cGroup>], [<cStyle>], [<cProp>] )
+	[ <oSelect> := ] TWebSelect():New( <oForm>, [<cId>], [<uValue>], [\{<cPrompt>\}], [\{<cValue>\}], [<aKeyValue>], [<nGrid>], [<cAction>], [<cLabel>], [<cClass>], [<cFont>], [<cGroup>], [<cStyle>], [<cProp>], [<.ro.>] )
 
 #xcommand ICON [<oIcon>] [ ID <cId> ] [ <prm: IMAGE,SRC> <cSrc> ] [ ALIGN <cAlign> ] ;
 	[GRID <nGrid>] [ CLASS <cClass> ] [ FONT <cFont> ] [ LINK <cLink> ] [ STYLE <cStyle>] OF <oForm> ;

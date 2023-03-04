@@ -57,7 +57,7 @@ METHOD New( oParent, cId, cLabel, cName, cAction, cValue, nGrid, cAlign, cIcon, 
 	::uValue		:= cValue
 	::cClass		:= cClass
 	::cIcon			:= cIcon
-	::lDisabled		:= lDisabled
+	::lDisabled	:= lDisabled
 	::lSubmit		:= lSubmit
 
 	::cClass 		:= cClass

@@ -8,13 +8,14 @@ CLASS TWebSwitch FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction  ) CLASS TWebSwitch
+METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction, lReadOnly  ) CLASS TWebSwitch
 
 	DEFAULT cId TO ''
 	DEFAULT lValue TO .F.
 	DEFAULT nGrid TO 4
 	DEFAULT cLabel TO ''
 	DEFAULT cAction TO ''
+	DEFAULT lReadOnly TO .F.
 	
 	::oParent		:= oParent
 	::cId			:= cId
@@ -22,6 +23,7 @@ METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction  ) CLASS TWebSwitch
 	::cLabel 		:= cLabel
 	::nGrid			:= nGrid
 	::cAction		:= cAction
+	::lReadOnly		:= lReadOnly
 
 	IF Valtype( oParent ) == 'O'
 	
@@ -63,6 +65,10 @@ METHOD Activate() CLASS TWebSwitch
 	ENDIF
 	
 	//cHtml += ' onclick="' + ::cAction + '" ' 
+	
+	IF ::lReadOnly
+		cHtml += ' disabled '
+	ENDIF		
 	
 	cHtml += '>' 
 	

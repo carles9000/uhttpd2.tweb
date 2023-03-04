@@ -13,7 +13,7 @@ CLASS TWebSelect FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle, cProp ) CLASS TWebSelect
+METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle, cProp, lReadOnly ) CLASS TWebSelect
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT aItems TO {}
@@ -28,6 +28,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	DEFAULT cGroup TO ''	
 	DEFAULT cStyle TO ''	
 	DEFAULT cProp TO ''	
+	DEFAULT lReadonly TO .F.
 	
 
 	::oParent 		:= oParent	
@@ -43,6 +44,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	::cGroup 		:= cGroup
 	::cStyle 		:= cStyle
 	::cProp 		:= cProp
+	::lReadOnly		:= lReadOnly
 
 	
 	if valtype( aKeyValue ) == 'H' 
@@ -173,6 +175,10 @@ METHOD Activate() CLASS TWebSelect
 		endif 
 		
 	ENDIF	
+	
+	IF ::lReadOnly
+		cHtml += ' disabled '
+	ENDIF		
 	
 	
 	cHtml += '>'

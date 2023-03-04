@@ -1,3 +1,6 @@
+04/03/2023 Vrs. 1.05 READONLY/DISABLED clausule
+	* check controls\disabled
+
 03/03/2023 Vrs. 1.04 link TButton solved
 	* check samples\examples\button-link.prg
 
