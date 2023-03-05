@@ -1,0 +1,66 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+
+	DEFINE WEB oWeb TITLE 'Hide' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Controls', 'Hide'
+		
+		DEFINE FORM o ID 'myform' API 'api_controls' OF oWeb 
+			o:lDessign 	:= .f.
+			o:lFluid 	:= .f.
+		
+		INIT FORM o 
+		
+			ROWGROUP o 
+		
+				COL o GRID 6				
+				
+					ROWGROUP o 									
+						GET ID 'myget' LABEL "I'm a get" VALUE 'I am a input/get' HIDDEN GRID 12 ;
+							BUTTON 'Test' ACTION "alert('Hi...')" OF o			
+					ENDROW o
+					
+					ROWGROUP o			
+						GET MEMO ID 'mymemo' LABEL "I'm a get memo" VALUE 'I am a input/get'  HIDDEN GRID 12 OF o			
+					ENDROW o			
+
+					ROWGROUP o			
+						BUTTON ID 'mybtn' LABEL 'Click me !' ACTION "alert( 'Hi...')" HIDDEN GRID 12 OF o			
+					ENDROW o			
+
+					ROWGROUP o			
+						CHECKBOX ID 'mycheck' LABEL 'Accept' HIDDEN GRID 12 OF o			
+					ENDROW o
+
+					ROWGROUP o			
+						SELECT ID 'mycombo' LABEL 'Cars' PROMPT 'Volvo', 'Seat', 'Renault' VALUES  'V', 'S', 'R'   GRID 12  HIDDEN  OF o
+					ENDROW o	
+				
+					ROWGROUP o			
+						RADIO ID 'myradio' PROMPT 'Soltero', 'Casado' VALUES  'S', 'C'  HIDDEN GRID 12 INLINE   OF o				
+					ENDROW o
+
+					ROWGROUP o 
+						SWITCH ID 'myonoff' VALUE .T. LABEL 'Ready' HIDDEN OF o		
+					ENDROW o					
+				
+				ENDCOL o 								
+			
+			ENDROW o
+			
+			ROWGROUP o HALIGN 'center' STYLE 'border: 1px solid gray;margin: 10px;padding: 10px;background-color: lightgray;'
+				
+				HTML o INLINE '<div class="btn-group" >'
+					BUTTON LABEL 'Show'  ACTION 'show' OF o			
+					BUTTON LABEL 'Hide'  ACTION 'hide' OF o			
+				HTML o INLINE '</div>'	
+			
+			ENDROW o				
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

@@ -13,7 +13,7 @@ CLASS TWebSelect FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle, cProp, lReadOnly ) CLASS TWebSelect
+METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle, cProp, lReadOnly, lHidden ) CLASS TWebSelect
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT aItems TO {}
@@ -29,6 +29,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	DEFAULT cStyle TO ''	
 	DEFAULT cProp TO ''	
 	DEFAULT lReadonly TO .F.
+	DEFAULT lHidden TO .F.
 	
 
 	::oParent 		:= oParent	
@@ -45,6 +46,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	::cStyle 		:= cStyle
 	::cProp 		:= cProp
 	::lReadOnly		:= lReadOnly
+	::lHidden 		:= lHidden
 
 	
 	if valtype( aKeyValue ) == 'H' 
@@ -100,6 +102,7 @@ METHOD Activate() CLASS TWebSelect
 	local aPar
 	local lArrayPar := .f.
 	local cIdPrefix
+	local cSt := ''
 	
 	DO CASE
 		CASE upper(::oParent:cSizing) == 'SM' ; cSize := 'form-control-sm'
@@ -113,6 +116,19 @@ METHOD Activate() CLASS TWebSelect
 	endif	
 
 	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) 
+	
+	IF  ::oParent:lDessign
+		cSt += 'border:1px solid blue;'
+	ENDIF
+
+	IF ::lHidden
+		cSt += 'display:none;'
+	ENDIF	
+	
+	if !empty( cSt )
+		cHtml += ' style="' + cSt + '" '
+	endif	
+	
 	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 	
 

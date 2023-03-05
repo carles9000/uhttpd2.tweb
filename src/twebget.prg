@@ -20,7 +20,7 @@ CLASS TWebGet FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle, cProp ) CLASS TWebGet
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle, cProp, lHidden ) CLASS TWebGet
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
@@ -47,6 +47,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	DEFAULT aSpanId TO {}
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
+	DEFAULT lHidden TO .F.
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -74,6 +75,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	::aSpanId		:= aSpanId
 	::cStyle		:= cStyle
 	::cProp			:= cProp
+	::lHidden		:= lHidden
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )			
@@ -90,6 +92,7 @@ METHOD Activate() CLASS TWebGet
 	LOCAL cBtnSize 	 := ''
 	local nI, nBtn, cLabel, cAction, cBtnId, nSpan
 	local cIdPrefix
+	local cSt := ''
 	
 	DO CASE
 		CASE ::cAlign == 'center' ; cAlign := 'text-center'
@@ -114,10 +117,24 @@ METHOD Activate() CLASS TWebGet
 	endif
 
 	cHtml := '<div class="col-' + ltrim(str(::nGrid)) 
-	//cHtml += ' col-form-label ' 
+	
 	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '') 		
 	cHtml += '" '
-	chtml += IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) 
+	
+	IF  ::oParent:lDessign
+		cSt += 'border:1px solid blue;'
+	ENDIF
+
+	IF ::lHidden
+		cSt += 'display:none;'
+	ENDIF	
+	
+	if !empty( cSt )
+		cHtml += ' style="' + cSt + '" '
+	endif
+	
+	
+	
 	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 	
 	IF !empty( ::cLabel )
@@ -163,6 +180,8 @@ METHOD Activate() CLASS TWebGet
 	IF ::lRequired
 		cHtml += ' required '
 	ENDIF	
+	
+
 	
 	if !empty( ::cStyle )	
 		cHtml += ' style="' + ::cStyle + '" '

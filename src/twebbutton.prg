@@ -16,7 +16,7 @@ CLASS TWebButton FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cLink, cClass, cFont, cId_Btn_Files, nWidth, cConfirm, cStyle, cProp ) CLASS TWebButton
+METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cLink, cClass, cFont, cId_Btn_Files, nWidth, cConfirm, cStyle, cProp, lHidden ) CLASS TWebButton
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT cLabel TO ''
@@ -37,7 +37,8 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 	DEFAULT nWidth TO ''
 	DEFAULT cConfirm TO ''
 	DEFAULT cStyle TO ''
-	DEFAULT cProp TO ''
+	DEFAULT cProp TO ''	
+	DEFAULT lHidden TO .F.
 	
 	
 	if empty( cClass ) 
@@ -65,6 +66,7 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 	::cConfirm 		:= cConfirm
 	::cStyle 		:= cStyle
 	::cProp			:= cProp 
+	::lHidden 		:= lHidden
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )		
@@ -78,6 +80,7 @@ METHOD Activate() CLASS TWebButton
 	LOCAL cSize := ''
 	LOCAL cType := 'button'
 	LOCAL cIdPrefix
+	local cSt := ''
 	
 	DO CASE
 		CASE upper(::oParent:cSizing) == 'SM' ; cSize := 'btn-sm'
@@ -113,9 +116,10 @@ METHOD Activate() CLASS TWebButton
 		endcase	
 		
 			
-		cHtml += '" ' 
-
-		cHtml += IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )
+		cHtml += '" ' 	
+		
+		cHtml += IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )							
+		
 		cHtml += '>'
 	
 	ENDIF
@@ -151,14 +155,20 @@ METHOD Activate() CLASS TWebButton
 		::cStyle += 'width: '  + ::nWidth + '; '
 	endif
 	
-	if !empty( ::cStyle )	
-		cHtml += ' style="' + ::cStyle + '" '
-	endif	
 
 	if !empty( ::cProp )	
 		cHtml += ' ' + ::cProp + ' ' 
 	endif
-		
+	
+
+		IF ::lHidden
+			::cStyle += 'display:none;'
+		ENDIF			
+	
+	if !empty( ::cStyle )	
+		cHtml += ' style="' + ::cStyle + '" '
+	endif	
+	
 	cHtml += ' data-live '
 	
 	if !empty( ::cConfirm )
@@ -181,7 +191,9 @@ METHOD Activate() CLASS TWebButton
 	ENDIF
 		
 
-		cHtml += 'id="' + cIdPrefix + ::cId + '" name="' + ::cName + '" value="' + ::uValue + '" ' 
+	cHtml += 'id="' + cIdPrefix + ::cId + '" name="' + ::cName + '" value="' + ::uValue + '" ' 
+	
+	
 
 	
 	cHtml += IF( ::lDisabled, 'disabled', '' ) + ' >' 

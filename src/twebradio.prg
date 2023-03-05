@@ -12,7 +12,7 @@ CLASS TWebRadio FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cLabel, uValue, aItems, aValues, lReadOnly, nGrid, cAction, lInline, cClass, cFont, cStyle, cProp ) CLASS TWebRadio
+METHOD New( oParent, cId, cLabel, uValue, aItems, aValues, lReadOnly, nGrid, cAction, lInline, cClass, cFont, cStyle, cProp, lHidden ) CLASS TWebRadio
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT cLabel TO ''	
@@ -27,6 +27,7 @@ METHOD New( oParent, cId, cLabel, uValue, aItems, aValues, lReadOnly, nGrid, cAc
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
 	DEFAULT lReadOnly TO .F.
+	DEFAULT lHidden TO .F.
 	
 
 	::oParent 		:= oParent	
@@ -43,6 +44,7 @@ METHOD New( oParent, cId, cLabel, uValue, aItems, aValues, lReadOnly, nGrid, cAc
 	::cStyle 		:= cStyle
 	::cProp 		:= cProp
 	::lReadOnly		:= lReadOnly
+	::lHidden		:= lHidden
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -74,6 +76,12 @@ METHOD Activate() CLASS TWebRadio
 	if ::oParent:lDessign
 		cSt += "border:1px solid blue;"
 	endif
+	
+	IF ::lHidden
+		cSt += 'display:none;'
+	ENDIF		
+	
+		
 	
 	cSt += "padding-left: 15px;"
 	

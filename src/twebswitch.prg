@@ -8,7 +8,7 @@ CLASS TWebSwitch FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction, lReadOnly  ) CLASS TWebSwitch
+METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction, lReadOnly, lHidden ) CLASS TWebSwitch
 
 	DEFAULT cId TO ''
 	DEFAULT lValue TO .F.
@@ -16,6 +16,7 @@ METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction, lReadOnly  ) CLASS TWe
 	DEFAULT cLabel TO ''
 	DEFAULT cAction TO ''
 	DEFAULT lReadOnly TO .F.
+	DEFAULT lHidden TO .F.
 	
 	::oParent		:= oParent
 	::cId			:= cId
@@ -24,6 +25,7 @@ METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction, lReadOnly  ) CLASS TWe
 	::nGrid			:= nGrid
 	::cAction		:= cAction
 	::lReadOnly		:= lReadOnly
+	::lHidden		:= lHidden
 
 	IF Valtype( oParent ) == 'O'
 	
@@ -39,6 +41,7 @@ METHOD Activate() CLASS TWebSwitch
 	LOCAL cHtml 	:= ''
 	LOCAL cChecked	:= ''
 	local cIdPrefix
+	local cSt := ''
 	
 	IF ::uValue
 		cChecked := 'checked'
@@ -50,8 +53,25 @@ METHOD Activate() CLASS TWebSwitch
 		cIdPrefix :=  ''
 	endif
 
-	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + ' custom-control custom-switch tweb_switch' + IF( ::oParent:lDessign, ' tweb_dessign', '')  + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )   + ' >'
-	cHtml += '<input type="checkbox" class="custom-control-input" id="' + cIdPrefix + ::cId + '" name="' + cIdPrefix + ::cId + '" ' + cChecked 
+	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + ' custom-control custom-switch tweb_switch' + IF( ::oParent:lDessign, ' tweb_dessign', '')  + '" ' 
+	
+	IF ::oParent:lDessign
+		cSt += 'border:1px solid blue;'
+	ENDIF
+	
+	IF ::lHidden
+		cSt += 'display:none;'
+	ENDIF	
+	
+	if !empty( cSt )
+		cHtml += ' style="' + cSt + '" '
+	endif		
+	
+	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'	
+	
+	
+	cHtml += '<input type="checkbox" class="custom-control-input" id="' + cIdPrefix + ::cId + '" ' 
+	cHtml += ' name="' + cIdPrefix + ::cId + '" ' + cChecked 
 	
 	cHtml += ' data-live '
 	

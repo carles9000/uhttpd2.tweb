@@ -68,6 +68,7 @@ static function DoShow( oDom )
 	oDom:Show( 'mycheck' )
 	oDom:Show( 'mycombo' )
 	oDom:Show( 'myradio' )	
+	oDom:Show( 'myonoff' )	
 
 	
 	oDom:Show( 'myrowgroup' )	
@@ -86,6 +87,8 @@ static function DoHide( oDom )
 	oDom:Hide( 'mycheck' )
 	oDom:Hide( 'mycombo' )
 	oDom:Hide( 'myradio' )	
+	oDom:Hide( 'myonoff' )	
+	
 	
 	oDom:Hide( 'myrowgroup'   )
 	oDom:Hide( 'mycol'   )

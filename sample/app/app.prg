@@ -115,6 +115,7 @@ function WebServer()
 		oServer:Route( 'upload'		, 'controls/upload.html' ) 		
 		oServer:Route( 'upload_basic'	, 'controls/upload_basic.html' ) 
 		oServer:Route( 'disable'		, 'controls/disable.html' ) 
+		oServer:Route( 'hide'			, 'controls/hide.html' ) 
 
 	//	Charset
 	

@@ -7,7 +7,7 @@ CLASS TWebCheckbox FROM TWebControl
 
 ENDCLASS 
 
-METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle, cProp, lReadonly ) CLASS TWebCheckbox
+METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle, cProp, lReadonly, lHidden ) CLASS TWebCheckbox
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT lValue TO .F.
@@ -19,6 +19,7 @@ METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
 	DEFAULT lReadonly TO .f.
+	DEFAULT lHidden TO .f.
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -31,6 +32,7 @@ METHOD New(  oParent, cId, lValue, cLabel, nGrid, cAction, cClass, cFont, cStyle
 	::cStyle 		:= cStyle
 	::cProp 		:= cProp
 	::lReadOnly 	:= lReadOnly 
+	::lHidden		:= lHidden
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -44,6 +46,7 @@ METHOD Activate() CLASS TWebCheckbox
 	LOCAL cHtml 	:= ''
 	LOCAL cChecked	:= ''
 	local cIdPrefix
+	local cSt := ''
 	
 	IF ::uValue
 		cChecked := 'checked="checked"'
@@ -57,6 +60,21 @@ METHOD Activate() CLASS TWebCheckbox
 
 	
 	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + ' tweb_checkbox" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) 
+	
+
+	IF  ::oParent:lDessign
+		cSt += 'border:1px solid blue;'
+	ENDIF
+
+	IF ::lHidden
+		cSt += 'display:none;'
+	ENDIF	
+	
+	if !empty( cSt )
+		cHtml += ' style="' + cSt + '" '
+	endif
+	
+	
 	cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 	
 	if !empty( ::cStyle )

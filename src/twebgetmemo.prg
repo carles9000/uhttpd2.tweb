@@ -15,7 +15,7 @@ CLASS TWebGetMemo FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClass, cFont, cChange, cStyle, cProp  ) CLASS TWebGetMemo
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClass, cFont, cChange, cStyle, cProp, lHidden  ) CLASS TWebGetMemo
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
@@ -29,6 +29,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClas
 	DEFAULT cChange TO ''
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
+	DEFAULT lHidden TO .F.
 	
 	
 	::oParent 		:= oParent
@@ -44,6 +45,7 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, nRows, cClas
 	::cChange 		:= cChange	
 	::cStyle 		:= cStyle
 	::cProp 		:= cProp
+	::lHidden 		:= lHidden
 	
 
 	IF Valtype( oParent ) == 'O'	
@@ -57,6 +59,7 @@ METHOD Activate() CLASS TWebGetMemo
 	LOCAL cHtml
 	LOCAL cSize := ''
 	local cIdPrefix
+	local cSt := ''
 	
 	DO CASE
 		CASE upper(::oParent:cSizing) == 'SM' ; cSize := 'form-control-sm'
@@ -69,7 +72,21 @@ METHOD Activate() CLASS TWebGetMemo
 		cIdPrefix :=  ''
 	endif
 	
-	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' )  
+	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' 
+	
+	
+	IF  ::oParent:lDessign
+		cSt += 'border:1px solid blue;'
+	ENDIF
+
+	IF ::lHidden
+		cSt += 'display:none;'
+	ENDIF	
+	
+	if !empty( cSt )
+		cHtml += ' style="' + cSt + '" '
+	endif	
+	
     cHtml += ' data-group="' + cIdPrefix + ::cId   + '" >'
 	
 	IF !empty( ::cLabel )
