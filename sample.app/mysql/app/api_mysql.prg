@@ -46,7 +46,7 @@ static function DoExecute( oDom )
 
 	local aRows 	:= {}
 	local aCols 	:= {}
-	local cSql 		:= oDom:Get( 'sql' )
+	local cSql 	:= oDom:Get( 'sql' )
 	local lError 	:= .f.
 	local oWDO 		:= WDO():Rdbms( 'MYSQL', "localhost", "harbour", "hb1234", "dbHarbour", 3306 )
 	local hRes, a, n, hConfig, aStruct 
@@ -99,48 +99,11 @@ retu nil
 
 
 // -------------------------------------------------- //
-/*
-static function DoPersistence( oDom )
-
-	
-	local cMsg := ''
-	local nIni := hb_milliseconds()
-	
-	if hConn == nil 
-	
-		hConn := {=>}
-	
-		hConn[ 'wdo' ] := WDO():Rdbms( 'MYSQL', "localhost", "harbour", "hb1234", "dbHarbour", 3306 )
-		hConn[ 'id'  ] := hb_threadId() 
-	
-		IF ! hConn[ 'wdo' ]:lConnect
-
-			oDom:SetError( hConn[ 'wdo' ]:cError )
-			retu nil
-			
-		ENDIF
-		
-		cMsg += 'MySql new connexion !' 
-		cMsg += '<br>Version RDBMS MySql: ' + hConn[ 'wdo' ]:VersionName() + ' - ' + hConn[ 'wdo' ]:Version() 
-		cMsg += '<br>Elapsed: ' + ltrim(str( hb_milliseconds() - nIni ))
-		
-	else
-	
-		cMsg += 'WDO persistence !' 
-		cMsg += '<br>Version RDBMS MySql: ' + hConn[ 'wdo' ]:VersionName() + ' - ' + hConn[ 'wdo' ]:Version()	
-		cMsg += '<br>Elapsed: ' + ltrim(str( hb_milliseconds() - nIni ))
-		
-	endif
-	
-	oDom:SetMsg( cMsg )
-
-retu nil 
-*/
 
 static function DoPersistence( oDom )
 
 	local nIni 	:= hb_milliseconds()
-	local o 	:= WDO_Pool( 'mysql_dbharbour', {|| MyOpen() } )
+	local o 		:= WDO_Pool( 'mysql_dbharbour', {|| MyOpen() } )
 	local cMsg 	:= ''
 	
 	cMsg += 'WDO persistence !' 
@@ -154,14 +117,13 @@ retu nil
 static function MyOpen() 
 
 	local oConn := WDO():Rdbms( 'MYSQL', "localhost", "harbour", "hb1234", "dbHarbour", 3306 )
-_d( 'MyOpen()....')	
+
 	IF ! oConn:lConnect
 		? 'Error: ', oConn:mysql_error()		
 		retu nil
 	ENDIF			
 	
 retu oConn  
-
 
 // -------------------------------------------------- //
 
