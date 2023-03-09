@@ -8,6 +8,7 @@ CLASS TWebNav FROM TWebControl
 	DATA nLogoWidth 				INIT 30
 	DATA nLogoHeight				INIT 30 
 	DATA aMenuItem 				INIT {}
+	DATA lBurguerLeft				INIT .T.
 
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
@@ -16,7 +17,7 @@ CLASS TWebNav FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute ) CLASS TWebNav
+METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute, lBurguerLeft ) CLASS TWebNav
 
 	DEFAULT cId TO ''
 	DEFAULT cCaption TO ''
@@ -24,6 +25,7 @@ METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute ) CLA
 	DEFAULT nLogoWidth TO 30
 	DEFAULT nLogoHeight TO 30
 	DEFAULT cRoute TO ''
+	DEFAULT lBurguerLeft TO .F.
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -32,6 +34,7 @@ METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute ) CLA
 	::nLogoWidth	:= nLogoWidth
 	::nLogoHeight	:= nLogoHeight
 	::cRoute		:= cRoute
+	::lBurguerLeft := lBurguerLeft 
 	
 
 	IF Valtype( oParent ) == 'O'	
@@ -69,8 +72,13 @@ METHOD Activate() CLASS TWebNav
 
 	cHtml := '<nav class="navbar navbar-dark bg-dark ">'
 	
+	if ::lBurguerLeft
+		cHtml += '<button class="navbar-toggler" type="button" style="margin-right: 10px;" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">'
+		cHtml += ' <span class="navbar-toggler-icon"></span>'
+		cHtml += '</button>'
+	endif
 	
-	cHtml += '<a class="navbar-brand" href="' + ::cRoute + '">'
+	cHtml += '<a class="navbar-brand mr-auto" href="' + ::cRoute + '">'
 	
 	if !empty( ::cLogo ) 
 		cHtml += '<img src="' + ::cLogo + '" width="' + ltrim(str(::nLogoWidth)) + '" height="' + ltrim(str(::nLogoHeight)) + '" alt="logo">'
@@ -83,9 +91,14 @@ METHOD Activate() CLASS TWebNav
 	
 	if nLen > 0 
 	
-		cHtml += '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">'
-		cHtml += ' <span class="navbar-toggler-icon"></span>'
-		cHtml += '</button>'
+		if ! ::lBurguerLeft
+		
+			cHtml += '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">'
+			cHtml += ' <span class="navbar-toggler-icon"></span>'
+			cHtml += '</button>'		
+		
+		endif
+	
 		cHtml += '<div class="collapse navbar-collapse" id="navbar-list">'
 		cHtml += '<ul class="navbar-nav">'
 		cHtml += ' <li class="nav-item active">'
@@ -113,12 +126,13 @@ METHOD Activate() CLASS TWebNav
 			endif 
 			
 			cHtml += ::aMenuItem[n][ 'item' ] + '</a>'		
-		next
+		next			
 	
 		cHtml += ' </li>'
 		cHtml += '</ul>'
 		cHtml += '</div>'
 	
+		//	Review https://stackblitz.com/edit/bootstrap-navbar-submenu?file=index.html for submenus...
 	endif
 	
 	
