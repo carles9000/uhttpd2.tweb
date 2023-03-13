@@ -201,9 +201,9 @@
 	[<oIcon> := ] TWebIcon():New( <oForm>, [<cId>], [<cSrc>], [<nGrid>], [<cAlign>], [<cClass>], [<cFont>], [<cLink>], [<cStyle>] )
 
 #xcommand NAV [<oNav>] [ ID <cId> ] [ TITLE <cTitle> ] [ LOGO <cLogo> [ WIDTH <nWidth>] ;
-	[ ROUTE <cRoute>] [HEIGHT <nHeight> ] ] OF <oWeb> ;	
+	[ ROUTE <cRoute>] [HEIGHT <nHeight> ] ] [ <bl: BURGUERLEFT> ] OF <oWeb> ;	
 => ;
-	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>] )
+	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>], [<.bl.>] )
 
 #xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>] )
 
