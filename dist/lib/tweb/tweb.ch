@@ -16,6 +16,7 @@
 #xcommand CSS <oForm> => #pragma __cstream| <oForm>:Html( '<style>' + %s + '</style>' )
 
 #xcommand TEXT TO <var> => #pragma __stream|<var> += %s
+#xcommand CODE TO <var> => #pragma __stream|<var> += %s
 
 #xcommand HTML <o> => #pragma __cstream| <o>:Html( %s )
 #xcommand HTML <o> INLINE <cHtml> => <o>:Html( <cHtml> )
@@ -201,11 +202,18 @@
 	[<oIcon> := ] TWebIcon():New( <oForm>, [<cId>], [<cSrc>], [<nGrid>], [<cAlign>], [<cClass>], [<cFont>], [<cLink>], [<cStyle>] )
 
 #xcommand NAV [<oNav>] [ ID <cId> ] [ TITLE <cTitle> ] [ LOGO <cLogo> [ WIDTH <nWidth>] ;
-	[ ROUTE <cRoute>] [HEIGHT <nHeight> ] ] [ <bl: BURGUERLEFT> ] OF <oWeb> ;	
+	[ ROUTE <cRoute>] [HEIGHT <nHeight> ] ] [ <bl: BURGUERLEFT> ] [ <sd: SIDEBAR> [ SIDE <cSide> ] ] OF <oWeb> ;	
 => ;
-	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>], [<.bl.>] )
+	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>], [<.bl.>], [<.sd.>], [<cSide>] )
 
-#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>] )
+#xcommand MENU GROUP <cItem> OF <oNav>  => <oNav>:AddMenuItem( <cItem>, nil, nil, nil,  .f., .f., .t. )
+#xcommand MENU <cItem> [ ICON <cIcon> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, nil, [<cIcon>], nil, .t., .f., .f. )
+#xcommand ENDMENU OF <oNav>  => <oNav>:AddMenuItem( nil, nil, nil, nil, .f., .t., .f. )
+
+#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ <ac: ACTIVE> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<.ac.>]  )
+#xcommand MENUITEM SEPARATOR OF <oNav>  => <oNav>:AddMenuItemSeparator()
+
+#xcommand HTML SIDEBAR OF <oNav> => #pragma __cstream| <oNav>:SideBar( %s )
 
 
 		 

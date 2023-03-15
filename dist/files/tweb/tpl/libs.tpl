@@ -25,6 +25,13 @@
 		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/lightbox/lightbox.js"></script>
 		<link href="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/lightbox/css/lightbox.css" rel="stylesheet" >		
 		
+	<!-- SIDEBAR -->
+	
+		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/sidebar/js/jquery.sidebar.js"></script>
+		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/sidebar/js/handlers.js"></script>
+		<link href="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/sidebar/css/styles.css" rel="stylesheet" >		
+
+	
 	<!-- TWEB -->
 	
 		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/tweb.js"></script>

@@ -1,3 +1,6 @@
+15/03/2023 Vrs. 1.07 Menu sidebar
+	* check menu examples
+
 05/03/2023 Vrs. 1.06 HIDDEN clausule
 	* check controls\hidden
 
