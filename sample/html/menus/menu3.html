@@ -1,0 +1,114 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb 
+	LOCAL cSideBar	:= ''
+	
+	DEFINE WEB oWeb TITLE 'Menu'
+	
+		NAV oNav ID 'nav' TITLE '&nbsp;Menus' LOGO 'files/images/mini-mercury.png' ;
+			ROUTE 'menu' WIDTH 30 HEIGHT 30 sidebar  OF oWeb		//	BURGUERLEFT ,  SIDEBAR [side 'right' ]
+
+			HTML SIDEBAR OF oNav 							
+
+				<style>
+				
+					.profile {
+						margin-left: auto;
+						margin-right: auto;
+						text-align: center;
+						
+						padding-top: 10px;
+						padding-bottom: 10px;
+						border-bottom: 1px solid #efefef;				
+					}
+					
+					.profile img {
+						width: 80px;
+						margin: 0 auto 20px auto;
+						border-radius: 50%;					
+					}
+			
+					.img-fluid {
+						max-width: 100%;
+						height: auto;
+					}
+					
+					.profile .name {
+						font-size: 18px;
+						margin-bottom: 0;					
+					}
+					
+					.profile .country {
+						font-size: 14px;
+						color: #cfcfcf;
+					}
+					
+					.counter {
+						
+						padding-bottom: 30px;
+						border-bottom: 1px solid #efefef;
+						text-align: center;					
+					}
+					
+					.counter div .number {
+						display: block;
+						font-size: 20px;
+						color: #ece78d;
+					}
+
+					.counter div .number-label {
+						color: #cfcfcf;
+					}					
+	
+
+					.mybottom {
+						position:absolute;
+						bottom:0;
+					}					
+				
+				</style>
+
+				<div class="profile">
+					<img class="img-fluid" src="files/images/cara1.webp">
+					<h3 class="name">John Kocinsky</h3>
+					<span class="country">New York, USA</span>								
+				</div>
+				
+				
+				
+				<div class="counter d-flex justify-content-center pt-4">
+					<div class="col">
+						<strong class="number">892</strong>
+						<span class="number-label">Send</span>
+					</div>
+					<div class="col">
+						<strong class="number">22.5k</strong>
+						<span class="number-label">Messages</span>
+					</div>
+					<div class="col">
+						<strong class="number">150</strong>
+						<span class="number-label">Tracks</span>
+					</div>				
+				</div>	
+
+				
+				<div class="menu-items mybottom">
+					<div class="input-group ">
+					  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+					  <div class="input-group-append">
+						<button class="btn btn-outline-success" type="button">Button</button>
+					  </div>
+					</div>
+				</div>				
+		
+			ENDTEXT 								
+			
+		DEFINE FORM o OF oWeb	
+
+			HTML o INLINE '<h3>Menu Sidebar (advance)</h3><hr>'			
+			
+		ENDFORM o 				
+		
+	INIT WEB oWeb RETURN 
+?>

@@ -30,9 +30,9 @@
 				
 					SEPARATOR o LABEL 'Data variables'
 
-					GET ID 'user' LABEL 'User' VALUE hData[ 'user' ] GRID 12OF o
-					GET ID 'name' LABEL 'Name' VALUE hData[ 'name' ] GRID 12 OF o
-					GET ID 'rol'  LABEL 'Rol'  VALUE hData[ 'rol'  ] GRID 12 OF o
+					GET ID 'user' LABEL 'User' VALUE hData[ 'user' ] DISABLED GRID 12 OF o
+					GET ID 'name' LABEL 'Name' VALUE hData[ 'name' ] DISABLED GRID 12 OF o
+					GET ID 'rol'  LABEL 'Rol'  VALUE hData[ 'rol'  ] DISABLED GRID 12 OF o
 				
 				ENDCOL o
 			
@@ -41,13 +41,13 @@
 				
 					SEPARATOR o LABEL 'Config parameters'
 					
-					GET LABEL 'Path'  	 VALUE hInfo[ 'path' ] GRID 12 OF o
-					GET LABEL 'Name'  	 VALUE hInfo[ 'name' ] GRID 12 OF o
-					GET LABEL 'Prefix'   VALUE hInfo[ 'prefix' ] GRID 12 OF o
-					GET LABEL 'Duration'  VALUE ltrim(str(hInfo[ 'duration' ] )) GRID 12 OF o
-					GET LABEL 'Now seconds'  VALUE ltrim(str(Seconds())) GRID 12 OF o
-					GET LABEL 'Expired'  VALUE ltrim(str(hInfo[ 'expired' ])) GRID 12 OF o
-					GET LABEL 'Diff. Expired - Now'  VALUE ltrim(str(hInfo[ 'expired' ]  - Seconds())) GRID 12 OF o
+					GET LABEL 'Path'  	 VALUE hInfo[ 'path' ] DISABLED GRID 12 OF o
+					GET LABEL 'Name'  	 VALUE hInfo[ 'name' ] DISABLED GRID 12 OF o
+					GET LABEL 'Prefix'   VALUE hInfo[ 'prefix' ] DISABLED GRID 12 OF o
+					GET LABEL 'Duration'  VALUE ltrim(str(hInfo[ 'duration' ] )) DISABLED GRID 12 OF o
+					GET LABEL 'Now seconds'  VALUE ltrim(str(Seconds())) DISABLED GRID 12 OF o
+					GET LABEL 'Expired'  VALUE ltrim(str(hInfo[ 'expired' ])) DISABLED GRID 12 OF o
+					GET LABEL 'Diff. Expired - Now'  VALUE ltrim(str(hInfo[ 'expired' ]  - Seconds())) DISABLED GRID 12 OF o
 					
 				ENDCOL o 
 			

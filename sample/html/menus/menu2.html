@@ -1,0 +1,38 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb 
+	LOCAL cSideBar	:= ''
+	
+	DEFINE WEB oWeb TITLE 'Menu'
+	
+		NAV oNav ID 'nav' TITLE '&nbsp;Menus' LOGO 'files/images/mini-mercury.png' ;
+			ROUTE 'menu' WIDTH 30 HEIGHT 30 sidebar  OF oWeb		//	BURGUERLEFT ,  SIDEBAR [side 'right' ]
+
+			MENU GROUP 'General' OF oNav
+			
+			MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE 'menu' 		OF oNav
+			MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' ACTIVE	OF oNav 
+			
+			MENU 'Tools' ICON '<i class="fa fa-times-circle" aria-hidden="true"></i>' OF oNav
+				MENUITEM 'My Submenu'  ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav 							
+				MENUITEM 'My Submenu2' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav
+				MENUITEM SEPARATOR OF oNav
+				MENUITEM 'My Submenu3' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav
+			ENDMENU OF oNav			
+
+			MENU GROUP 'General' OF oNav
+			
+			MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE 'menu' 		OF oNav
+			MENUITEM SEPARATOR OF oNav
+			MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' 	OF oNav 
+		
+			
+		DEFINE FORM o OF oWeb	
+		
+			HTML o INLINE '<h3>Menu Sidebar (basic)</h3><hr>'
+			
+		ENDFORM o 				
+		
+	INIT WEB oWeb RETURN 
+?>
