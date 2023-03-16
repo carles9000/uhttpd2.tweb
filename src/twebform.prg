@@ -332,7 +332,9 @@ METHOD Activate( fOnInit ) CLASS TWebForm
 		c := 'UInitDialog("' + ::cId + '");'
 		::Html( JSReady( c ) )
 		
-						
+	else 
+	
+		::Html( JSReady( "console.error( 'Attention: Init form is missing!')" ) )
 		
 	endif 
 

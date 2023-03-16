@@ -6,7 +6,7 @@
 ** MIT license https://github.com/carles9000/tweb.uhttpd2/blob/master/LICENSE
 */
 
-#define TWEB_VERSION 			'1.07'
+#define TWEB_VERSION 			'1.08'
 
 #include 'hbclass.ch'	
 #include 'common.ch'
@@ -134,26 +134,11 @@ METHOD Activate() CLASS TWeb
 		hb_SetEnv( "ROOTRELATIVE", ::cRootRelative )
 
 		UReplaceBlocks( @cHtml, "{{", "}}" )
-
-
-		
-		/*
-		IF ::lTables
-			cHtml += LoadTWebTables()
-		ELSE
-			cHtml += LoadTWeb()	
-		ENDIF				
-		*/
 		
 	endif
-	
-
-	
-	//_d( 'DIR', IsDirectory( ::cPathTpl ) )		
+		
 	
 	::lActivated := .T.	
-
-	//UWrite( cHtml )
 	
 	FOR nI := 1 To len( ::aControls )	
 	
