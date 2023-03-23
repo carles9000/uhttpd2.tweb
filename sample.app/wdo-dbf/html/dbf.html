@@ -1,0 +1,37 @@
+<?prg 
+#include "lib/tweb/tweb.ch" 
+
+	LOCAL o
+	
+		?? "<h3>==> Test conexion...</h3><hr>"
+	
+		? "<li>Case: Table don't exist"
+		
+			o := WDO_Dbf():New( 'customer.dbf' )				
+		
+		? "<li>Case: Table exist:  "
+		
+			o := WDO_Dbf():New( 'data/customer.dbf' )
+			
+			IF o:lConnect			
+				?? 'Connected !'				
+			ENDIF		
+			
+		? "<li>Case: Index don't exist"
+		
+			o := WDO_Dbf():New( 'data/customer.dbf', 'data/customer.xxx' )
+			
+			IF o:lConnect			
+				?? 'Connected !'				
+			ENDIF
+
+		? "<li>Case: Table+Index exist: "
+		
+			o := WDO_Dbf():New( 'data/customer.dbf', 'data/customer.cdx' )
+			
+			IF o:lConnect			
+				?? 'Connected !'				
+			ENDIF			
+		
+	RETU ''
+?>

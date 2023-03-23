@@ -1,0 +1,37 @@
+<?prg 
+#include "lib/tweb/tweb.ch" 
+
+	LOCAL o
+	
+	
+	//	Config Sistema...
+	
+		o := WDO_Dbf()
+			o:cDefaultPath 	:= hb_dirbase() + '/data'	
+			
+			?? '<b>Version</b> ' +  o:VersionName() +  '<small style="float:right;">' + time() + '</small><hr>'
+		
+		
+	//	Uso de tabla Dbf...
+		
+		o := WDO_Dbf():New( 'customer.dbf', 'customer.cdx' )		
+		
+			IF o:Append()			
+
+				o:Fieldput( 'First', 'Test_Append' )
+				o:Fieldput( 'Last' , dtos( date()) + ' ' + time() )
+				
+				? '==> Append: ', o:Recno(), o:FieldGet( 'first' ), o:FieldGet( 'last' )
+				
+				
+				
+				? '==> Delete (pack)', o:delete()
+				? '==> Total Deleted: ' + str( o:CountDeleted() )
+				
+			ELSE
+				? 'Error Append()'
+			ENDIF							
+		
+	RETU ''
+?>
+

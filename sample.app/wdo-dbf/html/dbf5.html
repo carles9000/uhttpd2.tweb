@@ -1,0 +1,45 @@
+<?prg 
+#include "lib/tweb/tweb.ch" 
+
+	LOCAL oDb
+
+	//	Config Sistema...
+	
+		o := WDO_Dbf()
+			o:cDefaultPath 	:= hb_dirbase() + '/data'				
+			o:cDefaultRdd 	:= 'DBFCDX'
+			
+			?? '<b>Version</b> ' +  o:VersionName() +  '<small style="float:right;">' + time() + '</small><hr>'
+				
+	//	Exclusive Mode
+	
+		? '<br><b>==> Open Exclusive Mode...</b>'		
+		
+		oDb := WDO_Dbf():New( 'customer.dbf', 'customer.cdx', .F. )			
+			oDb:lExclusive := .T.										//	Open Exclusive			
+			oDb:Open()	
+	
+		? 'DB1 - Open Exclusive', oDb:lOpen, oDb:cAlias
+		
+		if oDb:lConnect 
+		
+			? '==> Total Deleted: ' + str( oDb:CountDeleted() )
+			
+			oDb:Pack()
+			
+			? '==> Total Deleted after pack: ' + str( oDb:CountDeleted() )
+			
+		endif
+		
+		? '<br><b>==> Open again Exclusive Mode...</b>'		
+		
+		oDb := WDO_Dbf():New( 'customer.dbf', 'customer.cdx', .F. )			
+			oDb:lExclusive := .T.										//	Open Exclusive			
+			oDb:Open()			
+
+
+
+	RETU ''
+?>
+
+

@@ -1,0 +1,22 @@
+<?prg 
+#include "lib/tweb/tweb.ch" 
+
+	LOCAL o			
+		
+	o := WDO_MYSQL():New( "localhost", "harbour", "hb1234", "dbHarbour", 3306 )
+	
+	?? '<b>Version</b> ' +  o:VersionName() +  '<small style="float:right;">' + time() + '</small><hr>'
+	
+	IF o:lConnect
+	
+		? 'Connected !'
+		? '<b>Version RDBMS MySql</b>', o:VersionName()
+		
+	ELSE 
+	
+		? 'Error : ', o:cError
+		
+	ENDIF
+	
+	RETU ''
+?>

@@ -1,0 +1,25 @@
+-n
+-w1
+-es2
+-inc
+-head=full
+-mt
+
+app\app.prg
+app\api_dbf.prg
+
+-i=c:\harbour\include
+
+-Llib\uhttpd2
+-luhttpd2
+
+-Llib\tweb
+-ltweb
+
+-Llib\wdo
+-lwdo
+
+
+# WAPI_OutputDebugString()
+hbwin.hbc
+xhb.hbc

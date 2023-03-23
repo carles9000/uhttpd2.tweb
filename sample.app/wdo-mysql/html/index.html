@@ -1,0 +1,56 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'TWeb' 			
+		
+		DEFINE FORM o ID 'myform' API 'api_curl' OF oWeb
+			//o:lDessign := .t.
+
+		INIT FORM o					
+			SAY VALUE '<h1>MYSQL example test !' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>WDO engine</h4><hr>' ALIGN 'center' GRID 12  OF o									
+			
+			ROWGROUP o
+			
+				COL o GRID 6
+				
+					HTML o
+										
+						<ul>
+							<li><a href="mysql1">Connect !</a>						
+							<li><a href="mysql2">SQL command engine</a>						
+							<li><a href="mysql3">Persistence</a>						
+						</ul>
+								
+					ENDTEXT
+			
+				ENDCOL o
+				
+		
+			
+				COL o GRID 6
+				
+					HTML o
+									
+						<ul>
+							<li><a href="sql">Sql</a>						
+							<li><a href="sql0">Sql 0</a>																			
+							<li><a href="sql1">Sql 1</a>																			
+							<li><a href="sql2">Sql 2</a>																			
+							<li><a href="sql3">Sql 3</a>																			
+							<li><a href="sql4">Sql 4</a>																			
+							<li><a href="sql5">Sql 5</a>																			
+						</ul>
+							
+					ENDTEXT
+			
+				ENDCOL o				
+			
+			ENDROW o
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+?>

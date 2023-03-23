@@ -1,0 +1,55 @@
+<?prg 
+#include "lib/tweb/tweb.ch" 
+	LOCAL o
+	LOCAL oDb3
+	LOCAL cHtml := ''
+	LOCAL cPathImage := 'data/sales/images/'
+
+		
+
+		
+		oDb3 := WDO_Dbf():New( 'vendors.dbf', 'vendors.cdx', .F. )	
+				oDb3:cPath 	:= hb_dirbase() + '/data/sales'			
+				oDb3:Open()			
+		
+		?? '<b>Version</b> ' +  oDb3:VersionName() +  '<small style="float:right;">' + time() + '</small><hr>'
+		
+	//	List Vendors...
+	
+		? '<br><b>==> List Vendors...</b><br>'
+	
+		oDb3:First()
+		
+		cHtml +=  '<table border="1">'
+		cHtml +=  '<thead>'
+		cHtml +=  '<tr>'
+		cHtml +=  '<th>Recno</th>'
+		cHtml +=  '<th>Id</th>'
+		cHtml +=  '<th>Name</th>'
+		cHtml +=  '<th>Phone</th>'
+		cHtml +=  '<th>Image</th>'
+		cHtml +=  '</tr>'
+		cHtml +=  '</thead>'
+
+		
+		
+		WHILE !oDb3:Eof()		
+		
+			cHtml +=  '<tr>' 
+			cHtml +=  '<td>' + ltrim(str(oDb3:Recno())) + '</td>' 
+			cHtml +=  '<td>' + ltrim(str(oDb3:FieldGet( 'id' ))) + '</td>' 
+			cHtml +=  '<td>' + oDb3:FieldGet( 'name' ) + '</td>' 
+			cHtml +=  '<td>' + ltrim(str(oDb3:FieldGet( 'phone' ))) + '</td>' 
+			cHtml +=  '<td><img src="' + cPathImage + alltrim(oDb3:FieldGet( 'image' )) + '" ></td>' 									
+			cHtml +=  '</tr>'					
+			
+			oDb3:next()
+			
+		END		
+
+		cHtml +=  '</table>'	
+		
+		? cHtml		
+	
+	RETU ''
+?>

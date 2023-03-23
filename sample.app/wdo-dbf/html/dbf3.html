@@ -1,0 +1,69 @@
+<?prg 
+#include "lib/tweb/tweb.ch" 
+
+	LOCAL o
+	LOCAL oDb1
+
+	//	Config Sistema...
+	
+		o := WDO_Dbf()
+			o:cDefaultPath 	:= hb_dirbase() + '/data'				
+			o:cDefaultRdd 	:= 'DBFCDX'
+			
+			?? '<b>Version</b> ' +  o:VersionName() +  '<small style="float:right;">' + time() + '</small><hr>'
+
+	//	Open Tables
+	
+		oDb1 := WDO_Dbf():New( 'customer.dbf', 'customer.cdx' )				
+
+			oDb1:Focus( 'state' )
+			oDb1:Seek( 'LA' )			//	KS, LA, MA,...
+	
+			Test( oDb1, 'state', 'LA' )				
+			
+			? '<hr>'
+			
+			oDb1:Focus( 'first' )
+			oDb1:Seek( 'Sandy' )			//	
+	
+			Test( oDb1, 'first', 'Sandy' )	
+
+			? '<hr>'
+			
+			oDb1:Focus( 'zip' )
+			oDb1:Seek( '68428-0759' )			//	
+	
+			Test( oDb1, 'zip', '68428-0759' )			
+
+	RETU ''
+
+	FUNCTION Test( o, cField, uValue )
+
+		LOCAl cHtml := ''
+
+		cHtml += '<b>Focus </b>' + cField + ' = ' + uValue + '<br>'
+		
+		cHtml +=  '<table border="1">'
+		
+		WHILE !o:Eof() .AND. o:FieldGet( cField ) = uValue
+		
+			cHtml +=  '<tr>' 
+			cHtml +=  '<td>' + ltrim(str(o:Recno())) + '</td>' 
+			cHtml +=  '<td>' + o:FieldGet( 'first' ) + '</td>' 
+			cHtml +=  '<td>' + o:FieldGet( 'last' ) + '</td>' 
+			cHtml +=  '<td>' + o:FieldGet( 'city' ) + '</td>' 
+			cHtml +=  '<td>' + o:FieldGet( 'zip' ) + '</td>' 
+			cHtml +=  '<td>' + o:FieldGet( 'state' ) + '</td>' 
+			cHtml +=  '</tr>'
+			
+			o:next()
+			
+		END
+		
+		cHtml +=  '</table>'	
+		
+		? cHtml
+
+	RETU 
+	
+?>

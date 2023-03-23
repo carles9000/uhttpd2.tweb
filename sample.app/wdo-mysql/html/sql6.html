@@ -1,0 +1,29 @@
+<?prg 
+#include "lib/tweb/tweb.ch" 
+
+	LOCAL o, oRs
+	LOCAL n, j			
+	
+		o := WDO_MYSQL():New( "localhost", "harbour", "hb1234", "dbHarbour", 3306 )		
+		
+		?? '<b>Version</b> ' +  o:VersionName() +  '<small style="float:right;">' + time() + '</small><hr>'
+		
+		IF ! o:lConnect		
+			RETU NIL
+		ENDIF
+		
+		
+		? "<b>==> Fetch  Query( 'select * from sellers limit 10' )</b>"
+		
+		IF !empty( hRes := o:Query( 'select * from sellers limit 10' ) )
+		
+			WHILE ( !empty( hRs := o:Fetch_Assoc( hRes ) ) )
+				? hRs[ 'code' ], hRs[ 'first' ], hRs[ 'address1' ], hRs[ 'zipcode' ], hRs[ 'email' ]
+			END
+			
+			o:Free_Result( hRes )
+		
+		ENDIF						
+		
+	RETU ''
+?>
