@@ -1,0 +1,60 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+
+    LOCAL o, oWeb 	
+	
+	DEFINE WEB oWeb TITLE 'MsgApi'
+	
+		DEFINE FORM o ID 'myform' API 'api_dialog' OF oWeb		
+			
+			HTML o INLINE '<h3>Test PBS (Process Before Send)</h3><hr>'	
+			
+			INIT FORM o
+			
+				HTML o 
+					<h5>
+					PBS <cFunction> esta diseñado para pre-ejecutar un code javascript antes de 
+					interactuar con la API. Si la funcion devuelve true se ejecutará la API
+					<hr>
+					PBS <cFunction> is designed to pre-execute javascript code before
+					interact with the API. If the function returns true, the API will be executed.
+					</h5>
+					<br>
+					Si introduces 123 PBS abortara impedirá la conexion API
+					<br>
+					If you enter 123 PBS it will abort it will prevent the API connection
+					<br><br>					
+				ENDTEXT 
+				
+				ROWGROUP o  VALIGN 'bottom'                      
+					GET ID 'mycode' VALUE 'JACK-45256-U'   GRID 6 LABEL 'Code' OF o             
+					BUTTON ID 'btn'  LABEL 'Send Code' GRID 0 PBS 'MyMsg' ACTION 'testpbs' OF o    
+				ENDROW o
+
+
+				HTML o
+					<script>
+						
+						function MyMsg() {
+						
+							var cCode = $('#myform-mycode').val()
+							
+							if ( cCode == '123' ){
+								MsgInfo( 'Aborted !' )
+								return false 
+							}
+
+							MsgLoading( 'Send Code...')							
+					
+							return true
+						} 
+						
+					</script>
+				ENDTEXT		
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+
+?>

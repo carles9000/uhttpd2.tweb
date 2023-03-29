@@ -1,0 +1,59 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+
+    LOCAL o, oWeb 	
+	
+	DEFINE WEB oWeb TITLE 'MsgApi'
+	
+		DEFINE FORM o ID 'myform' API 'api_msg' OF oWeb		
+			
+			HTML o INLINE '<h3>Test MsgLoading...</h3><hr>'	
+			
+			INIT FORM o
+			
+				ROWGROUP o					
+					BUTTON ID 'btn1'  LABEL 'MsgLoading' GRID 0 WIDTH '200px' PBS 'MyMsg' ACTION 'testpbs' OF o    
+				ENDROW o 
+				
+				ROWGROUP o					
+					BUTTON ID 'btn2'  LABEL 'MsgLoading + Confirm' GRID 0 WIDTH '200px' PBS 'MyMsg' ;
+						CONFIRM 'Execute proccess?' ACTION 'testpbs' OF o    
+				ENDROW o 
+				
+				//	Para poder ejecutar un dialogo de loading antes de procesar nuestra API usaremos
+				//	la clausula PBS. Ver ejemplo de Dialogos - PBS para entender su uso
+				//	--------------------------------------------------------------------------------
+				//	In order to execute a load dialog before processing our API we will use
+				//  the PBS clause. See example of Dialogues - PBS to understand its use
+								
+				
+				HTML o
+					<script>
+						
+						function MyMsg() {
+						
+							/*	Icons Animated
+							  "fas fa-spinner fa-spin"
+							  "fas fa-circle-notch fa-spin"
+							  "fas fa-sync fa-spin"
+							  "fas fa-cog fa-spin"
+							  "fas fa-spinner fa-pulse"
+							  "fas fa-stroopwafel fa-spin"
+							  
+							  MsgLoading( cMessage, cTitle, cIcon, lHeader )
+							*/
+
+							MsgLoading( 'Execute process...', null, 'fas fa-spinner fa-spin' )							
+														
+							return true
+						} 
+							
+					</script>
+				ENDTEXT		
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+
+?>

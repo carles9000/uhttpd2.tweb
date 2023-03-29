@@ -24,7 +24,9 @@ function Api_Dialog( oDom )
 		
 		case oDom:GetProc() == 'hello'		; oDom:SetMsg( 'Hello at ' + time() )
 		case oDom:GetProc() == 'getValues'	; ( oDom:SetMsg( 'Check console!' ), oDom:Console( oDom:GetList(.f.) ) )
-		case oDom:GetProc() == 'search'	    ; DoSearch( oDom )						
+		case oDom:GetProc() == 'search'	    ; DoSearch( oDom )		
+		
+		case oDom:GetProc() == 'testpbs'	    ; DoPBS( oDom )						
 
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
@@ -279,3 +281,19 @@ static function MyScreen()
 	INIT DIALOG oDlg RETURN 
 
 retu nil 
+
+// -------------------------------------------------- //
+
+static function DoPBS( oDom )
+
+	//	We simulate long proccess 
+		hb_IdleSleep(3)
+	
+	oDom:Console( oDom:GetAll() )
+	
+	//	Call MsgLoading(.f.) --> Close loading dialog...
+		oDom:SetJs( 'MsgLoading', { .f. } )
+	
+	oDom:SetMsg( 'Code processed: ' + oDom:Get( 'mycode' ) )
+	
+retu nil

@@ -9,6 +9,7 @@ CLASS TWebButton FROM TWebControl
 	DATA lSubmit					INIT .F.
 	DATA cLink						INIT ''
 	DATA cId_Btn_Files				INIT ''
+	DATA cPBS						INIT ''
 
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
@@ -16,7 +17,7 @@ CLASS TWebButton FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cLink, cClass, cFont, cId_Btn_Files, nWidth, cConfirm, cStyle, cProp, lHidden ) CLASS TWebButton
+METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon, lDisabled, lSubmit, cLink, cClass, cFont, cId_Btn_Files, nWidth, cConfirm, cStyle, cProp, lHidden, cPBS ) CLASS TWebButton
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT cLabel TO ''
@@ -39,6 +40,7 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''	
 	DEFAULT lHidden TO .F.
+	DEFAULT cPBS TO ''		
 	
 	
 	if empty( cClass ) 
@@ -67,6 +69,7 @@ METHOD New( oParent, cId, cLabel, cAction , cName, cValue, nGrid, cAlign, cIcon,
 	::cStyle 		:= cStyle
 	::cProp			:= cProp 
 	::lHidden 		:= lHidden
+	::cPBS 			:= cPBS
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )		
@@ -174,6 +177,10 @@ METHOD Activate() CLASS TWebButton
 	if !empty( ::cConfirm )
 		cHtml += ' data-confirm="' + ::cConfirm + '" '
 	endif 
+	
+	if !empty( ::cPBS )
+		cHtml += ' data-pbs="' + ::cPBS + '" '
+	endif 	
 	
 	if !empty( ::cId_Btn_Files )
 		cHtml += ' data-upload="_' + cIdPrefix + ::cId_Btn_Files + '" '

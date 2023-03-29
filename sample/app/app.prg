@@ -153,6 +153,7 @@ function WebServer()
 		
 		oServer:Route( 'dlg-1'		, 'dialog/dlg-1.html' ) 		
 		oServer:Route( 'dlg-2'		, 'dialog/dlg-2.html' ) 		
+		oServer:Route( 'dlg-3'		, 'dialog/dlg-3.html' ) 		
 		
 		
 	//	Screens
@@ -176,6 +177,7 @@ function WebServer()
 		oServer:Route( 'msgyesno'	, 'msg/msgyesno.html' ) 
 		oServer:Route( 'msgerror'	, 'msg/msgerror.html' ) 
 		oServer:Route( 'msgnotify'	, 'msg/msgnotify.html' ) 
+		oServer:Route( 'msgloading', 'msg/msgloading.html' ) 
 		oServer:Route( 'msgserver'	, 'msg/msgserver.html' ) 
 		oServer:Route( 'msgserver2', 'msg/msgserver2.html' ) 
 		oServer:Route( 'msgapi'	, 'msg/msgapi.html' ) 

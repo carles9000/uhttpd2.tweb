@@ -125,10 +125,11 @@
 	[ WIDTH <cWidth> ] ;
 	[ CONFIRM <cConfirm> ] ;
 	[ STYLE <cStyle> ] [ PROP <hProp> ];
-	[ <hi: HIDE, HIDDEN> ];		
+	[ <hi: HIDE, HIDDEN> ];
+	[ PBS <cPBS> ];
 	OF <oForm> ;
 => ;
-	[ <oBtn> := ] TWebButton():New( <oForm>, [<cId>], <cLabel>, <cAction>, <cName>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ds.>], [<.sb.>], [<cLink>], [<cClass>], [<cFont>], [<cId_Btn_Files>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.hi.>] )	
+	[ <oBtn> := ] TWebButton():New( <oForm>, [<cId>], <cLabel>, <cAction>, <cName>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ds.>], [<.sb.>], [<cLink>], [<cClass>], [<cFont>], [<cId_Btn_Files>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.hi.>], [<cPBS>] )	
 	
 #xcommand BUTTON FILE [<oBtn>] [ ID <cId> ] [ LABEL <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
     [ GRID <nGrid> ] [ ALIGN <cAlign> ]  ;

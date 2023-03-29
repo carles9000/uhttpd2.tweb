@@ -1,3 +1,7 @@
+29/03/2023 Vrs. 1.09 Clausule PBS in button 
+	* check dialog\pbs
+	* check msg\msgloading
+
 16/03/2023 Vrs. 1.08 Flag Error if clausule init form is missing
 
 15/03/2023 Vrs. 1.07 Menu sidebar
