@@ -31,6 +31,10 @@
     background: #03A9F4;
 }
 
+.sidebars {
+	z-index: 2000;
+}
+
 .sidebars > .sidebar {
     position: fixed;
     color: white;    
