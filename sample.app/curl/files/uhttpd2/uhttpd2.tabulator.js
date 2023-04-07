@@ -1,9 +1,9 @@
 /*
 **	module.....: uhttpd2tabulator.js -- Tabulator for uhttpd2 (Harbour)
-**	version....: 0.98
-**  last update: 24/12/2022
+**	version....: 1.001
+**  last update: 20/02/2023
 **
-**	(c) 2022 by Carles Aubia
+**	(c) 2022-2023 by Carles Aubia
 **
 */
 
@@ -131,9 +131,16 @@ class UTabulator {
 				this.table.updateRow( value.index, value.row );				
 				break;					
 
-			case 'clean':				
-				this.table.setData();
-				this.table.clearCellEdited();															
+			case 'clean':	
+
+				this.table.clearData();
+				break;
+				
+			case 'title':	
+console.log( value )
+				var cId = this.id + '_title'
+				$('#' + cId ).html( value )
+				
 				break;
 
 			case 'getData': 		
@@ -309,42 +316,46 @@ function UTabulatorValidOptions( o ) {
 
 	var oCols = o.columns;	
 	
-	
 	for (let i = 0; i < oCols.length; i++) {
 	
-		//	Checking formatter options...
+		if ( typeof oCols[i] == 'object'  ) { 
 		
-			if ( 'formatter' in oCols[i]) {
+			//	Checking formatter options...
+			
+			
+				if ( 'formatter' in oCols[i]) {
 
-				if ( typeof oCols[i].formatter == 'string' ) {	
-		
-					var fn =  window[ oCols[i].formatter ]
-					
-					if (typeof fn === "function") {
-						oCols[i].formatter = fn
-					}												
-				}		
-			}
+					if ( typeof oCols[i].formatter == 'string' ) {	
 			
-		
-		
-		//	Checking validator options...
-			if ( 'validator' in oCols[i]) {						
-			
-				var aValidator = []
+						var fn =  window[ oCols[i].formatter ]
+						
+						if (typeof fn === "function") {
+							oCols[i].formatter = fn
+						}												
+					}		
+				}
 				
 			
-				if ( oCols[i].validator != null ) {										
 			
-						var fn =  window[ oCols[i].validator.type ]
-							
-						if (typeof fn === "function") {
+			//	Checking validator options...
+				if ( 'validator' in oCols[i]) {						
+				
+					var aValidator = []
+					
+				
+					if ( oCols[i].validator != null ) {										
+				
+							var fn =  window[ oCols[i].validator.type ]
+								
+							if (typeof fn === "function") {
 
-							oCols[i].validator.type = fn
-							
-						}																
-				}				
-			}						
+								oCols[i].validator.type = fn
+								
+							}																
+					}				
+				}	
+
+		}
 	}		
 }
 

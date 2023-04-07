@@ -1,0 +1,47 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions
+	LOCAL hFormatImage 	:= {=>}
+	LOCAL hFormatLink 	:= {=>}
+	
+	DEFINE WEB oWeb TITLE 'Curl' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Curl', 'chatGPT'
+		
+		DEFINE FORM o ID 'myform' API 'api_curl' OF oWeb 
+		
+		INIT FORM o 
+		
+			ROWGROUP o			
+				GET MEMO ID 'myquestion' LABEL "Question" VALUE 'What is the OpenAI mission?'  GRID 12 OF o			
+			ENDROW o		
+
+			ROWGROUP o			
+				GET MEMO ID 'myanswer' LABEL "Answer" VALUE '' READONLY ROWS 8  GRID 12 OF o			
+			ENDROW o					
+			
+			ROWGROUP o			
+				BUTTON LABEL 'Send'  ACTION 'initchatgpt' PBS 'MyMsg' WIDTH '200px' ALIGN 'center' GRID 12 OF o	
+			ENDROW o
+
+			HTML o
+				<script>
+					
+					function MyMsg() {
+					
+						$('#myform-myanswer').val( '' )
+
+						MsgLoading( 'Execute process...' )							
+													
+						return true
+					} 
+						
+				</script>
+			ENDTEXT				
+
+		ENDFORM o	
+
+	INIT WEB oWeb RETURN
+?>
+

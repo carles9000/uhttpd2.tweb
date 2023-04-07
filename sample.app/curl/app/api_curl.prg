@@ -8,6 +8,8 @@ function Api_Curl( oDom )
 		
 		case oDom:GetProc() == 'brwsetdata'		; DoBrwSetData( oDom )
 		case oDom:GetProc() == 'brwclean'		; DoBrwClean( oDom )
+		
+		case oDom:GetProc() == 'initchatgpt'	; DoInitChatGpt( oDom )
 
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
@@ -115,5 +117,76 @@ retu nil
 static function DoBrwClean( oDom )	
 
 	oDom:TableClean( 'mytable' )
+	
+retu nil
+
+// -------------------------------------------------- //
+//	https://platform.openai.com/account/api-keys 
+//	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
+//	https://medium.com/geekculture/2023-how-to-use-chatgpt-api-with-curl-f2628e4f809
+
+static function DoInitChatGpt( oDom )
+
+	local cQuestion	:= oDom:Get( 'myquestion' )		//"What is the OpenAI mission?"
+	local uValue 		:= ''
+	local cUrl 		:= "https://api.openai.com/v1/chat/completions"			
+	local hCurl, n, hRows	
+	local cAuth 		:= "Authorization: Bearer 080042cad6356ad5dc0a720c18b53b8e53d4c274"
+	local aHeaders 	:= {}	
+	local hParams		:= {=>}
+	
+	Aadd( aHeaders, 'Content-Type: application/json') 
+	Aadd( aHeaders, 'Authorization: Bearer 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') 
+	
+	hParams[ 'model' ] :=  "gpt-3.5-turbo"	
+	hParams[ 'messages' ] :=  { ;
+		{ 	"role" => "user", ;
+			"content" => cQuestion ;
+			} }
+	
+	if ! empty( hCurl := curl_easy_init() )		
+		
+		
+        curl_easy_setopt( hCurl, HB_CURLOPT_URL, cUrl )
+        curl_easy_setopt( hCurl, HB_CURLOPT_TIMEOUT, 10 )			
+        curl_easy_setopt( hCurl, HB_CURLOPT_DL_BUFF_SETUP )
+		
+		curl_easy_setopt( hCurl, HB_CURLOPT_HTTPHEADER, aHeaders )
+		curl_easy_setopt( hCurl, HB_CURLOPT_POSTFIELDS, hb_jsonEncode( hParams ) )
+		
+		curl_easy_setopt( hCurl, HB_CURLOPT_SSL_VERIFYPEER, .f. )
+		curl_easy_setopt( hCurl, HB_CURLOPT_SSL_VERIFYHOST, .f. )
+		curl_easy_setopt( hCurl, HB_CURLOPT_FOLLOWLOCATION )        // Necesario para aquellos sitios que nos redirigen a otros		
+
+
+		n := curl_easy_perform( hCurl ) 
+
+        if n == 0
+		
+			uValue 	:= curl_easy_dl_buff_get( hCurl )	
+
+			hRows	:= hb_jsonDecode( uvalue )
+			
+			_d( 'Respuesta: ', hRows )				
+			
+			if valtype( hRows ) == 'H' .and. HB_HHasKey( hRows, 'choices' )
+				_d( hRows[ 'choices' ] )
+				uValue := hRows[ 'choices' ][1][ 'message' ][ 'content' ]
+			endif
+			
+		else
+		
+			uValue	:= curl_easy_strerror( n )			
+			
+        endif
+		
+		curl_easy_cleanup(hCurl) 		
+		
+    endif
+	
+	//	Call MsgLoading(.f.) --> Close loading dialog...
+		oDom:SetJs( 'MsgLoading', { .f. } )
+		
+	oDom:Set( 'myanswer', uValue )
 	
 retu nil

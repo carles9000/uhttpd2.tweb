@@ -26,6 +26,7 @@ function WebServer()
 		oServer:Route( '/'		, 'index.html' ) 
 		oServer:Route( 'curl1'	, 'curl1.html' ) 
 		oServer:Route( 'curl2'	, 'curl2.html' ) 		
+		oServer:Route( 'curl3'	, 'curl3.html' ) 		
 		
 	//	-----------------------------------------------------------------------//	
 	

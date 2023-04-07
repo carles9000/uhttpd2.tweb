@@ -1,4 +1,5 @@
 //	---------------------------------------------------------------------------- //
+var _TWebIdDlg = 0
 
 function MsgInfo( cMsg, fCallback, cTitle, cIcon ) {
 
@@ -29,6 +30,11 @@ function MsgInfo( cMsg, fCallback, cTitle, cIcon ) {
 				}
 			}
 		}
+	});
+	
+	dialog.on("shown.bs.modal", function() {
+		_TWebIdDlg++
+		dialog.attr("id", "TWebIdDlg" +  _TWebIdDlg );
 	});
 	
 	dialog.init(function(){
@@ -220,6 +226,59 @@ function TValuesToParam( oValues ) {
 
 //	---------------------------------------------------------------------------- //
 
+/*	Icons Animated
+  "fas fa-spinner fa-spin"
+  "fas fa-circle-notch fa-spin"
+  "fas fa-sync fa-spin"
+  "fas fa-cog fa-spin"
+  "fas fa-spinner fa-pulse"
+  "fas fa-stroopwafel fa-spin"
+*/
+
+var _TWebMsgLoading = null
+
+function MsgLoading( cMessage, cTitle, cIcon, lHeader ) {
+
+	
+	//	If cMessage == false , close MsgLoading is it was opened
+	
+		if ( $.type( cMessage ) == 'array' && cMessage.length == 1 && cMessage[0] == false ) {
+	
+			if ( $.type( _TWebMsgLoading ) == 'object' ) {
+	
+				_TWebMsgLoading.modal( 'hide' );
+				_TWebMsgLoading = null
+		
+			}
+			return false		
+		}
+		
+	//	--------------------------------------------------------
+
+
+	cMessage 	= (typeof cMessage ) == 'string' ? cMessage : 'Loading...' ;
+	cTitle 		= (typeof cTitle ) == 'string' ? cTitle : 'System' ;
+	cIcon 		= (typeof cIcon ) == 'string' ? '<i class="' + cIcon + '"></i>': '<i class="fas fa-sync fa-spin"></i>' ;
+	lHeader		= (typeof lHeader ) == 'boolean' ? lHeader : false ;
+
+	_TWebMsgLoading = bootbox.dialog({
+			title: cTitle,
+			message: '<p>' + cIcon + '&nbsp;&nbsp;'  + cMessage + '</p>',
+			animate: false,							
+			//closeButton: false
+		}); 
+
+	_TWebMsgLoading.addClass("loading_center");
+	_TWebMsgLoading.find("div.modal-content").addClass("loading_content");
+	_TWebMsgLoading.find("div.modal-body").addClass("loading_body");																
+
+	if ( ! lHeader )
+		_TWebMsgLoading.find("div.modal-header").addClass("loading_header");																
+		
+	return _TWebMsgLoading
+}
+
+
 //	MsgNotify ------------------------------------------------------------------	
 //	cType = 	success, info, danger, warning
 //	Examples -> http://bootstrap-growl.remabledesigns.com/
@@ -237,5 +296,18 @@ function MsgNotify( cMsg, cType, cIcon, lSound ) {
 //	---------------------------------------------------------------------------- //
 
 function TDoClick( cId ){ $('#' + cId).click() }
+
+//	---------------------------------------------------------------------------- //
+
+function TWebIntro( cId, fFunction ) {
+
+	$("#" + cId ).on('keyup', function (e) {
+		if (e.key === 'Enter' || e.keyCode === 13) {
+			if ( typeof fFunction === "function") {					
+				fFunction.apply(null);
+			}		
+		}
+	});
+}
 
 //	---------------------------------------------------------------------------- //
