@@ -122,21 +122,21 @@ retu nil
 
 // -------------------------------------------------- //
 //	https://platform.openai.com/account/api-keys 
-//	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
+//	API KEY EXAMPLE: sk-fISy1fFHRXg1tEMVNgAvT3BlbkFJHI8wXKG74kYCoO0VstfFz
 //	https://medium.com/geekculture/2023-how-to-use-chatgpt-api-with-curl-f2628e4f809
 
 static function DoInitChatGpt( oDom )
 
 	local cQuestion	:= oDom:Get( 'myquestion' )		//"What is the OpenAI mission?"
 	local uValue 		:= ''
-	local cUrl 		:= "https://api.openai.com/v1/chat/completions"			
-	local hCurl, n, hRows	
-	local cAuth 		:= "Authorization: Bearer 080042cad6356ad5dc0a720c18b53b8e53d4c274"
+	local cUrl 			:= "https://api.openai.com/v1/chat/completions"			
+	local hCurl, n, hRows		
 	local aHeaders 	:= {}	
 	local hParams		:= {=>}
+	local cKey 			:= '<YOUR API-KEY>'
 	
 	Aadd( aHeaders, 'Content-Type: application/json') 
-	Aadd( aHeaders, 'Authorization: Bearer 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') 
+	Aadd( aHeaders, 'Authorization: Bearer ' + cKey ) 
 	
 	hParams[ 'model' ] :=  "gpt-3.5-turbo"	
 	hParams[ 'messages' ] :=  { ;
