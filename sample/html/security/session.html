@@ -1,0 +1,59 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Security' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Security', 'Session'
+		
+		DEFINE FORM o ID 'myform' API 'api_security' OF oWeb 
+			o:lDessign := .f.
+		
+		INIT FORM o 
+
+			SEPARATOR o LABEL 'Data User'	
+
+  			ROWGROUP o			
+				GET ID 'myname'  VALUE 'Charles Bronson' GRID 4 LABEL 'Name' OF o			
+				GET ID 'myage'    TYPE 'number' VALUE '64' GRID 4 LABEL 'Age' OF o			
+				GET ID 'mydate'   TYPE 'date' VALUE '' GRID 4 LABEL 'Date' OF o			
+			ENDROW o	
+
+  			ROWGROUP o			
+				COL o GRID 12					
+					BUTTON LABEL 'Init session & save data' WIDTH '100%' GRID 12 ACTION 'session_init' OF o	
+				ENDCOL o
+				
+			ENDROW o
+			
+			SEPARATOR o LABEL 'Manipulate Session'
+			
+  			ROWGROUP o	
+				COL o GRID 4					
+					BUTTON LABEL 'Exist Session?' WIDTH '100%' GRID 12 ACTION 'session_exist' OF o	
+				ENDCOL o
+			
+				COL o GRID 4					
+					BUTTON LABEL 'Delete Session' WIDTH '100%' GRID 12 ACTION 'session_end' OF o	
+				ENDCOL o
+
+				COL o GRID 4					
+					BUTTON LABEL 'Recover data' WIDTH '100%' GRID 12 ACTION 'session_load' OF o	
+				ENDCOL o				
+				
+			ENDROW o
+
+			ROWGROUP o	
+			
+				COL o GRID 12
+					GET MEMO ID 'mysession' LABEL "Data Values" VALUE '' GRID 12 DISABLED OF o													
+				ENDCOL o			
+
+			ENDROW o
+			
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

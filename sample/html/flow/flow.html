@@ -1,0 +1,51 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+
+	DEFINE WEB oWeb TITLE 'Web' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Flow Web', 'Connectivity'
+		
+		DEFINE FORM o ID 'myform' API 'api_flow' OF oWeb 			
+		
+		INIT FORM o
+
+			ROWGROUP o 								
+				BUTTON LABEL 'To Backend via API' WIDTH '300px' ACTION 'hello' OF o 
+			ENDROW o		
+
+			ROWGROUP o 								
+				BUTTON LABEL 'To Backend via Javascript' WIDTH '300px' ACTION 'mySend()' OF o 
+			ENDROW o
+
+			ROWGROUP o 								
+				BUTTON LABEL 'Execute Javascript from backend' WIDTH '300px' ACTION 'js' OF o 
+			ENDROW o			
+
+		ENDFORM o
+		
+		HTML o
+			<script>
+				
+				function mySend() {
+
+					var oPar = new Object()
+						oPar[ 'myname' ] = 'Jean-Paul'
+						oPar[ 'mycif'  ] = '1234-XJK-7'
+					
+					MsgApi( 'api_flow', 'mydata', oPar )
+				}
+				
+				function myCollector( u ) {
+				
+					MsgInfo( 'Message from my func myCollector.<br>It was executed from backend.<br>Check console' )
+					console.log( 'Parameters received from backend', u )				
+				}				
+				
+			</script>
+		ENDTEXT	
+
+	INIT WEB oWeb RETURN
+?>
+

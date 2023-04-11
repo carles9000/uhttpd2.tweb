@@ -1,11 +1,18 @@
 function Api_Security( oDom )
 
 	do case		
-		case oDom:GetProc() == 'test1'		; DoTest1( oDom )						
-		case oDom:GetProc() == 'test2'		; DoTest2( oDom )								
+		case oDom:GetProc() == 'test1'			; DoTest1( oDom )						
+		case oDom:GetProc() == 'test2'			; DoTest2( oDom )								
 		
-		case oDom:GetProc() == 'test3'		; DoTest3( oDom )								
-		case oDom:GetProc() == 'test4'		; DoTest4( oDom )								
+		case oDom:GetProc() == 'test3'			; DoTest3( oDom )								
+		case oDom:GetProc() == 'test4'			; DoTest4( oDom )								
+		
+		//	----------------------------------------------	//
+		
+		case oDom:GetProc() == 'session_init'	; DoSession_Init( oDom )								
+		case oDom:GetProc() == 'session_end'	; DoSession_End( oDom )								
+		case oDom:GetProc() == 'session_exist'	; DoSession_Exist( oDom )								
+		case oDom:GetProc() == 'session_load'	; DoSession_Load( oDom )								
 
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
@@ -84,3 +91,68 @@ static function DoTest4( oDom )
 retu nil
 
 // -------------------------------------------------- //
+
+
+static function DoSession_Init( oDom )
+	local hData := {=>}	
+	
+	hData[ 'name' ] := oDom:Get( 'myname' )
+	hData[ 'age'  ] := oDom:Get( 'myage' )
+	hData[ 'date' ] := oDom:Get( 'mydate' )
+	
+	USessionStart()
+	Usession( 'data_user'	, hData )
+	Usession( 'data_in'		, dtoc( date() ) + ' - ' + time() )
+	
+	oDom:SetMsg( 'Session created !' )
+	
+retu nil 
+
+// -------------------------------------------------- //
+
+static function DoSession_End( oDom )
+	
+	USessionEnd()
+		
+	oDom:SetMsg( 'Session was deleted !' )
+	
+retu nil 
+
+// -------------------------------------------------- //
+
+static function DoSession_Exist( oDom )
+	
+	
+	if USessionReady()
+		oDom:SetMsg( 'Session exist !' )
+	else
+		oDom:SetMsg( 'Session NOT exist !' )
+	endif
+	
+retu nil 
+
+// -------------------------------------------------- //
+
+static function DoSession_Load( oDom )
+
+	local hData := {=>}
+	local cData := ''
+
+	if USessionReady()
+	
+		hData := USession( 'data_user' )
+		
+		cData += hData[ 'name' ] + chr(10)
+		cData += hData[ 'age' ] + chr(10)
+		cData += hData[ 'date' ] 		
+
+		oDom:Set( 'mysession', cData )		
+		
+	else 
+	
+		oDom:Set( 'mysession', 'Session is NULL' )
+		
+	endif
+	
+	
+retu nil 

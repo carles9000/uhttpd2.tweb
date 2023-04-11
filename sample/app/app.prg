@@ -65,6 +65,7 @@ function WebServer()
 		oServer:Route( 'charset'	, 'index_charset.html' ) 		
 		oServer:Route( 'browse'	, 'index_brw.html' )  	
 		oServer:Route( 'dialog'	, 'index_dialog.html' )  	
+		oServer:Route( 'flow'		, 'flow\flow.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
 		oServer:Route( 'splash'	, 'index_splash.html' )  			
 		oServer:Route( 'functional', 'index_functional.html' )  			
@@ -202,7 +203,8 @@ function WebServer()
 		
 	//	Security
 	
-		oServer:Route( 'token'	, 'security/token.html' ) 
+		oServer:Route( 'token'	 , 'security/token.html' ) 
+		oServer:Route( 'session', 'security/session.html' )		
 		
 	//	Testing
 	
