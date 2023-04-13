@@ -42,7 +42,7 @@ function WebServer()
 		-----------------
 		oServer:cSessionPath		:=	'.sessions' 	//	Default path session ./sessions
 		oServer:cSessionName		:=	'USESSID' 		//	Default session name USESSID
-		oServer:cSessionPrefix		:=	'sess_'			//	Default prefix sess_
+		oServer:cSessionPrefix	:=	'sess_'			//	Default prefix sess_
 		oServer:cSessionSeed		:= 	'm!PaswORD@'	//	Password default ...
 		
 		oServer:nSessionDuration	:=	3600			//	Default duration session time 3600

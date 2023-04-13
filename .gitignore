@@ -1,4 +1,3 @@
-doc/*
 #Ignore tots els dirs .hbmk, .sessions
 **/.hbmk/
 **/.sessions/

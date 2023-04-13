@@ -11,8 +11,10 @@
 
 			MENU GROUP 'General' OF oNav
 			
-			MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE 'menu' 		OF oNav
-			MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' ACTIVE	OF oNav 
+				MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE 'menu' 		OF oNav
+				MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' ACTIVE	OF oNav 
+				
+			ENDMENU OF oNav					
 			
 			MENU 'Tools' ICON '<i class="fa fa-times-circle" aria-hidden="true"></i>' OF oNav
 				MENUITEM 'My Submenu'  ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav 							
@@ -21,12 +23,11 @@
 				MENUITEM 'My Submenu3' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav
 			ENDMENU OF oNav			
 
-			MENU GROUP 'General' OF oNav
-			
-			MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE 'menu' 		OF oNav
-			MENUITEM SEPARATOR OF oNav
-			MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' 	OF oNav 
-		
+
+				MENUITEM SEPARATOR OF oNav
+				MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' 	OF oNav 
+				
+					
 			
 		DEFINE FORM o OF oWeb	
 		
