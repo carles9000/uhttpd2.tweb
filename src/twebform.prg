@@ -334,7 +334,7 @@ METHOD Activate( fOnInit ) CLASS TWebForm
 		
 	else 
 	
-		::Html( JSReady( "console.error( 'Attention: Init form is missing!')" ) )
+		::Html( JSReady( "console.warn( 'Warning: Init form is missing!')" ) )
 		
 	endif 
 

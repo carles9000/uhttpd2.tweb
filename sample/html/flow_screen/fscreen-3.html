@@ -1,0 +1,44 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+
+	DEFINE WEB oWeb TITLE 'Screen' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Screen', 'Window'
+		
+		DEFINE FORM o ID 'myform' API 'api_screen' OF oWeb
+	
+		
+		INIT FORM o
+		
+			ROW o VALIGN 'top'
+			
+				COL o GRID 4
+				
+					ROWGROUP o 								
+						BUTTON LABEL 'Window (New Tab)' WIDTH '200px' ACTION 'window-1' OF o 
+					ENDROW o
+
+					ROWGROUP o 								
+						BUTTON LABEL 'Window (Same Tab)' WIDTH '200px' ACTION 'window-2' OF o 
+					ENDROW o	
+
+					ROWGROUP o 								
+						BUTTON LABEL 'Window (only one)' WIDTH '200px' ACTION 'window-3' OF o 
+					ENDROW o
+
+					ROWGROUP o 								
+						BUTTON LABEL 'Window (lot of them)' WIDTH '200px' ACTION 'window-4' OF o 
+					ENDROW o	
+					
+
+				ENDCOL o 
+
+			ENDROW o
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

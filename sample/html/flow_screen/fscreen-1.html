@@ -1,0 +1,79 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+
+	DEFINE WEB oWeb TITLE 'Screen' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Screen', 'Panel'
+		
+		DEFINE FORM o ID 'myform' API 'api_screen' OF oWeb
+
+		HTML o  
+
+			<style>
+			
+				#mycontainer {
+					border:2px solid green;					
+					width:100%					
+				}
+				
+				#mycontainer-2 {
+					border:2px solid red;					
+					width:100%					
+				}				
+			</style>
+
+		ENDTEXT		
+		
+		INIT FORM o
+		
+			ROW o VALIGN 'top'
+			
+				COL o GRID 4
+				
+					ROWGROUP o 								
+						BUTTON LABEL 'Clean Screen 1 ' WIDTH '200px' ACTION 'clean-1' OF o 
+					ENDROW o
+
+					ROWGROUP o 								
+						BUTTON LABEL 'Clean Screen 2 ' WIDTH '200px' ACTION 'clean-2' OF o 
+					ENDROW o					
+
+					ROWGROUP o 								
+						BUTTON LABEL 'Embedeed Screen 1 ' WIDTH '200px' ACTION 'panel-1' OF o 
+					ENDROW o	
+					
+					ROWGROUP o 								
+						BUTTON LABEL 'Embedeed Screen 2 ' WIDTH '200px' ACTION 'panel-2' OF o 
+					ENDROW o	
+
+					ROWGROUP o 								
+						BUTTON LABEL 'Load Screen 1 ' WIDTH '200px' ACTION 'panel-3' OF o 
+					ENDROW o	
+
+					ROWGROUP o 								
+						BUTTON LABEL 'Load Screen 2 ' WIDTH '200px' ACTION 'panel-4' OF o 
+					ENDROW o						
+
+				ENDCOL o 
+				
+				COL o GRID 8
+				
+					ROWGROUP o 
+						HTML o INLINE 'id="mycontainer"<br><div id="mycontainer"></div>'
+					ENDROW o
+					
+					ROWGROUP o 
+						HTML o INLINE 'id="mycontainer-2"<br><div id="mycontainer-2"></div>'
+					ENDROW o
+
+				ENDCOL o 
+
+			ENDROW o
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

@@ -1,3 +1,6 @@
+15/04/2023 Vrs. 1.10 
+	* New example. Mnagament screens, review samples\flow_screen
+
 29/03/2023 Vrs. 1.09 Clausule PBS in button 
 	* check dialog\pbs
 	* check msg\msgloading

@@ -1,0 +1,34 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+
+	DEFINE WEB oWeb TITLE 'Screen' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Screen', 'Dialog'
+		
+		DEFINE FORM o ID 'myform' API 'api_screen' OF oWeb	
+		
+		INIT FORM o
+		
+			ROW o VALIGN 'top'
+			
+				COL o GRID 4
+				
+					ROWGROUP o 								
+						BUTTON LABEL 'Dialog Embedded' WIDTH '200px' ACTION 'dialog-1' OF o 
+					ENDROW o
+
+					ROWGROUP o 								
+						BUTTON LABEL 'Dialog from Hmtl' WIDTH '200px' ACTION 'dialog-2' OF o 
+					ENDROW o						
+
+				ENDCOL o 
+
+			ENDROW o
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

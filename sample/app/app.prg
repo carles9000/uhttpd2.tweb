@@ -65,6 +65,7 @@ function WebServer()
 		oServer:Route( 'charset'	, 'index_charset.html' ) 		
 		oServer:Route( 'browse'	, 'index_brw.html' )  	
 		oServer:Route( 'dialog'	, 'index_dialog.html' )  	
+		oServer:Route( 'flow_screen', 'index_flow_screen.html' )  	
 		oServer:Route( 'flow'		, 'flow\flow.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
 		oServer:Route( 'splash'	, 'index_splash.html' )  			
@@ -154,7 +155,13 @@ function WebServer()
 		
 		oServer:Route( 'dlg-1'		, 'dialog/dlg-1.html' ) 		
 		oServer:Route( 'dlg-2'		, 'dialog/dlg-2.html' ) 		
-		oServer:Route( 'dlg-3'		, 'dialog/dlg-3.html' ) 		
+		oServer:Route( 'dlg-3'		, 'dialog/dlg-3.html' )
+ 		
+		oServer:Route( 'fscreen-1'	, 'flow_screen/fscreen-1.html' ) 		
+		oServer:Route( 'fscreen-2'	, 'flow_screen/fscreen-2.html' ) 		
+		oServer:Route( 'fscreen-3'	, 'flow_screen/fscreen-3.html' ) 		
+		oServer:Route( 'hello'		, 'flow_screen/hello.html' ) 		
+		oServer:Route( 'wndhello'	, 'flow_screen/wndhello.html' ) 		
 		
 		
 	//	Screens

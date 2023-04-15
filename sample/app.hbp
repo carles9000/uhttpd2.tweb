@@ -21,6 +21,7 @@ app\api_security.prg
 app\api_functional.prg
 app\api_examples.prg
 app\api_charset.prg
+app\api_screen.prg
 app\web_msg.prg
 app\web_brw.prg
 app\web_prg.prg

@@ -1,6 +1,9 @@
 function Api_Msg( oDom )
 
 	do case
+		case oDom:GetProc() == 'hello'		; oDom:SetMsg( 'Hello at ' + time() )
+		case oDom:GetProc() == 'clickme'	; oDom:SetMsg( 'Click !' )
+		
 		case oDom:GetProc() == 'ping'		; DoPing( oDom )						
 		case oDom:GetProc() == 'testpbs'	; DoPBS( oDom )						
 

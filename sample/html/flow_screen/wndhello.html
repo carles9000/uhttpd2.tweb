@@ -1,0 +1,20 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	LOCAL cIdForm := if( pvalue(1) == NIL , 'form_hello', pvalue(1) )
+	
+	DEFINE WEB oWeb 		
+		
+		DEFINE FORM o ID cIdForm API  'api_msg' OF oWeb							
+
+		INIT FORM o					
+			SAY VALUE '<h1>Welcome to TWeb !' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>Engine loaded, version {{ TWebVersion() }}<hr>' ALIGN 'center' GRID 12  OF o									
+			
+			BUTTON ID 'btn' LABEL 'Click me!' ALIGN 'center' GRID 12 ACTION 'clickme' OF o
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+?>
