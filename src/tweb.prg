@@ -6,7 +6,7 @@
 ** MIT license https://github.com/carles9000/tweb.uhttpd2/blob/master/LICENSE
 */
 
-#define TWEB_VERSION 			'1.10'
+#define TWEB_VERSION 			'1.11'
 
 #include 'hbclass.ch'	
 #include 'common.ch'
@@ -75,7 +75,7 @@ CLASS TWeb
 
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
-	METHOD AddControl( uValue )			INLINE Aadd( ::aControls, uValue )
+	METHOD AddControl( uValue )		INLINE Aadd( ::aControls, uValue )
 	METHOD Html( cCode ) 				INLINE Aadd( ::aControls, cCode )
 	METHOD AddJs( cFile, lAbsolute ) 	
 	METHOD AddCss( cFile, lAbsolute ) 	
@@ -217,7 +217,7 @@ retu cEcho
 function TWebHtmlInline( cFile, ... )
 
 	local cCode := ''	
-	
+
 	cCode := ULoadHtml( cFile, ... )
 	
 retu cCode 

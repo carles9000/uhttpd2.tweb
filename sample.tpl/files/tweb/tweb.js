@@ -239,15 +239,17 @@ var _TWebMsgLoading = null
 
 function MsgLoading( cMessage, cTitle, cIcon, lHeader ) {
 
-	
+
+
 	//	If cMessage == false , close MsgLoading is it was opened
 	
-		if ( $.type( cMessage ) == 'array' && cMessage.length == 1 && cMessage[0] == false ) {
-	
+		if ( cMessage == false || ( $.type( cMessage ) == 'array' && cMessage.length == 1 && cMessage[0] == false )) {
 			if ( $.type( _TWebMsgLoading ) == 'object' ) {
-	
-				_TWebMsgLoading.modal( 'hide' );
-				_TWebMsgLoading = null
+
+				//	No funciona bien. De momento cerraremos todas...
+				//_TWebMsgLoading.modal( 'hide' );
+				//_TWebMsgLoading = null
+				bootbox.hideAll();
 		
 			}
 			return false		

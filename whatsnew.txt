@@ -1,3 +1,6 @@
+20/04/2023 Vrs. 1.11
+	* Add clausule HIDDEN to DIV, ROW, ROWGROUP, COL, BROWSE 
+	
 15/04/2023 Vrs. 1.10 
 	* New example. Mnagament screens, review samples\flow_screen
 

@@ -23,10 +23,11 @@ retu oDom:Send()
 // ipinfo.io/ip
 // -------------------------------------------------- //
 
+
 static function GetIp( oDom )
 
 	local uValue 	:= ''
-	local cUrl 		:= "https://ifconfig.me"			
+	local cUrl 		:= "https://ifconfig.me"				
 	local hCurl, n		
 	
 	if ! empty( hCurl := curl_easy_init() )		

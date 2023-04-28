@@ -98,7 +98,7 @@ METHOD InitForm( cClass ) CLASS TWebForm
 	
 RETU NIL
 
-METHOD Col( cId, nCol, cType, cClass, cStyle ) CLASS TWebForm
+METHOD Col( cId, nCol, cType, cClass, cStyle, lHidden ) CLASS TWebForm
 
 	local cHtml := ''
 	local cPrefix := IF( empty(::cType), '', ::cType + '-' )
@@ -109,6 +109,7 @@ METHOD Col( cId, nCol, cType, cClass, cStyle ) CLASS TWebForm
 	DEFAULT cClass TO ''	
 	DEFAULT cId TO ''	
 	DEFAULT cStyle TO ''	
+	DEFAULT lHidden TO .f.
 	
 	IF !Empty( cType )
 		cPrefix := cType + '-' 	
@@ -139,6 +140,10 @@ METHOD Col( cId, nCol, cType, cClass, cStyle ) CLASS TWebForm
 		cStyle +=  ';border:1px solid blue;'
 	ENDIF
 	
+	IF lHidden
+		cStyle +=  'display:none;'
+	ENDIF
+	
 	IF !empty(cStyle)
 		cHtml += ' style="' + cStyle + '" '
 	endif	
@@ -150,7 +155,7 @@ METHOD Col( cId, nCol, cType, cClass, cStyle ) CLASS TWebForm
 	
 RETU NIL
 
-METHOD Div( cId, cClass, cStyle, cProp ) CLASS TWebForm
+METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 
 	local cHtml := ''
 	
@@ -159,6 +164,7 @@ METHOD Div( cId, cClass, cStyle, cProp ) CLASS TWebForm
 	DEFAULT cClass TO ''
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
+	DEFAULT lHidden TO .f.
 
 	cHtml += '<div id="' + ::cId_Dialog + '-' + cId + '" '
 	
@@ -169,6 +175,10 @@ METHOD Div( cId, cClass, cStyle, cProp ) CLASS TWebForm
 	if ::lDessign
 		cStyle += ";border:1px solid red;" 
 	endif
+	
+	IF lHidden
+		cStyle +=  'display:none;'
+	ENDIF	
 	
 	if !empty( cStyle )	
 		cHtml += ' style="' + cStyle + '" '
@@ -185,7 +195,7 @@ METHOD Div( cId, cClass, cStyle, cProp ) CLASS TWebForm
 	
 RETU NIL
 
-METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom ) CLASS TWebForm
+METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom, lHidden ) CLASS TWebForm
 
 	local cHtml := ''
 
@@ -195,6 +205,7 @@ METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom ) CLASS TWebForm
 	DEFAULT cClass TO ''
 	DEFAULT cTop TO ''
 	DEFAULT cBottom TO ''
+	DEFAULT lHidden TO .f.
 	
 	cVAlign 	:= lower( cVAlign )
 	cHAlign 	:= lower( cHAlign )
@@ -223,6 +234,10 @@ METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom ) CLASS TWebForm
 	cHtml += ' style="'
 	
 	cHtml += IF( ::lDessign, 'border:1px solid red;', '' )  
+	
+	IF lHidden
+		cHtml +=  'display:none;'
+	ENDIF		
 
 	if !empty( cTop )
 		cTop := mh_valtochar( cTop )
@@ -243,7 +258,7 @@ METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom ) CLASS TWebForm
 RETU NIL
 
 
-METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle ) CLASS TWebForm
+METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle, lHidden ) CLASS TWebForm
 
 	local cHtml := ''
 
@@ -252,6 +267,7 @@ METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle ) CLASS TWebForm
 	DEFAULT cHAlign TO 'left'
 	DEFAULT cClass TO ''
 	DEFAULT cStyle TO ''
+	DEFAULT lHidden TO .f.
 	
 	cVAlign 	:= lower( cVAlign )
 	cHAlign 	:= lower( cHAlign )
@@ -286,6 +302,10 @@ METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle ) CLASS TWebForm
 	IF ::lDessign 
 		cStyle +=  ';border:1px solid red;'
 	ENDIF
+	
+	IF lHidden
+		cStyle +=  'display:none;'
+	ENDIF		
 	
 	IF !empty(cStyle)
 		cHtml += ' style="' + cStyle + '" '

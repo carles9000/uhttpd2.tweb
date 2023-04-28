@@ -9,6 +9,7 @@ CLASS TWebBrowse FROM TWebControl
 	DATA cFilter_Id				INIT ''
 	DATA hOptions					INIT {=>}
 	DATA cLabel						INIT ''
+	DATA lAll						INIT .F.
 
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
@@ -20,13 +21,17 @@ CLASS TWebBrowse FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, hOptions, aEvents, aFilter, cFilter_Id, cLabel  ) CLASS TWebBrowse
+METHOD New( oParent, cId, hOptions, aEvents, aFilter, cFilter_Id, cLabel, lAll, cClass, cStyle, lHidden ) CLASS TWebBrowse
 
 	DEFAULT cId TO ''	
 	DEFAULT hOptions TO {=>}
 	DEFAULT aFilter TO {}
 	DEFAULT cFilter_Id TO ''	
 	DEFAULT cLabel TO ''
+	DEFAULT lAll TO .F.
+	DEFAULT cClass TO ''
+	DEFAULT cStyle TO ''
+	DEFAULT lHidden TO .F.
 
 	::oParent		:= oParent
 	::cId			:= cId	
@@ -35,6 +40,10 @@ METHOD New( oParent, cId, hOptions, aEvents, aFilter, cFilter_Id, cLabel  ) CLAS
 	::aFilter		:= aFilter
 	::cFilter_Id	:= cFilter_Id
 	::cLabel 		:= cLabel		
+	::lAll 			:= lAll
+	::cClass 		:= cClass
+	::cStyle 		:= cStyle
+	::lHidden 		:= lHidden 
 	
 	IF Valtype( oParent ) == 'O'
 	
@@ -51,6 +60,7 @@ METHOD Activate() CLASS TWebBrowse
 	LOCAL cChecked	:= ''
 	local cIdPrefix, n, nPos 
 	LOCAL aNewFilter := {}
+	local cSt 		:= ''
 
 	//	Check Filter...
 	
@@ -77,7 +87,24 @@ METHOD Activate() CLASS TWebBrowse
 		cIdPrefix :=  ''
 	endif
 
-	cHtml := '<div class="card" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) + ' >'
+	cHtml := '<div class="card '
+	
+	if !empty( ::cClass )	
+		cHtml += ::cClass
+	endif		
+	
+	cHtml += '" ' 
+	
+	cSt := 'style="' 
+	IF ::lHidden
+		cSt += 'display:none;'
+	ENDIF		
+	
+	IF ::oParent:lDessign
+		cSt += "border:1px solid blue;"
+	ENDIF
+	
+	cHtml += cSt + '" >'
 	
 	if !empty( ::cLabel )
 		cHtml += '<div id="' + cIdPrefix + ::cId + '_title' + '" class="card-header">' + ::cLabel + '</div>'
@@ -90,7 +117,12 @@ METHOD Activate() CLASS TWebBrowse
 	
 	endif		
 	
-	cHtml += '  <div id="' + cIdPrefix + ::cId + '" data-live class="card-body--- tabulator">'
+	cHtml += '  <div id="' + cIdPrefix + ::cId + '" data-live class="card-body--- tabulator" '
+	
+	if ::lAll
+		cHtml += '  data-all '
+	endif
+	cHtml += '>'
 	
 	cHtml += ' </div>'
 	
