@@ -1,0 +1,43 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	LOCAL hData := {=>}
+	LOCAL cTxt 
+	
+	cTxt := '<h4>Macro &#60;$ uValue $&#62; always will be evaluate in at runtime inside a text block. HTML o PARAMS n1,n2,n...'
+	cTxt += '<br>This means that we can refer to the variables that we pass as parameters to the text block at runtime.'
+	cTxt += '</h4>'	
+	
+	hData[ 'id' ] 			:= 'AB-1000'
+	hData[ 'name' ] 		:= 'John Kocinsky'
+	hData[ 'description' ]  := 'Head of the sales department'		
+	
+	DEFINE WEB oWeb TITLE 'Macro' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Macro', 'HTML o PARAMS n1,n2,n...'
+		
+		DEFINE FORM o OF oWeb 
+			
+		
+		INIT FORM o 						
+		
+  			ROWGROUP o
+				SAY LABEL cTxt GRID 12 OF o 
+			ENDROW o 			
+
+			HTML o PARAMS hData 
+<div class="card">
+  <h5 class="card-header">Card Id. <$ hData[ 'id' ]$></h5>
+  <div class="card-body">
+    <h5 class="card-title"><$ hData[ 'name' ] $></h5>
+    <p class="card-text"><$ hData[ 'description' ] $></p>    
+  </div>
+</div>									
+			ENDTEXT 
+			
+		ENDFORM o
+		
+	INIT WEB oWeb RETURN
+?>
+

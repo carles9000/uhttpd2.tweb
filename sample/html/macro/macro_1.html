@@ -1,0 +1,33 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	LOCAL cTxt 
+	
+	cTxt := '<h4>Macro &#123;&#123; ... &#125;&#125; always will be evaluate befor execute the code.'
+	cTxt += '<br>This means that we will not be able to refer to variables defined within the code, but we can execute functions....'
+	cTxt += 'ex: &#123;&#123; time() &#125;&#125;'
+	cTxt += '</h4>'
+	
+	DEFINE WEB oWeb TITLE 'Macro' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Macro', '&#123;&#123; ... &#125;&#125;'
+		
+		DEFINE FORM o OF oWeb 
+			
+		
+		INIT FORM o 						
+			
+  			ROWGROUP o
+				SAY LABEL cTxt GRID 12 OF o 
+			ENDROW o 
+			
+  			ROWGROUP o			
+				GET ID 'myvar'  LABEL 'Time' VALUE "{{ time() }}" OF o					
+			ENDROW o			
+			
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

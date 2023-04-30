@@ -1,0 +1,60 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	LOCAL aData := {}
+	LOCAL cTxt, n
+	
+	cTxt := '<h4>Macro &#60;$ uValue $&#62; always will be evaluate in at runtime inside a text block. HTML o PARAMS n1,n2,n...'
+	cTxt += '<br>This means that we can refer to the variables that we pass as parameters to the text block at runtime.'
+	cTxt += '</h4>'	
+	
+	aData := LoadData()		
+	
+	DEFINE WEB oWeb TITLE 'Macro' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Macro', 'HTML o PARAMS n1,n2,n...'
+		
+		DEFINE FORM o OF oWeb 
+			
+		
+		INIT FORM o 						
+		
+  			ROWGROUP o
+				SAY LABEL cTxt GRID 12 OF o 
+			ENDROW o 	
+
+			for n := 1 to len( aData )
+
+				HTML o PARAMS n, aData
+					
+					<div class="card col-4" style="float:left;">
+					  <h5 class="card-header">Card Id. <$ aData[n][ 'id' ]$></h5>
+					  <div class="card-body">
+						<h5 class="card-title"><$ aData[n][ 'name' ] $></h5>
+						<p class="card-text"><$ aData[n][ 'description' ] $></p>    
+					  </div>
+					</div>									
+					
+				ENDTEXT 
+			
+			next
+			
+		ENDFORM o
+		
+	INIT WEB oWeb RETURN
+	
+function LoadData()
+	
+	local aData := {}
+	
+	Aadd( aData, { 'id' => 'AB-1000', 'name' => 'John Kocinsky', 'description' => 'Company Manager' } )
+	Aadd( aData, { 'id' => 'AB-1001', 'name' => 'Marilo Funck' , 'description' => 'Head of the manager department' } )
+	Aadd( aData, { 'id' => 'AB-1002', 'name' => 'Charles Brow' , 'description' => 'Head of the accounting department' } )
+	Aadd( aData, { 'id' => 'AB-1004', 'name' => 'Silvia Dosnar', 'description' => 'Head of the logistics department' } )
+	Aadd( aData, { 'id' => 'AB-1005', 'name' => 'Philip Marlow', 'description' => 'Head of the sales department' } )
+	Aadd( aData, { 'id' => 'AB-1006', 'name' => 'Esther Willy' , 'description' => 'Consultant Chief' } )
+	
+retu aData
+?>
+
