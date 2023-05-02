@@ -15,7 +15,7 @@ CLASS TWebImage FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery, lNoZoom, cStyle, cProp ) CLASS TWebImage
+METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery, lNoZoom, cStyle, cProp, lHidden ) CLASS TWebImage
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT cSrc TO ''
@@ -28,6 +28,7 @@ METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery
 	DEFAULT lNoZoom TO .F.
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
+	DEFAULT lHidden TO .F.
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -41,6 +42,7 @@ METHOD New( oParent, cId, cSrc, cBigSrc, nGrid, cAlign, cClass, nWidth, cGallery
 	::lZoom			:= !lNoZoom
 	::cStyle 		:= cStyle 
 	::cProp 		:= cProp 
+	::lHidden 		:= lHidden
 
 
 	IF Valtype( oParent ) == 'O'	
@@ -126,6 +128,10 @@ METHOD Activate() CLASS TWebImage
 		//cHtml += ' style="width:' + ltrim(str(::nWidth)) + 'px; '
 		::cStyle += ';width:' + ltrim(str(::nWidth)) + 'px; '
 	endif
+	
+	IF ::lHidden
+		::cStyle += 'display:none;'
+	ENDIF		
 	
 	if !empty( ::cStyle )	
 		cHtml += ' style="' + ::cStyle + '" '

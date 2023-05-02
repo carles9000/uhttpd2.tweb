@@ -146,9 +146,9 @@
 	
 #xcommand IMAGE [<oImg>] [ ID <cId> ] [ FILE <cFile> ] [ BIGFILE <cBigFile> ] [ ALIGN <cAlign> ] ;
 	[GRID <nGrid>] [ CLASS <cClass> ] [ WIDTH <nWidth>] [ GALLERY <cGallery> ] ;
-	[ <nozoom: NOZOOM> ] [ STYLE <cStyle> ] [ PROP <cProp> ] OF <oForm> ;
+	[ <nozoom: NOZOOM> ] [ STYLE <cStyle> ] [ PROP <cProp> ] [ <hi: HIDE, HIDDEN> ] OF <oForm> ;
 => ;
-	[<oImg> := ] TWebImage():New( <oForm>, [<cId>], [<cFile>], [<cBigFile>], [<nGrid>], [<cAlign>], [<cClass>], [<nWidth>], [<cGallery>], [<.nozoom.>], [<cStyle>], [<cProp>] )
+	[<oImg> := ] TWebImage():New( <oForm>, [<cId>], [<cFile>], [<cBigFile>], [<nGrid>], [<cAlign>], [<cClass>], [<nWidth>], [<cGallery>], [<.nozoom.>], [<cStyle>], [<cProp>], [<.hi.>] )
 	
 	
 #xcommand SWITCH [<oSwitch>] [ ID <cId> ] [ <lValue: ON> ] [ VALUE <lValue> ] [ LABEL <cLabel> ] ;
