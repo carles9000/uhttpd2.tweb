@@ -102,7 +102,7 @@ static function DoSession_Init( oDom )
 	
 	USessionStart()
 	Usession( 'data_user'	, hData )
-	Usession( 'data_in'		, dtoc( date() ) + ' - ' + time() )
+	Usession( 'data_in'	, dtoc( date() ) + ' - ' + time() )
 	
 	oDom:SetMsg( 'Session created !' )
 	
@@ -115,6 +115,19 @@ static function DoSession_End( oDom )
 	USessionEnd()
 		
 	oDom:SetMsg( 'Session was deleted !' )
+	
+		oDom:Set( 'mysession', '' )
+		
+		oDom:Set( 'path' 		, '' )
+		oDom:Set( 'name' 		, '' )
+		oDom:Set( 'prefix' 		, '' )
+		oDom:Set( 'duration' 	, '' )
+		oDom:Set( 'sec' 		, '' )
+		oDom:Set( 'sec_txt'		, '' )
+		oDom:Set( 'expired' 	, '' )
+		oDom:Set( 'expired_txt'	, '' )
+		oDom:Set( 'diff' 		, '' )		
+		oDom:Set( 'diff_txt'	, '' )		
 	
 retu nil 
 
@@ -137,20 +150,46 @@ static function DoSession_Load( oDom )
 
 	local hData := {=>}
 	local cData := ''
+	local hSession
 
 	if USessionReady()
 	
-		hData := USession( 'data_user' )
+		hSession 	:= UGetSession()					
+		hData 		:= USession( 'data_user' )
 		
 		cData += hData[ 'name' ] + chr(10)
 		cData += hData[ 'age' ] + chr(10)
 		cData += hData[ 'date' ] 		
 
-		oDom:Set( 'mysession', cData )		
+		oDom:Set( 'mysession', cData )	
 		
+		oDom:Set( 'path' 		, hSession[ 'path' ] )
+		oDom:Set( 'name' 		, hSession[ 'name' ] )
+		oDom:Set( 'prefix' 		, hSession[ 'prefix' ] )		
+		oDom:Set( 'duration' 	, hSession[ 'duration' ]  )
+		oDom:Set( 'duration_txt', SecToTime( hSession[ 'duration' ])  )
+		
+		oDom:Set( 'sec' 		, Seconds() )
+		oDom:Set( 'sec_txt' 	, SecToTime(Seconds()) )
+		oDom:Set( 'expired' 	, hSession[ 'expired' ] )
+		oDom:Set( 'expired_txt'	, SecToTime(hSession[ 'expired' ]) )
+		oDom:Set( 'diff' 		, hSession[ 'expired' ]  - Seconds() )
+		oDom:Set( 'diff_txt' 	, SecToTime(hSession[ 'expired' ]  - Seconds() ))
+
 	else 
 	
 		oDom:Set( 'mysession', 'Session is NULL' )
+		
+		oDom:Set( 'path' 		, '' )
+		oDom:Set( 'name' 		, '' )
+		oDom:Set( 'prefix' 		, '' )
+		oDom:Set( 'duration' 	, '' )
+		oDom:Set( 'sec' 		, '' )
+		oDom:Set( 'sec_txt'		, '' )
+		oDom:Set( 'expired' 	, '' )
+		oDom:Set( 'expired_txt'	, '' )
+		oDom:Set( 'diff' 		, '' )		
+		oDom:Set( 'diff_txt'	, '' )		
 		
 	endif
 	

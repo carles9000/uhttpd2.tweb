@@ -7,8 +7,8 @@
 	
 		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Security', 'Session'
 		
-		DEFINE FORM o ID 'myform' API 'api_security' OF oWeb 
-			o:lDessign := .f.
+		DEFINE FORM o ID 'myform' API 'api_security' OF oWeb 			
+			o:cSizing 	:= 'sm'
 		
 		INIT FORM o 
 
@@ -50,6 +50,39 @@
 					GET MEMO ID 'mysession' LABEL "Data Values" VALUE '' GRID 12 DISABLED OF o													
 				ENDCOL o			
 
+			ENDROW o
+			
+			ROWGROUP o	VALIGN 'top'	
+			
+				SEPARATOR o LABEL 'Config parameters'
+				
+				COL o GRID 6				
+					GET ID 'path' 	  LABEL 'Path'  	 			VALUE '' DISABLED GRID 12 OF o
+					GET ID 'name' 	  LABEL 'Name'  	 			VALUE '' DISABLED GRID 12 OF o
+					GET ID 'prefix'   LABEL 'Prefix'   				VALUE '' DISABLED GRID 12 OF o					
+				ENDCOL o 
+
+				COL o GRID 6
+					ROWGROUP o  VALIGN 'bottom'
+						GET ID 'duration' 	  LABEL 'Duration'  	VALUE '' DISABLED GRID 6 OF o				
+						GET ID 'duration_txt' LABEL ''  			VALUE '' DISABLED GRID 6 OF o				
+					ENDROW o
+					
+					ROWGROUP o  VALIGN 'bottom'
+						GET ID 'sec' 	     LABEL 'Now seconds'  	VALUE '' DISABLED GRID 6 OF o
+						GET ID 'sec_txt'  	 LABEL ''			  	VALUE '' DISABLED GRID 6 OF o
+					ENDROW o
+					
+					ROWGROUP o VALIGN 'bottom'
+						GET ID 'expired'  	 LABEL 'Expired'  		VALUE '' DISABLED GRID 6 OF o
+						GET ID 'expired_txt' LABEL ''  				VALUE '' DISABLED GRID 6 OF o
+					ENDROW o
+					
+					ROWGROUP o VALIGN 'bottom'
+						GET ID 'diff' 	 	 LABEL 'Diff. Expired - Now'  	VALUE '' DISABLED GRID 6 OF o				
+						GET ID 'diff_txt' 	 LABEL ''  						VALUE '' DISABLED GRID 6 OF o				
+					ENDROW o
+				ENDCOL o 
 			ENDROW o
 			
 		ENDFORM o

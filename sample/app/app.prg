@@ -51,6 +51,8 @@ function WebServer()
 		oServer:lSessionCrypt		:=	.F. 			//	Default crypt session .F.
 	*/
 	
+	
+	
 	//	Routing...			
 
 		oServer:Route( '/'			, 'index.html' )  										
