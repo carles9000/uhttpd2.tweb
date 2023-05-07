@@ -1,3 +1,6 @@
+07/05/2023
+	* Add samples.app\ws example with WS (WebSockets). Not ready yet
+	
 20/04/2023 Vrs. 1.11
 	* Add clausule HIDDEN to DIV, ROW, ROWGROUP, COL, BROWSE 
 	

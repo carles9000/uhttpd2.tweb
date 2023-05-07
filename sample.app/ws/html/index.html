@@ -1,0 +1,42 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'TWeb' 			
+		
+		DEFINE FORM o ID 'myform' API 'myapi' ON INIT 'ws_init' OF oWeb							
+
+		INIT FORM o					
+			
+			SAY ID 'mysay' VALUE '<h4>WebSockets. (Not ready yet)<h5>Open console</h5><hr>' ALIGN 'center' GRID 12  OF o									
+			
+			ROWGROUP o 			
+				GET ID 'mystatus' VALUE '' ALIGN 'center' GRID 12 READONLY OF o			
+			ENDROW o 
+			
+			ROWGROUP o 
+				BUTTON ID 'btn' LABEL 'Init Long Proccess!' ALIGN 'center' GRID 12 ;
+					ACTION 'run' PBS 'InitProc' OF o								
+			ENDROW o			
+			
+		ENDFORM o
+
+		HTML o 		
+			<script>
+				function InitProc() {
+					$('#myform-btn').html( '<i class="fas fa-spinner fa-spin"></i>&nbsp;Processing...' )				
+					$('#myform-btn').prop("disabled",true);
+					return true 
+				}
+				
+				function MyTest( u ) {										
+					$( '#' + u[ 'id' ]). val( u[ 'value'] )
+				}
+				
+				
+			</script>		
+		ENDTEXT 
+	
+	INIT WEB oWeb RETURN 
+?>
