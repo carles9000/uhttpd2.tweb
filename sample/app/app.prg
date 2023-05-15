@@ -47,6 +47,7 @@ function WebServer()
 		
 		oServer:nSessionDuration	:=	3600			//	Default duration session time 3600
 		oServer:nSessionGarbage	:=	1000			//	Default totals sessions executed for garbage
+		oServer:nSessionGarbage	:=	1000			//	Default totals sessions executed for garbage
 		oServer:nSessionLifeDays	:=	3				//	Default days stored for garbage 3
 		oServer:lSessionCrypt		:=	.F. 			//	Default crypt session .F.
 	*/
@@ -163,6 +164,7 @@ function WebServer()
 		oServer:Route( 'fscreen-1'	, 'flow_screen/fscreen-1.html' ) 		
 		oServer:Route( 'fscreen-2'	, 'flow_screen/fscreen-2.html' ) 		
 		oServer:Route( 'fscreen-3'	, 'flow_screen/fscreen-3.html' ) 		
+		oServer:Route( 'redirect-1', 'flow_screen/redirect.html' ) 		
 		oServer:Route( 'hello'		, 'flow_screen/hello.html' ) 		
 		oServer:Route( 'wndhello'	, 'flow_screen/wndhello.html' ) 		
 		

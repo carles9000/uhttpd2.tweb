@@ -21,7 +21,17 @@
 
 			ROWGROUP o 								
 				BUTTON LABEL 'Execute Javascript from backend' WIDTH '300px' ACTION 'js' OF o 
-			ENDROW o			
+			ENDROW o	
+			
+			HTML o INLINE '<hr>'
+
+			ROWGROUP o 								
+				BUTTON LABEL 'Redirect to Menu from API' WIDTH '300px' ACTION 'redirect' OF o 
+			ENDROW o	
+
+			ROWGROUP o 								
+				BUTTON LABEL 'Redirect to Menu from HTML' WIDTH '300px' ACTION 'PageRedirect()' OF o 
+			ENDROW o				
 
 		ENDFORM o
 		
@@ -41,7 +51,11 @@
 				
 					MsgInfo( 'Message from my func myCollector.<br>It was executed from backend.<br>Check console' )
 					console.log( 'Parameters received from backend', u )				
-				}				
+				}
+
+				function PageRedirect(){
+					window.location.href = 'redirect-1'
+				}
 				
 			</script>
 		ENDTEXT	

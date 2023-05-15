@@ -4,6 +4,8 @@ function Api_Flow( oDom )
 		case oDom:GetProc() == 'hello'		; oDom:SetMsg( 'Hello at ' + time() )
 		case oDom:GetProc() == 'mydata'	; DoData( oDom )
 		case oDom:GetProc() == 'js'		; DoJS( oDom )				
+		
+		case oDom:GetProc() == 'redirect'	; DoRedirect( oDom )				
 
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
@@ -38,3 +40,12 @@ static function DoJS( oDom )
 	oDom:SetJS( 'myCollector', hData )
 	
 retu nil
+
+
+// -------------------------------------------------- //
+
+static function DoRedirect( oDom )
+
+	URedirect( '/' )
+
+retu nil 
