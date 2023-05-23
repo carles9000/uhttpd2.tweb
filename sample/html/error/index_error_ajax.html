@@ -1,0 +1,29 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	
+	DEFINE WEB oWeb TITLE 'Test Error' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Error', 'Api/Ajax'
+		
+		DEFINE FORM o ID 'myform' API 'api_error' OF oWeb 			
+			o:cSizing 	:= 'sm'
+		
+		INIT FORM o 
+
+			SEPARATOR o LABEL 'Samples'	
+
+  			ROWGROUP o	
+				BUTTON LABEL 'Test 1 - Api' WIDTH '300px' GRID 12 ACTION 'error_1' OF o	
+			ENDROW o	
+
+  			ROWGROUP o	
+				BUTTON LABEL 'Test 2 - Api' WIDTH '300px' GRID 12 ACTION 'error_2' OF o	
+			ENDROW o				
+			
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

@@ -65,6 +65,7 @@ function WebServer()
 		oServer:Route( 'pluggin'	, 'index_pluggin.html' )
 		oServer:Route( 'security'	, 'index_security.html' )
 		oServer:Route( 'macro'		, 'index_macro.html' )
+		oServer:Route( 'error'		, 'index_error.html' )
 		oServer:Route( 'controls'	, 'index_controls.html' ) 		
 		oServer:Route( 'charset'	, 'index_charset.html' ) 		
 		oServer:Route( 'browse'	, 'index_brw.html' )  	
@@ -223,6 +224,20 @@ function WebServer()
 		oServer:Route( 'macro_1' , 'macro/macro_1.html' ) 
 		oServer:Route( 'macro_2' , 'macro/macro_2.html' ) 
 		oServer:Route( 'macro_3' , 'macro/macro_3.html' ) 
+		
+	//	Error
+	
+		oServer:Route( 'error_1' , 'error/error_1.html' ) 		
+		oServer:Route( 'error_2' , 'error/error_2.html' ) 		
+		oServer:Route( 'error_3' , 'error/error_3.html' ) 		
+		oServer:Route( 'error_4' , 'error/error_4.html' ) 		
+		oServer:Route( 'error_5' , 'error/error_5.html' ) 
+		oServer:Route( 'error_10' , 'error/error_10.html' ) 
+		oServer:Route( 'error_11' , 'error/error_11.html' ) 
+		oServer:Route( 'error_12' , 'error/error_12.html' ) 
+		
+		oServer:Route( 'error_page' , 'error/index_error_page.html' ) 		
+		oServer:Route( 'error_ajax' , 'error/index_error_ajax.html' ) 		
 		
 		
 	//	Testing

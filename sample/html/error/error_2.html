@@ -1,0 +1,30 @@
+<?prg
+//	Test Error include 
+
+#include "lib/tweb/tweb.ch" 
+#include "hbclass.ch" 
+#include "common.ch" 
+
+    LOCAL o, oWeb
+	local t := time()		
+	LOCAL a := 1
+	
+	DEFINE WEB oWeb TITLE 'xxx'
+	
+		DEFINE FORM o OF oWeb
+	
+		ROW o
+			GET ID 'pol' OF 
+		ENDROW o
+		
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+
+
+<?prg
+	local a := time()
+	
+	return a
+?>
