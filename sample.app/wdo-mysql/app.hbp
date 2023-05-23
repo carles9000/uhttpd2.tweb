@@ -23,4 +23,3 @@ app\api_mysql.prg
 # WAPI_OutputDebugString()
 hbwin.hbc
 xhb.hbc
-hbcurl.hbc
