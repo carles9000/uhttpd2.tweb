@@ -1,3 +1,6 @@
+24/05/2023 Vrs. 1.12
+	* Dialog have new clausules: addJs() & addCss()
+
 07/05/2023
 	* Add samples.app\ws example with WS (WebSockets). Not ready yet
 	

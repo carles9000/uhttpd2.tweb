@@ -9,6 +9,7 @@ function Api_Dialog( oDom )
 		case oDom:GetProc() == 'dlg3'		; DoDlg3( oDom )						
 		case oDom:GetProc() == 'dlg4'		; DoDlg4( oDom )	
 		case oDom:GetProc() == 'dlg5'		; DoDlg5( oDom )	
+		case oDom:GetProc() == 'dlg6'		; DoDlg6( oDom )	
 
 		//	2 ejemplos (iguales) que colocan datos en otro FORM
 		
@@ -113,6 +114,16 @@ static function DoDlg5( oDom )
 	local cHtml := ULoadHtml( 'dialog\brw-select.html'  )
 	
 	oDom:SetDialog( 'xxx', cHtml, 'Search customer', { 'focus' => 'seed-mysearch' } )
+	
+retu nil
+
+// -------------------------------------------------- //
+
+static function DoDlg6( oDom )
+
+	local cHtml := ULoadHtml( 'dialog\dlg_js_css.html'  )
+	
+	oDom:SetDialog( 'xxx', cHtml, 'Test Js/Css' )
 	
 retu nil
 

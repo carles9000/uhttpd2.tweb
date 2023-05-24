@@ -1,0 +1,21 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+	LOCAL o, oDlg			
+	
+	DEFINE DIALOG oDlg	
+	
+		oDlg:AddJs( 'files/mytest/test.js' )
+		oDlg:AddCss( 'files/mytest/test.css' )
+	
+		DEFINE FORM o OF oDlg							
+
+		INIT FORM o					
+			
+			SAY VALUE '<h4>Add js file & css file<hr>' ALIGN 'center' GRID 12  OF o									
+			
+			BUTTON LABEL 'Click me!' ALIGN 'center' GRID 12 ACTION 'test()' CLASS 'mybutton' OF o
+			
+		ENDFORM o	
+	
+	INIT DIALOG oDlg RETURN 	
+?>
