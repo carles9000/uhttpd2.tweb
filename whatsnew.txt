@@ -1,3 +1,6 @@
+25/05/2023 Vrs. 1.13
+	* Check ID Form if duplicated
+
 24/05/2023 Vrs. 1.12
 	* Dialog have new clausules: addJs() & addCss()
 
