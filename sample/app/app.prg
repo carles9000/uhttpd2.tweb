@@ -158,14 +158,15 @@ function WebServer()
 		
 	//	Dialogs			
 		
-		oServer:Route( 'dlg-1'		, 'dialog/dlg-1.html' ) 		
-		oServer:Route( 'dlg-2'		, 'dialog/dlg-2.html' ) 		
-		oServer:Route( 'dlg-3'		, 'dialog/dlg-3.html' )
+		oServer:Route( 'dlg-1'			, 'dialog/dlg-1.html' ) 		
+		oServer:Route( 'dlg-2'			, 'dialog/dlg-2.html' ) 		
+		oServer:Route( 'dlg-3'			, 'dialog/dlg-3.html' )
+		oServer:Route( 'dlg-getcustom'		, 'getcustom' )
  		
 		oServer:Route( 'fscreen-1'	, 'flow_screen/fscreen-1.html' ) 		
 		oServer:Route( 'fscreen-2'	, 'flow_screen/fscreen-2.html' ) 		
 		oServer:Route( 'fscreen-3'	, 'flow_screen/fscreen-3.html' ) 		
-		oServer:Route( 'redirect-1', 'flow_screen/redirect.html' ) 		
+		oServer:Route( 'redirect-1' , 'flow_screen/redirect.html' ) 		
 		oServer:Route( 'hello'		, 'flow_screen/hello.html' ) 		
 		oServer:Route( 'wndhello'	, 'flow_screen/wndhello.html' ) 		
 		

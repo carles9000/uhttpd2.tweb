@@ -10,6 +10,10 @@ function Api_Dialog( oDom )
 		case oDom:GetProc() == 'dlg4'		; DoDlg4( oDom )	
 		case oDom:GetProc() == 'dlg5'		; DoDlg5( oDom )	
 		case oDom:GetProc() == 'dlg6'		; DoDlg6( oDom )	
+		case oDom:GetProc() == 'dlg6'		; DoDlg6( oDom )	
+		case oDom:GetProc() == 'dlg7'		; DoDlg7( oDom )	
+		case oDom:GetProc() == 'dlg7'		; DoDlg7( oDom )	
+		case oDom:GetProc() == 'dlg-getid'	; DoGetId( oDom )	
 
 		//	2 ejemplos (iguales) que colocan datos en otro FORM
 		
@@ -126,6 +130,39 @@ static function DoDlg6( oDom )
 	oDom:SetDialog( 'xxx', cHtml, 'Test Js/Css' )
 	
 retu nil
+
+// -------------------------------------------------- //
+
+static function DoDlg7( oDom )
+
+	local cHtml := ULoadHtml( 'dialog\autocomplete.html'  )
+	
+	oDom:SetDialog( 'xxx', cHtml, 'Test Autocomplete/Js/Css' )
+	
+retu nil
+
+
+// -------------------------------------------------- //
+
+static function DoGetId( oDom )
+
+	local nId := Val( oDom:Get( 'mysearch' ) )
+	local cAlias, cTxt 
+	
+	use ( AppPathData() + 'test.dbf' ) shared new VIA 'DBFCDX' 	
+	SET INDEX TO ( AppPathData() + 'test.cdx' )
+	
+	cAlias := Alias()	
+	
+	(cAlias)->( DbGoTo( nId ) )
+	
+	cTxt := Alltrim( (cAlias)->first ) + ' ' + alltrim( (cAlias)->last )
+	
+	oDom:Set( 'mydata', cTxt )
+	
+retu nil
+
+
 
 // -------------------------------------------------- //
 
@@ -308,3 +345,44 @@ static function DoPBS( oDom )
 	oDom:SetMsg( 'Code processed: ' + oDom:Get( 'mycode' ) )
 	
 retu nil
+
+// -------------------------------------------------- //
+/*
+* getcustomer autocomplete example
+* This is a public function. 
+*/
+
+function getcustom()
+
+	Local aRows := {}
+	local cSearch
+	local cAlias, aReg
+
+	cSearch  := lower( UGet()[ 'term' ] )
+	
+	use ( AppPathData() + 'test.dbf' ) shared new VIA 'DBFCDX' 	
+	SET INDEX TO ( AppPathData() + 'test.cdx' )
+	
+	cAlias := Alias()	
+
+	(cAlias)->( OrdSetFocus( 'FIRST' ) )
+	
+	(cAlias)->( DbSeek( cSearch, .t. ) ) 
+	
+	while lower((cAlias)->first) = cSearch .and.  (cAlias)->( !eof() ) 
+				
+		aReg := { 	'value' => (cAlias)->( Recno() ),;
+					'label' => (cAlias)->first + ' ' + (cAlias)->last ,;
+					'first' => alltrim((cAlias)->first),;
+					'last'  => alltrim((cAlias)->last);
+				}
+		
+		Aadd( aRows, aReg ) 
+	
+		(cAlias)->( DbSkip() )
+	
+	end 						
+	
+	UAddHeader("Content-Type", "application/json")				
+
+return hb_jsonencode( aRows )

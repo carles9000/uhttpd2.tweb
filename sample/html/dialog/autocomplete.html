@@ -1,0 +1,59 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oDlg, oBrw, aOptions
+
+	DEFINE DIALOG oDlg 	
+	
+		oDlg:AddJs( 'https://code.jquery.com/ui/1.13.2/jquery-ui.js')
+		oDlg:AddCss( 'https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css' )
+		
+		DEFINE FORM o ID 'abc' API 'api_dialog' OF oDlg
+		
+		INIT FORM o 	
+
+			ROWGROUP o
+			
+				GET ID 'mysearch' VALUE '' LABEL 'Id. Client' ;
+				BTNIDS 'btnSearch'  ACTION 'dlg-getid' ;
+				BUTTON '<i class="fas fa-search"></i>' GRID 6 OF o
+			
+				GET ID 'mydata' VALUE '' LABEL 'Data' GRID 6 READONLY OF o
+			
+			ENDROW o 
+
+			HTML o
+				
+				<style>
+					.ui-front {
+						z-index:9999;
+					}
+				</style>
+			
+				<script>
+						
+					$("#abc-mysearch").autocomplete({
+						source: function(request, response) {
+							$.ajax({
+								type: "GET",
+								url: "dlg-getcustom",	//	Define route in app.prg
+								dataType: "json",
+								data: { term: request.term },
+								success: function(data) {									
+									response(data);
+								}
+							});
+						},
+						select: function(event, value) {
+							$('#abc-mydata').val( value.item.first + ' ' +  value.item.last )
+						}
+					});			
+					
+				</script>								
+			ENDTEXT 			
+
+		ENDFORM o
+ 
+	INIT DIALOG oDlg RETURN
+?>
+
