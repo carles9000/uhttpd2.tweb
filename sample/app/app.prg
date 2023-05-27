@@ -52,6 +52,7 @@ function WebServer()
 		oServer:lSessionCrypt		:=	.F. 			//	Default crypt session .F.
 	*/
 	
+	oServer:nSessionDuration	:=	10
 	
 	
 	//	Routing...			
