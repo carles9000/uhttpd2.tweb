@@ -1,0 +1,32 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'TWeb' 			
+		
+		DEFINE FORM o ID 'myform' API 'api_session' OF oWeb							
+
+		INIT FORM o								
+			SAY VALUE '<h4>Test Session</h4><hr>' ALIGN 'center' GRID 12  OF o									
+			
+			ROWGROUP o
+				BUTTON LABEL 'Session Init'  ALIGN 'center' GRID 12 WIDTH '200px' ACTION 'session_init'  OF o
+			ENDROW o 
+			
+			ROWGROUP o
+				BUTTON LABEL 'Session End'   ALIGN 'center' GRID 12 WIDTH '200px' ACTION 'session_end'   OF o
+			ENDROW o 
+							
+			ROWGROUP o
+				BUTTON LABEL 'Session Exist' ALIGN 'center' GRID 12 WIDTH '200px' ACTION 'session_exist' OF o
+			ENDROW o 
+							
+			ROWGROUP o
+				BUTTON LABEL 'Session Load'  ALIGN 'center' GRID 12 WIDTH '200px' ACTION 'session_load'  OF o
+			ENDROW o 
+							
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+?>

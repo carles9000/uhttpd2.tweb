@@ -1,3 +1,6 @@
+06/06/2023 
+	* Update last uhttpd2 libs
+
 25/05/2023 Vrs. 1.13
 	* Check ID Form if duplicated
 
