@@ -1,0 +1,24 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+	LOCAL o, oWeb
+
+	DEFINE WEB oWeb TITLE 'Test dialogos'
+		//oWeb:AddJs('https://cdn.jsdelivr.net/npm/mobile-detect@1.4.5/mobile-detect.min.js')
+	    
+		DEFINE FORM o ID 'abc' API 'myapi' ON INIT 'test' OF oWeb
+		//DEFINE FORM o ID 'abc' API 'myapi' OF oWeb
+		o:lDessign 	:= .F.
+		o:lFluid	:= .f. 
+		o:cSizing	:= ''
+		
+		INIT FORM o
+
+			//ROWGROUP o
+			//	BUTTON LABEL 'Test dialogo' WIDTH '200px' ACTION 'dlg' OF o
+			//ENDROW o			
+
+		ENDFORM o
+	
+	INIT WEB oWeb RETURN
+?>

@@ -1,0 +1,48 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+  local o, oDlg, oBrw, aOptions	
+	local aData := {;
+		{ 'FIRST' => 'Homer'		, 'LAST' => 'Hoaks', 'AGE' => 38 },;
+		{ 'FIRST' => 'Jean-Piere'	, 'LAST' => 'Thain', 'AGE' => 58 },;
+		{ 'FIRST' => 'Steve'		, 'LAST' => 'Staro', 'AGE' => 26 } ;
+	}
+
+	DEFINE DIALOG oDlg
+		DEFINE FORM o ID 'listProducts' API 'myapi' OF oDlg
+		INIT FORM o
+		
+	 ROW o
+	 COL o GRID 12
+	 
+		 aOptions := { ;
+			 'index' => 'codigo', ;
+			 'height' => '300px',	;
+			 'placeholder'  => '', ;
+			 'layout' => 'fitColumns', ;
+			 'selectable' => 1 , ;
+			 'initialSort' => nil, ;
+    	 'movableColumns' => .f. ;			 
+		 }
+
+		 aEvents := { { 'name' => 'cellClick', 'proc' => 'testpdto' }	}
+		 
+		 DEFINE BROWSE oBrw ID 'tableListProducts' OPTIONS aOptions EVENTS aEvents OF o
+			 COL oCol TO oBrw CONFIG { 'title' => "<span class='header-font-size'>Nombre</span>", 'field' => "FIRST"		, 'cssClass' => "no-bold cell-font-size", 'resizable' => .f. , 'headerSort' => .f. , ;
+			 																																											'headerFilter' => .t. , 'headerFilterPlaceholder' => 'Buscar código...' }
+			 COL oCol TO oBrw CONFIG { 'title' => "<span class='header-font-size'>Edad</span>", 'field' => "AGE"	, 'cssClass' => "no-bold cell-font-size", 'resizable' => .f. , 'headerSort' => .f. , ;
+			 																																										'headerFilter' => .t. , 'headerFilterPlaceholder' => 'Buscar nombre...'}
+			 			 
+			 INIT BROWSE oBrw DATA aData
+	 ENDCOL o	 
+ ENDROW o
+ 
+ // test
+ 	ROWGROUP o CLASS 'pt-2' HALIGN 'center'    
+		BUTTON LABEL 'test api'  ACTION 'testpdto' ALIGN 'center' GRID 6  WIDTH '100px' CLASS 'btn-secondary' OF o
+	ENDROW o
+
+		ENDFORM o
+ 
+	INIT DIALOG oDlg RETURN
+?>

@@ -1,0 +1,25 @@
+-n
+-w1
+-es2
+-inc
+-head=full
+-mt
+
+app\app.prg
+app\myapi.prg
+
+
+-Llib\uhttpd2
+-luhttpd2
+
+-Llib\tweb
+-ltweb
+
+-lhbct
+-lxhb
+
+hbnetio.hbc
+
+# WAPI_OutputDebugString()
+hbwin.hbc
+xhb.hbc

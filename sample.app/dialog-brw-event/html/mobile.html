@@ -1,0 +1,20 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+	DEFINE WEB oWeb TITLE 'mobile'		
+		DEFINE FORM o ID 'xxx' API 'myapi' OF oWeb 
+			o:lDessign 	:= .f.
+			o:cSizing 	:= 'sm'
+		
+		INIT FORM o 
+		
+			ROWGROUP o VALIGN 'top' CLASS 'pt-3'
+				COL o GRID 6
+					BUTTON LABEL 'Móvil' WIDTH '200px' ACTION 'dlg' OF o
+				ENDCOL o			
+			ENDROW o
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>

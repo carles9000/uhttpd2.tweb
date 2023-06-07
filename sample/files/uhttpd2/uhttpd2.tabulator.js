@@ -1,6 +1,6 @@
 /*
 **	module.....: uhttpd2tabulator.js -- Tabulator for uhttpd2 (Harbour)
-**	version....: 1.02
+**	version....: 1.03
 **  last update: 27/04/2023
 **
 **	(c) 2022-2023 by Carles Aubia
@@ -100,7 +100,7 @@ class UTabulator {
 										break;
 								}								
 
-								MsgApi( cApi, events[i][ 'proc' ], oPar ) 
+								MsgApi( cApi, events[i][ 'proc' ], oPar, id_parent ) 
 							})														
 						} else {
 							console.error( "Don't exist api for " + events[i][ 'proc' ])
