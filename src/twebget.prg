@@ -93,7 +93,7 @@ METHOD Activate() CLASS TWebGet
 	local nI, nBtn, cLabel, cAction, cBtnId, nSpan
 	local cIdPrefix
 	local cSt := ''
-	
+
 	DO CASE
 		CASE ::cAlign == 'center' ; cAlign := 'text-center'
 		CASE ::cAlign == 'right'  ; cAlign := 'text-right'

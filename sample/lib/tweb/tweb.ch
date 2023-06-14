@@ -239,8 +239,7 @@
 #xcommand ENDTAB <oFld> => <oFld>:End()
 #xcommand ENDFOLDER <oFld> => <oFld>:End()	
 
-//	--------------------------------------------------------
-
+//	BROWSE ------------------------------------------	//
 
 #xcommand DEFINE BROWSE [<oBrw>] [ ID <cId> ] [OPTIONS <hOptions>] [ EVENTS <aEvents>]  ;
 	[ FILTER <aFilter> ] [ FILTER_ID <cFilter_id> ] [ TITLE <cTitle> ] [ <lAll: ALL> ] ; 
@@ -257,4 +256,70 @@
 
 #xcommand INIT BROWSE <oBrw> [ DATA <aRows> ] ;
 => ;
-	<oBrw>:Init( [<aRows>] )	
+	<oBrw>:Init( [<aRows>] )
+
+//	CARD ------------------------------------------	//
+
+#xcommand DEFINE CARD <oCard> [ ID <cId> ] [ CLASS <cClass> ] [ STYLE <cStyle> ] OF <oForm> ;
+=> ;
+	<oCard> := TWebCard():New( <oForm>, [<cId>], [<cClass>], [<cStyle>] )
+	
+#xcommand ENDCARD <oCard> => <oCard>:EndCard()
+	
+	
+#xcommand HEADER <oHeader> OF CARD <oCard> ;
+=> ;
+	<oHeader> := <oCard>:AddHeader()
+	
+#xcommand HEADER [ CODE <cCode> ] OF CARD <oCard> ;
+=> ;
+	<oCard>:AddHeader( [<cCode>] )
+
+#xcommand CARD ENDHEADER <oHeader> => <oHeader>:End()
+
+#xcommand BODY <oBody> OF CARD <oCard> ;
+=> ;
+	<oBody> := <oCard>:AddBody()
+	
+#xcommand BODY [ CODE <cCode> ] OF CARD <oCard> ;
+=> ;
+	<oCard>:AddBody( [<cCode>] )
+
+#xcommand CARD ENDBODY <oBody> => <oBody>:End()
+
+#xcommand FOOTER <oFooter> OF CARD <oCard> ;
+=> ;
+	<oFooter> := <oCard>:AddFooter()
+	
+#xcommand FOOTER [ CODE <cCode> ] OF CARD <oCard> ;
+=> ;
+	<oCard>:AddFooter( [<cCode>] )
+	
+#xcommand CARD ENDFOOTER <oFooter> => <oFooter>:End()	
+
+//	ACCORDION -------------------------------------	//
+
+#xcommand DEFINE ACCORDION <oAccordion> [ ID <cId> ] [ CLASS <cClass> ] [ STYLE <cStyle> ] ;
+	[ <u: UNIQUE> ] OF <oForm> ;
+=> ;
+	<oAccordion> := TWebAccordion():New( <oForm>, [<cId>], [<cClass>], [<cStyle>], [<.u.>] )
+	
+#xcommand ENDACCORDION <oAccordion> => <oAccordion>:End()
+
+#xcommand ADDSECTION <oSection> [ ID HEADER <cId_Header> ] [ ID BODY <cId_Body> ] [ CLASS <cClass> ] OF ACCORDION <oAccordion> ;
+=> ;
+	<oSection> := <oAccordion>:AddSection( [<cId_Header>], [<cId_Body>], [<cClass>] )
+	
+#xcommand ENDSECTION <oSection> => <oSection>:End()
+
+#xcommand HEADER [ <oHeader> ] [ <prm: CODE,PROMPT,LABEL> <cCode> ] [ CLASS <cClass> ] OF SECTION <oSection> ;
+=> ;
+	[ <oHeader> := ] <oSection>:Header( [<cCode>], [<cClass>] )
+
+#xcommand SECTION ENDHEADER <oHeader> => <oHeader>:End()
+
+#xcommand BODY [ <oBody> ] [ <prm: CODE,PROMPT,LABEL> <cCode> ] [ CLASS <cClass> ] [ STYLE <cStyle> ] [ <ls: SHOW> ] OF SECTION <oSection> ;
+=> ;
+	[ <oBody> := ] <oSection>:Body( [<cCode>], [<cClass>], [<cStyle>], [<.ls.>]  )
+
+#xcommand SECTION ENDBODY <oBody> => <oBody>:End()

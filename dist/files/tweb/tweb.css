@@ -49,6 +49,32 @@
     border-color: transparent !important;
 }
 
+
+.nav-item a:hover {
+	color: #5368d5;
+}
+
+.nav-item a {
+  color: white;
+  padding: 5px 10px;
+}
+
+.nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #114273 #dee2e6 #fff !important;
+  font-weight: bold;
+}
+
+.dropdown-tweb {
+  color: black !important;
+  padding: 5px 10px;
+}
+
+.folder-link-tweb {
+	color: black !important
+}
+
 /*	Desactivar autozoom en IOS	-------- */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {

@@ -1,0 +1,64 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+
+	DEFINE WEB oWeb TITLE 'Basic' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Folder', 'Basic'
+		
+		DEFINE FORM o ID 'myform' API 'api_folder' OF oWeb 			
+		
+		INIT FORM o
+
+			ROWGROUP o
+			
+				FOLDER oFld ID 'fld' ;
+					TABS 'general', 'admin' ;
+					PROMPT 'General', '<i class="fas fa-tv"></i> Admin' ;
+					OPTION 'general' OF o
+				
+					DEFINE TAB 'general' OF oFld
+						
+						SEPARATOR oFld LABEL 'Auditor'
+						
+						ROWGROUP oFld  
+							SAY VALUE 'Stock' GRID 5 ALIGN 'right' OF oFld
+							GET ID 'xxx' VALUE '12,34' GRID 7 ALIGN 'center'  ;
+								BUTTON '<i class="fas fa-wrench"></i>' ;
+								ACTION "alert('stock')" OF oFld
+						ENDROW oFld
+						
+						ROWGROUP oFld  
+							SAY VALUE 'Etiqueta' GRID 5 ALIGN 'right' OF oFld
+							GET ID 'xxx' VALUE '9416015' GRID 7 ALIGN 'center' ;
+								BUTTON '<i class="fas fa-wrench"></i>' ;
+								ACTION "alert('etiqueta')" OF oFld
+						ENDROW oFld
+
+						ROWGROUP oFld  
+							SAY VALUE 'Ubicacion' GRID 5 ALIGN 'right' OF oFld
+							GET ID 'xxx' VALUE '1234567890' GRID 7 ALIGN 'center' ;
+								BUTTON '<i class="fas fa-wrench"></i>' ;
+								ACTION "alert('ubicacion')" OF oFld
+						ENDROW oFld			
+					
+					ENDTAB oFld
+					
+					DEFINE TAB 'admin' OF oFld
+					
+						SEPARATOR oFld LABEL 'Others...'	
+
+						GET oGet ID 'myid' VALUE '' LABEL 'Id. User' BUTTON 'Hello' ACTION "alert('hola')" OF oFld
+						
+					ENDTAB oFld			
+				
+				ENDFOLDER oFld 						
+			
+			ENDROW o	
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

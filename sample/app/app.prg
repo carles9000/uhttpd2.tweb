@@ -71,6 +71,9 @@ function WebServer()
 		oServer:Route( 'charset'	, 'index_charset.html' ) 		
 		oServer:Route( 'browse'	, 'index_brw.html' )  	
 		oServer:Route( 'dialog'	, 'index_dialog.html' )  	
+		oServer:Route( 'card'		, 'index_card.html' )  	
+		oServer:Route( 'accordion'	, 'index_accordion.html' )  	
+		oServer:Route( 'folder'	, 'index_folder.html' )  	
 		oServer:Route( 'flow_screen', 'index_flow_screen.html' )  	
 		oServer:Route( 'flow'		, 'flow\flow.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
@@ -170,7 +173,37 @@ function WebServer()
 		oServer:Route( 'redirect-1' , 'flow_screen/redirect.html' ) 		
 		oServer:Route( 'hello'		, 'flow_screen/hello.html' ) 		
 		oServer:Route( 'wndhello'	, 'flow_screen/wndhello.html' ) 		
+	
+	//	Cards 
+	
+		oServer:Route( 'card-1'	, 'card/card-1.html' ) 
+		oServer:Route( 'card-2'	, 'card/card-2.html' ) 
+		oServer:Route( 'card-3'	, 'card/card-3.html' ) 
+		oServer:Route( 'card-4'	, 'card/card-4.html' ) 
+		oServer:Route( 'card-5'	, 'card/card-5.html' ) 
 		
+	//	Accordions 
+	
+		oServer:Route( 'accordion-1'	, 'accordion/accordion-1.html' ) 
+		oServer:Route( 'accordion-2'	, 'accordion/accordion-2.html' ) 
+		oServer:Route( 'accordion-3'	, 'accordion/accordion-3.html' ) 
+		oServer:Route( 'accordion-4'	, 'accordion/accordion-4.html' ) 
+		oServer:Route( 'accordion-5'	, 'accordion/accordion-5.html' ) 
+		
+	//	Folder
+	
+		oServer:Route( 'folder-1'	, 'folder/folder-1.html' ) 
+		oServer:Route( 'folder-2'	, 'folder/folder-2.html' ) 
+		oServer:Route( 'folder-3'	, 'folder/folder-3.html' ) 
+		oServer:Route( 'folder-4'	, 'folder/folder-4.html' ) 
+		oServer:Route( 'folder-5'	, 'folder/folder-5.html' ) 
+	
+	//	Container
+	
+		oServer:Route( 'cont-1'	, 'container/cont-1.html' ) 	
+		oServer:Route( 'cont-2'	, 'container/cont-2.html' ) 	
+		oServer:Route( 'cont-3'	, 'container/cont-3.html' ) 	
+		oServer:Route( 'cont-4'	, 'container/cont-4.html' ) 	
 		
 	//	Screens
 	
@@ -268,6 +301,8 @@ RETURN 0
 
 function ShowInfo( hInfo ) 
 
+	local cLang := hb_oemtoansi(hb_langName())
+
 	HB_HCaseMatch( hInfo, .f. )
 
 	CConsole '---------------------------------'	
@@ -284,7 +319,10 @@ function ShowInfo( hInfo )
 	Console  'Trace............: ' + if( hInfo[ 'debug' ], 'Yes', 'No' )
 	Console  'Codepage.........: ' + hb_SetCodePage() + '/' + hb_cdpUniID( hb_SetCodePage() )
 	Console  'UTF8 (actived)...: ' + if( hInfo[ 'utf8' ], 'Yes', 'No' )
-	Console  '---------------------------------'
+	Console  'TWeb Version.....: ' + TWebVersion()
+	Console  Replicate( '-', len( cLang ) )
+	Console  cLang
+	Console  Replicate( '-', len( cLang ) )
 	Console  'Escape for exit...' 		
 
 retu nil 
@@ -297,7 +335,8 @@ function Config()
 	RddSetDefault( 'DBFCDX' )
 	
 	HB_LANGSELECT('ES')        
-    HB_SetCodePage ( "ESWIN" )		
+	
+    HB_SetCodePage ( "ESWIN" )	
 	
 	SET( _SET_DBCODEPAGE, 'ESWIN' )		
 

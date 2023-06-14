@@ -200,8 +200,8 @@ METHOD DrawMenuItem() CLASS TWebNav
 		
 			case !oItem[ 'menu' ] .and. !oItem[ 'group' ] .and. !lMenu
 			
-				cHtml += '<li class="nav-item">'
-				cHtml += '	<a class="nav-link '
+				cHtml += '<li class="nav-item ">'
+				cHtml += '	<a class="nav-link nav-menu-tweb'
 				cHtml += if( oItem[ 'active'], 'item-active', '') + '" '
 				cHtml += '	href="'
 				
@@ -236,7 +236,7 @@ METHOD DrawMenuItem() CLASS TWebNav
 
 			case !oItem[ 'menu' ] .and. !oItem[ 'group' ] .and. lMenu		
 				
-				cHtml += '<a class="dropdown-item" href="'
+				cHtml += '<a class="dropdown-item dropdown-tweb" href="'
 				
 					if !empty( oItem[ 'link' ] )
 						cHtml += oItem[ 'link' ]

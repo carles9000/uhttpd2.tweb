@@ -23,6 +23,8 @@ app\api_examples.prg
 app\api_charset.prg
 app\api_screen.prg
 app\api_error.prg
+app\api_card.prg
+app\api_folder.prg
 app\web_msg.prg
 app\web_brw.prg
 app\web_prg.prg

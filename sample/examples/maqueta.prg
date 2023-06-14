@@ -45,7 +45,7 @@ function main()
 				SEPARATOR o LABEL 'Datos de Salida'
 
 				CAPTION o LABEL 'Identficador' GRID 6
-				CAPTION o LABEL '<b>Información</b>' GRID 6
+				CAPTION o LABEL '<b>InformaciÃ³n</b>' GRID 6
 			
 				GET ID 'myid' VALUE '11' GRID 6 PLACEHOLDER 'Id.' BUTTON '<i class="fas fa-search"></i>' ACTION 'GetId()' OF o
 

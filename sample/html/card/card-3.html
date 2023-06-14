@@ -1,0 +1,30 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, cInfo	
+
+	DEFINE WEB oWeb TITLE 'Basic' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Card', 'Image'
+		
+		DEFINE FORM o ID 'myform' API 'api_card' OF oWeb 			
+		
+		INIT FORM o
+
+			DEFINE CARD oCard STYLE 'width:200px' OF o 							
+			
+				HEADER CODE '<img src="files/images/ut.png" class="card-img-top" alt="...">' OF CARD oCard								
+				
+				cInfo := '<h5><b>UT Project</b></h5><hr>'
+				cInfo += '<b>Uhttpd2</b> ' + UVersion() 
+				cInfo += '<br><b>TWeb</b> ' + TWebVersion()				
+				
+				BODY CODE cInfo OF CARD oCard 									
+				
+			ENDCARD oCard					
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

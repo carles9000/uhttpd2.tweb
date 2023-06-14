@@ -1,0 +1,64 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	LOCAL aKey 		:= { 'G', 'M', 'L' }
+	LOCAL aValue 	:= { 'Greatest', 'Medium', 'Lowest' }
+
+	DEFINE WEB oWeb TITLE 'Basic' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Card', 'Container'
+		
+		DEFINE FORM o ID 'myform' API 'api_card' OF oWeb 			
+				
+		INIT FORM o
+		
+			ROWGROUP o
+			
+				FOLDER oFld ID 'fld' ; 
+					TABS 'menu1', 'menu2' ;
+					PROMPT 'Menu 1', 'Menu 2' ;
+					OPTION 'menu2' OF o
+
+					DEFINE TAB 'menu1' OF oFld
+
+						GET oGet ID 'myid' VALUE '' LABEL 'Id. User' BUTTON 'Hello' ACTION "alert('hola')" OF oFld
+						
+					ENDTAB oFld	
+					
+					DEFINE TAB 'menu2' OF oFld
+					
+						DEFINE CARD oCard OF oFld 							
+						
+							HEADER CODE "<h5>I'm a title..." OF CARD oCard								
+							
+							BODY oBody OF CARD oCard 
+							
+								ROWGROUP oBody HALIGN 'center'
+
+									SELECT oSelect ID 'qm' LABEL 'Quality Inspection' PROMPT aValue  VALUES aKey ;
+										GRID 6  OF oBody				
+				
+								ENDROW oBody
+							
+											
+								ROWGROUP oBody 
+									BUTTON LABEL 'Accept' GRID 12 CLASS 'btn-outline-danger' ;
+										ACTION 'ping' ALIGN 'center' WIDTH '200px' OF oBody   
+								ENDROW oBody
+					
+							CARD ENDBODY oBody																			
+							
+						ENDCARD oCard								
+						
+					ENDTAB oFld					
+					
+				ENDFOLDER oFld
+				
+			ENDROW o				
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

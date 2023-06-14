@@ -1,0 +1,46 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	local cLoren := "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+	local cIpsum := 'El trozo de texto estándar de Lorem Ipsum usado desde el año 1500 es reproducido debajo para aquellos interesados. Las secciones 1.10.32 y 1.10.33 de "de Finibus Bonorum et Malorum" por Cicero son también reproducidas en su forma original exacta, acompañadas por versiones en Inglés de la traducción realizada en 1914 por H. Rackham.'	
+	local cCode  := 'You can use <code>DEFINE ACCORDION oAccordion OF o</code> for define accordion control'
+
+	DEFINE WEB oWeb TITLE 'Basic' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Accordion', 'Basic'
+		
+		DEFINE FORM o OF oWeb 			
+		
+		INIT FORM o
+
+			DEFINE ACCORDION oAccordion OF o
+			
+				ADDSECTION oSection ID HEADER  'head-1' ID BODY 'body-1'  OF ACCORDION oAccordion
+					
+					HEADER LABEL 'Section 1' OF SECTION oSection
+					BODY CODE cLoren OF SECTION oSection
+
+				ENDSECTION oSection 
+				
+				ADDSECTION oSection ID HEADER  'head-2' ID BODY 'body-2'  OF ACCORDION oAccordion
+					
+					HEADER LABEL 'Section 2' OF SECTION oSection
+					BODY CODE cIpsum OF SECTION oSection
+
+				ENDSECTION oSection 
+				
+				ADDSECTION oSection ID HEADER  'head-3' ID BODY 'body-3'  OF ACCORDION oAccordion
+					
+					HEADER LABEL 'Section 3' OF SECTION oSection
+					BODY CODE cCode  OF SECTION oSection
+
+				ENDSECTION oSection 
+				
+			ENDACCORDION oAccordion					
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

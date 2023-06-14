@@ -1,0 +1,42 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+
+	DEFINE WEB oWeb TITLE 'Basic' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Folder', 'Basic'
+		
+		DEFINE FORM o ID 'myform' API 'api_folder' OF oWeb 			
+		
+		INIT FORM o
+
+			ROWGROUP o
+			
+				FOLDER oFld ID 'fld' ;
+					TABS 'general', 'admin' ;
+					PROMPT 'General', 'Admin' ;
+					OPTION 'admin' OF o
+					
+					oFld:lBorder := .t.
+				
+					DEFINE TAB 'general' OF oFld
+
+					
+					ENDTAB oFld
+					
+					DEFINE TAB 'admin' CLASS 'p-5' OF oFld 
+
+						GET oGet ID 'myid' VALUE '' LABEL 'Id. User' GRID 12 BUTTON 'Hello' ACTION "gettime" OF oFld
+						
+					ENDTAB oFld			
+				
+				ENDFOLDER oFld
+				
+			ENDROW o	
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

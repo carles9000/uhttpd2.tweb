@@ -1,0 +1,86 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	LOCAL aData 	:= LoadData()
+
+	DEFINE WEB oWeb TITLE 'Basic' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Card', 'Multi-card'		
+		
+		DEFINE FORM o ID 'myform' API 'api_card' OF oWeb 
+			o:cSizing := 'sm'
+					
+		INIT FORM o
+
+			ROWGROUP o HALIGN 'center'
+			
+				for n := 1 to 6
+				
+					MyCard( o, n, aData )
+					
+				next
+			
+			ENDROW o
+			
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+	
+	function MyCard( o, n, aData )
+
+		local oCard 
+		local cImage 	:= UrlImages() + aData[n][ 'image' ]
+
+		DEFINE CARD oCard CLASS 'm-3' OF o 							
+				
+			HEADER CODE '<img src="' + cImage + '" class="card-img-top">' OF CARD oCard								
+			
+			BODY oBody OF CARD oCard 
+			
+				ROW oBody
+					SAY LABEL '<b>ID: </b>' + aData[n][ 'id' ] GRID 12 OF oBody
+				ENDROW oBody
+			
+				ROW oBody
+					SAY LABEL '<b>Product: </b>' + aData[n][ 'name' ] GRID 12 OF oBody
+				ENDROW oBody
+				
+				ROW oBody
+					SAY LABEL '<b>Price: </b>' + Str(aData[n][ 'price' ]) GRID 12 OF oBody
+				ENDROW oBody
+
+			CARD ENDBODY oBody 
+			
+			FOOTER oFooter OF CARD oCard 
+			
+				ROW oFooter									
+				
+					BUTTON  LABEL '&nbsp;&nbsp;Add to Cart' ALIGN 'right' WIDTH '130px' GRID 12 ;						
+						ICON '<i class="fa fa-shopping-basket" aria-hidden="true"></i>' ;
+						VALUE aData[n][ 'id' ] ACTION 'gettrigger' OF oFooter
+					
+				ENDROW oFooter
+
+			CARD ENDFOOTER oFooter 
+			
+		ENDCARD oCard	
+
+	retu nil 
+	
+	function UrlImages() ; retu 'files/images/card/'
+	
+	function LoadData() 
+	
+		local aData := {}
+		
+		Aadd( aData, { 'id' => 'ID-1', 'image' => 'b-1.webp', 'name' => 'Samsung Galaxy A34', 'price' => 287 })
+		Aadd( aData, { 'id' => 'ID-2', 'image' => 'b-2.webp', 'name' => 'Galaxy Z Flip 4' 	, 'price' => 985 })
+		Aadd( aData, { 'id' => 'ID-3', 'image' => 'b-3.webp', 'name' => 'Galaxy S23 Ultra' 	, 'price' => 935 })
+		Aadd( aData, { 'id' => 'ID-4', 'image' => 'b-4.webp', 'name' => 'Galaxy A54 5G' 	, 'price' => 387 })
+		Aadd( aData, { 'id' => 'ID-5', 'image' => 'b-5.webp', 'name' => 'Redmi Note 12' 	, 'price' => 254 })
+		Aadd( aData, { 'id' => 'ID-6', 'image' => 'b-6.png' , 'name' => 'IPhone 14 Pro' 	, 'price' => 1024 })
+	
+	retu aData
+?>
+

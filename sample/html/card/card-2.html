@@ -1,0 +1,51 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	LOCAL aKey 		:= { 'G', 'M', 'L' }
+	LOCAL aValue 	:= { 'Greatest', 'Medium', 'Lowest' }
+
+	DEFINE WEB oWeb TITLE 'Basic' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Card', 'Body container'
+		
+		DEFINE FORM o ID 'myform' API 'api_card' OF oWeb 			
+		
+		INIT FORM o
+
+			DEFINE CARD oCard OF o 							
+			
+				HEADER CODE "<h5>Transfer System" OF CARD oCard							
+				
+				BODY oBody OF CARD oCard 
+				
+					ROWGROUP oBody 
+						SAY VALUE '<h5>Quality Inspection</h5>' GRID 12 ALIGN 'center' OF oBody	
+					ENDROW oBody
+
+					ROWGROUP oBody 
+
+						SAY VALUE 'Value' GRID 6 ALIGN 'right' OF oBody
+						
+						SELECT oSelect ID 'qm' PROMPT aValue  VALUES aKey GRID 6  OF oBody				
+	
+					ENDROW oBody
+				
+					ROWGROUP oBody HALIGN 'center'
+						BUTTON LABEL 'Send Value' GRID 12 CLASS 'btn-outline-danger' ;
+							ACTION 'send_qm' ALIGN 'center' WIDTH '200px' OF oBody   
+					
+					ENDROW oBody				
+					
+				CARD ENDBODY oBody												
+				
+				FOOTER CODE "Data: " + DToC(Date()) + ' ' + time() OF CARD oCard
+				
+			ENDCARD oCard	
+				
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

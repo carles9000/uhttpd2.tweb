@@ -6,7 +6,7 @@
 ** MIT license https://github.com/carles9000/tweb.uhttpd2/blob/master/LICENSE
 */
 
-#define TWEB_VERSION 			'1.13'
+#define TWEB_VERSION 			'1.14'
 
 #include 'hbclass.ch'	
 #include 'common.ch'
@@ -51,6 +51,9 @@
 #include 'twebbrowse.prg'
 #include 'twebdialog.prg'
 #include 'twebunicode.prg'
+#include 'twebcard.prg'
+#include 'twebaccordion.prg'
+
 //#include 'mc_prepro.prg'
 //#include 'mh.prg'
 //	----------------------------------------------------------

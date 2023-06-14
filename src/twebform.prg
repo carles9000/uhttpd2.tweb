@@ -26,29 +26,32 @@ CLASS TWebForm FROM TWebControl
 	DATA cMethod					INIT 'POST'
 	DATA cApi						INIT ''
 	DATA cProc						INIT ''
-	DATA cType						INIT ''		//	sm, md, lg, xl, xs
-	DATA cSizing					INIT ''		//	sm, lg
-	DATA lFluid						INIT .F. 
+	DATA lFluid					INIT .F. 
 	DATA lHttpd2Api				INIT .F. 
 	DATA lActivated 				INIT .F. 
 
+	//DATA cType						INIT ''		//	sm, md, lg, xl, xs
+	//DATA cSizing					INIT ''		//	sm, lg
+	
 	METHOD New() 					CONSTRUCTOR	
 
 	METHOD AddControl( uValue )		INLINE Aadd( ::aControls, uValue )
-	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
-	METHOD Caption()
-	METHOD Separator()
-	METHOD Small()
 	METHOD InitForm() 					
+	METHOD Activate()
+
+	
+	/* to TWebControl 
+	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
 	METHOD Div() 					
 	METHOD Col() 					
 	METHOD Row() 					
 	METHOD RowGroup() 					
 	METHOD End() 					INLINE ::Html( '</div>' + CRLF  )				
-	METHOD Activate()
-
+	METHOD Caption()
+	METHOD Separator()
+	METHOD Small()
 	METHOD Echo()
-	
+	*/
 	
 ENDCLASS 
 
@@ -98,6 +101,8 @@ METHOD InitForm( cClass ) CLASS TWebForm
 	
 RETU NIL
 
+/*	to TWebControl */
+/*
 METHOD Col( cId, nCol, cType, cClass, cStyle, lHidden ) CLASS TWebForm
 
 	local cHtml := ''
@@ -154,7 +159,10 @@ METHOD Col( cId, nCol, cType, cClass, cStyle, lHidden ) CLASS TWebForm
 	::Html ( cHtml )
 	
 RETU NIL
+*/
 
+/*	to TWebControl */
+/*
 METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 
 	local cHtml := ''
@@ -194,6 +202,10 @@ METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 	::Html( cHtml )
 	
 RETU NIL
+*/
+
+/*	to TWebControl */
+/*
 
 METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom, lHidden ) CLASS TWebForm
 
@@ -256,8 +268,10 @@ METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom, lHidden ) CLASS TWebFo
 	::Html( cHtml )
 	
 RETU NIL
+*/
 
-
+/*	to TWebControl */
+/*
 METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle, lHidden ) CLASS TWebForm
 
 	local cHtml := ''
@@ -318,7 +332,7 @@ METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle, lHidden ) CLASS TWebForm
 	
 	
 RETU NIL
-
+*/
 
 METHOD Activate( fOnInit ) CLASS TWebForm
 
@@ -375,95 +389,4 @@ RETU cHtml
 
 
 
-METHOD Caption( cTitle, nGrid, cClass ) CLASS TWebForm
 
-	LOCAL cHtml := ''		
-	
-	DEFAULT cTitle TO ''
-	DEFAULT nGrid TO 12
-	DEFAULT cClass TO ''
-	
-	cHtml := '<div class="col-' + ltrim(str(nGrid)) + ' '
-	
-	if !empty( cClass )
-		cHtml += cClass 
-	endif
-	
-	cHtml += '">' + CRLF 
-	
-	
-	cHtml += '<small>' + cTitle + '</small>' + CRLF 
-	cHtml += '</div>' + CRLF 
-	
-	::Html( cHtml )
-
-RETU NIL
-
-
-METHOD Separator( cId , cTitle, cClass ) CLASS TWebForm
-
-	LOCAL cHtml 
-	
-	DEFAULT cId TO ''
-	DEFAULT cClass TO ''
-	
-	cHtml := '<div '
-	
-	if !empty( cId )	
-		cHtml += ' id="' + cId + '" ' 
-	endif
-	
-	cHtml += 'class="col-12 form_separator '
-	
-	if !empty( cClass)
-		cHtml += cClass 
-	endif
-	
-	cHtml += '" ' + IF( ::lDessign, 'style="border:1px solid blue;"', '' ) + '>' + CRLF 
-	
-	
-	DEFAULT cTitle TO ''
-	
-	cHtml += '<small>' + cTitle + '</small>' + CRLF 
-	cHtml += '</div>' + CRLF 
-	
-	::Html( cHtml )
-
-RETU NIL
-
-METHOD Small( cId, cText, nGrid, cClass ) CLASS TWebForm
-	LOCAL cHtml := ''
-	local cIdPrefix
-	
-	DEFAULT cId	TO ''
-	DEFAULT cText 	TO ''
-	DEFAULT nGrid 	TO 6
-	DEFAULT cClass 	TO ''
-	
-	if !empty( ::cId_Dialog )
-		cIdPrefix :=  ::cId_Dialog + '-'
-	else
-		cIdPrefix :=  ''
-	endif	
-	
-	cHtml := '<div class="col-' + ltrim(str(nGrid)) + IF( ::lDessign, ' tweb_dessign', '')  + ' '
-	
-	if !empty( cClass )
-		cHtml += cClass 
-	endif
-	
-	cHtml += '" ' + IF( ::lDessign, 'style="border:1px solid blue;"', '' )   + ' >' + CRLF 
-	
-	cHtml += '<small id="' + cIdPrefix + cId + '" class="text-muted" data-live >'	
-	
-	cHtml += cText
-	cHtml += '</small>' + CRLF 
-	cHtml += '</div>' + CRLF 	
-
-	::Html( cHtml )		
-
-RETU NIL
-
-METHOD Echo() CLASS TWebForm
-
-RETU ''

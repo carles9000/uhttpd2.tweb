@@ -8,6 +8,7 @@ CLASS TWebFolder FROM TWebForm
 	DATA aTabs 						INIT {=>}
 	DATA cInitTab 					INIT ''
 	DATA lAdjust 					INIT .F.
+	DATA cId_Dialog				INIT ''
 
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
@@ -46,10 +47,12 @@ METHOD New( oParent, cId, aTabs, aPrompts, nGrid, cInitTab, lAdjust, cClass, cFo
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
 		
-		::lDessign := oParent:lDessign
-		::cSizing  := oParent:cSizing
-		::cType    := oParent:cType
+		::lDessign 	:= oParent:lDessign
+		::cSizing  	:= oParent:cSizing
+		::cType    		:= oParent:cType
 		
+		::cId_Dialog 	:= UIdFormParent( oParent )
+	
 	ENDIF
 
 RETU SELF
@@ -60,6 +63,7 @@ METHOD AddTab( cId , lFocus, cClassTab ) CLASS TWebFolder
 
 	LOCAL cHtml := ''
 	LOCAL cClass := IF( ::oParent:lFluid, 'container-fluid', 'container' )
+	
 	
 	DEFAULT cClassTab TO ''
 	
@@ -114,7 +118,7 @@ METHOD Activate() CLASS TWebFolder
 				 
 				 cHtml += '">'
 				 
-					cHtml += '<a class="nav-link '	
+					cHtml += '<a class="nav-link folder-link-tweb'	
 
 						 if ::cInitTab == ::aTabs[nI] 
 							cHtml += ' active'				 
@@ -155,7 +159,9 @@ METHOD Activate() CLASS TWebFolder
 			cHtml += ::aControls[nI]
 		ENDIF
 	
-	NEXT		
+	NEXT	
+
+	cHtml += '</div>'
 
 	
 
