@@ -1,0 +1,63 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'Tree' 						
+	
+		oWeb:AddJs( 'files/jstree/jstree.min.js' )
+		oWeb:AddCss( 'files/jstree/themes/default/style.min.css' )
+		
+		HTML oWeb
+		
+			<style>
+				#mytree {
+					border:1px solid red;
+				}
+			</style>
+		
+		ENDTEXT 
+		
+		DEFINE FORM o OF oWeb							
+
+		INIT FORM o					
+
+			SAY VALUE '<h3>Tree example (native code)</h3>' ALIGN 'center' GRID 12  OF o															
+			SAY VALUE '<h5><a href="https://www.jstree.com/docs/json/">Jstree.com</a></h5><hr>' ALIGN 'center' GRID 12  OF o															
+			
+			ROWGROUP o HALIGN 'center'
+			
+				COL o GRID 12 
+
+					HTML o
+					
+						<div id='mytree'></div>
+						
+						<script>
+
+							var oTree
+
+							$(document).ready(function(){								
+
+								oTree = $('#mytree').jstree({ 'core' : {
+									'data' : [
+									   { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" },
+									   { "id" : "ajson2", "parent" : "#", "text" : "Root node 2" },
+									   { "id" : "ajson3", "parent" : "ajson2", "text" : "Child 1" },
+									   { "id" : "ajson4", "parent" : "ajson2", "text" : "Child 2" },
+									]
+								} });						
+							})
+
+						</script>
+						
+					ENDTEXT 							
+				
+				ENDCOL o
+				
+			ENDROW o
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+?>
