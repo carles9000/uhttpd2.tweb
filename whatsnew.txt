@@ -1,3 +1,6 @@
+16/06/2023
+	- MENUTIEM clausule CONFIRM <cMsg>
+
 14/06/2023 Vrs. 1.14
 	* New Containers
 		- Accordion
