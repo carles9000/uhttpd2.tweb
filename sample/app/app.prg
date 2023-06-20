@@ -74,6 +74,7 @@ function WebServer()
 		oServer:Route( 'card'		, 'index_card.html' )  	
 		oServer:Route( 'accordion'	, 'index_accordion.html' )  	
 		oServer:Route( 'folder'	, 'index_folder.html' )  	
+		oServer:Route( 'panel'		, 'index_panel.html' )  	
 		oServer:Route( 'flow_screen', 'index_flow_screen.html' )  	
 		oServer:Route( 'flow'		, 'flow\flow.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
@@ -197,6 +198,10 @@ function WebServer()
 		oServer:Route( 'folder-3'	, 'folder/folder-3.html' ) 
 		oServer:Route( 'folder-4'	, 'folder/folder-4.html' ) 
 		oServer:Route( 'folder-5'	, 'folder/folder-5.html' ) 
+		
+	//	Panel
+	
+		oServer:Route( 'panel-1'	, 'panel/panel-1.html' ) 		
 	
 	//	Container
 	

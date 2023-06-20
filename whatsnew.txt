@@ -1,5 +1,6 @@
-16/06/2023
-	- MENUTIEM clausule CONFIRM <cMsg>
+20/06/2023 Vrs. 1.14a	
+	* MENUTIEM clausule CONFIRM <cMsg>
+	* New Container Panel. See controls/containers
 
 14/06/2023 Vrs. 1.14
 	* New Containers

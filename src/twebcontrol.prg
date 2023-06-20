@@ -45,7 +45,8 @@ CLASS TWebControl
 	METHOD AddControl( uValue )		INLINE Aadd( ::aControls, uValue )
 	METHOD GetId() 					INLINE ( ::nId++, 'id' + ltrim(str(::nId)) )
 	
-	METHOD Div()
+	//METHOD Div()
+	
 	METHOD Row()
 	METHOD RowGroup()
 	METHOD Col()
@@ -53,6 +54,7 @@ CLASS TWebControl
 	METHOD Separator()
 	METHOD Small()	
 	METHOD Echo()
+	
 	//METHOD End() 					INLINE ::Html( '</div>' )	
 	METHOD End() 					INLINE ::Html( '</div>' + CRLF  )
 	
@@ -270,6 +272,7 @@ METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle, lHidden ) CLASS TWebCont
 RETU NIL
 
 
+/*
 METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebControl
 
 	local cHtml := ''
@@ -309,7 +312,7 @@ METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebControl
 	::Html( cHtml )
 	
 RETU NIL
-
+*/
 
 METHOD Caption( cTitle, nGrid, cClass ) CLASS TWebControl
 

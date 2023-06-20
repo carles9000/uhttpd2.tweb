@@ -58,6 +58,13 @@
 	[ STYLE <cStyle> ] [ PROP <cProp> ] OF <oForm> ;
 => ;
 	[<oDiv> := ] <oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>])
+	
+#xcommand PANEL [<oPanel>] [ ID <cId> ] [ CLASS <cClass> ] ;
+	[ STYLE <cStyle> ] [ PROP <cProp> ] [ <hi: HIDE, HIDDEN> ] OF <oForm> ;
+=> ;
+	[<oPanel> := ] TWebPanel():New( <oForm>, [<cId>], [<cClass>], [<cStyle>], [<cProp>], [<.hi.>] )	
+
+#xcommand ENDPANEL <oPanel> => <oPanel>:End()	
 
 #xcommand ENDROW <oForm> => <oForm>:End()
 #xcommand ENDCOL <oForm> => <oForm>:End()
