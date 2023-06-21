@@ -6,7 +6,7 @@ request TWEB
 function main()
 
 
-	HB_SetEnv( 'WDO_PATH_MYSQL', "c:/xampp.64/htdocs/" )
+	HB_SetEnv( 'WDO_PATH_MYSQL', "c:/xampp/htdocs/" )
 	
 	hb_threadStart( @WebServer() )	
 	

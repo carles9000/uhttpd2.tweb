@@ -13,6 +13,7 @@ CLASS TWebNav FROM TWebControl
 	DATA cSideBarCode				INIT ''
 	DATA cSide						INIT 'left'
 
+
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
 	METHOD AddMenuItem( cItem, cLink, cAction, cIcon  )
@@ -25,7 +26,7 @@ CLASS TWebNav FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute, lBurguerLeft, lSidebar, cSide ) CLASS TWebNav
+METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute, lBurguerLeft, lSidebar, cSide) CLASS TWebNav
 
 	DEFAULT cId TO ''
 	DEFAULT cCaption TO ''
@@ -37,6 +38,7 @@ METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute, lBur
 	DEFAULT lSideBar TO .F.
 	DEFAULT cSide TO 'left'
 	
+	
 	::oParent 		:= oParent
 	::cId			:= cId
 	::cTitle		:= cCaption
@@ -47,6 +49,7 @@ METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute, lBur
 	::lBurguerLeft := lBurguerLeft 
 	::lSideBar 		:= lSideBar
 	::cSide 		:= lower(cSide)
+	
 	
 
 	IF Valtype( oParent ) == 'O'	
@@ -203,6 +206,11 @@ METHOD DrawMenuItem() CLASS TWebNav
 				cHtml += '<li class="nav-item ">'
 				cHtml += '	<a class="nav-link nav-menu-tweb'
 				cHtml += if( oItem[ 'active'], 'item-active', '') + '" '
+				
+				if !empty( oItem[ 'confirm'] )
+					cHtml += ' onclick="return confirm( ' + "'" + oItem[ 'confirm'] + "'" + ' )" '	
+				endif
+
 				cHtml += '	href="'
 				
 							if !empty( oItem[ 'link' ] )
@@ -230,6 +238,9 @@ METHOD DrawMenuItem() CLASS TWebNav
 							endif 
 							
 				cHtml += oItem[ 'item' ] 
+				
+				
+				
 				cHtml += '  </a>'
 
 				cHtml += '</li>'	
@@ -287,7 +298,7 @@ METHOD DrawMenuItem() CLASS TWebNav
 
 RETU cHtml 
 
-METHOD AddMenuItem( cMenu, cLink, cIcon, cAction, lMenu, lEndMenu, lGroup, lSeparator, lActive ) CLASS TWebNav
+METHOD AddMenuItem( cMenu, cLink, cIcon, cAction, lMenu, lEndMenu, lGroup, lSeparator, lActive, cConfirm ) CLASS TWebNav
 
 	hb_default( @cMenu, '' )
 	hb_default( @cLink, '' )
@@ -298,13 +309,14 @@ METHOD AddMenuItem( cMenu, cLink, cIcon, cAction, lMenu, lEndMenu, lGroup, lSepa
 	hb_default( @lGroup, .F. )	
 	hb_default( @lSeparator, .F. )	
 	hb_default( @lActive, .f. )	
+	hb_default( @cConfirm, '' )	
 
-	Aadd( ::aMenuItem, { 'item' => cMenu, 'link' => cLink, 'action' => cAction, 'icon' => cIcon, 'menu' => lMenu, 'endmenu' => lEndMenu, 'group' => lGroup, 'separator' => lSeparator, 'active' => lActive } )
+	Aadd( ::aMenuItem, { 'item' => cMenu, 'link' => cLink, 'action' => cAction, 'icon' => cIcon, 'menu' => lMenu, 'endmenu' => lEndMenu, 'group' => lGroup, 'separator' => lSeparator, 'active' => lActive, 'confirm' => cConfirm } )
 	
 RETU NIL 
 
 METHOD AddMenuItemSeparator() CLASS TWebNav	
 
-	Aadd( ::aMenuItem, { 'item' => '', 'link' => '', 'action' => '', 'icon' => '', 'menu' => .f., 'endmenu' => .f., 'group' => .f., 'separator' => .T., 'active' => .f. } )
+	Aadd( ::aMenuItem, { 'item' => '', 'link' => '', 'action' => '', 'icon' => '', 'menu' => .f., 'endmenu' => .f., 'group' => .f., 'separator' => .T., 'active' => .f., 'confirm' => '' } )
 	
 RETU NIL 

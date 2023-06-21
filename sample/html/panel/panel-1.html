@@ -1,0 +1,46 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+
+	DEFINE WEB oWeb TITLE 'Basic' 	
+	
+		HTML oWeb 
+			<style>
+			
+				.red { border:1px solid red; }
+				.green { border:1px solid green; }
+			
+			</style>
+		
+		ENDTEXT 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Panel', 'Basic'				
+		
+		DEFINE FORM o ID 'myform' API 'api_panel' OF oWeb 			
+		
+		INIT FORM o
+
+			ROWGROUP o CLASS 'pt-3'
+				HTML o INLINE '<div class="btn-group">'
+				  BUTTON ID 'btn1' LABEL 'Panel List'   VALUE 'list'     ACTION 'panel' CLASS 'btn-outline-secondary' GRID 0 OF o
+				  BUTTON ID 'btn2' LABEL 'Panel Detail' VALUE 'detail'   ACTION 'panel' CLASS 'btn-outline-secondary' GRID 0 OF o
+				  BUTTON ID 'btn3' LABEL 'Close All'    VALUE 'closeall' ACTION 'panel' CLASS 'btn-outline-secondary' GRID 0 OF o
+				HTML o INLINE '</div>'
+			ENDROW o
+
+			PANEL oList ID 'list' CLASS 'red' OF o
+				SAY LABEL 'SCREEN PANEL LIST...' OF oList				
+				BUTTON LABEL 'Button List' ACTION 'hello' OF oList
+			ENDPANEL oList
+
+			PANEL oDetail ID 'detail' CLASS 'green' HIDE OF o
+				SAY LABEL 'SCREEN PANEL DETAIL...'  OF oDetail
+				BUTTON LABEL 'Button Detail' ACTION 'bye' OF oDetail
+			ENDDIV oDetail	
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

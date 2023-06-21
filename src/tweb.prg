@@ -6,7 +6,7 @@
 ** MIT license https://github.com/carles9000/tweb.uhttpd2/blob/master/LICENSE
 */
 
-#define TWEB_VERSION 			'1.14'
+#define TWEB_VERSION 			'1.14a'
 
 #include 'hbclass.ch'	
 #include 'common.ch'
@@ -25,8 +25,6 @@
                [, <uVarN> := <uValN> ] => ;
                   If( <uVar1> == nil, <uVar1> := <uVal1>, ) ;;
                 [ If( <uVarN> == nil, <uVarN> := <uValN>, ); ]
-				
-
 
 //	----------------------------------------------------------
 #include 'twebcontrol.prg'
@@ -53,6 +51,7 @@
 #include 'twebunicode.prg'
 #include 'twebcard.prg'
 #include 'twebaccordion.prg'
+#include 'twebpanel.prg'
 
 //#include 'mc_prepro.prg'
 //#include 'mh.prg'

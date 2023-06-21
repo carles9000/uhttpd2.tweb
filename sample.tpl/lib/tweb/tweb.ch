@@ -58,6 +58,13 @@
 	[ STYLE <cStyle> ] [ PROP <cProp> ] OF <oForm> ;
 => ;
 	[<oDiv> := ] <oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>])
+	
+#xcommand PANEL [<oPanel>] [ ID <cId> ] [ CLASS <cClass> ] ;
+	[ STYLE <cStyle> ] [ PROP <cProp> ] [ <hi: HIDE, HIDDEN> ] OF <oForm> ;
+=> ;
+	[<oPanel> := ] TWebPanel():New( <oForm>, [<cId>], [<cClass>], [<cStyle>], [<cProp>], [<.hi.>] )	
+
+#xcommand ENDPANEL <oPanel> => <oPanel>:End()	
 
 #xcommand ENDROW <oForm> => <oForm>:End()
 #xcommand ENDCOL <oForm> => <oForm>:End()
@@ -211,8 +218,8 @@
 #xcommand MENU <cItem> [ ICON <cIcon> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, nil, [<cIcon>], nil, .t., .f., .f. )
 #xcommand ENDMENU OF <oNav>  => <oNav>:AddMenuItem( nil, nil, nil, nil, .f., .t., .f. )
 
-#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ <ac: ACTIVE>  ]     OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<.ac.>]  )
-#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ ACTIVE <lActive>  ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<lActive>]  )
+#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ <ac: ACTIVE>  ] [ CONFIRM <cConfirm>] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<.ac.>], [<cConfirm>]  )
+#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ ACTIVE <lActive>  ] [ CONFIRM <cConfirm>] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<lActive>], [<cConfirm>]  )
 #xcommand MENUITEM SEPARATOR OF <oNav>  => <oNav>:AddMenuItemSeparator()
 
 #xcommand HTML SIDEBAR OF <oNav> => #pragma __cstream| <oNav>:SideBar( %s )

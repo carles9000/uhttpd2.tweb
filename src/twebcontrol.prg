@@ -46,15 +46,16 @@ CLASS TWebControl
 	METHOD GetId() 					INLINE ( ::nId++, 'id' + ltrim(str(::nId)) )
 	
 	//METHOD Div()
-	//METHOD Row()
-	//METHOD RowGroup()
-	//METHOD Col()
 	
+	METHOD Row()
+	METHOD RowGroup()
+	METHOD Col()
+
 	METHOD Caption()
 	METHOD Separator()
 	METHOD Small()	
 	METHOD Echo()
-	//METHOD End() 					INLINE ::Html( '</div>' )	
+	
 	METHOD End() 					INLINE ::Html( '</div>' + CRLF  )
 	
 	

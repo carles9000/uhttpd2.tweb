@@ -39,19 +39,30 @@ CLASS TWebForm FROM TWebControl
 	METHOD InitForm() 					
 	METHOD Activate()
 
-	METHOD Div() 					
+					
 	METHOD Col() 					
 	METHOD Row() 					
 	METHOD RowGroup() 					
 	
-	/*
+	
+	/* to TWebControl 
 	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
 	METHOD End() 					INLINE ::Html( '</div>' + CRLF  )				
+
+	
+	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
+
+
 	METHOD Caption()
 	METHOD Separator()
 	METHOD Small()
 	METHOD Echo()
 	*/
+	
+	
+	METHOD Div() 					
+	METHOD End() 					INLINE ::Html( '</div>' + CRLF  )				
+	
 	
 ENDCLASS 
 
@@ -161,8 +172,6 @@ METHOD Col( cId, nCol, cType, cClass, cStyle, lHidden ) CLASS TWebForm
 RETU NIL
 
 
-
-
 METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 
 	local cHtml := ''	
@@ -207,6 +216,10 @@ METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 	::Html( cHtml )
 	
 RETU NIL
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8659e3adee55b0cf1f5e14770fdb8cebb3d235de
 
 
 
