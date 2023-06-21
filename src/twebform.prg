@@ -212,17 +212,10 @@ METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 	
 	
 	cHtml += '>'  + CRLF 
-	
+			
 	::Html( cHtml )
 	
 RETU NIL
-<<<<<<< HEAD
-=======
-
->>>>>>> 8659e3adee55b0cf1f5e14770fdb8cebb3d235de
-
-
-
 
 
 METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom, lHidden ) CLASS TWebForm

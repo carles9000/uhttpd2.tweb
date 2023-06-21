@@ -274,6 +274,45 @@ function TWebParameter( uValue )
 	
 retu ''
 
+//	------------------------------------------- //
+
+function UIdFormParent( oParent )
+
+	local cId_Dialog 	:= ''
+	local lFound 		:= .f.
+	local o
+	
+	if valtype( oParent ) != 'O'
+		retu cId_Dialog
+	endif
+
+	if oParent:classname() == 'TWEBFORM' 
+		retu oParent:cId_Dialog 
+	endif
+
+	
+		//	aData := __objGetMsgList( o, .T. )
+		
+	//	We're looking for a TWEBFORM. We need cId_Dialog
+							
+		o := oParent
+		
+		while __objHasData( o, 'OPARENT' ) .and. !lFound 
+		
+			o := o:oParent
+			
+			if valtype( o ) == 'O' .and. o:ClassName() == 'TWEBFORM'
+			
+				lFound 			:= .t.
+				cId_Dialog 	:= o:cId_Dialog
+				
+			endif	
+
+		end 
+
+		
+retu cId_Dialog
+
 
 //	------------------------------------------------------------------------------
 

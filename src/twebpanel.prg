@@ -1,13 +1,14 @@
-CLASS TWebPanel FROM TWebControl
+CLASS TWebPanel FROM TWebForm 
 
 	DATA cSizing				INIT ''
 	DATA cId_Dialog			INIT ''
 	DATA lFluid					INIT ''
+	DATA cHtml_End				INIT '</div>' + CRLF	
 
 
 	METHOD New() 				CONSTRUCTOR	
 
-	METHOD End() 				INLINE ::Html( '</div>' )
+	METHOD End() 				INLINE ::Html( ::cHtml_End )
 	
 	METHOD Activate()
 

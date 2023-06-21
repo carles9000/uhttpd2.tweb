@@ -1,5 +1,5 @@
 
-CLASS TWebCard FROM TWebControl
+CLASS TWebCard FROM TWebForm
 
 	DATA lFluid 					INIT .f.
 
@@ -10,7 +10,7 @@ CLASS TWebCard FROM TWebControl
 	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
 	
 	METHOD AddHeader( cCode ) 
-	//METHOD EndHeader()		 		INLINE ::Html( '</div>' )
+	METHOD EndHeader()		 		INLINE ::Html( '</div>' )
 	
 	METHOD AddBody( cCode ) 
 	METHOD EndBody()		 		INLINE ::Html( '</div>' )
@@ -47,6 +47,9 @@ METHOD New( oParent, cId, cClass, cStyle) CLASS TWebCard
 		::cSizing  := oParent:cSizing
 		::cType    := oParent:cType
 		::lFluid   := oParent:lFluid
+		
+	//	We're looking for a TWEBFORM. We need cId_Dialog
+		::cId_Dialog 	:= UIdFormParent( oParent )		
 		
 	ENDIF
 
@@ -108,6 +111,7 @@ METHOD AddHeader( cCode ) CLASS TWebCard
 	else
 	
 		oHeader := TCardContainer():New( SELF )
+		//oHeader := TWebPanel():New( SELF, ::cId, 'card-header' )
 	
 		oHeader:Html( cHtml )	
 		
@@ -131,6 +135,7 @@ METHOD AddBody( cCode ) CLASS TWebCard
 	else
 
 		oBody := TCardContainer():New( SELF )
+		//oBody := TWebPanel():New( SELF, ::cId, 'card-body' )
 	
 		oBody:Html( cHtml )	
 		
@@ -155,6 +160,7 @@ METHOD AddFooter( cCode ) CLASS TWebCard
 	else
 	
 		oFooter := TCardContainer():New( SELF )
+		//oFooter := TWebPanel():New( SELF, ::cId, 'card-footer' )
 	
 		oFooter:Html( cHtml )	
 		
@@ -165,7 +171,7 @@ RETU oFooter
 
 //	---------------------------------------------------	//
 
-CLASS TCardContainer FROM TWebControl
+CLASS TCardContainer FROM TWebForm
 
 	DATA cSizing					INIT ''
 	DATA cId_Dialog				INIT ''

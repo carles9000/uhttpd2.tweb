@@ -10,6 +10,7 @@ CLASS TWebControl
 	DATA uValue						INIT ''
 	DATA cLabel						INIT ''
 	DATA lDessign					INIT .F.
+	DATA lFluid						INIT .F.
 	DATA lHidden					INIT .F.
 	DATA lBorder					INIT .F.
 	DATA nGrid						INIT 4
@@ -47,9 +48,9 @@ CLASS TWebControl
 	
 	//METHOD Div()
 	
-	METHOD Row()
-	METHOD RowGroup()
-	METHOD Col()
+	//METHOD Row()
+	//METHOD RowGroup()
+	//METHOD Col()
 
 	METHOD Caption()
 	METHOD Separator()

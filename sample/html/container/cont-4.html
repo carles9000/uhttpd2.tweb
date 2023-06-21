@@ -13,14 +13,13 @@
 		
 		DEFINE FORM o ID 'myform' API 'api_folder' OF oWeb 	
 
-			//o:ldessign := .t.
+			o:ldessign := .t.
 		
 		INIT FORM o
 
 			ROW o //VALIGN 'top'
 			
 				COL o GRID 6 
-			
 					DEFINE CARD oCard OF o 							
 					
 						HEADER CODE "<h5>I'm a title..." OF CARD oCard								
@@ -36,8 +35,9 @@
 										SAY ID 'mysay' LABEL '<i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;&nbsp;Address  Card' ;
 											CLASS 'p-0' GRID 12 OF oHeader 
 											
-									SECTION ENDHEADER oHeader 						
-									
+									SECTION ENDHEADER oHeader 	
+
+	
 									BODY oBody OF SECTION oSection 
 									
 										FOLDER oFld ID 'fld' ; 
@@ -62,6 +62,7 @@
 										ENDFOLDER oFld
 									
 									SECTION ENDBODY oBody
+							
 
 								ENDSECTION oSection 
 								
@@ -79,6 +80,7 @@
 
 								ENDSECTION oSection 
 								
+				
 							ENDACCORDION oAccordion					
 								
 						CARD ENDBODY oBody								
@@ -86,7 +88,6 @@
 						FOOTER CODE "I'm a footer..." OF CARD oCard
 						
 					ENDCARD oCard	
-				
 				ENDCOL o
 					
 				COL o GRID 6 
