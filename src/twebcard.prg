@@ -10,15 +10,15 @@ CLASS TWebCard FROM TWebForm
 	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
 	
 	METHOD AddHeader( cCode ) 
-	METHOD EndHeader()		 		INLINE ::Html( '</div>' )
+	METHOD EndHeader()		 		INLINE ::Html( '</div>'  + CRLF)
 	
 	METHOD AddBody( cCode ) 
-	METHOD EndBody()		 		INLINE ::Html( '</div>' )
+	METHOD EndBody()		 		INLINE ::Html( '</div>'  + CRLF)
 	
 	
 	METHOD AddFooter( cCode )	
 	
-	METHOD EndCard()				INLINE ::Html( '</div>' ) 		//	::Html( '</div></div>' )
+	METHOD EndCard()				INLINE ::Html( '</div>'  + CRLF ) 		//	::Html( '</div></div>' )
 			
 	METHOD Activate()	
 	
@@ -59,10 +59,6 @@ METHOD Activate() CLASS TWebCard
 
 	LOCAL cHtml := ''
 	LOCAL nI
-
-	//retu mh_valtochar( ::APrompts )
-	
-
 	
 	//cHtml += '<div class="card-deck" >'	
 	
@@ -79,7 +75,7 @@ METHOD Activate() CLASS TWebCard
 	endif	
 	
 	
-	cHtml += '>'	
+	cHtml += '>' + CRLF
 		
 	FOR nI := 1 To len( ::aControls )
 	
@@ -97,21 +93,20 @@ RETU cHtml
 
 METHOD AddHeader( cCode ) CLASS TWebCard
 
-	local cHtml 	:= '<div class="card-header">'
+	local cHtml 	:= '<div class="card-header">' + CRLF
 	local oHeader	:= nil 
 
 	hb_default( @cCode, '' )
 	
 	if !empty( cCode )
 	
-		cHtml += cCode + '</div>'
+		cHtml += cCode + '</div>' + CRLF
 	
 		::Html( cHtml )
 		
 	else
 	
-		oHeader := TCardContainer():New( SELF )
-		//oHeader := TWebPanel():New( SELF, ::cId, 'card-header' )
+		oHeader := TCardContainer():New( SELF )		
 	
 		oHeader:Html( cHtml )	
 		
@@ -121,21 +116,20 @@ RETU oHeader
 
 METHOD AddBody( cCode ) CLASS TWebCard
 
-	local cHtml := '<div class="card-body">'
+	local cHtml := '<div class="card-body">' + CRLF
 	local oBody 
 
 	hb_default( @cCode, '' )	
 	
 	if !empty( cCode )
 	
-		cHtml += cCode	+ '</div>'
+		cHtml += cCode	+ '</div>' + CRLF
 	
 		::Html( cHtml )
 		
 	else
 
-		oBody := TCardContainer():New( SELF )
-		//oBody := TWebPanel():New( SELF, ::cId, 'card-body' )
+		oBody := TCardContainer():New( SELF )		
 	
 		oBody:Html( cHtml )	
 		
@@ -146,21 +140,20 @@ RETU oBody
 
 METHOD AddFooter( cCode ) CLASS TWebCard
 
-	local cHtml 	:= '<div class="card-footer">'
+	local cHtml 	:= '<div class="card-footer">' + CRLF
 	local oFooter 	:= nil 
 
 	hb_default( @cCode, '' )
 	
 	if !empty( cCode )
 	
-		cHtml += '<small class="text-muted">' + cCode + '</small></div>'		
+		cHtml += '<small class="text-muted">' + cCode + '</small></div>' + CRLF		
 	
 		::Html( cHtml )
 		
 	else
 	
-		oFooter := TCardContainer():New( SELF )
-		//oFooter := TWebPanel():New( SELF, ::cId, 'card-footer' )
+		oFooter := TCardContainer():New( SELF )		
 	
 		oFooter:Html( cHtml )	
 		

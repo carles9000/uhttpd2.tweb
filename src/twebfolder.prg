@@ -15,8 +15,8 @@ CLASS TWebFolder FROM TWebForm
 	
 		
 	METHOD AddTab( cId, cHtml )
-	METHOD EndTab()					INLINE ::Html( '</div>' )
-	METHOD EndFolder()				INLINE ::Html( '</div></div>' )
+	METHOD EndTab()					INLINE ::Html( '</div>'  + CRLF )
+	METHOD EndFolder()					INLINE ::Html( '</div></div>'  + CRLF )
 
 ENDCLASS 
 
@@ -90,7 +90,7 @@ METHOD AddTab( cId , lFocus, cClassTab ) CLASS TWebFolder
 	
 	
 	cHtml += '" '
-	cHtml += ' id="' +  cId + '">'
+	cHtml += ' id="' +  cId + '">'  + CRLF
 	
 	::Html( cHtml )	
 
@@ -104,9 +104,9 @@ METHOD Activate() CLASS TWebFolder
 	//retu mh_valtochar( ::APrompts )
 	
 	
-	cHtml += '<div class="col-' + ltrim(str(::nGrid)) + ' tweb_folder" >'	
+	cHtml += '<div class="col-' + ltrim(str(::nGrid)) + ' tweb_folder" >'	 + CRLF
 	
-		cHtml += '<ul id="' + ::cId + '" class="nav nav-tabs border-0">'	
+		cHtml += '<ul id="' + ::cId + '" class="nav nav-tabs border-0">' + CRLF	
 		
 			FOR nI := 1 To len( ::aPrompts )
 			
@@ -116,7 +116,7 @@ METHOD Activate() CLASS TWebFolder
 				 	cHtml += ' active'				 
 				 endif
 				 
-				 cHtml += '">'
+				 cHtml += '">' + CRLF
 				 
 					cHtml += '<a class="nav-link folder-link-tweb'	
 
@@ -136,15 +136,15 @@ METHOD Activate() CLASS TWebFolder
 							cHtml += ' ' + ::cFont
 						endif																
 					
-					cHtml += '" data-toggle="tab" href="#' + ::aTabs[nI] + '">' + ::aPrompts[nI] + '</a>'			 
+					cHtml += '" data-toggle="tab" href="#' + ::aTabs[nI] + '">' + ::aPrompts[nI] + '</a>'	 + CRLF		 
 				 
-				 cHtml += '</li>'				
+				 cHtml += '</li>'	 + CRLF			
 			NEXT		
 		
-		cHtml += '</ul>'	
+		cHtml += '</ul>' + CRLF	
 
 	
-		cHtml += '<div class="tab-content"' + IF( ::lDessign, 'style="border:1px solid blue;"', '' )   + ' >'
+		cHtml += '<div class="tab-content"' + IF( ::lDessign, 'style="border:1px solid blue;"', '' )   + ' >' + CRLF
 
 
 		//	EndFolder() cierra los 2 divs abiertos...
@@ -161,7 +161,7 @@ METHOD Activate() CLASS TWebFolder
 	
 	NEXT	
 
-	cHtml += '</div>'
+	cHtml += '</div>' + CRLF
 
 	
 
