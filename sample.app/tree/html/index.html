@@ -11,47 +11,118 @@
 		HTML oWeb
 		
 			<style>
-				#mytree {
+				.tree {
 					border:1px solid red;
 				}
 			</style>
 		
 		ENDTEXT 
 		
-		DEFINE FORM o OF oWeb							
+		DEFINE FORM o ID 'myform' API 'myapi' OF oWeb							
 
 		INIT FORM o					
 
 			SAY VALUE '<h3>Tree example (native code)</h3>' ALIGN 'center' GRID 12  OF o															
 			SAY VALUE '<h5><a href="https://www.jstree.com/docs/json/">Jstree.com</a></h5><hr>' ALIGN 'center' GRID 12  OF o															
 			
+			ROWGROUP o 
+				html o inline '<div class="btn-group">'
+				BUTTON LABEL 'Hide' ACTION 'hide'  GRID 0 WIDTH  '100px' OF o
+				BUTTON LABEL 'Show'  ACTION 'show' GRID 0 WIDTH  '100px' OF o
+				BUTTON LABEL 'Clean'  ACTION 'clean' GRID 0 WIDTH  '100px' OF o
+				BUTTON LABEL 'Load'  ACTION 'load' GRID 0 WIDTH  '100px' OF o
+				html o inline '</div>'
+			ENDROW o 
+			
 			ROWGROUP o HALIGN 'center'
 			
 				COL o GRID 12 
+				
+					//DIV oDiv ID 'mytree' CLASS 'tree' OF o
+					DIV oDiv ID 'mytree'  OF o
 
-					HTML o
-					
-						<div id='mytree'></div>
+					HTML o											
 						
 						<script>
 
 							var oTree
 
 							$(document).ready(function(){								
-
-								oTree = $('#mytree').jstree({ 'core' : {
+								/*
+								oTree = $('#myform-mytree').jstree({ 'core' : {
 									'data' : [
 									   { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" },
 									   { "id" : "ajson2", "parent" : "#", "text" : "Root node 2" },
 									   { "id" : "ajson3", "parent" : "ajson2", "text" : "Child 1" },
 									   { "id" : "ajson4", "parent" : "ajson2", "text" : "Child 2" },
 									]
-								} });						
+								} });
+								*/
+								
+								oTree = $('#myform-mytree').jstree({ 'core' : { 
+										'strings' : { 'Loading ...' : 'Cargando...' },
+										'data' : []	
+									}
+								});								
+
+								oTree.on( "dblclick.jstree", function (e, data) {
+								
+								console.log( 'e', e )
+								console.log( 'data', data )
+								
+									var oThisTree 	= $('#myform-mytree').jstree(true);
+									var oNode		=  oThisTree.get_node( e.target )
+									
+									
+									
+									console.log( oNode )
+									
+									if ( (oNode.data) && ( oNode.data.length > 0 ) ){
+										console.log( 'dins')
+										var par = { LAST: 'Charles', TEST: 1234 }
+	
+										URedirect( 'dummy', par )
+									}
+									
+									//$('#user').data( 'key', '' )
+
+									/*
+									if ( oNode.state.disabled == false ) {									
+										//SelectDbf( oNode )
+									}
+									
+									if ( (oNode.data) && (( oNode.data.length > 0 ) || ( $.type(oNode.data) == 'object' )) ){				
+
+										console.log( 'NODE', oNode )
+										
+										//$('#user').data( 'key', oNode.id )																													
+									}
+									*/									
+
+								})								
 							})
+							
+							function tree_clean( o ) {
+								
+								var cId 	= o[0];
+								var aData 	= o[1];
+								
+								console.log( cId )
+								console.log( aData)
+												
+								oTree = $('#' + cId).jstree(true);
+								oTree.settings.core.data = aData;
+								oTree.refresh();
+							}
+							
 
 						</script>
 						
-					ENDTEXT 							
+					ENDTEXT 
+
+					ENDDIV o
+					
+					
 				
 				ENDCOL o
 				

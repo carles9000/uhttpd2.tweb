@@ -24,6 +24,7 @@ function WebServer()
 	//	Routing...			
 
 		oServer:Route( '/'		, 'index.html' )  												
+		oServer:Route( 'dummy'	, 'dummy.html' )  												
 		
 	//	-----------------------------------------------------------------------//	
 	

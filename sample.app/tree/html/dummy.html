@@ -1,0 +1,17 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'Dummy' 						
+
+		DEFINE FORM o ID 'myform' API 'myapi' ON INIT 'init' OF oWeb							
+
+		INIT FORM o					
+
+			SAY VALUE '<h3>Dummy screen</h3><hr>' ALIGN 'center' GRID 12  OF o
+					
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+?>

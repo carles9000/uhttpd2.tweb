@@ -39,13 +39,13 @@ CLASS TWebForm FROM TWebControl
 	METHOD InitForm() 					
 	METHOD Activate()
 
-	
-	/* to TWebControl 
-	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
 	METHOD Div() 					
 	METHOD Col() 					
 	METHOD Row() 					
 	METHOD RowGroup() 					
+	
+	/*
+	METHOD Html( cCode ) 			INLINE Aadd( ::aControls, cCode )
 	METHOD End() 					INLINE ::Html( '</div>' + CRLF  )				
 	METHOD Caption()
 	METHOD Separator()
@@ -101,8 +101,8 @@ METHOD InitForm( cClass ) CLASS TWebForm
 	
 RETU NIL
 
-/*	to TWebControl */
-/*
+
+
 METHOD Col( cId, nCol, cType, cClass, cStyle, lHidden ) CLASS TWebForm
 
 	local cHtml := ''
@@ -159,22 +159,27 @@ METHOD Col( cId, nCol, cType, cClass, cStyle, lHidden ) CLASS TWebForm
 	::Html ( cHtml )
 	
 RETU NIL
-*/
 
-/*	to TWebControl */
-/*
+
+
+
 METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 
-	local cHtml := ''
-	
+	local cHtml := ''	
+	local cId_Dialog := ''
 
 	DEFAULT cId TO ''
 	DEFAULT cClass TO ''
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
 	DEFAULT lHidden TO .f.
+	
+	if !empty( ::cId_Dialog )
+		cId_Dialog := ::cId_Dialog + '-' 
+	endif
 
-	cHtml += '<div id="' + ::cId_Dialog + '-' + cId + '" '
+
+	cHtml += '<div id="' + cId_Dialog + cId + '" '
 	
 	if !empty( cClass )
 		cHtml += ' class="' + cClass + '" '
@@ -202,10 +207,10 @@ METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 	::Html( cHtml )
 	
 RETU NIL
-*/
 
-/*	to TWebControl */
-/*
+
+
+
 
 METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom, lHidden ) CLASS TWebForm
 
@@ -268,10 +273,10 @@ METHOD Row( cId, cVAlign, cHAlign, cClass, cTop, cBottom, lHidden ) CLASS TWebFo
 	::Html( cHtml )
 	
 RETU NIL
-*/
 
-/*	to TWebControl */
-/*
+
+
+
 METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle, lHidden ) CLASS TWebForm
 
 	local cHtml := ''
@@ -332,7 +337,7 @@ METHOD RowGroup( cId, cVAlign, cHAlign, cClass, cStyle, lHidden ) CLASS TWebForm
 	
 	
 RETU NIL
-*/
+
 
 METHOD Activate( fOnInit ) CLASS TWebForm
 
