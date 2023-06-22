@@ -28,8 +28,7 @@ return nil
 function DoLoad( oDom )
 
 	local aData := LoadData()
-
-	//oDom:SetJs( 'tree_clean', { 'myform-mytree', { 'Charles...', 'Pol...' } } )
+	
 	oDom:SetJs( 'tree_clean', { 'myform-mytree', aData } )
 
 return nil 
@@ -58,12 +57,6 @@ retu aData
 
 function DoInit( oDom )
 
-	
-_d( oDom:GetAll() )
-_d( UGet() )
-_d( UPost() )
-_d( UServer() )
-	
 	
 
 return nil 

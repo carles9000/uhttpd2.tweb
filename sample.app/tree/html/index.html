@@ -38,16 +38,16 @@
 			
 				COL o GRID 12 
 				
-					//DIV oDiv ID 'mytree' CLASS 'tree' OF o
-					DIV oDiv ID 'mytree'  OF o
-
+					DIV oDiv ID 'mytree' CLASS 'tree' OF o					
+					
 					HTML o											
 						
 						<script>
 
 							var oTree
 
-							$(document).ready(function(){								
+							$(document).ready(function(){	
+							
 								/*
 								oTree = $('#myform-mytree').jstree({ 'core' : {
 									'data' : [
@@ -67,14 +67,9 @@
 
 								oTree.on( "dblclick.jstree", function (e, data) {
 								
-								console.log( 'e', e )
-								console.log( 'data', data )
-								
 									var oThisTree 	= $('#myform-mytree').jstree(true);
 									var oNode		=  oThisTree.get_node( e.target )
-									
-									
-									
+
 									console.log( oNode )
 									
 									if ( (oNode.data) && ( oNode.data.length > 0 ) ){
@@ -82,22 +77,7 @@
 										var par = { LAST: 'Charles', TEST: 1234 }
 	
 										URedirect( 'dummy', par )
-									}
-									
-									//$('#user').data( 'key', '' )
-
-									/*
-									if ( oNode.state.disabled == false ) {									
-										//SelectDbf( oNode )
-									}
-									
-									if ( (oNode.data) && (( oNode.data.length > 0 ) || ( $.type(oNode.data) == 'object' )) ){				
-
-										console.log( 'NODE', oNode )
-										
-										//$('#user').data( 'key', oNode.id )																													
-									}
-									*/									
+									}									
 
 								})								
 							})
@@ -120,9 +100,7 @@
 						
 					ENDTEXT 
 
-					ENDDIV o
-					
-					
+					ENDDIV o										
 				
 				ENDCOL o
 				
