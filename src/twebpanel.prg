@@ -17,6 +17,7 @@ ENDCLASS
 METHOD New( oParent, cId, cClass, cStyle, cProp, lHidden ) CLASS TWebPanel	
 
 	local lFound := .f.
+	local oForm 
 	
 	DEFAULT cId TO ::GetId()
 	DEFAULT cClass TO ''
@@ -32,6 +33,8 @@ METHOD New( oParent, cId, cClass, cStyle, cProp, lHidden ) CLASS TWebPanel
 	
 	::oParent 		:= oParent
 	
+
+	
 	IF Valtype( oParent ) == 'O'	
 	
 		oParent:AddControl( SELF )	
@@ -43,6 +46,15 @@ METHOD New( oParent, cId, cClass, cStyle, cProp, lHidden ) CLASS TWebPanel
 		
 	//	We're looking for a TWEBFORM. We need cId_Dialog
 		::cId_Dialog 	:= UIdFormParent( oParent )
+		
+		oForm 	:= UOFormParent( oParent )			
+		
+		if valtype( oForm ) == 'O' .and. oForm:ClassName() == 'TWEBFORM'
+			::lDessign := oForm:lDessign
+			::cSizing  := oForm:cSizing
+			::cType    := oForm:cType		
+			::lFluid   := oForm:lFluid			
+		endif
 	
 	ENDIF
 

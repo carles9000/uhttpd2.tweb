@@ -275,19 +275,30 @@ function TWebParameter( uValue )
 retu ''
 
 //	------------------------------------------- //
+// Get id FORM 
 
-function UIdFormParent( oParent )
+function UIdFormParent( oParent, lReturnObject )
 
 	local cId_Dialog 	:= ''
 	local lFound 		:= .f.
 	local o
 	
+	hb_default( @lReturnObject, .f. )
+	
 	if valtype( oParent ) != 'O'
-		retu cId_Dialog
+		if lReturnObject
+			retu nil
+		else
+			retu cId_Dialog
+		endif
 	endif
 
 	if oParent:classname() == 'TWEBFORM' 
-		retu oParent:cId_Dialog 
+		if lReturnObject
+			retu oParent
+		else
+			retu oParent:cId_Dialog 
+		endif
 	endif
 
 	
@@ -311,7 +322,13 @@ function UIdFormParent( oParent )
 		end 
 
 		
-retu cId_Dialog
+retu if( lReturnObject, if( lFound, o, nil ), cId_Dialog )
+
+//	------------------------------------------- //
+//	Get Object FORM 
+function UOFormParent( oParent ) 
+retu UIdFormParent( oParent, .t. )
+
 
 
 //	------------------------------------------------------------------------------

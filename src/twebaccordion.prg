@@ -18,7 +18,9 @@ CLASS TWebAccordion FROM TWebForm
 	
 ENDCLASS 
 
-METHOD New( oParent, cId, cClass, cStyle, lUnique ) CLASS TWebAccordion		
+METHOD New( oParent, cId, cClass, cStyle, lUnique ) CLASS TWebAccordion	
+
+	local oForm
 
 	
 	//hb_default( @cId, ltrim(str(hb_milliseconds())) )
@@ -40,7 +42,7 @@ METHOD New( oParent, cId, cClass, cStyle, lUnique ) CLASS TWebAccordion
 	endif
 	
 
-	
+
 	IF Valtype( oParent ) == 'O'
 	
 		oParent:AddControl( SELF )	
@@ -48,6 +50,20 @@ METHOD New( oParent, cId, cClass, cStyle, lUnique ) CLASS TWebAccordion
 		::lDessign := oParent:lDessign
 		::cSizing  := oParent:cSizing
 		::cType    := oParent:cType
+		
+	//	We're looking for a TWEBFORM. We need cId_Dialog
+		::cId_Dialog 	:= UIdFormParent( oParent )	
+		
+		oForm 	:= UOFormParent( oParent )			
+		
+		if valtype( oForm ) == 'O' .and. oForm:ClassName() == 'TWEBFORM'
+			::lDessign := oForm:lDessign
+			::cSizing  := oForm:cSizing
+			::cType    := oForm:cType		
+			::lFluid   := oForm:lFluid		
+
+		endif
+	
 		
 	ENDIF
 
@@ -315,7 +331,7 @@ RETU cHtml
 
 //	---------------------------------------------------	//
 
-CLASS TContainer FROM TWebControl
+CLASS TContainer FROM TWebForm
 
 	DATA cHtml_End					INIT '</div>' + CRLF
 	
