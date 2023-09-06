@@ -1,0 +1,34 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'TWeb' 			
+		
+		DEFINE FORM o ID 'myform' API 'myapi' OF oWeb							
+
+		INIT FORM o					
+			
+			SAY VALUE '<h4>Test HaruPdf</h4><hr>' ALIGN 'center' GRID 12  OF o									
+			
+			ROWGROUP o
+				BUTTON ID 'btn'  LABEL 'Harupdf example from Harbour contribs' ALIGN 'center' GRID 12 WIDTH '320px' ACTION 'original' OF o
+			ENDROW o
+			
+			ROWGROUP o
+				BUTTON ID 'btn1' LABEL 'TPDF Basic example'  ALIGN 'center' GRID 12 WIDTH '320px' ACTION 'rpt-1' OF o
+			ENDROW o
+
+						
+  			ROWGROUP o STYLE 'width:320px;margin: auto;' 
+				
+				GET ID 'myid'  VALUE '1' GRID 7  ;//LABEL 'Customer Id.' ;				
+					BUTTON 'Template' ACTION 'rpt-2' OF o	
+
+				CHECKBOX ID 'rules' LABEL 'rules' GRID 5 OF o
+			ENDROW o			
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+?>

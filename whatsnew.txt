@@ -1,3 +1,5 @@
+21/07/2023 Print example using harupdf. Check sample.app\print folder 
+
 20/06/2023 Vrs. 1.14a	
 	* MENUTIEM clausule CONFIRM <cMsg>
 	* New Container Panel. See controls/containers
