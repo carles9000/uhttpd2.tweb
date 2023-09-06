@@ -90,7 +90,7 @@ METHOD Activate() CLASS TWebGet
 	LOCAL cAlign 	 := ''
 	LOCAL cSizeLabel := 'col-form-label'
 	LOCAL cBtnSize 	 := ''
-	local nI, nBtn, cLabel, cAction, cBtnId, nSpan
+	local nI, nBtn, cLabel, cAction, cBtnId, nSpan, cGrid
 	local cIdPrefix
 	local cSt := ''
 
@@ -115,8 +115,15 @@ METHOD Activate() CLASS TWebGet
 	else
 		cIdPrefix :=  ''
 	endif
+	
+	if valtype( ::nGrid ) == 'N'
+		cGrid := ltrim(str(::nGrid))
+	else
+		cGrid := ::nGrid	
+	endif	
 
-	cHtml := '<div class="col-' + ltrim(str(::nGrid)) 
+	//cHtml := '<div class="col-' + ltrim(str(::nGrid)) 
+	cHtml := '<div class="col-' + cGrid
 	
 	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '') 		
 	cHtml += '" '

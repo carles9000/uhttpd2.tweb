@@ -42,6 +42,7 @@ METHOD Activate() CLASS TWebSay
 	LOCAL cHtml
 	LOCAL cSize 	:= ''
 	local cIdPrefix	
+	local cGrid 
 
 	
 	DO CASE
@@ -55,7 +56,15 @@ METHOD Activate() CLASS TWebSay
 		cIdPrefix :=  ''
 	endif		
 
-	cHtml := '<div class="col-' + ltrim(str(::nGrid)) 
+	//cHtml := '<div class="col-' + ltrim(str(::nGrid)) 
+	
+	if valtype( ::nGrid ) == 'N'
+		cGrid := ltrim(str(::nGrid))
+	else
+		cGrid := ::nGrid	
+	endif
+	
+	cHtml := '<div class="col-' + cGrid
 	
 	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '') 
 	cHtml += ' tweb_say' 

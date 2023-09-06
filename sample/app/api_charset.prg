@@ -438,7 +438,7 @@ static function MyGetRows( cAlias, nRecno, nTotal )
 					case aStr[j][2] == 'C'
 
 						//uValue :=  hb_strtoUtf8( hb_AnsiToOem( Alltrim((cAlias)->( FieldGet( j ) )) ) , 1 ) 
-						uValue :=  hb_strtoUtf8( Alltrim((cAlias)->( FieldGet( j ) ))  , 1 ) 
+						uValue :=   Alltrim((cAlias)->( FieldGet( j ) ))  , 1 ) 
 	
 					HB_HSet( aReg, (cAlias)->( FieldName( j ) ), uValue )  
 					otherwise				

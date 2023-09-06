@@ -103,6 +103,7 @@ METHOD Activate() CLASS TWebSelect
 	local lArrayPar := .f.
 	local cIdPrefix
 	local cSt := ''
+	local cGrid := ''
 	
 	DO CASE
 		CASE upper(::oParent:cSizing) == 'SM' ; cSize := 'form-control-sm'
@@ -115,7 +116,13 @@ METHOD Activate() CLASS TWebSelect
 		cIdPrefix :=  ''
 	endif	
 
-	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) 
+	if valtype( ::nGrid ) == 'N'
+		cGrid := ltrim(str(::nGrid))
+	else
+		cGrid := ::nGrid	
+	endif
+	
+	cHtml := '<div class="col-' + cGrid + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) 
 	
 	IF  ::oParent:lDessign
 		cSt += 'border:1px solid blue;'
