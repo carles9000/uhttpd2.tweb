@@ -37,27 +37,34 @@
 
 
 
-#xcommand COL <oForm> [ ID <cId> ] [GRID <nGrid>] [TYPE <cType>]  [ CLASS <cClass> ] [ STYLE <cStyle> ] ;
+#xcommand COL <oForm> [ ID <cId> ] [GRID <nGrid>] [TYPE <cType>]  [ CLASS <cClass> ] [ STYLE <cStyle> ] [ <hi: HIDE, HIDDEN> ];
 => ;
-	<oForm>:Col( [<cId>], [<nGrid>], [<cType>], [<cClass>], [<cStyle>] )
+	<oForm>:Col( [<cId>], [<nGrid>], [<cType>], [<cClass>], [<cStyle>], [<.hi.>] )
 	
-#xcommand ROW <oForm> [ ID <cId> ] [ VALIGN <cVAlign> ] [ HALIGN <cHAlign> ] [ CLASS <cClass> ] [ TOP <cTop> ] [ BOTTOM <cBottom>] ;
+#xcommand ROW <oForm> [ ID <cId> ] [ VALIGN <cVAlign> ] [ HALIGN <cHAlign> ] [ CLASS <cClass> ] [ TOP <cTop> ] [ BOTTOM <cBottom>] [ <hi: HIDE, HIDDEN> ] ;
 => ;
-	<oForm>:Row( [<cId>], [<cVAlign>], [<cHAlign>], [<cClass>], [<cTop>], [<cBottom>] )
+	<oForm>:Row( [<cId>], [<cVAlign>], [<cHAlign>], [<cClass>], [<cTop>], [<cBottom>], [<.hi.>] )
 	
-#xcommand ROWGROUP <oForm> [ ID <cId> ] [ VALIGN <cVAlign> ] [ HALIGN <cHAlign> ] [ CLASS <cClass> ] [ STYLE <cStyle> ] ;
+#xcommand ROWGROUP <oForm> [ ID <cId> ] [ VALIGN <cVAlign> ] [ HALIGN <cHAlign> ] [ CLASS <cClass> ] [ STYLE <cStyle> ] [ <hi: HIDE, HIDDEN> ] ;
 => ;
-	<oForm>:RowGroup( [<cId>], <cVAlign>, <cHAlign>, <cClass>, [<cStyle>] )
+	<oForm>:RowGroup( [<cId>], <cVAlign>, <cHAlign>, <cClass>, [<cStyle>], [<.hi.>] )
 	
-#xcommand DIV <oForm> [ ID <cId> ] [ CLASS <cClass> ] ;
+#xcommand DIV <oForm> [ ID <cId> ] [ CLASS <cClass> ] [ <hi: HIDE, HIDDEN> ];
 	[ STYLE <cStyle> ] [ PROP <cProp> ];
 => ;
-	<oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>])
+	<oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>], [<.hi.>])
 	
 #xcommand DIV [<oDiv>] [ ID <cId> ] [ CLASS <cClass> ] ;
 	[ STYLE <cStyle> ] [ PROP <cProp> ] OF <oForm> ;
 => ;
 	[<oDiv> := ] <oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>])
+	
+#xcommand PANEL [<oPanel>] [ ID <cId> ] [ CLASS <cClass> ] ;
+	[ STYLE <cStyle> ] [ PROP <cProp> ] [ <hi: HIDE, HIDDEN> ] OF <oForm> ;
+=> ;
+	[<oPanel> := ] TWebPanel():New( <oForm>, [<cId>], [<cClass>], [<cStyle>], [<cProp>], [<.hi.>] )	
+
+#xcommand ENDPANEL <oPanel> => <oPanel>:End()	
 
 #xcommand ENDROW <oForm> => <oForm>:End()
 #xcommand ENDCOL <oForm> => <oForm>:End()
@@ -146,9 +153,9 @@
 	
 #xcommand IMAGE [<oImg>] [ ID <cId> ] [ FILE <cFile> ] [ BIGFILE <cBigFile> ] [ ALIGN <cAlign> ] ;
 	[GRID <nGrid>] [ CLASS <cClass> ] [ WIDTH <nWidth>] [ GALLERY <cGallery> ] ;
-	[ <nozoom: NOZOOM> ] [ STYLE <cStyle> ] [ PROP <cProp> ] OF <oForm> ;
+	[ <nozoom: NOZOOM> ] [ STYLE <cStyle> ] [ PROP <cProp> ] [ <hi: HIDE, HIDDEN> ] OF <oForm> ;
 => ;
-	[<oImg> := ] TWebImage():New( <oForm>, [<cId>], [<cFile>], [<cBigFile>], [<nGrid>], [<cAlign>], [<cClass>], [<nWidth>], [<cGallery>], [<.nozoom.>], [<cStyle>], [<cProp>] )
+	[<oImg> := ] TWebImage():New( <oForm>, [<cId>], [<cFile>], [<cBigFile>], [<nGrid>], [<cAlign>], [<cClass>], [<nWidth>], [<cGallery>], [<.nozoom.>], [<cStyle>], [<cProp>], [<.hi.>] )
 	
 	
 #xcommand SWITCH [<oSwitch>] [ ID <cId> ] [ <lValue: ON> ] [ VALUE <lValue> ] [ LABEL <cLabel> ] ;
@@ -211,10 +218,16 @@
 #xcommand MENU <cItem> [ ICON <cIcon> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, nil, [<cIcon>], nil, .t., .f., .f. )
 #xcommand ENDMENU OF <oNav>  => <oNav>:AddMenuItem( nil, nil, nil, nil, .f., .t., .f. )
 
-#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ <ac: ACTIVE> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<.ac.>]  )
+#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ <ac: ACTIVE>  ] [ CONFIRM <cConfirm>] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<.ac.>], [<cConfirm>]  )
+#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ ACTIVE <lActive>  ] [ CONFIRM <cConfirm>] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<lActive>], [<cConfirm>]  )
 #xcommand MENUITEM SEPARATOR OF <oNav>  => <oNav>:AddMenuItemSeparator()
 
 #xcommand HTML SIDEBAR OF <oNav> => #pragma __cstream| <oNav>:SideBar( %s )
+
+#xcommand HTML SIDEBAR OF <oNav> PARAMS [<v1>] [,<vn>] ;
+=> ;
+	#pragma __cstream |<oNav>:Sidebar( UInlinePrg( UReplaceBlocks( %s, '<$', "$>" [,<(v1)>][+","+<(vn)>] [, @<v1>][, @<vn>] ) ) )
+
 
 
 		 
@@ -233,13 +246,14 @@
 #xcommand ENDTAB <oFld> => <oFld>:End()
 #xcommand ENDFOLDER <oFld> => <oFld>:End()	
 
-//	--------------------------------------------------------
-
+//	BROWSE ------------------------------------------	//
 
 #xcommand DEFINE BROWSE [<oBrw>] [ ID <cId> ] [OPTIONS <hOptions>] [ EVENTS <aEvents>]  ;
-	[ FILTER <aFilter> ] [ FILTER_ID <cFilter_id> ] [ TITLE <cTitle> ] OF <oForm> ;
+	[ FILTER <aFilter> ] [ FILTER_ID <cFilter_id> ] [ TITLE <cTitle> ] [ <lAll: ALL> ] ; 
+	[ CLASS <cClass> ] [ STYLE <cStyle> ] [ <hi: HIDE, HIDDEN> ] ;	
+	OF <oForm> ;
 => ;
-	[ <oBrw> := ] TWebBrowse():New( <oForm>, [<cId>], <hOptions>, [<aEvents>], [<aFilter>], [<cFilter_id>], [<cTitle>] )
+	[ <oBrw> := ] TWebBrowse():New( <oForm>, [<cId>], <hOptions>, [<aEvents>], [<aFilter>], [<cFilter_id>], [<cTitle>], [<.lAll.>], [<cClass>], [<cStyle>], [<.hi.>] )
 	
 
 #xcommand COL <oCol> TO <oBrw> CONFIG <hConfig> ;
@@ -249,4 +263,70 @@
 
 #xcommand INIT BROWSE <oBrw> [ DATA <aRows> ] ;
 => ;
-	<oBrw>:Init( [<aRows>] )	
+	<oBrw>:Init( [<aRows>] )
+
+//	CARD ------------------------------------------	//
+
+#xcommand DEFINE CARD <oCard> [ ID <cId> ] [ CLASS <cClass> ] [ STYLE <cStyle> ] OF <oForm> ;
+=> ;
+	<oCard> := TWebCard():New( <oForm>, [<cId>], [<cClass>], [<cStyle>] )
+	
+#xcommand ENDCARD <oCard> => <oCard>:EndCard()
+	
+	
+#xcommand HEADER <oHeader> OF CARD <oCard> ;
+=> ;
+	<oHeader> := <oCard>:AddHeader()
+	
+#xcommand HEADER [ CODE <cCode> ] OF CARD <oCard> ;
+=> ;
+	<oCard>:AddHeader( [<cCode>] )
+
+#xcommand CARD ENDHEADER <oHeader> => <oHeader>:End()
+
+#xcommand BODY <oBody> OF CARD <oCard> ;
+=> ;
+	<oBody> := <oCard>:AddBody()
+	
+#xcommand BODY [ CODE <cCode> ] OF CARD <oCard> ;
+=> ;
+	<oCard>:AddBody( [<cCode>] )
+
+#xcommand CARD ENDBODY <oBody> => <oBody>:End()
+
+#xcommand FOOTER <oFooter> OF CARD <oCard> ;
+=> ;
+	<oFooter> := <oCard>:AddFooter()
+	
+#xcommand FOOTER [ CODE <cCode> ] OF CARD <oCard> ;
+=> ;
+	<oCard>:AddFooter( [<cCode>] )
+	
+#xcommand CARD ENDFOOTER <oFooter> => <oFooter>:End()	
+
+//	ACCORDION -------------------------------------	//
+
+#xcommand DEFINE ACCORDION <oAccordion> [ ID <cId> ] [ CLASS <cClass> ] [ STYLE <cStyle> ] ;
+	[ <u: UNIQUE> ] OF <oForm> ;
+=> ;
+	<oAccordion> := TWebAccordion():New( <oForm>, [<cId>], [<cClass>], [<cStyle>], [<.u.>] )
+	
+#xcommand ENDACCORDION <oAccordion> => <oAccordion>:End()
+
+#xcommand ADDSECTION <oSection> [ ID HEADER <cId_Header> ] [ ID BODY <cId_Body> ] [ CLASS <cClass> ] OF ACCORDION <oAccordion> ;
+=> ;
+	<oSection> := <oAccordion>:AddSection( [<cId_Header>], [<cId_Body>], [<cClass>] )
+	
+#xcommand ENDSECTION <oSection> => <oSection>:End()
+
+#xcommand HEADER [ <oHeader> ] [ <prm: CODE,PROMPT,LABEL> <cCode> ] [ CLASS <cClass> ] OF SECTION <oSection> ;
+=> ;
+	[ <oHeader> := ] <oSection>:Header( [<cCode>], [<cClass>] )
+
+#xcommand SECTION ENDHEADER <oHeader> => <oHeader>:End()
+
+#xcommand BODY [ <oBody> ] [ <prm: CODE,PROMPT,LABEL> <cCode> ] [ CLASS <cClass> ] [ STYLE <cStyle> ] [ <ls: SHOW> ] OF SECTION <oSection> ;
+=> ;
+	[ <oBody> := ] <oSection>:Body( [<cCode>], [<cClass>], [<cStyle>], [<.ls.>]  )
+
+#xcommand SECTION ENDBODY <oBody> => <oBody>:End()

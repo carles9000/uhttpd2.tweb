@@ -1,3 +1,17 @@
+07/09/2023 Vrs. 1.15 
+	* TWeb now compiled with MinGw 64 bit also
+	* Now we can generate the library with scripts for msvc64 and gcc64
+	* Examples have been created to see the scripts necessary to compile 
+	  in one way or another.
+	  By default the project is based on MSVC64, but the scripts have been 
+	  created to see how to compile in the following examples:
+	  
+		\sample			- Basic sample
+		\sample.app\curl	- Curl example
+		\sample.app\print	- Print example
+		\sample.tpl		- Bsic template
+		\sample.tpl.ssl		- Basic template for https use (with certificate)
+	  
 21/07/2023 Print example using harupdf. Check sample.app\print folder 
 
 20/06/2023 Vrs. 1.14a	

@@ -1,0 +1,47 @@
+-n
+-w1
+-es2
+-inc
+-head=full
+-mt
+
+
+app\app.prg
+app\api_curl.prg
+
+-Llib\uhttpd2\gcc64
+-luhttpd2
+
+-Llib\tweb\gcc64
+-ltweb
+
+
+# WAPI_OutputDebugString()
+-lhbwin
+-lhbct
+-lxhb
+
+
+
+### CURL Static 7.77 ###
+-llibhbcurl
+-llibcurl
+-llibbrotlicommon-static
+-llibbrotlidec-static
+-llibbrotlienc-static
+-llibnghttp2
+-llibgsasl
+-llibidn2
+-llibssh2
+-llibz
+-llibcrypt32
+-llibwldap32
+-llibzstd
+
+### SSL Static ###
+-llibcrypto
+-llibhbssl
+-llibssl
+
+
+

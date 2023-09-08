@@ -25,6 +25,7 @@ A equivalent Unicode characters. Standard ASCII and ISO 8859-1 (Latin-1) charact
 
 #include 'lib/uhttpd2/uhttpd2.ch'
 
+
 thread static nInd := 0
 
 function Api_Charset( oDom )
@@ -438,7 +439,7 @@ static function MyGetRows( cAlias, nRecno, nTotal )
 					case aStr[j][2] == 'C'
 
 						//uValue :=  hb_strtoUtf8( hb_AnsiToOem( Alltrim((cAlias)->( FieldGet( j ) )) ) , 1 ) 
-						uValue :=   Alltrim((cAlias)->( FieldGet( j ) ))  , 1 ) 
+						uValue :=   Alltrim((cAlias)->( FieldGet( j ) )) 
 	
 					HB_HSet( aReg, (cAlias)->( FieldName( j ) ), uValue )  
 					otherwise				

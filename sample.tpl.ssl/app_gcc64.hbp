@@ -1,0 +1,54 @@
+-n
+-w1
+-es2
+-inc
+-head=full
+-mt
+
+
+### SSL ###
+-D__SSL__
+
+### GCC compiler ###
+#-fullstatic
+
+app\app.prg
+app\myapi.prg
+app\fix_ssl.prg
+
+-Llib\uhttpd2\gcc64
+-luhttpds2
+
+-Llib\tweb\gcc64
+-ltweb
+
+
+# WAPI_OutputDebugString()
+-lhbwin
+-lhbct
+-lxhb
+
+
+
+### CURL Static 7.77 ###
+-llibhbcurl
+-llibcurl
+-llibbrotlicommon-static
+-llibbrotlidec-static
+-llibbrotlienc-static
+-llibnghttp2
+-llibgsasl
+-llibidn2
+-llibssh2
+-llibz
+-llibcrypt32
+-llibwldap32
+-llibzstd
+
+### SSL Static ###
+-llibcrypto
+-llibhbssl
+-llibssl
+
+
+

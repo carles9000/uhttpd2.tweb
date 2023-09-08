@@ -1,5 +1,6 @@
 #include "hbcurl.ch"
 
+
 function Api_Curl( oDom )	
 
 	do case
@@ -35,6 +36,10 @@ static function GetIp( oDom )
         curl_easy_setopt( hCurl, HB_CURLOPT_URL, cUrl )
         curl_easy_setopt( hCurl, HB_CURLOPT_TIMEOUT, 10 )			
         curl_easy_setopt( hCurl, HB_CURLOPT_DL_BUFF_SETUP )
+		
+		curl_easy_setopt( hCurl, HB_CURLOPT_SSL_VERIFYPEER, .f. )
+		curl_easy_setopt( hCurl, HB_CURLOPT_SSL_VERIFYHOST, .f. )
+		curl_easy_setopt( hCurl, HB_CURLOPT_NOPROGRESS, .t. )		
 
 		n := curl_easy_perform( hCurl ) 
 

@@ -1,0 +1,25 @@
+-n
+-w1
+-es2
+-inc
+-head=full
+-mt
+
+
+app\app.prg
+app\myapi.prg
+app\print\tpdf.prg
+
+-Llib\uhttpd2\gcc64
+-luhttpd2
+
+-Llib\tweb\gcc64
+-ltweb
+
+
+# WAPI_OutputDebugString()
+-lhbwin
+-lhbct
+-lxhb
+
+hbhpdf.hbc

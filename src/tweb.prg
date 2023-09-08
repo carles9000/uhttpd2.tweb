@@ -1,12 +1,12 @@
 /*
 **  tweb.prg -- TWeb library form mod harbour
 **
-** (c) Carles Aubia, 2019-2022
+** (c) Carles Aubia, 2019-2023
 ** Developed by Carles Aubia Floresvi carles9000@gmail.com
 ** MIT license https://github.com/carles9000/tweb.uhttpd2/blob/master/LICENSE
 */
 
-#define TWEB_VERSION 			'1.14a'
+#define TWEB_VERSION 			'1.15'
 
 #include 'hbclass.ch'	
 #include 'common.ch'
