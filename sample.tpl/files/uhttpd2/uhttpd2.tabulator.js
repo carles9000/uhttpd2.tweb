@@ -83,7 +83,7 @@ class UTabulator {
 								var oPar = new Object()
 								
 								switch ( events[i][ 'name' ] ) {
-								
+							
 									case 'cellEdited':							
 								
 										var oCell = new Object()
@@ -97,6 +97,27 @@ class UTabulator {
 
 										oPar[ 'cell' ] = oCell 
 								
+										break;
+										
+									case 'cellClick':	
+									
+										//	https://tabulator.info/docs/5.5/components#component-cell
+										
+										var oCol = o.getColumn();
+									
+										var oCell = new Object()
+											oCell[ 'index' ] = table.options.index
+											oCell[ 'field' ] = o.getField()
+											oCell[ 'title' ] = oCol.getDefinition().title 
+											oCell[ 'value' ] = o.getValue()
+											oCell[ 'oldvalue' ] = o.getOldValue()
+											oCell[ 'cargo' ] = cargo
+											oCell[ 'row' ] = o.getData()
+
+										oPar[ 'cell' ] = oCell 
+										
+										console.log( oCell )										
+
 										break;
 								}								
 
