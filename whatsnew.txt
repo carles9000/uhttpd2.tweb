@@ -1,3 +1,9 @@
+11/10/2023
+	* Samples into \sample.app\
+		- browse_insert_delete_edit  (simple example for easy edit)
+		- csrf	                     (csrf concept. Concept encript and valid token)
+		 
+		
 07/09/2023 Vrs. 1.15 
 	* TWeb now compiled with MinGw 64 bit also
 	* Now we can generate the library with scripts for msvc64 and gcc64

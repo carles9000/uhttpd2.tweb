@@ -1,0 +1,32 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'TWeb' 			
+		
+		DEFINE FORM o ID 'myform' API 'myapi' OF oWeb							
+
+		INIT FORM o					
+			
+			SAY VALUE '<h4>Test Hide Value</h4><hr>' ALIGN 'center' GRID 12  OF o												
+			
+			ROWGROUP o 	HALIGN 'center'							
+			
+				//	https://es.stackoverflow.com/questions/261319/qu%C3%A9-es-en-blade-csrf
+				
+				GET ID 'total_csrf' VALUE '0' HIDDEN GRID 0 OF o	
+				
+				GET ID 'total' LABEL "Total" VALUE '0'  READONLY ALIGN 'center' GRID 6 OF o						
+				
+			ENDROW o
+			
+			ROWGROUP o HALIGN 'center'																	
+				BUTTON LABEL 'Set Total' ALIGN 'center' GRID 4 ACTION 'set' OF o
+				BUTTON LABEL 'Pay Total' ALIGN 'center' GRID 4 ACTION 'pay' OF o
+			ENDROW o			
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+?>

@@ -1,0 +1,59 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+	local o, oWeb, oCol
+
+	DEFINE WEB oWeb TITLE 'Browse'						
+
+		DEFINE FORM o ID 'myscreen' API 'myapi' OF oWeb
+			o:lDessign 	:= .f.
+			o:lFluid	:= .f.
+
+		INIT FORM o
+		
+		SAY VALUE '<h4>Test Table Insert/Delete/Edit with Total</h4><hr>' ALIGN 'center' GRID 12  OF o
+		
+		HTML o INLINE '<div class="btn-group">'						
+			BUTTON LABEL '&nbsp;Insert' ICON '<i class="fa fa-file" aria-hidden="true"></i>' ACTION 'new_row' CLASS 'btn btn-outline-dark' GRID 0 OF o
+			BUTTON LABEL '&nbsp;Delete' ICON '<i class="fa fa-table" aria-hidden="true"></i>' ACTION 'del_row' CLASS 'btn btn-outline-dark' GRID 0 ;
+				CONFIRM 'Delete row?' OF o									
+		HTML o INLINE '</div>'
+		
+		ROW o CLASS 'pt-3'
+		  COL o GRID 10
+		  
+			aOptions := { ;
+				'index' => 'id',;		// Default id
+				'height' => '280px',;			 
+				'rowHeight' => 40,;  
+				'selectable' => .T. ;
+			}			
+
+			aEvents := { { 'name' => 'cellEdited' , 'proc' => 'upd_row'},;
+						 { 'name' => 'tableBuilt' , 'proc' => 'loaddata'}; 
+						}
+
+			DEFINE BROWSE oBrw ID 'tableOrder' OPTIONS aOptions EVENTS aEvents ALL OF o	
+				
+				COL oCol TO oBrw CONFIG { 'formatter' => "rowSelection", 'align' => "center", 'headerSort' => .F. }
+						 
+				COL oCol TO oBrw CONFIG { 'title' => 'Código'	, 'field' => 'codigo'	}
+				COL oCol TO oBrw CONFIG { 'title' => 'Producto' , 'field' => 'producto'	}
+				COL oCol TO oBrw CONFIG { 'title' => 'Cantidad'	, 'field' => 'cantidad', 'editor' => "number"	}
+				COL oCol TO oBrw CONFIG { 'title' => 'Precio'	, 'field' => 'precio'	}
+			 	COL oCol TO oBrw CONFIG { 'title' => 'Total'	, 'field' => 'importe' 	}
+			 	COL oCol TO oBrw CONFIG { 'title' => 'Comment'	, 'field' => 'comment' , 'editor' => "input" 	}
+			 
+			 INIT BROWSE oBrw
+		  ENDCOL o	 
+		ENDROW o		
+		
+		ROW o CLASS 'pt-3'
+			SAY LABEL '<h3>Total</h3>'  GRID 0 OF o
+			SAY ID 'total' ALIGN 'left' GRID 10 OF o
+		ENDROW o		
+		
+		ENDFORM o		
+		
+	INIT WEB oWeb RETURN	
+?>
