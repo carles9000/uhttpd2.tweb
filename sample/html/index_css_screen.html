@@ -1,0 +1,64 @@
+<!doctype html>
+<!doctype html>
+<html lang="en">
+<head>		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="files/tweb/images/tweb.ico"/>
+	<title>TWeb UHttpd2</title> 
+ 
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script> 
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">	
+</head>
+<body>	
+
+	<div class='container pt-3'>
+	
+		<h3 onClick="location.href='/'" style="cursor: pointer;" >
+			<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+			&nbsp;Css Management
+		</h3><hr>
+		
+		<div class="row">
+			<div class="col-6">
+				<div class="card">
+					<div class="card-header">
+						<h4><b><i class="fa fa-table" aria-hidden="true"></i>
+						&nbsp;Css</b></h4>(source html/css_screen)
+					</div>	
+					<div class="card-body">					
+						<ul>							
+							<li><a href="cssbrw-1"	>Browse 1</a>																																																														
+							<li><a href="cssbrw-2"	>Browse 2</a>																																																														
+							<li><a href="cssbrw-3"	>Browse 3</a>																																																																					
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-6">
+				<div class="card">
+					<div class="card-header">
+						<h4><b><i class="fa fa-comment" aria-hidden="true"></i>
+						&nbsp;Description</b></h4>When should we use this technique 
+					</div>	
+					<div class="card-body">					
+<p>Cuando usas el mismo css en varios prgs, lo puedes grabar en un fichero, p.e. 
+en files/css/myfile.css y luego cargarlo desde tu prg de esta manera <code>oWeb:AddCss( 'files/css/mybrw.css' )</code>
+<br><br>En este ejemplo hay 3 módulos que usan un browse. Solo tienes un mismo 
+fichero css único para estos 3 o 50. El mantenimiento es mas fácil.
+</p>
+<hr>
+<p>
+When you use the same css in several prgs, you can save it in a file, e.g.
+in files/css/myfile.css and then load it from your prg like this <code>oWeb:AddCss( 'files/css/mybrw.css' )</code>
+<br><br>In this example there are 3 modules that use a browse. you only have one
+Single CSS file for these 3 or 50. Maintenance is easier.
+</p>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+	
+<body>

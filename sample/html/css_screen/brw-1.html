@@ -1,0 +1,30 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions
+	LOCAL aData := hb_jsondecode( memoread( 'data/data.json' ) )
+
+	DEFINE WEB oWeb TITLE 'Css Screen' 	
+
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Css', 'Browse example'
+		
+			oWeb:AddCss( 'https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator_simple.min.css' )
+			oWeb:AddCss( 'files/css/mybrw.css' )
+			
+		DEFINE FORM o ID 'myform' API 'api_css' OF oWeb
+
+		INIT FORM o		
+
+			DEFINE BROWSE oBrw ID 'mytable' TITLE '<h5>Browse 1</h5>' OF o 				
+				
+				COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200 }
+				COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST"  , 'width' => 200}
+				COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE" }
+				
+			INIT BROWSE oBrw DATA aData				
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

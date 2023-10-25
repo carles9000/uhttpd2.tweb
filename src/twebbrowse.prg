@@ -128,9 +128,14 @@ METHOD Activate() CLASS TWebBrowse
 	
 	cHtml += '</div>'
 	
+
+
 	
 	cHtml += '<script>'
 	cHtml += '$( document ).ready(function() {'
+	
+	cHtml += ' console.log( ' + hb_jsonEncode( ::aCols, .T. ) + '); '		
+	
 	cHtml += ' var aCols =  ' + hb_jsonEncode( ::aCols, .T. ) + "; "		
 	cHtml += ' var Options =  ' + hb_jsonEncode( ::hOptions, .T. ) + "; "	
 	

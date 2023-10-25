@@ -9,6 +9,8 @@ REQUEST HB_CODEPAGE_ESWIN
 REQUEST HB_CODEPAGE_UTF8EX
 //	-----------------------
 
+REQUEST MEMOREAD
+
 #define VK_ESCAPE	27
 
 function main()
@@ -76,6 +78,7 @@ function WebServer()
 		oServer:Route( 'folder'	, 'index_folder.html' )  	
 		oServer:Route( 'panel'		, 'index_panel.html' )  	
 		oServer:Route( 'flow_screen', 'index_flow_screen.html' )  	
+		oServer:Route( 'css_screen', 'index_css_screen.html' )  	
 		oServer:Route( 'flow'		, 'flow\flow.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
 		oServer:Route( 'splash'	, 'index_splash.html' )  			
@@ -214,6 +217,12 @@ function WebServer()
 	
 		oServer:Route( 'screen1'	, 'screens/screen1.html' ) 		
 		oServer:Route( 'screen2'	, 'concept' ) 					//	<<--- Function !
+		
+	//	Css
+	
+		oServer:Route( 'cssbrw-1'	, 'css_screen/brw-1.html' ) 
+		oServer:Route( 'cssbrw-2'	, 'css_screen/brw-2.html' ) 
+		oServer:Route( 'cssbrw-3'	, 'css_screen/brw-3.html' ) 
 		
 	//	Functional (Mini App with security)
 	

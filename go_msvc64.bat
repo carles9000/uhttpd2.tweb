@@ -5,7 +5,7 @@ c:\harb\msvc64\bin\hbmk2 tweb.hbp -comp=msvc64
 
 IF ERRORLEVEL 1 GOTO COMPILEERROR
 
-rem We will always copy the library to the samples folder to test it...s
+rem We will always copy the library to the samples folder to test it...
 copy lib\msvc64\tweb.lib sample\lib\tweb\msvc64\tweb.lib /Y
 
 GOTO EXIT
