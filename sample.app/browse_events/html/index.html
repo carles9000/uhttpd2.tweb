@@ -1,0 +1,89 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aEvents 
+	LOCAL aData := {;
+		{ 'FIRST' => 'Homer'		, 'LAST' => 'Hoaks', 'AGE' => 38 },;
+		{ 'FIRST' => 'Jean-Piere'	, 'LAST' => 'Thain', 'AGE' => 58 },;
+		{ 'FIRST' => 'Steve'		, 'LAST' => 'Staro', 'AGE' => 26 } ;
+	}
+
+	DEFINE WEB oWeb TITLE 'Browse' 	
+			
+		DEFINE FORM o ID 'myform' API 'myapi' OF oWeb 								
+		
+		INIT FORM o 			
+			
+			ROW o 					
+				SAY LABEL '<h3>Browse Events. Click right button</h3><hr>' GRID 12 OF o
+			ENDROW o
+				  
+			aEvents := { { 'name' => 'tableBuilding' , 'function' => 'getOptions'}  }        		
+		
+			aOptions := { ;
+				'height' => '300px',	;					                                                                                                              
+				'index' => 'id'   		;		// Default id                 
+			}															
+			
+			DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions EVENTS aEvents TITLE '<h5>Customer list</h5>' OF o 
+				
+				//	https://tabulator.info/docs/5.4/columns 
+				
+				COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200 }
+				COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200 }
+				COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE" }
+				
+			INIT BROWSE oBrw DATA aData																				
+
+			HTML o
+
+				<script>
+
+					function getOptions() {
+					  var table = Tabulator.findTable('#myform-mytable')[0];  
+					  var rightRowMenu = [
+							  {
+								  label:"<i class='fas fa-user'></i> Opcion 1",
+								  action:function(e, row){     
+									  alert('Has elegido la opcion 1 sobre '+ row.getData()['FIRST']);
+								  }
+							  },
+							  {
+								  label:"<i class='fas fa-check-square'></i> Seleciona fila",
+								  action:function(e, row){
+									  row.toggleSelect(); 
+								  }
+							  },
+							  {
+								  separator:true,
+							  },
+							  {
+								  label:"Otras opciones",
+								  menu:[
+									  {
+										  label:"<i class='fas fa-trash'></i> Opcion 2",
+										  action:function(e, row){
+											  alert('Has elegido la opcion 2');
+										  }
+									  },
+									  {
+										  label:"<i class='fas fa-ban'></i> Opcion deshabilitada",
+										  disabled:true,
+									  },
+								  ]
+							  }
+						  ] ;    
+					 
+						  table['options']['rowContextMenu'] = rightRowMenu;    
+
+					 return ;
+
+					} 
+				   
+				</script>
+			ENDTEXT				
+		
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
