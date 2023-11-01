@@ -1,0 +1,18 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'TWeb WS' 			
+		
+		DEFINE FORM o OF oWeb							
+
+		INIT FORM o					
+			SAY VALUE '<h1>WebService running !' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>Engine loaded, version {{ TWebVersion() }}<hr>' ALIGN 'center' GRID 12  OF o												
+			
+		ENDFORM o	
+	
+	INIT WEB oWeb RETURN 
+
+?>
