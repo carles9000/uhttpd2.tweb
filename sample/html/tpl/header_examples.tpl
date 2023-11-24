@@ -5,7 +5,7 @@
 -->
 
 
-<div class="alert alert-dark form_title" style="overflow:hidden;height:56px;">
+<div class="alert alert-dark form_title" style="overflow:hidden;height:56px;border-bottom:2px solid gray;">
 	<h4 style="margin:0px;cursor: pointer;" onClick="location.href='javascript:history.back();'" >
 		<i class="fa fa-list-alt" aria-hidden="true"></i>
 		{{ pvalue(1) }}		

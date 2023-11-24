@@ -1,0 +1,67 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    Local oWeb, oForm, oBrw, aOptions
+	local aData := {}
+	
+	Aadd( aData, { 'id' => "  1", 'REFE' => 'SI', 'DESCRI' => 'Celda editable o NO???' } )
+	Aadd( aData, { 'id' => "  2", 'REFE' => 'NO', 'DESCRI' => 'Celda editable o NO???' } )
+
+
+    DEFINE WEB oWeb TITLE 'Tablero'	
+
+		DEFINE FORM oForm ID 'myform' OF oWeb		
+		
+		INIT FORM oForm 
+
+			SAY VALUE '<h1>Test EditableCellBrowse' ALIGN 'center' GRID 12  OF oForm	
+			SAY VALUE "Si reference == 'SI' puedes editar Description.<br>If Reference == 'SI' you can edit Description" ALIGN 'center' GRID 12  OF oForm
+		
+			ROW oForm
+
+				COL oForm GRID 12
+
+					//	https://tabulator.info/docs/5.4/options
+
+						aOptions := { ;
+							'height' => '300px',				;
+							'initialSort' => {	{ 'column' => 'id', 'dir' => 'asc' } },;
+							'index' => 'id',   					;	// Default id
+							'selectable' => 1, 					;	// Podem posar 1 (sols 1 col)
+							'selectableRollingSelection' => .T.,;
+							'selectableRangeMode' => "click",	;
+							'layout' => 'fitColumns';				// Ajusta columnes a l'amplada del Browse'
+							}
+
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions OF oForm
+
+						//	https://tabulator.info/docs/5.4/select#setup-formatting
+						//	https://tabulator.info/docs/5.4/columns
+
+						COL oCol TO oBrw CONFIG { 'title' => "Lin",			'field' => "id",		'width' => 30,				'headerSort' => .F. }
+						COL oCol TO oBrw CONFIG { 'title' => "Reference",	'field' => "REFE",		'width' => 150,				'headerSort' => .F., 'editor' => 'input' }
+						COL oCol TO oBrw CONFIG { 'title' => "Description",	'field' => "DESCRI",	'editable' => '@editCheck',	'headerSort' => .F., 'editor' => 'input' }
+
+					INIT BROWSE oBrw DATA aData
+					
+				ENDCOL oForm
+
+			ENDROW oForm
+
+			HTML oForm
+				<script>							
+
+					function editCheck(cell, formatterParams) {																						
+			
+						var data = cell.getRow().getData();								
+						
+						return ( data.REFE == 'SI' )							
+					}
+
+				</script>
+			ENDTEXT
+
+		ENDFORM oForm
+		
+	INIT WEB oWeb RETURN	
+?>

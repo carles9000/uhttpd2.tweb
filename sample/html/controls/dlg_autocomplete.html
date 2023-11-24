@@ -1,0 +1,16 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+	LOCAL o, oDlg			
+	
+	DEFINE DIALOG oDlg	
+	
+		DEFINE FORM o ID 'abc' API 'api_controls' OF oDlg							
+
+		INIT FORM o					
+			ROWGROUP o			
+				GET ID 'myget' VALUE '' LABEL 'Data from backend (States)' PLACEHOLDER 'ex. al' AUTOCOMPLETE 'auto_productos'  GRID 6 OF o
+			ENDROW o
+		ENDFORM o	
+	
+	INIT DIALOG oDlg RETURN 	
+?>

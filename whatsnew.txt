@@ -1,3 +1,9 @@
+21/11/2023 Vrs. 1.16
+	* Enchanced uhttpd2.tabulator.js new column event system. See sample.app\editable
+	* Enchanced GET with autocomplete. See controls\autocomplete example
+	* Add jquery-ui.css to tweb\tpl\libs.tpl
+	* Example browse TableUpdateRow. Section Browses 
+
 11/10/2023
 	* Samples into \sample.app\
 		- browse_insert_delete_edit  (simple example for easy edit)

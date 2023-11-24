@@ -16,6 +16,10 @@ function Api_Controls( oDom )
 		case oDom:GetProc() == 'myfiles'			; DoMyFiles( oDom )
 		case oDom:GetProc() == 'fileupload'		; DoUpload( oDom )
 		
+		case oDom:GetProc() == 'valid_id'  		; DoValid_Id( oDom )
+		case oDom:GetProc() == 'dlg_autocomplete'	; DoDialog_Autocomplete( oDom )
+//		case oDom:GetProc() == 'autoproductos'  	; DoAutoProductos( oDom )
+		
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
 	endcase
@@ -261,3 +265,64 @@ static function DoUpload_Basic( oDom )
 	oDom:SetMsg( 'Files upload!' )
 	
 retu nil 
+
+// -------------------------------------------------- //
+//	Autocomplete functions examples
+// -------------------------------------------------- //
+
+function DoAuto_Productos()
+
+	local cSearch  := alltrim(lower( UPost()[ 'search' ] ))
+	local aRows 	:= {}
+	local cAlias   := 'ALIAS' + ltrim(str(hb_milliseconds()))
+	
+	_d( UPost() )	//	Check via dbgview
+
+	USE ('data/states.dbf') SHARED NEW ALIAS (cAlias)
+	SET INDEX TO ('data/states.cdx')
+	
+	(cAlias)->( OrdSetFocus( 'name' ) )
+	(cAlias)->( DbSeek( lower(cSearch), .t. ) ) 
+
+	WHILE alltrim(lower((cAlias)->name)) = cSearch .and. (cAlias)->( !Eof() )		
+		Aadd( aRows, { 'value' => alltrim( (cAlias)->name), 'id' => (cAlias)->code } )
+		(cAlias)->( DbSkip() )
+	END		
+	
+	UAddHeader("Content-Type", "application/json")
+	UWrite( hb_jsonencode( aRows ) )
+	
+retu nil 
+
+
+// -------------------------------------------------- //
+
+function DoValid_Id( oDom )
+
+	oDom:SetMsg( 'Valid Id. => ' + oDom:Get( 'myget2' ) )
+	
+retu nil 
+
+// -------------------------------------------------- //
+
+function DoDialog_Autocomplete( oDom )
+
+	local cHtml := ULoadHtml( 'controls\dlg_autocomplete.html'  )
+	local o 	:= {=>}	
+	
+	//	-------------------------------------------------------------------------------------
+	//	TWeb usa el pluggin bootbox para creaar diálogos.
+	//	Todos los paràmetros los puedes encontrar aqui -> http://bootboxjs.com/examples.html 
+	//	-------------------------------------------------------------------------------------
+	
+	//o[ 'title' ] 		:= 'My Title...'	
+	//o[ 'backdrop' ] 	:= .t.
+	//o[ 'onEscape' ] 	:= .f.
+	//o[ 'closeButton' ]:= .t.
+	//o[ 'className' ] 	:= 'bounceIn fadeOutRight'
+	
+	oDom:SetDialog( 'xxx', cHtml, 'Test from dialog...', o )
+
+
+retu nil 
+

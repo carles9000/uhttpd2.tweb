@@ -1,0 +1,84 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+	local cStyle 	:= 'border: 2px solid red; box-shadow: 4px 4px 4px grey;max-width:70px;'			
+	local aLang 	:= {"aaaaaa", "ActionScript", "AppleScript", "Aps", "Aps+", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran"}
+	local aParam 	:= {=>}
+	local aConfig 	:= {=>}
+	
+	aParam[ 'name' ]:= 'Charly'
+	aParam[ 'age' ] := 47
+	
+	
+	DEFINE WEB oWeb TITLE 'Autocomplete' 
+	
+		HTML oWeb
+			<style>
+				.marco {
+					border:1px solid blue;
+					padding: 5px;
+					box-shadow: 5px 5px 5px #3ca1c1;
+				}
+			</style>
+		ENDTEXT
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Controls', 'Autocomplete'
+		
+		DEFINE FORM o ID 'myform' API 'api_controls' OF oWeb 
+			o:lDessign 	:= .f.
+			o:lFluid 	:= .t.
+		
+		INIT FORM o 				
+		
+			COL o GRID 12			
+
+				ROWGROUP o	CLASS 'marco' VALIGN 'bottom'	
+					GET ID 'mylang' VALUE '' LABEL 'Data array' PLACEHOLDER 'ex. ap' GRID 3 AUTOCOMPLETE aLang SELECT 'MySelect' OF o	
+					
+					SAY ID 'info' VALUE '' GRID 3 OF o		
+					
+					SAY VALUE "GET ID 'mylang' VALUE '' LABEL 'Data array' PLACEHOLDER 'ex. ap' GRID 3 AUTOCOMPLETE aLang SELECT 'MySelect' OF o"  GRID 6 OF o						
+				ENDROW o	
+				
+				ROWGROUP o	CLASS 'marco' 							
+					GET ID 'myget' VALUE '' STYLE cStyle LABEL 'Data from backend (States)' ALIGN 'center' PLACEHOLDER 'ex. mi' AUTOCOMPLETE 'auto_productos'  GRID 6 OF o	
+					
+					SAY VALUE "GET ID 'myget' VALUE '' STYLE cStyle LABEL 'Data from backend (States)' PLACEHOLDER 'ex. mi' AUTOCOMPLETE 'auto_productos'  GRID 6 OF o"  GRID 6 OF o							
+				ENDROW o	
+				
+				ROWGROUP o	CLASS 'marco' 
+
+					aConfig := { 'trigger' => '=', 'minLength' => 1, 'delay' => 100 }
+				
+					GET ID 'myget2' VALUE '' LABEL 'Data from backend (States)' GRID 6 PLACEHOLDER 'Trigger with =, ex. =mi' ;
+						AUTOCOMPLETE 'auto_productos' PARAM aParam CONFIG aConfig BUTTON 'Valid Id.' ACTION 'valid_id' OF o
+						
+					SAY VALUE "GET ID 'myget2' VALUE '' LABEL 'Data from backend (States)' GRID 6 PLACEHOLDER 'Trigger with =, ex. =mi' AUTOCOMPLETE 'auto_productos' PARAM aParam BUTTON 'Valid Id.' ACTION 'valid_id' OF o"  GRID 6 OF o														
+				ENDROW o
+
+				ROWGROUP o 								
+					BUTTON ID 'btn1' LABEL 'Example from Dialog' WIDTH '200px' ACTION 'dlg_autocomplete'  OF o 
+				ENDROW o						
+				
+			ENDCOL o 
+		
+			HTML o
+				<script>	
+
+					function MySelect( event, ui ) {
+						
+						console.log( 'MySelect', ui )				
+						
+						$('#myform-info').html( '<b>Info</b><br>You are selected: ' + ui.item.value ) 					
+					}	
+
+				</script>
+			ENDTEXT			
+			
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+
+?>
+

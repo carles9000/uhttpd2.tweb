@@ -5,6 +5,7 @@ function Api_Brw_Basic( oDom )
 	do case
 		case oDom:GetProc() == 'setdata'	; SetData( oDom )						
 		case oDom:GetProc() == 'adddata'	; AddData( oDom )						
+		case oDom:GetProc() == 'updaterow'	; UpdateRow( oDom )						
 		case oDom:GetProc() == 'clean'		; DoClean( oDom )				
 		case oDom:GetProc() == 'print'		; oDom:TablePrint( 'mytable' )
 		case oDom:GetProc() == 'dummy'		; oDom:console( oDom:Getall() )
@@ -35,6 +36,16 @@ static function AddData( oDom )
 	local aReg  	:= { 'id' => ++nInd, 'FIRST' => 'Shawn', 'LAST' => time(), 'AGE' => nInd }
 		
 	oDom:TableAddData( 'mytable', aReg, nil, .T.  )		
+	
+retu nil
+
+// -------------------------------------------------- //
+
+static function UpdateRow( oDom )
+	
+	local hRow	:= { 'LAST' => time(), 'AGE' => hb_randint(2,99) }		
+	
+	oDom:TableUpdateRow( 'mytable', 2, hRow  )		
 	
 retu nil
 

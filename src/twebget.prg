@@ -12,6 +12,8 @@ CLASS TWebGet FROM TWebControl
 	DATA cLink 						INIT ''
 	DATA aSpan						INIT {}
 	DATA aSpanId 					INIT {}
+	DATA hConfig 					INIT {=>}
+	DATA hParam 					INIT {=>}
 
 
 	METHOD New() 					CONSTRUCTOR
@@ -20,7 +22,7 @@ CLASS TWebGet FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle, cProp, lHidden ) CLASS TWebGet
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle, cProp, lHidden, hConfig, hParam ) CLASS TWebGet
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
@@ -48,6 +50,8 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
 	DEFAULT lHidden TO .F.
+	DEFAULT hConfig TO {=>}
+	DEFAULT hParam TO {=>}
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -76,6 +80,8 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	::cStyle		:= cStyle
 	::cProp			:= cProp
 	::lHidden		:= lHidden
+	::hConfig		:= hConfig
+	::hParam		:= hParam
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )			
@@ -91,7 +97,7 @@ METHOD Activate() CLASS TWebGet
 	LOCAL cSizeLabel := 'col-form-label'
 	LOCAL cBtnSize 	 := ''
 	local nI, nBtn, cLabel, cAction, cBtnId, nSpan, cGrid
-	local cIdPrefix
+	local cIdPrefix, hParam, hConfig
 	local cSt := ''
 
 	DO CASE
@@ -109,7 +115,7 @@ METHOD Activate() CLASS TWebGet
 			cSizeLabel	:= 'col-form-label-lg'
 			cBtnSize 	:= 'btn-lg'
 	ENDCASE	
-	
+
 	if !empty( ::oParent:cId_Dialog )
 		cIdPrefix :=  ::oParent:cId_Dialog + '-'
 	else
@@ -249,7 +255,7 @@ METHOD Activate() CLASS TWebGet
 			if len( ::aBtnId ) == nBtn 
 				cBtnId := cIdPrefix + ::aBtnId[nI] 
 			else
-				cBtnId := 'btn_' + ::cId + '_' + ltrim(str(nI))
+				cBtnId := cIdPrefix + 'btn_' + ::cId + '_' + ltrim(str(nI))
 			endif
 
 			cHtml += '<button id="' + cBtnId + '" class="btn btn-outline-secondary ' + cBtnSize + '" type="button" '
@@ -325,6 +331,7 @@ METHOD Activate() CLASS TWebGet
 				hSource := hb_jsonencode( ::uSource )	
 			
 				cHtml += "  var _uSource = JSON.parse( '" + hSource + "' );"						
+
 			
 			CASE Valtype( ::uSource ) == 'C'	//	Url
 			
@@ -332,11 +339,36 @@ METHOD Activate() CLASS TWebGet
 				
 		ENDCASE
 		
+		IF !empty( ::hConfig )
+				
+			hConfig := hb_jsonencode( ::hConfig )	
+			
+			cHtml += "  var _hConfig = JSON.parse( '" + hConfig + "' );"									
+			
+		ELSE
+		
+			cHtml += "  var _hConfig = null;"						
+			
+		ENDIF	
+
+		IF !empty( ::hParam )
+				
+			hParam := hb_jsonencode( ::hParam )	
+			
+			cHtml += "  var _hParam = JSON.parse( '" + hParam + "' );"									
+			
+		ELSE
+		
+			cHtml += "  var _hParam = null;"						
+			
+		ENDIF
+
 		IF empty( ::cSelect )
 			::cSelect := 'null'
-		ENDIF
-		
-		cHtml += "   TWebGetAutocomplete( '" + ::cId + "', _uSource, '" + ::cSelect + "' ); "	
+		ENDIF		
+
+		cHtml += "   var _oGAC = new TWebGetAutocomplete( '" + cIdPrefix + ::cId + "', _uSource, '" + ::cSelect + "', _hConfig,  _hParam ); "	
+		cHtml += "_oGAC.Init(); "
 
 		cHtml += '})'
 		cHtml += '</script>'

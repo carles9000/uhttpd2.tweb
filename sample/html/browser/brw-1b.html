@@ -1,0 +1,53 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	LOCAL aData := {;
+		{ 'id' => 1, 'FIRST' => 'Homer'		, 'LAST' => 'Hoaks', 'AGE' => 38 },;
+		{ 'id' => 2, 'FIRST' => 'Jean-Piere', 'LAST' => 'Thain', 'AGE' => 58 },;
+		{ 'id' => 3, 'FIRST' => 'Steve'		, 'LAST' => 'Staro', 'AGE' => 26 } ;
+	}	
+	
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'TableUpdateRow'
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_basic' OF oWeb 
+		
+		INIT FORM o 					
+		
+			aBtns := {	{ 'btn-2', 'UpdateRow'	, 'updaterow' }	}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns
+			
+			ROW o 			
+			
+				COL o CLASS 'p-0' GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',	;					
+						'index' => 'id'   		;		// Default id
+					}															
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+						
+						//	https://tabulator.info/docs/5.4/columns 
+						
+						COL oCol TO oBrw CONFIG { 'title' => "Id", 'field' => "id"  }
+						COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST"  }
+						COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200 }
+						COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE" }
+						
+					INIT BROWSE oBrw DATA aData
+			
+				ENDCOL o				
+				
+			ENDROW o		
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+

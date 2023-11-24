@@ -126,13 +126,15 @@ function WebServer()
 
 	//	Controls
 	
-		oServer:Route( 'get-types'		, 'controls/get-types.html' ) 		
+		oServer:Route( 'get-types'	, 'controls/get-types.html' ) 		
 		oServer:Route( 'styles'		, 'controls/styles.html' ) 		
 		oServer:Route( 'properties'	, 'controls/properties.html' ) 		
 		oServer:Route( 'upload'		, 'controls/upload.html' ) 		
 		oServer:Route( 'upload_basic'	, 'controls/upload_basic.html' ) 
 		oServer:Route( 'disable'		, 'controls/disable.html' ) 
 		oServer:Route( 'hide'			, 'controls/hide.html' ) 
+		oServer:Route( 'autocomplete'	, 'controls/autocomplete.html' ) 
+		oServer:Route( 'auto_productos', 'doauto_productos' ) 
 
 	//	Charset
 	
@@ -151,18 +153,19 @@ function WebServer()
 							
 		oServer:Route( 'brw-0'		, 'browser/brw-0.html' ) 
 		oServer:Route( 'brw-1'		, 'browser/brw-1.html' ) 
+		oServer:Route( 'brw-1b'		, 'browser/brw-1b.html' ) 
 		oServer:Route( 'brw-2'		, 'browser/brw-2.html' ) 
 		oServer:Route( 'brw-3'		, 'browser/brw-3.html' ) 
 		oServer:Route( 'brw-4'		, 'browser/brw-4.html' ) 
 		oServer:Route( 'brw-5'		, 'browser/brw-5.html' ) 
 		oServer:Route( 'brw-6'		, 'browser/brw-6.html' ) 
 		oServer:Route( 'brw-7'		, 'browser/brw-7.html' ) 
-		oServer:Route( 'brw-10'	, 'browser/brw-10.html' ) 
-		oServer:Route( 'brw-10b'	, 'browser/brw-10b.html' ) 
-		oServer:Route( 'brw-11'	, 'browser/brw-11.html' ) 
-		oServer:Route( 'brw-12'	, 'browser/brw-12.html' ) 
-		
-		oServer:Route( 'brw_ok'	, 'browser/brw_ok.html' ) 
+		oServer:Route( 'brw-10'		, 'browser/brw-10.html' ) 
+		oServer:Route( 'brw-10b'		, 'browser/brw-10b.html' ) 
+		oServer:Route( 'brw-11'		, 'browser/brw-11.html' ) 
+		oServer:Route( 'brw-12'		, 'browser/brw-12.html' ) 
+			
+		oServer:Route( 'brw_ok'		, 'browser/brw_ok.html' ) 
 		
 	//	Dialogs			
 		
