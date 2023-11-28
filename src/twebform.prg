@@ -172,7 +172,7 @@ METHOD Col( cId, nCol, cType, cClass, cStyle, lHidden ) CLASS TWebForm
 RETU NIL
 
 
-METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
+METHOD Div( cId, cClass, cStyle, cProp, cCode, lHidden ) CLASS TWebForm
 
 	local cHtml := ''	
 	local cId_Dialog := ''
@@ -181,6 +181,7 @@ METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 	DEFAULT cClass TO ''
 	DEFAULT cStyle TO ''
 	DEFAULT cProp TO ''
+	DEFAULT cCode TO ''
 	DEFAULT lHidden TO .f.
 	
 	if !empty( ::cId_Dialog )
@@ -212,6 +213,7 @@ METHOD Div( cId, cClass, cStyle, cProp, lHidden ) CLASS TWebForm
 	
 	
 	cHtml += '>'  + CRLF 
+	cHtml += cCode + CRLF 
 			
 	::Html( cHtml )
 	
