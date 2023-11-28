@@ -50,14 +50,14 @@
 	<oForm>:RowGroup( [<cId>], <cVAlign>, <cHAlign>, <cClass>, [<cStyle>], [<.hi.>] )
 	
 #xcommand DIV <oForm> [ ID <cId> ] [ CLASS <cClass> ] [ <hi: HIDE, HIDDEN> ];
-	[ STYLE <cStyle> ] [ PROP <cProp> ];
+	[ STYLE <cStyle> ] [ PROP <cProp> ] [ CODE <cCode> ] ;
 => ;
-	<oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>], [<.hi.>])
+	<oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>], [<cCode>], [<.hi.>])
 	
 #xcommand DIV [<oDiv>] [ ID <cId> ] [ CLASS <cClass> ] ;
-	[ STYLE <cStyle> ] [ PROP <cProp> ] OF <oForm> ;
+	[ STYLE <cStyle> ] [ PROP <cProp> ] [ CODE <cCode> ] OF <oForm> ;
 => ;
-	[<oDiv> := ] <oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>])
+	[<oDiv> := ] <oForm>:Div( [<cId>], [<cClass>], [<cStyle>], [<cProp>], [<cCode>] )
 	
 #xcommand PANEL [<oPanel>] [ ID <cId> ] [ CLASS <cClass> ] ;
 	[ STYLE <cStyle> ] [ PROP <cProp> ] [ <hi: HIDE, HIDDEN> ] OF <oForm> ;
