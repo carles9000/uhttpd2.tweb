@@ -1,3 +1,6 @@
+06/12/2023 
+	* Updated libs httpd2 Vrs. 1.10
+
 21/11/2023 Vrs. 1.16
 	* Enchanced uhttpd2.tabulator.js new column event system. See sample.app\editable
 	* Enchanced GET with autocomplete. See controls\autocomplete example
