@@ -2,10 +2,12 @@ function ws2()
 
 	local hRow 		:= UPost()
 	local hData 	:= {=>}
-	local cType 	:= UGetParams()[ 'CONTENT_TYPE' ]		
+	local hParams 	:= UGetParams()	
 
-	if HB_HHasKey( hRow, 'RAW' )	
+	if HB_HHasKey( hRow, 'RAW' ) .and. HB_HHasKey( hParams, 'CONTENT_TYPE' )
 	
+		cType 	:= hParams[ 'CONTENT_TYPE' ]		
+		
 		do case
 			case cType == 'text/plain'
 				hData := hb_jsonDecode( hRow[ 'RAW' ] )

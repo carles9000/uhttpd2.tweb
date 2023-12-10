@@ -1,3 +1,7 @@
+10/12/2023
+	* Great performance. Now you can use friendly urls. Very important for webservices
+	  You can test \sample.app\webservice\urlfriendly\
+
 06/12/2023 
 	* Updated libs httpd2 Vrs. 1.10
 
