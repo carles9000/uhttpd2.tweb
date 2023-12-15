@@ -1,5 +1,6 @@
 15/12/2023
 	* Example Tabulator to export data. See \browser\brw-13
+	  (pdf is ok, thanks Anxo)
 
 10/12/2023
 	* Great performance. Now you can use friendly urls. Very important for webservices

@@ -8,9 +8,9 @@
 		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Export'		
 			
 			HTML oWeb
-				<script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.2/jspdf.plugin.autotable.js"></script>
+				<script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>				
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>				
 			ENDTEXT
 		
 		DEFINE FORM o ID 'brw' API 'api_brw_basic' OF oWeb 
@@ -77,10 +77,11 @@
 							o.download( 'json', 'data.json');												
 					}					
 					function toPdf() {	
-						//	Not yet !. Error 
-							alert( 'Not yet' )
 						var o = Tabulator.findTable('#brw-mytable' )[0];			
-							o.download( 'pdf', 'data.pdf')
+							o.download( 'pdf', 'data.pdf', {
+								orientation:"portrait", 	//set page orientation to portrait
+								title:"UT Example Report", 	//add title to report
+							})
 					}					
 				</script>			
 			ENDTEXT 
