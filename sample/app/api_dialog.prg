@@ -66,7 +66,7 @@ static function DoDlg1( oDom )
 	//o[ 'title' ] 		:= 'My Title...'	
 	//o[ 'backdrop' ] 	:= .t.
 	//o[ 'onEscape' ] 	:= .f.
-	//o[ 'closeButton' ]:= .t.
+	//o[ 'closeButton' ]  := .f.
 	//o[ 'className' ] 	:= 'bounceIn fadeOutRight'
 	
 	oDom:SetDialog( 'xxx', cHtml, nil, o )
