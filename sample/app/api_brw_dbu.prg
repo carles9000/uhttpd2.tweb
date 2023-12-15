@@ -158,6 +158,7 @@ static function DoSave( oDom )
 		
 			(cAlias)->first   	:= hRow[ 'FIRST' ]
 			(cAlias)->state   	:= hRow[ 'STATE' ]
+			(cAlias)->last   	:= hRow[ 'LAST' ]
 			(cAlias)->age   	:= hRow[ 'AGE' ]
 			(cAlias)->married 	:= hRow[ 'MARRIED' ]
 			(cAlias)->hiredate	:= CTOD( hRow[ 'HIREDATE' ] )						
