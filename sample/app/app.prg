@@ -164,6 +164,7 @@ function WebServer()
 		oServer:Route( 'brw-10b'		, 'browser/brw-10b.html' ) 
 		oServer:Route( 'brw-11'		, 'browser/brw-11.html' ) 
 		oServer:Route( 'brw-12'		, 'browser/brw-12.html' ) 
+		oServer:Route( 'brw-13'		, 'browser/brw-13.html' ) 
 			
 		oServer:Route( 'brw_ok'		, 'browser/brw_ok.html' ) 
 		

@@ -1,0 +1,92 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions, aBtns
+	
+	DEFINE WEB oWeb TITLE 'Browse' 
+	
+		HTML oWeb FILE 'tpl\header_brw.tpl' PARAMS 'Export'		
+			
+			HTML oWeb
+				<script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.2/jspdf.plugin.autotable.js"></script>
+			ENDTEXT
+		
+		DEFINE FORM o ID 'brw' API 'api_brw_basic' OF oWeb 
+		
+		INIT FORM o 
+		
+			//	   id 	 , Label 	, data-onclick	, onclick 
+		
+			aBtns := {	;
+				{ 'btn-1', 'Load'			, 'setdata'		, nil },;
+				{ 'btn-2', 'Clean'			, 'clean'		, nil };																
+			}			
+		
+			HTML o FILE 'tpl\btnbar.tpl' PARAMS aBtns
+			
+			ROW o 			
+			
+				COL o CLASS 'p-0' GRID 12
+				
+					//	https://tabulator.info/docs/5.4/options
+				
+					aOptions := { ;
+						'height' => '300px',	;					
+						'index' => 'id'   		;		// Default id
+					}															
+					
+					DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions TITLE '<h5>Customer list</h5>' OF o 
+						
+						//	https://tabulator.info/docs/5.4/columns 
+						
+						COL oCol TO oBrw CONFIG { 'title' => "First", 'field' => "FIRST", 'width' => 200 }
+						COL oCol TO oBrw CONFIG { 'title' => "Last", 'field' => "LAST", 'width' => 200 }
+						COL oCol TO oBrw CONFIG { 'title' => "Street", 'field' => "STREET", 'width' => 200 }
+						COL oCol TO oBrw CONFIG { 'title' => "City", 'field' => "CITY", 'width' => 200 }
+						COL oCol TO oBrw CONFIG { 'title' => "Age", 'field' => "AGE" }
+						
+					INIT BROWSE oBrw 
+			
+	  			ENDCOL o	
+
+				ROWGROUP  o CLASS 'm-1'
+					HTML o INLINE '<div class="btn-group" >'
+						BUTTON LABEL 'Export Excel' ACTION 'toExcel()' GRID 0 WIDTH '120px' CLASS "btn btn-outline-secondary" OF o
+						BUTTON LABEL 'Export Csv'   ACTION 'toCsv()'   GRID 0 WIDTH '120px' CLASS "btn btn-outline-secondary" OF o
+						BUTTON LABEL 'Export Json'  ACTION 'toJson()'  GRID 0 WIDTH '120px' CLASS "btn btn-outline-secondary" OF o
+						BUTTON LABEL 'Export Pdf'   ACTION 'toPdf()'   GRID 0 WIDTH '120px' CLASS "btn btn-outline-secondary" OF o
+					HTML o INLINE '</div>'				
+				ENDROW o
+				
+			ENDROW o		
+			
+			HTML o 
+				<script>
+					function toExcel() {
+						var o = Tabulator.findTable('#brw-mytable' )[0];			
+							o.download( 'xlsx', 'data.xlsx');												
+					}
+					function toCsv() {
+						var o = Tabulator.findTable('#brw-mytable' )[0];			
+							o.download( 'csv', 'data.csv')												
+					}					
+					function toJson() {
+						var o = Tabulator.findTable('#brw-mytable' )[0];			
+							o.download( 'json', 'data.json');												
+					}					
+					function toPdf() {	
+						//	Not yet !. Error 
+							alert( 'Not yet' )
+						var o = Tabulator.findTable('#brw-mytable' )[0];			
+							o.download( 'pdf', 'data.pdf')
+					}					
+				</script>			
+			ENDTEXT 
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>
+
