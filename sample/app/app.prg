@@ -59,7 +59,8 @@ function WebServer()
 	
 	//	Routing...			
 
-		oServer:Route( '/'			, 'index.html' )  										
+		oServer:Route( '/'			, 'index.html' )  	
+		
 		oServer:Route( 'readme'	, 'index_readme.html' )  	
 		oServer:Route( 'tutor'		, 'index_tutor.html' )  	
 		oServer:Route( 'screens'	, 'index_screens.html' )  	
@@ -82,7 +83,8 @@ function WebServer()
 		oServer:Route( 'flow'		, 'flow\flow.html' )  	
 		oServer:Route( 'menu'		, 'index_menu.html' )  	
 		oServer:Route( 'splash'	, 'index_splash.html' )  			
-		oServer:Route( 'functional', 'index_functional.html' )  			
+		oServer:Route( 'functional', 'index_functional.html' ) 
+		
 		oServer:Route( 'examples'	, 'examples/*' )  			
 	
 

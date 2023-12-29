@@ -279,7 +279,8 @@ class UTabulator {
 				this.table.print( value.par1, value.par2);														
 				break;
 				
-			case 'download':				
+			case 'download':	
+			
 				this.table.download( value.format, value.file );														
 				break;
 							
