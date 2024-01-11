@@ -99,6 +99,7 @@ METHOD Activate() CLASS TWebSelect
 	LOCAL cChecked	:= ''
 	LOCAL nI
 	LOCAL cSize := ''
+	LOCAL cSizeLabel := ''
 	local aPar
 	local lArrayPar := .f.
 	local cIdPrefix
@@ -106,8 +107,12 @@ METHOD Activate() CLASS TWebSelect
 	local cGrid := ''
 	
 	DO CASE
-		CASE upper(::oParent:cSizing) == 'SM' ; cSize := 'form-control-sm'
-		CASE upper(::oParent:cSizing) == 'LG' ; cSize := 'form-control-lg'
+		CASE upper(::oParent:cSizing) == 'SM' 
+			cSize := 'form-control-sm'
+			cSizeLabel	:= 'col-form-label-sm'
+		CASE upper(::oParent:cSizing) == 'LG' 
+			cSize := 'form-control-lg'
+			cSizeLabel	:= 'col-form-label-lg'
 	ENDCASE	
 
 	if !empty( ::oParent:cId_Dialog )
@@ -141,7 +146,8 @@ METHOD Activate() CLASS TWebSelect
 
 	IF !empty( ::cLabel )
 	
-		cHtml += '<label for="' + ::cId + '">' + ::cLabel + '</label>'
+		//cHtml += '<label for="' + ::cId + '">' + ::cLabel + '</label>'
+		cHtml += '<label class="' + cSizeLabel + ' ' + ::cFontLabel + ' "for="' + ::cId + '">' + ::cLabel + '</label>'
 	
 	ENDIF	
 	
