@@ -1,3 +1,6 @@
+18/01/2024
+	* Nav menu, add CLASS clausule
+
 11/01/2024
 	* minor change in Label select
 

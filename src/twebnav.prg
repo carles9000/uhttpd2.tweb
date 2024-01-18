@@ -26,7 +26,7 @@ CLASS TWebNav FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute, lBurguerLeft, lSidebar, cSide) CLASS TWebNav
+METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute, lBurguerLeft, lSidebar, cSide, cClass ) CLASS TWebNav
 
 	DEFAULT cId TO ''
 	DEFAULT cCaption TO ''
@@ -37,6 +37,7 @@ METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute, lBur
 	DEFAULT lBurguerLeft TO .F.
 	DEFAULT lSideBar TO .F.
 	DEFAULT cSide TO 'left'
+	DEFAULT cClass TO ''
 	
 	
 	::oParent 		:= oParent
@@ -49,6 +50,7 @@ METHOD New( oParent, cId, cCaption, cLogo, nLogoWidth, nLogoHeight, cRoute, lBur
 	::lBurguerLeft := lBurguerLeft 
 	::lSideBar 		:= lSideBar
 	::cSide 		:= lower(cSide)
+	::cClass 		:= cClass
 	
 	
 
@@ -136,7 +138,7 @@ METHOD Activate() CLASS TWebNav
 		
 		cHtml += ::cSideBarCode
 		
-		cHtml += '<div class="menu-items">'
+		cHtml += '<div class="menu-items ' + ::cClass + '">'
 		cHtml += '<ul>'
 		cHtml += ::DrawMenuItem()	
 		cHtml += '</ul>'

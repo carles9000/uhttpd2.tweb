@@ -210,9 +210,9 @@
 	[<oIcon> := ] TWebIcon():New( <oForm>, [<cId>], [<cSrc>], [<nGrid>], [<cAlign>], [<cClass>], [<cFont>], [<cLink>], [<cStyle>] )
 
 #xcommand NAV [<oNav>] [ ID <cId> ] [ TITLE <cTitle> ] [ LOGO <cLogo> [ WIDTH <nWidth>] ;
-	[ ROUTE <cRoute>] [HEIGHT <nHeight> ] ] [ <bl: BURGUERLEFT> ] [ <sd: SIDEBAR> [ SIDE <cSide> ] ] OF <oWeb> ;	
+	[ ROUTE <cRoute>] [HEIGHT <nHeight> ] ] [ <bl: BURGUERLEFT> ] [ <sd: SIDEBAR> [ SIDE <cSide> ] ]  [ CLASS <cClass>] OF <oWeb> ;	
 => ;
-	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>], [<.bl.>], [<.sd.>], [<cSide>] )
+	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>], [<.bl.>], [<.sd.>], [<cSide>], [<cClass>] )
 
 #xcommand MENU GROUP <cItem> OF <oNav>  => <oNav>:AddMenuItem( <cItem>, nil, nil, nil,  .f., .f., .t. )
 #xcommand MENU <cItem> [ ICON <cIcon> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, nil, [<cIcon>], nil, .t., .f., .f. )
