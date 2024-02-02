@@ -18,7 +18,7 @@ function MsgInfo( cMsg, fCallback, cTitle, cIcon ) {
 		size: 'medium',
 		backdrop: false,
 		onEscape: true, 
-		className: 'bounce fadeOut',
+		className: 'animated fadeIn',
 		buttons: {
 			confirm: {
 				label: '<i class="fa fa-check"></i> Accept',
@@ -61,7 +61,7 @@ function MsgError( cMsg, fCallback, cTitle, cIcon ) {
 		size: 'large',
 		backdrop: false,
 		onEscape: true, 		
-		className: 'rubberBand animated',
+		className: 'animated fadeIn',
 		buttons: {
 			cancel: {
 				label: '<i class="fa fa-check"></i> Accept',
@@ -104,7 +104,7 @@ function MsgGet( cInput, fCallback, cTitle, cIcon ) {
 		size: 'medium',
 		backdrop: false,
 		onEscape: true, 
-		className: 'bounce fadeOut',
+		className: 'animated fadeIn',
 		callback: function(result) {
 	
 			if ( typeof result == 'string' )
@@ -248,8 +248,12 @@ function MsgLoading( cMessage, cTitle, cIcon, lHeader ) {
 
 				//	No funciona bien. De momento cerraremos todas...
 				//_TWebMsgLoading.modal( 'hide' );
-				//_TWebMsgLoading = null
-				bootbox.hideAll();
+				//_TWebMsgLoading = null																
+				
+				_TWebMsgLoading.modal( 'hide' );
+				_TWebMsgLoading = null				
+				
+				//bootbox.hideAll();
 		
 			}
 			return false		
@@ -264,8 +268,9 @@ function MsgLoading( cMessage, cTitle, cIcon, lHeader ) {
 	lHeader		= (typeof lHeader ) == 'boolean' ? lHeader : false ;
 
 	_TWebMsgLoading = bootbox.dialog({
+			id: 'zzzz',
 			title: cTitle,
-			message: '<p>' + cIcon + '&nbsp;&nbsp;'  + cMessage + '</p>',
+			message: '<p id="msgloading">' + cIcon + '&nbsp;&nbsp;'  + cMessage + '</p>',
 			animate: false,							
 			//closeButton: false
 		}); 

@@ -13,7 +13,8 @@ class UTabulator {
 
 	id = null 
 	table = null
-	cargo = null 			
+	cargo = null 	
+	init = null
 	
 	constructor( id ) {  // Constructor
 		this.id = id;
@@ -49,6 +50,16 @@ class UTabulator {
 			});		
 		
 			table.on("tableBuilt", function(){
+			
+				if ( typeof init == 'string' ) {
+				
+					var fn =  window[ init ]			
+			
+					if ( typeof fn == "function") {					
+						var u = fn.apply(null, [] );						
+					}
+				}
+				
 				//console.log( 'tableBuilt!!!' )
 				//lReady = true 
 				//console.log( 'tableBuilt2!!!', lReady )
@@ -130,7 +141,7 @@ class UTabulator {
 					} else {
 					
 						var fn =  window[ events[i][ 'function' ] ]
-						
+				
 						if (typeof fn === "function") {															
 							table.on( events[i][ 'name' ], fn )												
 						}
@@ -279,8 +290,7 @@ class UTabulator {
 				this.table.print( value.par1, value.par2);														
 				break;
 				
-			case 'download':	
-			
+			case 'download':				
 				this.table.download( value.format, value.file );														
 				break;
 							
