@@ -149,6 +149,28 @@
 	OF <oForm> ;
 => ;
 	[ <oBtn> := ] TWebButtonFile():New( <oForm>, [<cId>], <cLabel>, <cName>, <cAction>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ro.>], [<.sb.>], [<cClass>], [<cFont>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.mu.>] )	
+
+#xcommand DEFINE BUTTON GROUP OF <o> => <o>:Html( '<div class="btn-group ">' )
+
+#xcommand BUTTON GROUP [<oBtn>] [ ID <cId> ] [ LABEL <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
+    [ GRID <nGrid> ] [ ALIGN <cAlign> ]  ;
+	[ ICON <cIcon> ] [ <ds: DISABLED> ] [ <sb: SUBMIT> ] [ LINK <cLink> ] ;
+	[ CLASS <cClass> ] [ FONT <cFont> ] ;
+	[ UPLOAD <cId_Btn_Files> ] ;
+	[ WIDTH <cWidth> ] ;
+	[ CONFIRM <cConfirm> ] ;
+	[ STYLE <cStyle> ] [ PROP <hProp> ];
+	[ <hi: HIDE, HIDDEN> ];
+	[ PBS <cPBS> ];
+	OF <oForm> ;
+=> ;
+	[ <oBtn> := ] TWebButton():New( <oForm>, [<cId>], <cLabel>, <cAction>, <cName>, <cValue>,    0  , <cAlign>, <cIcon>, [<.ds.>], [<.sb.>], [<cLink>], [<cClass>], [<cFont>], [<cId_Btn_Files>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.hi.>], [<cPBS>] )
+	
+//	[ <oBtn> := ] TWebButton():New( <oForm>, [<cId>], <cLabel>, <cAction>,[<cName>],<cValue>, <nGrid>,<cAlign>, <cIcon>, [<.ds.>], [<.sb.>], [<cLink>], [<cClass>], [<cFont>], [<cId_Btn_Files>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.hi.>], [<cPBS>] )	
+
+
+#xcommand ENDGROUP OF <o> => <o>:Html( '</div>' )
+
 	
 	
 #xcommand IMAGE [<oImg>] [ ID <cId> ] [ FILE <cFile> ] [ BIGFILE <cBigFile> ] [ ALIGN <cAlign> ] ;
@@ -160,9 +182,9 @@
 	
 #xcommand SWITCH [<oSwitch>] [ ID <cId> ] [ <lValue: ON> ] [ VALUE <lValue> ] [ LABEL <cLabel> ] ;
 	[GRID <nGrid>] [ <act:ACTION,ONCHANGE> <cAction> ];
-	[ <ro: READONLY, DISABLED> ] [ <hi: HIDE, HIDDEN> ] OF <oForm> ;
+	[ <ro: READONLY, DISABLED> ] [ <hi: HIDE, HIDDEN> ] [ CLASS <cClass> ] OF <oForm> ;
 => ;
-	[ <oSwitch> := ] TWebSwitch():New( <oForm>, [<cId>], [<lValue>], [<cLabel>], [<nGrid>], [<cAction>], [<.ro.>], [<.hi.>] ) 	
+	[ <oSwitch> := ] TWebSwitch():New( <oForm>, [<cId>], [<lValue>], [<cLabel>], [<nGrid>], [<cAction>], [<.ro.>], [<.hi.>], [<cClass>] ) 	
 
 #xcommand RADIO [<oRadio>] [ ID <cId> ] [ LABEL <cLabel> ] [ <chk: VALUE, CHECKED> <uValue> ] ;
 		[ <prm: PROMPT, PROMPTS, ITEMS> <cPrompt,...> ] ;

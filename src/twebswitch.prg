@@ -8,7 +8,7 @@ CLASS TWebSwitch FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction, lReadOnly, lHidden ) CLASS TWebSwitch
+METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction, lReadOnly, lHidden, cClass ) CLASS TWebSwitch
 
 	DEFAULT cId TO ''
 	DEFAULT lValue TO .F.
@@ -17,6 +17,7 @@ METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction, lReadOnly, lHidden ) C
 	DEFAULT cAction TO ''
 	DEFAULT lReadOnly TO .F.
 	DEFAULT lHidden TO .F.
+	DEFAULT cClass TO ''
 	
 	::oParent		:= oParent
 	::cId			:= cId
@@ -26,6 +27,7 @@ METHOD New( oParent, cId, lValue, cLabel, nGrid, cAction, lReadOnly, lHidden ) C
 	::cAction		:= cAction
 	::lReadOnly		:= lReadOnly
 	::lHidden		:= lHidden
+	::cClass		:= cClass
 
 	IF Valtype( oParent ) == 'O'
 	
@@ -53,7 +55,14 @@ METHOD Activate() CLASS TWebSwitch
 		cIdPrefix :=  ''
 	endif
 
-	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + ' custom-control custom-switch tweb_switch' + IF( ::oParent:lDessign, ' tweb_dessign', '')  + '" ' 
+	//cHtml := '<div class="col-' + ltrim(str(::nGrid)) + ' custom-control custom-switch tweb_switch' + IF( ::oParent:lDessign, ' tweb_dessign', '')  + '" ' 
+	cHtml := '<div class="col-' + ltrim(str(::nGrid)) + ' custom-control custom-switch tweb_switch' + IF( ::oParent:lDessign, ' tweb_dessign', '') 
+	
+	if !empty( ::cClass )
+		cHtml += ' ' + ::cClass + ' ' 
+	endif
+
+	cHtml += '" ' 
 	
 	IF ::oParent:lDessign
 		cSt += 'border:1px solid blue;'

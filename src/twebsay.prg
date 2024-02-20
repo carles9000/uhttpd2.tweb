@@ -10,7 +10,7 @@ CLASS TWebSay FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, cCaption, nGrid, cAlign, cClass, cFont, cLink, cStyle ) CLASS TWebSay
+METHOD New( oParent, cId, cCaption, nGrid, cAlign, cClass, cFont, cLink, cStyle, cAction ) CLASS TWebSay
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT cCaption TO ''
@@ -20,6 +20,7 @@ METHOD New( oParent, cId, cCaption, nGrid, cAlign, cClass, cFont, cLink, cStyle 
 	DEFAULT cFont TO ''
 	DEFAULT cLink TO ''
 	DEFAULT cStyle TO ''
+	DEFAULT cAction TO ''
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -30,6 +31,7 @@ METHOD New( oParent, cId, cCaption, nGrid, cAlign, cClass, cFont, cLink, cStyle 
 	::cFont 		:= cFont
 	::cLink 		:= cLink
 	::cStyle		:= cStyle
+	::cAction		:= cAction
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )	
@@ -92,14 +94,24 @@ METHOD Activate() CLASS TWebSay
 	
 	if !empty( ::cLink )
 		cHtml += '<a href="' + ::cLink + '">'
+		
 	endif
 
 	
 	cHtml += '<span id="' + cIdPrefix + ::cId + '" '
 	
+	
 	if !empty( ::cStyle )	
 		cHtml += ' style="' + ::cStyle + '" '
 	endif	
+	
+	if !empty( ::cAction )		
+		if AT( '(', ::cAction ) >  0 		//	Exist function ?
+			cHtml += 'onclick="' + ::cAction + '" '				
+		else
+			cHtml += ' data-onclick="' + ::cAction + '" '					
+		endif
+	endif 
 	
 	cHtml += ' data-live '
 	

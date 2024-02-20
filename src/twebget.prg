@@ -131,7 +131,13 @@ METHOD Activate() CLASS TWebGet
 	//cHtml := '<div class="col-' + ltrim(str(::nGrid)) 
 	cHtml := '<div class="col-' + cGrid
 	
-	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '') 		
+	cHtml += IF( ::oParent:lDessign, ' tweb_dessign', '') 	
+/*
+	if !empty( ::cClass )
+	    cHtml += ' ' + ::cClass
+	endif
+*/
+	
 	cHtml += '" '
 	
 	IF  ::oParent:lDessign
@@ -187,7 +193,8 @@ METHOD Activate() CLASS TWebGet
 	cHtml += 'placeholder="' + ::cPlaceHolder + '" ' 
 	
 	IF ::lReadOnly
-		cHtml += ' readonly '
+		//cHtml += ' readonly '
+		cHtml += ' disabled '
 	ENDIF
 	
 	IF ::lRequired

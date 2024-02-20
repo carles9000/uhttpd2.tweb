@@ -167,6 +167,13 @@ METHOD Activate() CLASS TWebNav
 
 		cHtml += '</div>'
 	ENDIF
+	
+	cHtml += '<script>'
+	cHtml += '$( document ).ready(function() {'	
+	cHtml += ' _SidebarInit();'
+	cHtml += '}) '
+	cHtml += '</script>'	
+	
 
 RETU cHtml
 

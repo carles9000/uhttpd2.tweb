@@ -61,7 +61,8 @@ including versions of Lorem Ipsum.
 				//SEPARATOR o LABEL 'Datos de Salida'
 
 				RADIO    oRadio  ID 'status' PROMPT 'Soltero', 'Casado' VALUES  'S', 'C'  GRID 6  INLINE ONCHANGE 'status' OF o
-				CHECKBOX oCheck  ID 'active' LABEL 'Is Active ?' GRID 3 ON ACTION 'active' OF o
+				//CHECKBOX oCheck  ID 'active' LABEL 'Is Active ?' GRID 3 ON ACTION 'active' OF o				
+				CHECKBOX oCheck  ID 'active' LABEL 'Is Active ?' GRID 3 ACTION 'active' OF o
 				SWITCH ID 'power' VALUE .F. LABEL 'Power' ONCHANGE 'power' GRID 3 OF o
 			ENDROW o
 			

@@ -495,3 +495,29 @@ var TWebGetAutocomplete = function( cId, cSource, bSelect, oConfig, oParameters 
 }
 
 //	---------------------------------------------------------------------------- //
+
+//	Init Sidebar click out...
+
+	var _sbopened = false
+	
+	function _SidebarInit() {
+	
+		//console.log( 'Init sidebar...')
+	
+		$(".sidebar").on("sidebar:closed", function () { _sbopened = false });	
+		$(".sidebar").on("sidebar:opened", function () { _sbopened = true });					
+		
+		$(document).mouseup(function(e){ 
+			var _sb = $(".sidebar")
+		
+			if (!_sb.is(e.target) && _sb.has(e.target).length === 0) {						
+				
+				if ( _sbopened ){							
+					_sb.trigger("sidebar:close");
+				}					
+			}					
+		});															
+	}
+
+
+//	---------------------------------------------------------------------------- //
