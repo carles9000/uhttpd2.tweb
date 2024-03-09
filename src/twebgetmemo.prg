@@ -60,10 +60,15 @@ METHOD Activate() CLASS TWebGetMemo
 	LOCAL cSize := ''
 	local cIdPrefix
 	local cSt := ''
+	local cSizeLabel 
 	
 	DO CASE
-		CASE upper(::oParent:cSizing) == 'SM' ; cSize := 'form-control-sm'
-		CASE upper(::oParent:cSizing) == 'LG' ; cSize := 'form-control-lg'
+		CASE upper(::oParent:cSizing) == 'SM' 
+			cSize 		:= 'form-control-sm'
+			cSizeLabel 	:= 'col-form-label-sm'
+		CASE upper(::oParent:cSizing) == 'LG' 
+			cSize 		:= 'form-control-lg'
+			cSizeLabel 	:= 'col-form-label-lg'
 	ENDCASE	
 
 	if !empty( ::oParent:cId_Dialog )
@@ -91,7 +96,7 @@ METHOD Activate() CLASS TWebGetMemo
 	
 	IF !empty( ::cLabel )
 	
-		cHtml += '<label for="' + cIdPrefix + ::cId + '">' + ::cLabel + '</label>'
+		cHtml += '<label class="' + cSizeLabel + '" for="' + cIdPrefix + ::cId + '">' + ::cLabel + '</label>'
 	
 	ENDIF	
 	

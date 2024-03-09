@@ -1,26 +1,22 @@
+09/03/2024 Vrs. 1.17
+07/03/2024 tweb.js -> Msgxxx() return object bootbox
+06/03/2024 tweb.lib -> label get memo
+05/03/2024 sidebar -> styles.css 
+03/03/2024 tweb.ch BUTTON <prm: PROMPT,LABEL>
+24/02/2024 tweb.ch -> SELECT -> WIDTH
+24/02/2024 tweb.lib -> SELECT -> WIDTH
 19/02/2024 tweb.lib -> GET DISABLE/READONLY modify disabled attribute
 19/02/2024 tweb.js  -> NAV MENU -> Click out close menu
 19/02/2024 tweb.lib -> NAV MENU -> Click out close menu
 18/02/2024 tweb.lib -> Add CLASS to switch 
 18/02/2024 tweb.ch  -> Add CLASS to switch 
 11/02/2024 tweb.ch ->  BUTTON GROUP
-
-18/01/2024
-	* Nav menu, add CLASS clausule
-
-11/01/2024
-	* minor change in Label select
-
-15/12/2023
-	* Example Tabulator to export data. See \browser\brw-13
-	  (pdf is ok, thanks Anxo)
-
-10/12/2023
-	* Great performance. Now you can use friendly urls. Very important for webservices
-	  You can test \sample.app\webservice\urlfriendly\
-
-06/12/2023 
-	* Updated libs httpd2 Vrs. 1.10
+18/01/2024 Nav menu, add CLASS clausule
+11/01/2024 minor change in Label select
+15/12/2023 Example Tabulator to export data. See \browser\brw-13	  
+10/12/2023 Great performance. Now you can use friendly urls. Very important for webservices
+		   You can test \sample.app\webservice\urlfriendly\
+06/12/2023 Updated libs httpd2 Vrs. 1.10
 
 21/11/2023 Vrs. 1.16
 	* Enchanced uhttpd2.tabulator.js new column event system. See sample.app\editable

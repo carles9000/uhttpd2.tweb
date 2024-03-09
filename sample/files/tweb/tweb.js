@@ -41,7 +41,9 @@ function MsgInfo( cMsg, fCallback, cTitle, cIcon ) {
 		dialog.bind('shown.bs.modal', function(){
 			//$('.modal-content').draggable()														
 		});								
-	})			
+	})	
+
+	return dialog
 }
 
 //----------------------------------------------------------------------------//
@@ -75,6 +77,8 @@ function MsgError( cMsg, fCallback, cTitle, cIcon ) {
 			}
 		}
 	});
+	
+	return dialog
 }
 
 //	---------------------------------------------------------------------------- //
@@ -111,6 +115,8 @@ function MsgGet( cInput, fCallback, cTitle, cIcon ) {
 				fCallback.apply(null, [result] );			
 		}					
 	});
+	
+	return dialog
 }
 
 //	---------------------------------------------------------------------------- //
@@ -149,6 +155,8 @@ function MsgYesNo( cMsg, fCallback, cTitle, cIcon ){
 			}
 		}
 	});	
+	
+	return dialog
 
 }
 

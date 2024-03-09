@@ -26,6 +26,8 @@
 
 #xcommand HTML <oForm> FILE <cFile> [ <prm: PARAMS, VARS> <cValues,...> ]  => <oForm>:Html( TWebHtmlInline( <cFile>, [<cValues>]  ) )
 #xcommand TEMPLATE <oForm> FILE <cFile> [ <prm: PARAMS, VARS> <cValues,...> ]  => <oForm>:Html( TWebHtmlInline( <cFile>, [<cValues>]  ) )
+//#xcommand JAVASCRIPT <o>  => #pragma __cstream|<o>:Html( '<script>' + %s + '</script>' )
+
 
 
 #xcommand DEFINE FORM <oForm> [ID <cId> ] [ACTION <cAction>] [METHOD <cMethod>] ;
@@ -124,7 +126,7 @@
 
 
 	
-#xcommand BUTTON [<oBtn>] [ ID <cId> ] [ LABEL <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
+#xcommand BUTTON [<oBtn>] [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
     [ GRID <nGrid> ] [ ALIGN <cAlign> ]  ;
 	[ ICON <cIcon> ] [ <ds: DISABLED> ] [ <sb: SUBMIT> ] [ LINK <cLink> ] ;
 	[ CLASS <cClass> ] [ FONT <cFont> ] ;
@@ -138,7 +140,7 @@
 => ;
 	[ <oBtn> := ] TWebButton():New( <oForm>, [<cId>], <cLabel>, <cAction>, <cName>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ds.>], [<.sb.>], [<cLink>], [<cClass>], [<cFont>], [<cId_Btn_Files>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.hi.>], [<cPBS>] )	
 	
-#xcommand BUTTON FILE [<oBtn>] [ ID <cId> ] [ LABEL <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
+#xcommand BUTTON FILE [<oBtn>] [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
     [ GRID <nGrid> ] [ ALIGN <cAlign> ]  ;
 	[ ICON <cIcon> ] [ <sb: SUBMIT> ] ;
 	[ CLASS <cClass> ] [ FONT <cFont> ] ;	
@@ -152,7 +154,7 @@
 
 #xcommand DEFINE BUTTON GROUP OF <o> => <o>:Html( '<div class="btn-group ">' )
 
-#xcommand BUTTON GROUP [<oBtn>] [ ID <cId> ] [ LABEL <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
+#xcommand BUTTON GROUP [<oBtn>] [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
     [ GRID <nGrid> ] [ ALIGN <cAlign> ]  ;
 	[ ICON <cIcon> ] [ <ds: DISABLED> ] [ <sb: SUBMIT> ] [ LINK <cLink> ] ;
 	[ CLASS <cClass> ] [ FONT <cFont> ] ;
@@ -222,10 +224,10 @@
 		[ GRID <nGrid> ] ;
 		[ ONCHANGE  <cAction> ] ;
 		[ CLASS <cClass> ] [ FONT <cFont> ]  [ GROUP <cGroup> ] [ STYLE <cStyle>] [ PROP <cProp> ] ;
-		[ <ro: READONLY, DISABLED> ] [ <hi: HIDE, HIDDEN> ];	
+		[ <ro: READONLY, DISABLED> ] [ <hi: HIDE, HIDDEN> ] [ WIDTH <nWidth> ];	
 		OF <oForm> ;
 => ;
-	[ <oSelect> := ] TWebSelect():New( <oForm>, [<cId>], [<uValue>], [\{<cPrompt>\}], [\{<cValue>\}], [<aKeyValue>], [<nGrid>], [<cAction>], [<cLabel>], [<cClass>], [<cFont>], [<cGroup>], [<cStyle>], [<cProp>], [<.ro.>], [<.hi.>] )
+	[ <oSelect> := ] TWebSelect():New( <oForm>, [<cId>], [<uValue>], [\{<cPrompt>\}], [\{<cValue>\}], [<aKeyValue>], [<nGrid>], [<cAction>], [<cLabel>], [<cClass>], [<cFont>], [<cGroup>], [<cStyle>], [<cProp>], [<.ro.>], [<.hi.>], [<nWidth>] )
 
 #xcommand ICON [<oIcon>] [ ID <cId> ] [ <prm: IMAGE,SRC> <cSrc> ] [ ALIGN <cAlign> ] ;
 	[GRID <nGrid>] [ CLASS <cClass> ] [ FONT <cFont> ] [ LINK <cLink> ] [ STYLE <cStyle>] OF <oForm> ;

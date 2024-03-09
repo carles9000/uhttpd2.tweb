@@ -39,6 +39,7 @@
     position: fixed;
     color: white;    
 	padding: 0;        
+	overflow:auto !important;
 }
 
 .sidebar ul {

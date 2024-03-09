@@ -6,6 +6,7 @@ CLASS TWebSelect FROM TWebControl
 	DATA aItems						INIT {}
 	DATA aValues					INIT {}
 	DATA lParKeyValue				INIT .F. 
+	DATA cWidth 
 
 	METHOD New() 					CONSTRUCTOR
 	METHOD Activate()
@@ -13,7 +14,7 @@ CLASS TWebSelect FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle, cProp, lReadOnly, lHidden ) CLASS TWebSelect
+METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cLabel, cClass, cFont, cGroup, cStyle, cProp, lReadOnly, lHidden, cWidth ) CLASS TWebSelect
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT aItems TO {}
@@ -30,6 +31,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	DEFAULT cProp TO ''	
 	DEFAULT lReadonly TO .F.
 	DEFAULT lHidden TO .F.
+	DEFAULT cWidth TO ''
 	
 
 	::oParent 		:= oParent	
@@ -47,6 +49,7 @@ METHOD New( oParent, cId, uValue, aItems, aValues, aKeyValue, nGrid, cAction, cL
 	::cProp 		:= cProp
 	::lReadOnly		:= lReadOnly
 	::lHidden 		:= lHidden
+	::cWidth 		:= cWidth 
 
 	
 	if valtype( aKeyValue ) == 'H' 
@@ -127,6 +130,11 @@ METHOD Activate() CLASS TWebSelect
 		cGrid := ::nGrid	
 	endif
 	
+	if !empty( ::cWidth )
+		cGrid := '0'
+		cSt += 'width:' + ::cWidth + ';'
+	endif
+	
 	cHtml := '<div class="col-' + cGrid + IF( ::oParent:lDessign, ' tweb_dessign', '') + '" ' + IF( ::oParent:lDessign, 'style="border:1px solid blue;"', '' ) 
 	
 	IF  ::oParent:lDessign
@@ -151,8 +159,7 @@ METHOD Activate() CLASS TWebSelect
 	
 	ENDIF	
 	
-	cHtml += '<div class="input-group">'	
-	
+	cHtml += '<div class="input-group">'		
 	
 	
 	cHtml += '<select data-control="tcombobox" '
