@@ -1,0 +1,66 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'TWeb' 			
+
+		Html oWeb
+			<head>
+			    <link rel="manifest" href="files/manifest.json">
+				<meta name="description" content="una app de pelis">
+			    <meta name="theme-color" content="#6200ee">
+			    <meta name="apple-mobile-web-app-title" content="Pelis">
+			    <meta name="apple-mobile-web-app-capable" content="yes">
+			    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+			    <link rel="apple-touch-icon" href="files/icons/icon-192x192.png">
+			</head>
+		EndText
+
+		DEFINE FORM o ID 'myform' API 'myapi' ON INIT 'hello' OF oWeb							
+
+		INIT FORM o
+
+			SAY VALUE '<h1>Welcome to TWeb !' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>Engine loaded, version {{ TWebVersion() }}<hr>' ALIGN 'center' GRID 12  OF o									
+			
+			BUTTON ID 'btn'  LABEL 'Click me!' ALIGN 'center' GRID 12 ACTION 'clickme' OF o
+
+			// BUTTON ID 'butInstall' LABEL 'Instalar' Class "btn-primary" ALIGN 'center' GRID 12 ACTION '' OF o
+			
+			HTML o
+			ENDTEXT
+
+			HTML o
+				<br>
+				<div style="text-align: center;">
+					<button type="button" class="btn-primary" id="butInstall" aria-label="Install" hidden>Instalar App</button>
+				</div>
+			ENDTEXT
+
+			ROWGROUP o
+				HTML o INLINE '<br><br><br><div id="myform-info"></div>' 						
+			ENDROW o
+			
+		ENDFORM o	
+	
+
+		HTML o 
+		    <script>
+
+		        if( 'serviceWorker' in navigator) {
+		            window.addEventListener('load', ()=> {
+		                navigator.serviceWorker.register('files/service-worker.js').then((reg)=>{
+		                    console.log("Service worker registered", reg );
+		                })
+		            })
+		        }
+
+		    </script>
+
+		    <script src="files/install.js"></script>
+
+		ENDTEXT
+	
+	INIT WEB oWeb RETURN 
+?>
