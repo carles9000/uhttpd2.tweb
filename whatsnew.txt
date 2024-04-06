@@ -1,3 +1,12 @@
+06/04/2024 Vrs. 1.18
+06/04/2024 Updated UT 1.13
+	* UGetTokenApiKey( cKey )   --> cToken 
+	* UGetTokenBearer()         --> cToken
+	* UGetTokenBasic()          --> aPair -> aPair[ 'user' ], aPair[ 'password' ]
+	* UJWT() class for management Json Web Token. Finally i ported from mercury
+	* UTokenData()
+	* Image message error embbeded
+
 09/03/2024 Vrs. 1.17
 07/03/2024 tweb.js -> Msgxxx() return object bootbox
 06/03/2024 tweb.lib -> label get memo
