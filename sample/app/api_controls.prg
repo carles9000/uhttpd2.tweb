@@ -20,6 +20,9 @@ function Api_Controls( oDom )
 		case oDom:GetProc() == 'dlg_autocomplete'	; DoDialog_Autocomplete( oDom )
 //		case oDom:GetProc() == 'autoproductos'  	; DoAutoProductos( oDom )
 		
+		case oDom:GetProc() == 'set_combo_hash'	; DoSet_Combo_Hash( oDom )
+		case oDom:GetProc() == 'set_combo_array'	; DoSet_Combo_Array( oDom )
+		
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
 	endcase
@@ -326,3 +329,31 @@ function DoDialog_Autocomplete( oDom )
 
 retu nil 
 
+
+// -------------------------------------------------- //
+
+function DoSet_Combo_Hash( oDom )
+
+	local h := {=>}
+	
+	h[ 'R' ] := 'Renault'
+	h[ 'T' ] := 'Toyota'
+	h[ 'H' ] := 'Honda'
+
+	oDom:Set( 'cars', h )
+
+retu nil 
+
+// -------------------------------------------------- //
+
+function DoSet_Combo_Array( oDom )
+
+	local a := {}
+	
+	Aadd( a, 'Renault' )
+	Aadd( a, 'Toyota' )
+	Aadd( a, 'Honda' )
+
+	oDom:Set( 'cars', a )
+
+retu nil 
