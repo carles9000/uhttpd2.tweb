@@ -1,0 +1,96 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+
+    LOCAL o, oWeb 
+	LOCAL cSideBar	:= ''
+	
+	DEFINE WEB oWeb TITLE 'Menu'	
+	
+		NAV oNav ID 'nav' TITLE '&nbsp;Menus' LOGO 'files/images/mini-mercury.png' ;
+			ROUTE 'menu' WIDTH 30 HEIGHT 30 OF oWeb	
+			
+			HTML oWeb 
+				<style>
+					.mybadge {
+						border-radius: 30px;
+						padding-left: 5px;
+						padding-right: 5px;
+						font-size: 9px;
+						margin-top: -3px;
+						position: absolute;
+						margin-left: -10px;
+						font-weight: bold;	
+					}
+					.mybadge.red { color:white; background-color:red;}
+					.mybadge.blue{ color:white; background-color:#3a70ca;}
+					.mybadge.green{ color:white; background-color:#66ac66;}
+					.mybadge.yellow{ color:white; background-color:#e4a11b;}						
+				</style>
+			ENDTEXT
+			
+
+		//	This is a custom option for navbar.
+			
+			HTML NAVBAR OF oNav 
+			  <div class="collapse navbar-collapse " id="navbarNavDropdown">
+				<ul class="navbar-nav  ml-auto--">	<!-- ml-auto  ho posa a ladreta! -->
+				  
+				  <li class="nav-item text-center mx-2 mx-lg-1 active">
+					<a class="nav-link" href="menu">
+					<div>
+						<i class="fas fa-home fa-lg mb-1"></i>						
+					</div>
+					Home
+					</a>
+				  </li>		  
+				  
+				  <li class="nav-item text-center mx-2 mx-lg-1">
+					<a class="nav-link" href="menu">
+					<div>
+						<i class="far fa-envelope fa-lg mb-1"></i>			
+						<span class="mybadge red">11</span>	
+					</div>
+					Link
+					</a>
+				  </li>	    
+				  
+				  <li class="nav-item text-center mx-2 mx-lg-1">
+					<a class="nav-link" href="menu">
+					<div>
+						<i class="fas fa-bell fa-lg mb-1"></i>			
+						<span class="mybadge blue">69</span>	
+					</div>
+					Messages
+					</a>
+				  </li>
+
+				  <li class="nav-item text-center mx-2 mx-lg-1">
+					<a class="nav-link" href="menu">
+					<div>
+						<i class="fas fa-globe-americas fa-lg mb-1"></i>		
+						<span class="mybadge green">12</span>	
+					</div>
+					News
+					</a>
+				  </li>	  
+			  
+				</ul>
+			  </div>			
+			
+			
+
+			ENDTEXT
+		
+
+		
+		DEFINE FORM o OF oWeb	
+		
+		INIT FORM o
+		
+			HTML o INLINE '<h3>Menu Sidebar & NavBar (Full example)</h3><hr>'
+			
+		ENDFORM o 				
+		
+	INIT WEB oWeb RETURN 
+?>

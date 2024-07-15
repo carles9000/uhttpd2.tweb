@@ -1,3 +1,12 @@
+15/07/2024 Great changes to the menu system
+		   * SIDEBAR Clause Obsolete. For compatibility reasons it does not affect whether it is declared
+		   * BURGUERLEFT Clause Obsolete. For compatibility reasons it does not affect whether it is declared
+		   * See menu structure in examples		   
+		   * IMPORTANT !!! --> Update structure menu
+
+01/07/2024 * IMAGE WIDTH can bew number or character: 300 or '80%'
+
+28/05/2024 * Select. Label for correctly
 07/04/2024 * Add samples/examples/combo_set.prg  -> set data to combo
 
 06/04/2024 Vrs. 1.18

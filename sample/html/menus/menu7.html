@@ -1,0 +1,154 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+
+    LOCAL o, oWeb 
+	LOCAL cSideBar	:= ''
+	
+	DEFINE WEB oWeb TITLE 'Menu'
+
+		HTML oWeb 
+		
+			<style>
+				.myitem {
+					margin-top: 10px;
+					margin-bottom: 20px;
+					border: 2px solid #919191;
+					border-radius: 5px;
+					padding: 5px;
+					box-shadow: 2px 2px 2px black;			
+				}
+				
+				.myitem_text {
+					word-wrap: break-word;
+					font-style: italic;
+					color: cadetblue;
+				}
+				
+				.user {
+					border-radius: 50%;
+					border: 2px solid white;
+					width: 40px;
+					height: 40px;
+					margin-left: 10px;	
+					cursor: pointer;					
+				}
+			</style>
+		
+		ENDTEXT 	
+	
+		NAV oNav ID 'nav' TITLE '&nbsp;Menus' LOGO 'files/images/mini-mercury.png' ;
+			ROUTE 'menu' WIDTH 30 HEIGHT 30 OF oWeb	
+			
+		//	Sidebar
+
+			MENU GROUP 'General' OF oNav
+			
+				MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE 'menu' 		OF oNav
+				MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' ACTIVE	OF oNav 
+				MENU 'Tools' ICON '<i class="fa fa-times-circle" aria-hidden="true"></i>' OF oNav
+				
+					MENUITEM HEADER 'Account Settings' OF oNav
+					MENUITEM 'My Submenu'  ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav 							
+				
+					MENUITEM 'My Submenu2' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav
+					MENUITEM SEPARATOR OF oNav
+					MENUITEM 'My Submenu3' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav
+				
+				
+					MENUITEM HEADER 'Configuration' OF oNav
+					MENUITEM 'My Config'  ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav 							
+
+				ENDMENU OF oNav			
+			ENDMENU GROUP OF oNav		
+
+			
+			MENU GROUP 'General 2' OF oNav
+			
+		
+				MENU 'Tools 2' ICON '<i class="fa fa-times-circle" aria-hidden="true"></i>' OF oNav
+					MENUITEM 'My Submenu'  ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav 									
+				ENDMENU OF oNav					
+			
+			
+			ENDMENU GROUP OF oNav		
+			
+			HTML MENUITEM OF oNav
+				<div class="myitem">
+					<img src="files/images/mini-mercury.png" width="20" height="20">					
+					<span style="vertical-align: middle;" >Options</span>			
+					<div class="myitem_text">
+						This div contains a very long word: this is very longword. The long word will break and wrap to the next line.
+					</div>
+					<br>
+					<i class="fas fa-cog fa-spin"></i>
+					<span>Enjoy it...</span>
+				</div>				
+			ENDTEXT
+
+
+			MENUITEM SEPARATOR OF oNav
+			MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' 	OF oNav 
+			MENUITEM SEPARATOR OF oNav			
+	
+			NAVBAR NAVITEM PROMPT 'Home'   OF oNav
+			NAVBAR NAVITEM PROMPT 'Google' LINK 'https://google.es' ACTIVE OF oNav
+			
+			NAVBAR NAVITEM PROMPT 'SubMenus...' MENU OF oNav
+			
+				NAVBAR MENUITEM PROMPT 'SubMenu 1' OF oNav
+				NAVBAR MENUITEM PROMPT 'SubMenu 2' OF oNav
+				
+				NAVBAR MENUITEM PROMPT 'SubMenu 3' SUBMENU OF oNav
+				
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.1' OF oNav
+					
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.2' SUBMENU OF oNav
+						NAVBAR MENUITEM PROMPT 'SubMenu 3.2.1' OF oNav
+						NAVBAR MENUITEM SEPARATOR OF oNav
+						NAVBAR MENUITEM PROMPT 'SubMenu 3.2.2' OF oNav												
+					NAVBAR SUBMENU CLOSE OF oNav
+							
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.3' OF oNav
+					NAVBAR MENUITEM SEPARATOR OF oNav
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.4' OF oNav
+				
+				NAVBAR SUBMENU CLOSE OF oNav		
+			
+			NAVBAR MENU CLOSE OF oNav
+			
+			NAVBAR NAVITEM PROMPT 'Otro Submenu' MENU OF oNav
+			
+				NAVBAR MENUITEM PROMPT 'SubMenu A' OF oNav
+				NAVBAR MENUITEM PROMPT 'SubMenu B' OF oNav
+				
+				NAVBAR MENUITEM PROMPT 'SubMenu C' SUBMENU OF oNav
+				
+					NAVBAR MENUITEM PROMPT 'SubMenu C.1' OF oNav
+					NAVBAR MENUITEM PROMPT 'SubMenu C.2' OF oNav
+					NAVBAR MENUITEM SEPARATOR OF oNav
+					NAVBAR MENUITEM PROMPT 'SubMenu C.3' OF oNav
+				
+				NAVBAR SUBMENU CLOSE OF oNav		
+			
+			NAVBAR MENU CLOSE OF oNav	
+			
+		//	This is a custom option for navbar.
+			
+			HTML NAVBAR OF oNav 
+				<div style="position: absolute;right: 10px;">
+					<span id="nav_title2" style="color:white;vertical-align: middle;" >Charly</span>
+					<img src="files/images/cara1.png" class="user" onclick="alert( 'User profile...' )" >
+				</div>
+			ENDTEXT
+		
+		
+		DEFINE FORM o OF oWeb	
+		INIT FORM o
+		
+			HTML o INLINE '<h3>Menu Sidebar & NavBar (Full example)</h3><hr>'
+			
+		ENDFORM o 				
+		
+	INIT WEB oWeb RETURN 
+?>

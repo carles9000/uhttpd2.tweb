@@ -134,7 +134,7 @@ METHOD Activate() CLASS TWebBrowse
 	cHtml += '<script>'
 	cHtml += '$( document ).ready(function() {'
 	
-	cHtml += ' console.log( ' + hb_jsonEncode( ::aCols, .T. ) + '); '		
+	//cHtml += ' console.log( ' + hb_jsonEncode( ::aCols, .T. ) + '); '		
 	
 	cHtml += ' var aCols =  ' + hb_jsonEncode( ::aCols, .T. ) + "; "		
 	cHtml += ' var Options =  ' + hb_jsonEncode( ::hOptions, .T. ) + "; "	

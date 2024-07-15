@@ -124,9 +124,17 @@ METHOD Activate() CLASS TWebImage
 	
 	cHtml += '<img id="' + cIdPrefix + ::cId + '" src="' + ::cSrc + '" class="rounded " '
 	
-	if ::nWidth > 0
-		//cHtml += ' style="width:' + ltrim(str(::nWidth)) + 'px; '
-		::cStyle += ';width:' + ltrim(str(::nWidth)) + 'px; '
+	if !empty( ::nWidth )
+	
+		if valtype( ::nWidth ) == 'N'
+			if ::nWidth > 0
+				//cHtml += ' style="width:' + ltrim(str(::nWidth)) + 'px; '
+				::cStyle += ';width:' + ltrim(str(::nWidth)) + 'px; '
+			endif
+		else
+			::cStyle += ';width:' + ::nWidth + '; '
+		endif
+		
 	endif
 	
 	IF ::lHidden

@@ -1,37 +1,49 @@
 <?prg
 #include "lib/tweb/tweb.ch" 
 
+
     LOCAL o, oWeb 
 	LOCAL cSideBar	:= ''
 	
 	DEFINE WEB oWeb TITLE 'Menu'
-	
+
 		NAV oNav ID 'nav' TITLE '&nbsp;Menus' LOGO 'files/images/mini-mercury.png' ;
-			ROUTE 'menu' WIDTH 30 HEIGHT 30 sidebar  OF oWeb		//	BURGUERLEFT ,  SIDEBAR [side 'right' ]
+			ROUTE 'menu' WIDTH 30 HEIGHT 30  OF oWeb	
 
 			MENU GROUP 'General' OF oNav
 			
 				MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE 'menu' 		OF oNav
 				MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' ACTIVE	OF oNav 
+				MENU 'Tools' ICON '<i class="fa fa-times-circle" aria-hidden="true"></i>' OF oNav
 				
-			ENDMENU OF oNav					
-			
-			MENU 'Tools' ICON '<i class="fa fa-times-circle" aria-hidden="true"></i>' OF oNav
-				MENUITEM 'My Submenu'  ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav 							
-				MENUITEM 'My Submenu2' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav
-				MENUITEM SEPARATOR OF oNav
-				MENUITEM 'My Submenu3' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav
-			ENDMENU OF oNav			
-
-
-				MENUITEM SEPARATOR OF oNav
-				MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' 	OF oNav 
+					MENUITEM HEADER 'Account Settings' OF oNav
+					MENUITEM 'My Submenu'  ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav 							
 				
-					
+					MENUITEM 'My Submenu2' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav
+					MENUITEM SEPARATOR OF oNav
+					MENUITEM 'My Submenu3' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav
+				
+				
+					MENUITEM HEADER 'Configuration' OF oNav
+					MENUITEM 'My Config'  ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav 																									
+
+				ENDMENU OF oNav			
+			ENDMENU GROUP OF oNav		
+
 			
-		DEFINE FORM o OF oWeb	
+			MENU GROUP 'General 2' OF oNav			
 		
-			HTML o INLINE '<h3>Menu Sidebar (basic)</h3><hr>'
+				MENU 'Tools 2' ICON '<i class="fa fa-times-circle" aria-hidden="true"></i>' OF oNav
+					MENUITEM 'My Submenu'  ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'menu' OF oNav 									
+				ENDMENU OF oNav								
+			
+			ENDMENU GROUP OF oNav		
+
+		DEFINE FORM o OF oWeb		
+		
+		INIT FORM o
+		
+			HTML o INLINE '<h3>Menu Sidebar (Submenu)</h3><hr>'
 			
 		ENDFORM o 				
 		

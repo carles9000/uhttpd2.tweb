@@ -4,16 +4,21 @@
     LOCAL o, oWeb 	
 	
 	DEFINE WEB oWeb TITLE 'Menus'
-	
+
 		NAV oNav ID 'nav' TITLE '&nbsp;Menus' LOGO 'files/images/mini-mercury.png' ;
-			ROUTE 'menu' WIDTH 30 HEIGHT 30 OF oWeb		//	BURGUERLEFT
+			ROUTE 'menu' WIDTH 30 HEIGHT  30  OF oWeb		
 
 			MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE 'menu' 	OF oNav
 			MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' 	OF oNav
-	
-		DEFINE FORM o OF oWeb				
+
 			
-			HTML o INLINE '<h3>Menu navbar (basic)</h3><hr>'	
+		DEFINE FORM o ID 'myform' API 'myapi' OF oWeb
+
+		INIT FORM o
+			
+			HTML o INLINE '<h3>Menu navbar (basic)</h3><hr>'
+
+		ENDFORM o
 	
 	INIT WEB oWeb RETURN 
 ?>

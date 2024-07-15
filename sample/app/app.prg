@@ -122,9 +122,15 @@ function WebServer()
 
 	//	Menus			
 
+		oServer:Route( 'menu_help'	, 'menus/menu_help.html' ) 	
 		oServer:Route( 'menu1'		, 'menus/menu1.html' ) 	
 		oServer:Route( 'menu2'		, 'menus/menu2.html' ) 	
 		oServer:Route( 'menu3'		, 'menus/menu3.html' ) 	
+		oServer:Route( 'menu4'		, 'menus/menu4.html' ) 	
+		oServer:Route( 'menu5'		, 'menus/menu5.html' ) 	
+		oServer:Route( 'menu6'		, 'menus/menu6.html' ) 	
+		oServer:Route( 'menu7'		, 'menus/menu7.html' ) 	
+		oServer:Route( 'menu8'		, 'menus/menu8.html' ) 	
 
 	//	Controls
 	

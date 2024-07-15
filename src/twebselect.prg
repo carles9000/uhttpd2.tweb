@@ -155,7 +155,7 @@ METHOD Activate() CLASS TWebSelect
 	IF !empty( ::cLabel )
 	
 		//cHtml += '<label for="' + ::cId + '">' + ::cLabel + '</label>'
-		cHtml += '<label class="' + cSizeLabel + ' ' + ::cFontLabel + ' "for="' + ::cId + '">' + ::cLabel + '</label>'
+		cHtml += '<label class="' + cSizeLabel + ' ' + ::cFontLabel + ' "for="' + cIdPrefix + ::cId + '">' + ::cLabel + '</label>'
 	
 	ENDIF	
 	

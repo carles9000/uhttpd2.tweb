@@ -1,0 +1,64 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+
+    LOCAL o, oWeb 
+	LOCAL cSideBar	:= ''
+	
+	DEFINE WEB oWeb TITLE 'Menu'	
+	
+		NAV oNav ID 'nav' TITLE '&nbsp;Menus' LOGO 'files/images/mini-mercury.png' ;
+			ROUTE 'menu' WIDTH 30 HEIGHT 30 OF oWeb		//	BURGUERLEFT ,  SIDEBAR [side 'right' ]
+
+		NAVBAR NAVITEM PROMPT 'Home'   OF oNav
+		NAVBAR NAVITEM PROMPT 'Google' LINK 'https://google.es' ACTIVE OF oNav
+		
+		NAVBAR NAVITEM PROMPT 'SubMenus...' MENU OF oNav
+		
+			NAVBAR MENUITEM PROMPT 'SubMenu 1' LINK 'menu' OF oNav
+			NAVBAR MENUITEM PROMPT 'SubMenu 2' ACTION 'alert(123)' OF oNav
+			
+			NAVBAR MENUITEM PROMPT 'SubMenu 3' SUBMENU OF oNav
+			
+				NAVBAR MENUITEM PROMPT 'SubMenu 3.1' OF oNav
+				
+				NAVBAR MENUITEM PROMPT 'SubMenu 3.2' SUBMENU OF oNav
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.2.1' OF oNav
+					NAVBAR MENUITEM SEPARATOR OF oNav
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.2.2' OF oNav												
+				NAVBAR SUBMENU CLOSE OF oNav
+						
+				NAVBAR MENUITEM PROMPT 'SubMenu 3.3' OF oNav
+				NAVBAR MENUITEM SEPARATOR OF oNav
+				NAVBAR MENUITEM PROMPT 'SubMenu 3.4' OF oNav
+			
+			NAVBAR SUBMENU CLOSE OF oNav		
+		
+		NAVBAR MENU CLOSE OF oNav
+		
+		NAVBAR NAVITEM PROMPT 'Otro Submenu' MENU OF oNav
+		
+			NAVBAR MENUITEM PROMPT 'SubMenu A' OF oNav
+			NAVBAR MENUITEM PROMPT 'SubMenu B' OF oNav
+			
+			NAVBAR MENUITEM PROMPT 'SubMenu C' SUBMENU OF oNav
+			
+				NAVBAR MENUITEM PROMPT 'SubMenu C.1' OF oNav
+				NAVBAR MENUITEM PROMPT 'SubMenu C.2' OF oNav
+				NAVBAR MENUITEM SEPARATOR OF oNav
+				NAVBAR MENUITEM PROMPT 'SubMenu C.3' OF oNav
+			
+			NAVBAR SUBMENU CLOSE OF oNav		
+		
+		NAVBAR MENU CLOSE OF oNav					
+		
+		DEFINE FORM o OF oWeb	
+		
+		INIT FORM o
+		
+			HTML o INLINE '<h3>Menu NavBar (basic)</h3><hr>'
+			
+		ENDFORM o 				
+		
+	INIT WEB oWeb RETURN 
+?>

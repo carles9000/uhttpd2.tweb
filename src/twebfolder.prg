@@ -110,7 +110,7 @@ METHOD Activate() CLASS TWebFolder
 		
 			FOR nI := 1 To len( ::aPrompts )
 			
-				 cHtml += '<li class="nav-item ' 
+				 cHtml += '<li class="tfolder-nav-item ' 
 								 
 				 if ::cInitTab == ::aTabs[nI] 
 				 	cHtml += ' active'				 

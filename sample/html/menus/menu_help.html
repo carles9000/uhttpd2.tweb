@@ -1,0 +1,88 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb 	
+	
+	DEFINE WEB oWeb TITLE 'Menus'
+
+		NAV oNav ID 'nav' TITLE '&nbsp;Menus' LOGO 'files/images/mini-mercury.png' ;
+			ROUTE 'menu' WIDTH 30 HEIGHT  30  OF oWeb		
+
+			MENUITEM 'Home' ICON '<i class="fa fa-home" aria-hidden="true"></i>' ROUTE 'menu' 	OF oNav
+			MENUITEM 'List' ICON '<i class="fa fa-list" aria-hidden="true"></i>' ROUTE 'brw' 	OF oNav
+
+			
+		DEFINE FORM o ID 'myform' API 'myapi' OF oWeb
+
+		INIT FORM o
+			
+			HTML o 
+				<h3>Menu Structure</h3><hr>
+				<pre>
+NAV oNav ID [id] TITLE [cTitle] LOGO [cFile] ROUTE [cRoute] WIDTH [nWidth] HEIGHT [nHeight] OF oWeb	
+	
+	<span style="font-weight: bold;">// Sidebar structure ----------------------------------</span>
+	
+	<span style="color:red">MENU GROUP [cName] OF oNav</span>
+	
+		MENUITEM [cName] ICON [cIcon] ROUTE [cRoute] OF oNav
+		MENUITEM [cName] ICON [cIcon] ROUTE [cRoute] [ACTIVE] OF oNav
+		...
+		
+		<span style="color:blue">MENU [cName] ICON [cIcon] OF oNav</span>
+		
+			MENUITEM HEADER [cTitle] OF oNav
+			MENUITEM [cName] ICON [cIcon] ROUTE [cRoute] OF oNav 							
+			MENUITEM [cName] ICON [cIcon] ROUTE [cRoute] OF oNav 							
+			...											
+			MENUITEM HEADER [cTitle] OF oNav
+			MENUITEM [cName] ICON [cIcon] ROUTE [cRoute] OF oNav 										
+
+		<span style="color:blue">ENDMENU OF oNav</span>
+	<span style="color:red">ENDMENU GROUP OF oNav</span>
+
+	<span style="color:#a86400;">HTML MENUITEM OF oNav</span>
+		Html code...		
+	<span style="color:#a86400;">\ENDTEXT</span>	
+			
+	MENUITEM SEPARATOR OF oNav
+	MENUITEM [cName] ICON [cIcon] ROUTE [cRoute] [ACTIVE] OF oNav		
+	...
+	
+	<span style="font-weight: bold;">// NavBar Structure -----------------------------------</span>
+	
+	NAVBAR NAVITEM PROMPT [cName] LINK [cRoute] OF oNav
+	NAVBAR NAVITEM PROMPT [cName] LINK [cRoute] OF oNav
+	...			
+	<span style="color:red">NAVBAR NAVITEM PROMPT [cName] MENU OF oNav</span>
+	
+		NAVBAR MENUITEM PROMPT [cName] LINK [cRoute] OF oNav
+		NAVBAR MENUITEM PROMPT [cName] LINK [cRoute] OF oNav
+		...
+		
+		<span style="color:blue">NAVBAR MENUITEM PROMPT [cName] SUBMENU OF oNav</span>
+		
+			NAVBAR MENUITEM PROMPT [cName] LINK [cRoute] OF oNav
+			NAVBAR MENUITEM PROMPT [cName] LINK [cRoute] OF oNav
+			...
+			
+			<span style="color:green">NAVBAR MENUITEM PROMPT [cName] SUBMENU OF oNav</span>
+				NAVBAR MENUITEM PROMPT [cName] LINK [cRoute] OF oNav									
+			<span style="color:green">NAVBAR SUBMENU CLOSE OF oNav</span>
+			
+		<span style="color:blue">NAVBAR SUBMENU CLOSE OF oNav</span>
+	
+	<span style="color:red">NAVBAR MENU CLOSE OF oNav</span>	
+	
+	//	This is a custom option for navbar
+	
+	<span style="color:#a86400;">HTML NAVBAR OF oNav</span> 
+		Html code...
+	<span style="color:#a86400;">\ENDTEXT<span>
+</pre>
+			ENDTEXT
+
+		ENDFORM o
+	
+	INIT WEB oWeb RETURN 
+?>

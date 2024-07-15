@@ -63,11 +63,12 @@ static function DoDlg1( oDom )
 	//	Todos los paràmetros los puedes encontrar aqui -> http://bootboxjs.com/examples.html 
 	//	-------------------------------------------------------------------------------------
 	
-	//o[ 'title' ] 		:= 'My Title...'	
+	//o[ 'title' ] 		:= 'My Title....'	
 	//o[ 'backdrop' ] 	:= .t.
 	//o[ 'onEscape' ] 	:= .f.
 	//o[ 'closeButton' ]  := .f.
 	//o[ 'className' ] 	:= 'bounceIn fadeOutRight'
+	o[ 'draggable' ] 	:= .f.
 	
 	oDom:SetDialog( 'xxx', cHtml, nil, o )
 	
