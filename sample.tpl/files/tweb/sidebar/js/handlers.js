@@ -11,7 +11,6 @@ $(document).ready(function () {
 
     // Click handlers
     $(".btnsidebar[data-action]").on("click", function () {
-	console.log( 'mynavbar' )
         var $this = $(this);
         var action = $this.attr("data-action");
         var side = $this.attr("data-side");

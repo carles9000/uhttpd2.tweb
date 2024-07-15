@@ -7,10 +7,12 @@
 		
 #xcommand INIT WEB <oWeb>  => <oWeb>:Activate()
 #xcommand INIT WEB <oWeb> RETURN =>  return <oWeb>:Activate()
+#xcommand ACTIVATE WEB <oWeb> =>  return <oWeb>:Activate()
 
 #xcommand DEFINE DIALOG <oDlg> => <oDlg> := TWebDialog():New()
 #xcommand INIT DIALOG <oDlg> => <oDlg>:Activate()
 #xcommand INIT DIALOG <oDlg> RETURN => return <oDlg>:Activate()
+#xcommand ACTIVATE DIALOG <oDlg> RETURN => return <oDlg>:Activate()
 
 
 #xcommand CSS <oForm> => #pragma __cstream| <oForm>:Html( '<style>' + %s + '</style>' )
@@ -36,6 +38,7 @@
 
 #xcommand INIT FORM <oForm> [ CLASS <cClass>] => <oForm>:InitForm( [<cClass> ] )
 #xcommand ENDFORM <oForm>  => <oForm>:End()
+#xcommand ACTIVATE FORM <oForm>  => <oForm>:End()
 
 
 
@@ -234,18 +237,33 @@
 => ;
 	[<oIcon> := ] TWebIcon():New( <oForm>, [<cId>], [<cSrc>], [<nGrid>], [<cAlign>], [<cClass>], [<cFont>], [<cLink>], [<cStyle>] )
 
+//	NAV Menu
+	
 #xcommand NAV [<oNav>] [ ID <cId> ] [ TITLE <cTitle> ] [ LOGO <cLogo> [ WIDTH <nWidth>] ;
 	[ ROUTE <cRoute>] [HEIGHT <nHeight> ] ] [ <bl: BURGUERLEFT> ] [ <sd: SIDEBAR> [ SIDE <cSide> ] ]  [ CLASS <cClass>] OF <oWeb> ;	
 => ;
 	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>], [<.bl.>], [<.sd.>], [<cSide>], [<cClass>] )
 
-#xcommand MENU GROUP <cItem> OF <oNav>  => <oNav>:AddMenuItem( <cItem>, nil, nil, nil,  .f., .f., .t. )
-#xcommand MENU <cItem> [ ICON <cIcon> ] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, nil, [<cIcon>], nil, .t., .f., .f. )
-#xcommand ENDMENU OF <oNav>  => <oNav>:AddMenuItem( nil, nil, nil, nil, .f., .t., .f. )
 
-#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ <ac: ACTIVE>  ] [ CONFIRM <cConfirm>] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<.ac.>], [<cConfirm>]  )
-#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ ACTIVE <lActive>  ] [ CONFIRM <cConfirm>] OF <oNav>  => <oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil, .f., .f., .f.,.f.,[<lActive>], [<cConfirm>]  )
+#xcommand MENU GROUP <cItem> OF <oNav>  			=> <oNav>:AddMenuItem( <cItem>, nil, nil      , nil, .t., .f., .t. )
+#xcommand MENU <cItem> [ ICON <cIcon> ] OF <oNav>  	=> <oNav>:AddMenuItem( <cItem>, nil, [<cIcon>], nil, .t., .f., .f. )
+#xcommand ENDMENU GROUP OF <oNav>  					=> <oNav>:AddMenuItem( nil    , nil, nil      , nil, .t., .t., .t. )
+#xcommand ENDMENU OF <oNav>  						=> <oNav>:AddMenuItem( nil    , nil, nil      , nil, .t., .t., .f. )
+
+#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ <ac: ACTIVE>  ] [ CONFIRM <cConfirm>] OF <oNav>  ;
+=> ;
+	<oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil   , .f.  , .f.     , .f.   ,.f.        ,[<.ac.>], [<cConfirm>], .t.      , .f.    )
+	
+#xcommand MENUITEM <cItem> [ ICON <cIcon> ] [ ROUTE <cRoute> ] [ ACTIVE <lActive>  ] [ CONFIRM <cConfirm>] OF <oNav>  ;
+=> ;
+	<oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil   , .f.  , .f.     , .f.   ,.f.        ,[<lActive>], [<cConfirm>], .t.   , .f.    )
+
+#xcommand MENUITEM HEADER <cItem> OF <oNav> => <oNav>:AddMenuItemHeader( <cItem> )
 #xcommand MENUITEM SEPARATOR OF <oNav>  => <oNav>:AddMenuItemSeparator()
+
+#xcommand HTML MENUITEM OF <oNav> ;
+=> ;
+	#pragma __cstream |<oNav>:AddSidebarCode( %s )
 
 #xcommand HTML SIDEBAR OF <oNav> => #pragma __cstream| <oNav>:SideBar( %s )
 
@@ -253,9 +271,38 @@
 => ;
 	#pragma __cstream |<oNav>:Sidebar( UInlinePrg( UReplaceBlocks( %s, '<$', "$>" [,<(v1)>][+","+<(vn)>] [, @<v1>][, @<vn>] ) ) )
 
+// NAVBAR -------------------------------------------
+
+#xcommand NAVBAR NAVITEM [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ <act: ACTION,LINK> <cAction> ]  ;
+        [ CLASS <cClass> ] [ <ac: ACTIVE, ACTIVED> ] [ <ds: DISABLE, DISABLED> ] ;
+        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ];
+        OF <oNav> ;
+=> ; 
+	<oNav>:AddMenuNav( 'navitem', .F.   , [<cId>], [<cLabel>], [<cAction>], [<cClass>], [<.ac.>], [<.ds.>] , [<cConfirm>], [<cCustom>], [<.menu.>], [<.sm.>] )
+
+#xcommand NAVBAR MENUITEM [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ <act: ACTION,LINK> <cAction> ]  ;
+        [ CLASS <cClass> ] [ <ac: ACTIVE, ACTIVED> ] [ <ds: DISABLE, DISABLED> ] ;
+        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ];
+        OF <oNav> ;
+=> ; 
+	<oNav>:AddMenuNav( 'menuitem', .F.  , [<cId>], [<cLabel>], [<cAction>], [<cClass>], [<.ac.>], [<.ds.>] , [<cConfirm>], [<cCustom>], [<.menu.>], [<.sm.>] )
+
+		
+#xcommand NAVBAR MENU CLOSE OF <oNav>    => <oNav>:AddMenuNav( 'navitem', .t. , , , , , , , , , .t., .f. )	
+#xcommand NAVBAR SUBMENU CLOSE OF <oNav> => <oNav>:AddMenuNav( 'menuitem', .t., , , , , , , , , .f., .t. )	
+
+#xcommand NAVBAR MENUITEM SEPARATOR OF <oNav> => <oNav>:AddMenuNav( 'separator' )
+
+#xcommand HTML NAVBAR OF <oNav> ;
+=> ;
+	#pragma __cstream |<oNav>:AddNavBarCode( %s )		
+//	-------------------------------------------------------------
+
+	
+	
 
 
-		 
+// FOLDER -------------------------------		 
 #xcommand FOLDER [<oFolder>] [ ID <cId> ] ;
 		[ <tabs: TABS> <cTab,...> ] ;		
 		[ <prm: PROMPT, PROMPTS, ITEMS> <cPrompt,...> ] ;		

@@ -1,5 +1,6 @@
 /*	Input border default */
 
+
 .form-control:focus {
     border-color: #28a745;
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
@@ -48,8 +49,17 @@
 .nav-tabs .nav-link:not(.active) {
     border-color: transparent !important;
 }
+/*
+Hem de mirar twebfolder i buscar nav-item. Potser la solucio es posar class="tweb nav-item" i fer el
+css:  
+.tweb .nav-item a{
+  color: white;
+  padding: 5px 10px;
+}
 
+*/
 
+/*
 .nav-item a:hover {
 	color: #5368d5;
 }
@@ -58,7 +68,7 @@
   color: white;
   padding: 5px 10px;
 }
-
+*/
 .nav-link.active {
   color: #495057;
   background-color: #fff;
@@ -66,10 +76,12 @@
   font-weight: bold;
 }
 
+/* CAF 
 .dropdown-tweb {
   color: black !important;
   padding: 5px 10px;
 }
+*/
 
 .folder-link-tweb {
 	color: black !important
