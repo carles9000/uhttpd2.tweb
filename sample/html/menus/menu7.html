@@ -96,28 +96,28 @@
 			
 			NAVBAR NAVITEM PROMPT 'SubMenus...' MENU OF oNav
 			
-				NAVBAR MENUITEM PROMPT 'SubMenu 1' OF oNav
-				NAVBAR MENUITEM PROMPT 'SubMenu 2' OF oNav
+				NAVBAR MENUITEM PROMPT 'SubMenu 1' ICON '<i class="fa fa-address-book" aria-hidden="true"></i>' LINK 'menu' OF oNav
+				NAVBAR MENUITEM PROMPT 'SubMenu 2' ICON '<i class="fa fa-user-circle" aria-hidden="true"></i>' ACTION 'alert(123)' OF oNav
 				
-				NAVBAR MENUITEM PROMPT 'SubMenu 3' SUBMENU OF oNav
+				NAVBAR MENUITEM PROMPT 'SubMenu 3' SUBMENU ICON '<i class="fa fa-book" aria-hidden="true"></i>' OF oNav
 				
-					NAVBAR MENUITEM PROMPT 'SubMenu 3.1' OF oNav
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.1' ICON '<i class="fa fa-cube" aria-hidden="true"></i>' OF oNav
 					
-					NAVBAR MENUITEM PROMPT 'SubMenu 3.2' SUBMENU OF oNav
-						NAVBAR MENUITEM PROMPT 'SubMenu 3.2.1' OF oNav
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.2' SUBMENU ICON '<i class="fa fa-folder-open" aria-hidden="true"></i>' OF oNav
+						NAVBAR MENUITEM PROMPT 'SubMenu 3.2.1' ICON '<i class="fa fa-database" aria-hidden="true"></i>'  OF oNav
 						NAVBAR MENUITEM SEPARATOR OF oNav
-						NAVBAR MENUITEM PROMPT 'SubMenu 3.2.2' OF oNav												
+						NAVBAR MENUITEM PROMPT 'SubMenu 3.2.2' ICON '<i class="fa fa-exclamation-circle" aria-hidden="true"></i>' OF oNav												
 					NAVBAR SUBMENU CLOSE OF oNav
 							
-					NAVBAR MENUITEM PROMPT 'SubMenu 3.3' OF oNav
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.3' ICON '<i class="fa fa-server" aria-hidden="true"></i>' OF oNav
 					NAVBAR MENUITEM SEPARATOR OF oNav
-					NAVBAR MENUITEM PROMPT 'SubMenu 3.4' OF oNav
+					NAVBAR MENUITEM PROMPT 'SubMenu 3.4' ICON '<i class="fa fa-paper-plane" aria-hidden="true"></i>' OF oNav
 				
 				NAVBAR SUBMENU CLOSE OF oNav		
 			
 			NAVBAR MENU CLOSE OF oNav
 			
-			NAVBAR NAVITEM PROMPT 'Otro Submenu' MENU OF oNav
+			NAVBAR NAVITEM PROMPT 'Other Submenu' MENU OF oNav
 			
 				NAVBAR MENUITEM PROMPT 'SubMenu A' OF oNav
 				NAVBAR MENUITEM PROMPT 'SubMenu B' OF oNav

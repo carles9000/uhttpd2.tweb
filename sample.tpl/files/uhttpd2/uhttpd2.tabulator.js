@@ -127,7 +127,7 @@ class UTabulator {
 
 										oPar[ 'cell' ] = oCell 
 										
-										console.log( oCell )										
+										
 
 										break;
 								}								

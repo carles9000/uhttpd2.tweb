@@ -85,30 +85,21 @@ margin: 0;
   visibility: visible;
 }
 
-/*
-.dropdown-menu {
-  display: block;
-  max-height: 0;
-  visibility: hidden;
-  transition: all 0.2s ease-in-out;
-  overflow: hidden;
-}
-*/				
-
-/* cAF */
 .sidebar-dropdown-menu {
 	/*width:100%;*/ 
 	max-width:100%;
 }	
 
-/* CAF */
+
 .nav-item.sidebar-nav-item a {
 	color:gray;
 	padding: 5px 10px;
 }	
 
 .nav-item.sidebar-nav-item a:hover {
-	color:lightgray;
+	/*color:lightgray;*/
+	color: #000000 !important;
+	background-color: lightgray;		
 }
 
 .nav-link.sidebar-item-active {
@@ -128,6 +119,11 @@ margin: 0;
 	padding: 5px;
 	color: gray;
 	padding-left: 10px;								
+}
+
+.menu-items.sidebar-menu-items{
+	padding-top:0px;
+	padding-bottom:0px;
 }
 
 

@@ -243,7 +243,13 @@ METHOD DrawMenuNav() CLASS TWebNav
 						cHtml += 'href="#"'
 					endif				
 				
-				cHtml += '>' + oItem[ 'label' ] + '</a>' + CRLF
+				cHtml += '>' 
+				
+				if !empty( oItem[ 'icon' ] )
+					cHtml += oItem[ 'icon' ] + '&nbsp;' 
+				endif								
+				
+				cHtml += oItem[ 'label' ] + '</a>' + CRLF
 				
 				cHtml += '</li>' + CRLF			
 			
@@ -265,6 +271,11 @@ METHOD DrawMenuNav() CLASS TWebNav
 				
 				cHtml += '<a class="nav-link dropdown-toggle" '	 
 				cHtml += 'href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+				
+				if !empty( oItem[ 'icon' ] )
+					cHtml += oItem[ 'icon' ] + '&nbsp;' 
+				endif				
+				
 				cHtml += oItem[ 'label' ]
 				cHtml += '</a>' + CRLF
 				
@@ -294,7 +305,13 @@ METHOD DrawMenuNav() CLASS TWebNav
 						cHtml += 'href="#"'
 					endif				
 				
-				cHtml += '>' + oItem[ 'label' ] + '</a>' + CRLF
+				cHtml += '>' 
+				
+				if !empty( oItem[ 'icon' ] )
+					cHtml += '      ' + oItem[ 'icon' ] + '&nbsp;' 
+				endif				
+				
+				cHtml += oItem[ 'label' ] + '</a>' + CRLF
 				cHtml += '</li>' + CRLF
 						
 			case oItem[ 'menuitem' ] .and. oItem[ 'submenu' ]	.and. ! oItem[ 'close' ]	//	NavItem Submenu
@@ -332,7 +349,13 @@ METHOD DrawMenuNav() CLASS TWebNav
 					endif						
 				
 				
-				cHtml += '      >' + oItem[ 'label' ] + '</a>' + CRLF
+				cHtml += '>'
+				
+				if !empty( oItem[ 'icon' ] )
+					cHtml += '      ' + oItem[ 'icon' ] + '&nbsp;' 
+				endif
+				
+				cHtml += oItem[ 'label' ] + '</a>' + CRLF
 				cHtml += '    <ul class="dropdown-menu">' + CRLF
 				
 			case oItem[ 'menuitem' ] .and. oItem[ 'submenu' ]	.and. oItem[ 'close' ] 	//	End NavItem Submenu
@@ -422,7 +445,7 @@ METHOD DrawMenuItem() CLASS TWebNav
 		
 			case oItem[ 'menu' ] .and. oItem[ 'group' ] .and. !oItem[ 'endmenu' ]
 	
-				cHtml += '<div class="menu-items ">' + CRLF
+				cHtml += '<div class="menu-items sidebar-menu-items">' + CRLF
 				cHtml += '  <ul>' + CRLF
 				
 				if !empty( oItem[ 'item' ] )												
@@ -488,9 +511,7 @@ METHOD DrawMenuItem() CLASS TWebNav
 				lOpenMenu := .f.				
 				
 			
-			case oItem[ 'menu' ] .and. oItem[ 'endmenu' ] .and. oItem[ 'group' ]
-		
-				cHtml += '<!-- PASS-6 -->' + CRLF
+			case oItem[ 'menu' ] .and. oItem[ 'endmenu' ] .and. oItem[ 'group' ]						
 			
 				cHtml += '	</ul>' + CRLF 
 				cHtml += '</div>' + CRLF
@@ -604,7 +625,9 @@ METHOD AddSidebarCode( cCode ) CLASS TWebNav
 	
 RETU NIL 
 
-METHOD AddMenuNav( cType, lClose, cId, cLabel, cAction, cClass, lActive, lDisabled, cConfirm, cCustom, lMenu, lSubMenu ) CLASS TWebNav
+//	NAVBAR -------------------------------------------------------
+
+METHOD AddMenuNav( cType, lClose, cId, cLabel, cAction, cClass, lActive, lDisabled, cConfirm, cCustom, lMenu, lSubMenu, cIcon ) CLASS TWebNav
 
 	hb_default( @cType, '' )
 	hb_default( @lClose, .F. )
@@ -618,6 +641,7 @@ METHOD AddMenuNav( cType, lClose, cId, cLabel, cAction, cClass, lActive, lDisabl
 	hb_default( @cCustom, '' )	
 	hb_default( @lMenu, .F. )	
 	hb_default( @lSubMenu, .F. )	
+	hb_default( @cIcon, '' )	
 	
 	
 	cType := lower( cType )
@@ -635,6 +659,7 @@ METHOD AddMenuNav( cType, lClose, cId, cLabel, cAction, cClass, lActive, lDisabl
 						  'menu' => lMenu,;
 						  'submenu' => lSubMenu,;
 						  'separator' => ( cType == 'separator' ),;
+						  'icon' => cIcon ,;
 						  'custom' => cCustom ;
 						})
 	
@@ -657,6 +682,7 @@ METHOD AddNavBarCode( cCustom ) CLASS TWebNav
 						  'menu' => .f.,;
 						  'submenu' => .f.,;
 						  'separator' => .f.,;
+						  'icon' => '' ,;
 						  'custom' => cCustom ;
 						})
 	

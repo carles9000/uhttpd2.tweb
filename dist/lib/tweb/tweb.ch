@@ -237,14 +237,14 @@
 => ;
 	[<oIcon> := ] TWebIcon():New( <oForm>, [<cId>], [<cSrc>], [<nGrid>], [<cAlign>], [<cClass>], [<cFont>], [<cLink>], [<cStyle>] )
 
-//	NAV Menu
+//	NAV Menu -------------------------------------
 	
 #xcommand NAV [<oNav>] [ ID <cId> ] [ TITLE <cTitle> ] [ LOGO <cLogo> [ WIDTH <nWidth>] ;
 	[ ROUTE <cRoute>] [HEIGHT <nHeight> ] ] [ <bl: BURGUERLEFT> ] [ <sd: SIDEBAR> [ SIDE <cSide> ] ]  [ CLASS <cClass>] OF <oWeb> ;	
 => ;
 	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>], [<.bl.>], [<.sd.>], [<cSide>], [<cClass>] )
 
-
+//	SIDEBAR --------------------------------------
 #xcommand MENU GROUP <cItem> OF <oNav>  			=> <oNav>:AddMenuItem( <cItem>, nil, nil      , nil, .t., .f., .t. )
 #xcommand MENU <cItem> [ ICON <cIcon> ] OF <oNav>  	=> <oNav>:AddMenuItem( <cItem>, nil, [<cIcon>], nil, .t., .f., .f. )
 #xcommand ENDMENU GROUP OF <oNav>  					=> <oNav>:AddMenuItem( nil    , nil, nil      , nil, .t., .t., .t. )
@@ -275,17 +275,17 @@
 
 #xcommand NAVBAR NAVITEM [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ <act: ACTION,LINK> <cAction> ]  ;
         [ CLASS <cClass> ] [ <ac: ACTIVE, ACTIVED> ] [ <ds: DISABLE, DISABLED> ] ;
-        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ];
+        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ] [ ICON <cIcon> ] ;
         OF <oNav> ;
 => ; 
-	<oNav>:AddMenuNav( 'navitem', .F.   , [<cId>], [<cLabel>], [<cAction>], [<cClass>], [<.ac.>], [<.ds.>] , [<cConfirm>], [<cCustom>], [<.menu.>], [<.sm.>] )
+	<oNav>:AddMenuNav( 'navitem', .F.   , [<cId>], [<cLabel>], [<cAction>], [<cClass>], [<.ac.>], [<.ds.>] , [<cConfirm>], [<cCustom>], [<.menu.>], [<.sm.>], [<cIcon>] )
 
 #xcommand NAVBAR MENUITEM [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ <act: ACTION,LINK> <cAction> ]  ;
         [ CLASS <cClass> ] [ <ac: ACTIVE, ACTIVED> ] [ <ds: DISABLE, DISABLED> ] ;
-        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ];
+        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ] [ ICON <cIcon> ] ;
         OF <oNav> ;
 => ; 
-	<oNav>:AddMenuNav( 'menuitem', .F.  , [<cId>], [<cLabel>], [<cAction>], [<cClass>], [<.ac.>], [<.ds.>] , [<cConfirm>], [<cCustom>], [<.menu.>], [<.sm.>] )
+	<oNav>:AddMenuNav( 'menuitem', .F.  , [<cId>], [<cLabel>], [<cAction>], [<cClass>], [<.ac.>], [<.ds.>] , [<cConfirm>], [<cCustom>], [<.menu.>], [<.sm.>], [<cIcon>] )
 
 		
 #xcommand NAVBAR MENU CLOSE OF <oNav>    => <oNav>:AddMenuNav( 'navitem', .t. , , , , , , , , , .t., .f. )	
@@ -296,10 +296,6 @@
 #xcommand HTML NAVBAR OF <oNav> ;
 => ;
 	#pragma __cstream |<oNav>:AddNavBarCode( %s )		
-//	-------------------------------------------------------------
-
-	
-	
 
 
 // FOLDER -------------------------------		 
