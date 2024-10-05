@@ -128,7 +128,6 @@ retu nil
 
 // -------------------------------------------------- //
 //	https://platform.openai.com/account/api-keys 
-//	API KEY EXAMPLE: sk-fISy1fFHRXg1tEMVNgAvT3BlbkFJHI8wXKG74kYCoO0VstfFz
 //	https://medium.com/geekculture/2023-how-to-use-chatgpt-api-with-curl-f2628e4f809
 
 static function DoInitChatGpt( oDom )
