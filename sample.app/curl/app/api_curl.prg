@@ -171,7 +171,7 @@ static function DoInitChatGpt( oDom )
 		
 			uValue 	:= curl_easy_dl_buff_get( hCurl )	
 
-			hRows	:= hb_jsonDecode( uvalue )
+			hRows		:= hb_jsonDecode( uvalue )
 			
 			_d( 'Respuesta: ', hRows )				
 			
@@ -196,3 +196,33 @@ static function DoInitChatGpt( oDom )
 	oDom:Set( 'myanswer', uValue )
 	
 retu nil
+
+
+//	TEST
+
+FUNCTION Main()
+    LOCAL oCurlPost
+    LOCAL hPost := { "user_id" => "test", "user_id2" => "test" }
+    LOCAL hResponse
+
+    oCurlPost := TCURLPost():New("http://192.168.2.2/test.html", hPost)
+
+    IF oCurlPost:Execute()
+        ? "HTTP Status Code:", oCurlPost:GetHttpCode()
+        ? "Response:", oCurlPost:GetResponse()
+
+        hResponse := hb_jsonDecode(oCurlPost:GetResponse())
+        
+        IF hb_isHash(hResponse)
+            ? "Parsed JSON data:"
+            hb_HEval(hResponse, {|k,v| QOut(k + ": " + hb_ValToStr(v))})
+        ELSE
+            ? "Failed to parse JSON response"
+        ENDIF
+    ELSE
+        ? "Error:", oCurlPost:GetError()
+    ENDIF
+
+    oCurlPost:Destroy()
+
+RETURN NIL

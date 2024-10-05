@@ -194,12 +194,7 @@ METHOD DrawMenuNav() CLASS TWebNav
 		retu ''
 	endif	
 	
-	//	NavBar
-	
-	cHtml += '<!-- INICI DRAWMENUNAV -->' + CRLF 
-
-	//cHtml += '<div class="test" >'
-	//cHtml += '<div style="display:inline-flex">'			
+	//	NavBar			
 	
 	cHtml += '<div class="collapse navbar-collapse" id="navbarNavDropdown">' + CRLF
 	cHtml += '  <ul class="navbar-nav">' + CRLF

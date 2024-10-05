@@ -1,0 +1,26 @@
+-n
+-w1
+-es2
+-inc
+-head=full
+-mt
+
+app\app.prg
+app\myapi.prg
+app\func.prg
+
+
+
+{msvc64}-Llib\uhttpd2\msvc64
+{mingw64}-Llib\uhttpd2\gcc64
+-luhttpd2
+
+{msvc64}-Llib\tweb\msvc64
+{mingw64}-Llib\tweb\gcc64
+-ltweb
+
+
+# WAPI_OutputDebugString()
+hbwin.hbc
+xhb.hbc
+hbcurl.hbc 

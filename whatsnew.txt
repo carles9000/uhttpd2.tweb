@@ -1,3 +1,4 @@
+05/10/2024 OAuth2 authentication example, Check \sample.app\oauth2
 15/07/2024 Vrs. 1.2 
 14/07/2024 Great changes to the menu system
 	* SIDEBAR Clause Obsolete. For compatibility reasons it does not affect whether it is declared

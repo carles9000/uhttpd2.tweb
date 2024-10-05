@@ -1,0 +1,59 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oMemo	
+	local cOauthUrl := OAuth_Url()
+
+	if  USessionReady()
+		URedirect( '/' )
+		retu nil
+	endif	
+
+	DEFINE WEB oWeb TITLE 'OAuth2 example' 			
+	
+		HTML oWeb 
+			<style>
+				body {
+					display: flex;					
+					align-items: center;
+					height: 100vh;					
+					background: #1d507c;
+					font-family: Arial, sans-serif;
+				}		
+			</style>		
+		ENDTEXT 
+		
+		DEFINE FORM o ID 'myform' API 'myapi' OF oWeb	
+			o:cSizing := 'sm'
+
+		INIT FORM o					
+
+			ROWGROUP o HALIGN 'center'
+			
+				DEFINE CARD oCard CLASS 'm-3' STYLE 'box-shadow: 5px 5px 5px black;' OF o 							
+				
+					HEADER CODE '<h5>Access' OF CARD oCard													
+					
+					BODY oBody OF CARD oCard 						
+						
+						GET ID 'user' PROMPT 'User'     VALUE 'John' GRID 12 OF oBody
+						GET ID 'psw'  PROMPT 'Password' VALUE '1234' GRID 12 TYPE 'password' OF oBody						
+						
+						ROWGROUP oBody CLASS 'mt-3' 
+							BUTTON ID 'btn' LABEL 'Login' ALIGN 'center' GRID 12 WIDTH '200px' CLASS 'btn btn-outline-dark' ACTION 'login' OF oBody
+						ENDROW oBody
+						
+						if !empty( cOauthUrl )
+							BUTTON LABEL '<img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google">&nbsp;Start using Google' ;
+								ALIGN 'center' LINK cOauthUrl GRID 12 WIDTH '200px' CLASS 'btn btn-outline-dark' OF oBody
+						endif					
+					
+					CARD ENDBODY oBody 										
+					
+				ENDCARD oCard	
+			ENDROW o 			
+
+		ENDFORM o			
+	
+	INIT WEB oWeb RETURN 
+?>
