@@ -1,3 +1,39 @@
+Vrs. 1.14
+=========
+- UGetMethodsRoute() -> return string with methods defined in route
+- UGetMethod() -> return method (GET,POST,...)
+- Review OPTIONS 
+- _t() Output var DbWin trace
+
+Vrs. 1.13
+=========
+- UGetTokenApiKey( cKey )   --> cToken 
+- UGetTokenBearer()         --> cToken
+- UGetTokenBasic()          --> aPair -> aPair[ 'user' ], aPair[ 'password' ]
+- UJWT() class for management Json Web Token. Finally i ported from mercury
+- UTokenData()
+- Image message error embbeded
+
+
+Vrs. 1.12c
+==========
+- uhttpd2.js -> Set Combobox 
+	h := { 'x' => 'Type X', 'z' => 'Type Z','y' => 'Type Y'}			
+	o
+	h := { 'Type X', 'Type Z', 'Type Y' }
+
+	oDom:Set( 'combo', h ) 
+
+Vrs. 1.12b
+==========
+- draggable
+- set id into modal-dialog
+
+Vrs. 1.12
+=========
+- RouteDelete(cRoute) method
+- Bug UGetHeader(u)
+
 Vrs. 1.11b
 ==========
 - bug with * 
