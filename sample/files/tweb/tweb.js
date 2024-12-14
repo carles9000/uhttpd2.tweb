@@ -40,7 +40,7 @@ function MsgInfo( cMsg, fCallback, cTitle, cIcon ) {
 	dialog.init(function(){
 		dialog.bind('shown.bs.modal', function(){
 			//$('.modal-content').draggable()														
-		});								
+		});	
 	})	
 
 	return dialog
@@ -137,7 +137,7 @@ function MsgYesNo( cMsg, fCallback, cTitle, cIcon ){
 		cMsg = '&nbsp;'
 
 
-	bootbox.confirm({
+	var dialog = bootbox.confirm({
 		title: cIcon + ' ' + cTitle,
 		message: cMsg,
 		buttons: {
@@ -297,6 +297,8 @@ function MsgLoading( cMessage, cTitle, cIcon, lHeader ) {
 //	MsgNotify ------------------------------------------------------------------	
 //	cType = 	success, info, danger, warning
 //	Examples -> http://bootstrap-growl.remabledesigns.com/
+/*
+	NEW VERSION --> files\tweb\notify
 
 function MsgNotify( cMsg, cType, cIcon, lSound ) {
 
@@ -307,6 +309,7 @@ function MsgNotify( cMsg, cType, cIcon, lSound ) {
 	$.notify( { icon: cIcon, message: cMsg }, { type: cType, icon_type: 'image' } );
 
 }
+*/
 
 //	---------------------------------------------------------------------------- //
 

@@ -1,0 +1,37 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'UT Websockets' 					
+	
+		Menu( oWeb, 'Error' )
+		
+		DEFINE FORM o ID 'myform' API 'api_basic' OF oWeb 
+		
+		INIT FORM o 
+
+			ROWGROUP o 	HALIGN 'center' CLASS 'mt-5'
+				SAY LABEL '<h1><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Test error connecting !</h1><hr>' ALIGN 'center' GRID 12 OF o			
+			ENDROW o		
+
+		ENDFORM o	
+
+		DEFINE WEBSOCKETS ONOPEN 'MyOpen' ONCLOSE 'MyClose' OF o 			
+		
+		HTML o 		
+			<script>			
+				
+				function MyOpen() { 
+					MsgNotify( 'Open WebSocket connection !' )
+				}
+				
+				function MyClose( o ) { 
+					MsgNotify( 'Close connection', 'warn' )					
+				}
+				
+			</script>		
+		ENDTEXT 		
+	
+	INIT WEB oWeb RETURN 
+?>

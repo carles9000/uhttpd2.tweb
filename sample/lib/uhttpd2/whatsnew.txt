@@ -1,3 +1,7 @@
+Vrs. 2.0
+========
+- Websockets SSL support
+
 Vrs. 1.14
 =========
 - UGetMethodsRoute() -> return string with methods defined in route

@@ -1,0 +1,113 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, ofooter, oHeader, oBody
+	LOCAL cFace := 'files/images/user/' + ltrim(str( hb_randint( 1, 15 ) )) + '.png'	
+	
+	DEFINE WEB oWeb TITLE 'UT Websockets' 	
+
+		HTML oWeb
+			<style>				
+				body::before {
+					content: "";
+					position: fixed;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background: url(files/images/bk1.jpg);
+					background-size: cover;
+					/*filter: blur(3px);*/
+					z-index: -1;
+				}
+				
+				h1 {
+					text-shadow: 3px 2px 2px #fc0000;
+					color: #ffc10b;
+				}
+				
+				hr { border-top: 2px solid #F44336; }
+				
+				.mycard {
+					width:80%;
+					margin-top: 20px;
+					box-shadow: 0px 0px 40px 10px #740202;
+					border-radius: 10px;
+					background-color: darkgrey;
+					border: 1px solid black;
+				}
+				
+				.myimg img {
+					border-radius: 50% !important;
+					border: 2px solid black;
+					margin-left: 10px;
+					margin-right: 10px;
+					height: 60px;
+				}
+			</style>
+		ENDTEXT 
+	
+		Menu( oWeb, 'Chat' )
+		
+		DEFINE FORM o ID 'myform' API 'api_chat' OF oWeb 
+			o:cSizing := 'sm'
+		
+		INIT FORM o 
+
+			ROWGROUP o 	HALIGN 'center' CLASS 'mt-5'
+				SAY LABEL '<h1><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Simple Chat</h1><hr>' ALIGN 'center' GRID 12 OF o			
+			ENDROW o
+
+			ROWGROUP o 	HALIGN 'center' 
+				
+				DEFINE CARD oCard CLASS 'mycard' OF o 							
+				
+					HEADER oHeader  OF CARD oCard							
+						ROWGROUP oHeader VALIGN 'bottom'
+							IMAGE FILE cFace ALIGN 'center' CLASS 'myimg'  GRID 0 OF oHeader
+							GET ID 'myalias' VALUE 'Guest' LABEL 'Alias' GRID 0 OF oHeader
+						ENDROW oHeader
+					CARD ENDHEADER oHeader
+					
+					BODY oBody  OF CARD oCard 
+					
+						ROWGROUP oBody 
+							SAY VALUE '<h5>Messages...</h5>' GRID 12 ALIGN 'center' OF oBody	
+						ENDROW oBody					
+						
+						ROWGROUP oBody 					
+							GET MEMO ID 'chat' VALUE '' READONLY GRID 12 ROWS 6 OF oBody
+						ENDROW oBody					
+						
+					CARD ENDBODY oBody																	
+					
+					FOOTER oFooter OF CARD oCard
+						GET oGet ID 'mymsg' VALUE '' LABEL 'Message' BUTTON '<i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;Send' ;
+								ACTION 'send_msg' BTNCLASS 'btn  btn-dark' GRID 12 RETURN OF oFooter 					
+					CARD ENDFOOTER oFooter 
+					
+				ENDCARD oCard			
+			ENDROW o
+	
+
+		ENDFORM o	
+
+		DEFINE WEBSOCKETS TOKEN 'ABC-1234' SCOPE 'CHAT' ONOPEN 'MyOpen' ONCLOSE 'MyClose' OF o 	
+		
+		HTML o 		
+			<script>
+				
+				function MyOpen() { MsgNotify( 'Open WebSocket connection !' )	}
+				function MyClose() { MsgNotify( 'Close connection', 'warn' )	}
+				
+				function ListenMsg( u ){
+					
+					$('#myform-chat').val(  $('#myform-chat').val() + u.msg + '\\n' );	
+					$('#myform-chat').animate({ scrollTop:$('#myform-chat')[0].scrollHeight - $('#myform-chat').height() })
+				}
+				
+			</script>		
+		ENDTEXT 		
+	
+	INIT WEB oWeb RETURN 
+?>

@@ -1,0 +1,644 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'UT Websockets' 	
+
+		oWeb:AddJs( 'files/zeu/zeu.min.js' )
+		
+		HTML oWeb 
+		
+			<style>		
+				body  { 
+				margin: 0;
+				padding: 0;
+				background: #343a42;
+				background-image: radial-gradient(rgb(63, 93, 131) 10%, transparent 10%);
+				background-size: 18px 18px;
+				font-family: Tahoma, Geneva, sans-serif;
+				box-sizing: border-box;
+				}
+				
+				.mypanel {		
+					background-color: #9E9E9E;	
+					margin-top: 20px;		
+					margin-right: 20px;
+					float: left;		
+				}
+				
+				.mylog_body  { 
+					padding:0px;
+				}
+				
+				.mylog { 
+					background-color: black !important;
+					color: #61fd61;
+					font-size: 10px;		
+					line-height: 11px;
+				}	
+			</style>				
+		
+		ENDTEXT 				
+	
+		Menu( oWeb, 'Dashboard' )
+		
+		DEFINE FORM o ID 'myform' API 'api_iot' OF oWeb 
+		
+		INIT FORM o 
+
+			ROWGROUP o 	HALIGN 'center' CLASS 'mt-5'
+				SAY LABEL '<h1>Harbour IoT Center Vrs. 1.0</h1>' ALIGN 'center' STYLE 'color: #9c9c9c;' GRID 12 OF o			
+			ENDROW o	
+
+			ROWGROUP o 	HALIGN 'center' CLASS 'w-80' STYLE 'width:1230px;'
+			
+				SensorBar( o )
+				SensorHelix( o )				
+				SensorLog( o )
+				SensorCircle( o )
+				SensorVolume( o )
+				SensorSystem( o )
+				SensorCPU( o )
+			
+			ENDROW o	
+			
+			ROWGROUP o HALIGN 'center'  CLASS "mt-4" 
+				DEFINE BUTTON GROUP OF o		
+					BUTTON ID 'btn1' PROMPT 'Monitor ON' 	ACTION 'my_iot' GRID 0 WIDTH '200px'  CLASS 'btn btn-outline-success' ;
+						PBS 'InitProc' ALIGN 'center' OF o	
+						
+					BUTTON ID 'btn3' PROMPT 'Check CPU' 	ACTION 'cpu' GRID 0 WIDTH '200px'  CLASS 'btn btn-outline-success' ALIGN 'center' OF o	
+					BUTTON ID 'btn2' PROMPT 'Monitor OFF' 	ACTION 'my_iot_stop' GRID 0 WIDTH '200px'  CLASS 'btn btn-outline-danger' ALIGN 'center' OF o							
+				ENDGROUP OF o					
+			ENDROW o			
+			
+		ENDFORM o	
+
+		DEFINE WEBSOCKETS TOKEN 'ABC-1234' ONOPEN 'MyOpen' ONCLOSE 'MyClose'  OF o 	
+		
+		HTML o 
+			<script>
+			
+				function MyOpen() { MsgNotify( 'Open WebSocket connection !' )	}
+				
+				function MyClose( o ) { MsgNotify( 'Close connection', 'warn' )	}
+			
+				function InitProc() {	
+					MsgNotify( 'Monitor On !', 'success' )				
+					return true 
+				}				
+				
+				function ListenIOT( aData ){									
+					
+					for (let i = 0; i < aData.length; i++) {
+						
+						switch( aData[i].sensor ) {
+						
+							case 'meter': 		RefreshMeter( aData[i].values ); break
+							case 'helix': 		RefreshHelix( aData[i].values ); break
+							case 'volume': 		RefreshVolume( aData[i].values ); break
+							case 'log': 		RefreshLog( aData[i].values ); break
+							case 'system': 		RefreshSystem( aData[i].values ); break
+							case 'cpu': 		RefreshCPU( aData[i].values ); break
+							case 'circle':		RefreshCircle( aData[i].values ); break													
+						}
+					}					
+				}				
+				
+				function CloseAll( lMessage ){									
+					
+					if ( lMessage )
+						MsgNotify( 'Monitor is off !', 'warn' )	
+						
+					CloseMeter()
+					CloseHelix()
+					CloseCircle()
+					CloseCPU()
+					CloseLog()
+					CloseVolume()
+				}	
+
+				CloseAll()
+				
+			</script>
+		
+		ENDTEXT
+	
+	INIT WEB oWeb RETURN 
+	
+//	BAR --------------------------------------------------------- //
+	
+function SensorBar( o )
+	
+	DEFINE CARD oCard CLASS 'mypanel' OF o 							
+	
+		HEADER CODE "<h5>Quality Inspection" OF CARD oCard							
+		
+		BODY oBody  OF CARD oCard 
+			
+			HTML oBody 
+		
+				<div class="meter">
+					<canvas id="bar-meter-1" width="50px" height="100px"></canvas>
+					<canvas id="bar-meter-2" width="50px" height="100px"></canvas>
+					<canvas id="bar-meter-3" width="50px" height="100px"></canvas>
+					<canvas id="bar-meter-4" width="50px" height="100px"></canvas>
+				</div>
+
+			ENDTEXT			
+			
+		CARD ENDBODY oBody																
+		
+	ENDCARD oCard
+	
+	HTML o 		
+		<script>
+
+			let COLOR = {
+			  lightGreen: '#00d7af',
+			  lightWhite: '#f8f8ff',
+			  lightGrey: '#e0e0e0',
+			  lightBlack: '#343a42',
+			  black: '#000000',
+			  white: '#ffffff',
+			  red: '#dc3547',
+			  blue: '#007bfb',
+			  yellow: '#ffc108',
+			  cyan: '#17a2b9',
+			  grey: '#6c757e',
+			  green: '#28a748',
+			  orange: '#ffa500',
+			  transparent: 'rgba(255, 255, 255, 0)'
+			};
+						
+			function getRandomInt(min, max) {
+				return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+
+			var BLINK_COLORS = ['#ff5722', '#ff6a3c', '#ff7e55', '#ff916f', 'blue' ];
+			
+			function getBlinkColor() {
+				return BLINK_COLORS[getRandomInt(0, BLINK_COLORS.length - 1)]
+			}
+
+			var cfg_meter = { min: 0,
+			  max: 100,
+			  dashColor: COLOR.lightGrey,
+			  speed: 15 
+			}
+
+			var barMeter1 = new zeu.BarMeter('bar-meter-1', cfg_meter )
+			var barMeter2 = new zeu.BarMeter('bar-meter-2', cfg_meter )
+			var barMeter3 = new zeu.BarMeter('bar-meter-3', cfg_meter )
+			var barMeter4 = new zeu.BarMeter('bar-meter-4', cfg_meter )
+
+			function RefreshMeter( values ) {
+			  
+			  UpdateMeter( barMeter1, values[0] );
+			  UpdateMeter( barMeter2, values[1] );
+			  UpdateMeter( barMeter3, values[2] );
+			  UpdateMeter( barMeter4, values[3] );  
+			}
+
+			function UpdateMeter( o, value ) {
+
+				o.value = value
+
+				if (value <= 30) {
+					o.speed = 5;
+					o.barColor = 'green'	//COLOR.green;
+				} else if (value >= 60) {
+					o.speed = 25;
+					o.barColor = 'red'//COLOR.red;
+				} else {
+					o.speed = 10;
+					o.barColor = 'yellow'	//COLOR.yellow;
+				}
+			}
+
+			function CloseMeter() {
+				
+				barMeter1.value = 0
+				barMeter2.value = 0
+				barMeter3.value = 0
+				barMeter4.value = 0
+			}
+		</script>		
+	ENDTEXT 			
+
+retu nil 
+
+// HELIX ----------------------------------------------------------- //
+
+function SensorHelix( o )
+	
+	DEFINE CARD oCard STYLE 'width:355px;' CLASS 'mypanel'  OF o 							
+	
+		HEADER CODE "<h5>Sensor Helix" OF CARD oCard			
+		
+		BODY oBody  OF CARD oCard 
+			
+			HTML oBody 		
+				<div class="helix">
+					<canvas id="helix-1" width="100px" height="100px"></canvas>
+					<canvas id="helix-2" width="100px" height="100px"></canvas>
+					<canvas id="helix-3" width="100px" height="100px"></canvas>
+					<canvas id="helix-4" width="100px" height="100px"></canvas>
+					<canvas id="helix-5" width="100px" height="100px"></canvas>
+					<canvas id="helix-6" width="100px" height="100px"></canvas>
+					
+				</div>
+			ENDTEXT			
+			
+		CARD ENDBODY oBody																
+		
+	ENDCARD oCard
+	
+	HTML o 		
+	
+		<script>
+	
+			var options = {	
+			  fanColor: '#00d7af',
+			  center: {				
+				color: '#00d7af',				
+				bgColor: '#FFFFFF'
+			  },			  
+			  speed: 1
+			}
+		
+			var helix1 = new zeu.RoundFan('helix-1', options);
+			var helix2 = new zeu.RoundFan('helix-2', options);
+			var helix3 = new zeu.RoundFan('helix-3', options);
+			var helix4 = new zeu.RoundFan('helix-4', options);
+			var helix5 = new zeu.RoundFan('helix-5', options);
+			var helix6 = new zeu.RoundFan('helix-6', options);
+
+			function RefreshHelix( values ) {
+
+				helix1.speed = values[0]
+				helix2.speed = values[1]
+				helix3.speed = values[2]			
+				helix4.speed = values[3]			
+				helix5.speed = values[4]			
+				helix6.speed = values[5]			
+			}
+
+			function CloseHelix() {
+
+				helix1.speed = 0
+				helix2.speed = 0
+				helix3.speed = 0
+				helix4.speed = 0
+				helix5.speed = 0
+				helix6.speed = 0
+			}
+
+		</script>	
+		
+	ENDTEXT 			
+
+retu nil
+
+// VOLUME ----------------------------------------------------------- //
+
+function SensorVolume( o )
+	
+	DEFINE CARD oCard CLASS 'mypanel'  STYLE 'width:520px;' OF o 							
+	
+		HEADER CODE "<h5>Transfer System" OF CARD oCard							
+		
+		BODY oBody  OF CARD oCard 
+		
+			ROWGROUP oBody 
+				SAY VALUE '<h5>Sensor Volume</h5>' GRID 12 ALIGN 'center' OF oBody	
+			ENDROW oBody
+			
+			HTML oBody 		
+				<div class="volume">
+					<canvas id="volume-meter-1" width="75px" height="150px"></canvas>
+					<canvas id="volume-meter-2" width="75px" height="150px"></canvas>
+					<canvas id="volume-meter-3" width="75px" height="150px"></canvas>
+					<canvas id="volume-meter-4" width="75px" height="150px"></canvas>
+					<canvas id="volume-meter-5" width="75px" height="150px"></canvas>
+					<canvas id="volume-meter-6" width="75px" height="150px"></canvas>	
+				</div>
+			ENDTEXT			
+			
+		CARD ENDBODY oBody																
+		
+	ENDCARD oCard
+	
+	HTML o 		
+		<script>
+
+			var options = {
+			  min: {
+				fontColor: '#dc3547',
+				value: 0,
+				bgColor: '#000000'
+			  },
+			  max: {
+				fontColor: '#dc3547',
+				value: 1000,
+				bgColor: '#000000'
+			  },
+			  bar: {
+				borderColor: '#000000',
+				fillColor: '#123456',
+				graident: true,
+				speed: 3
+			  },
+			  marker: {
+				bgColor: '#28a748',
+				fontColor: '#ffffff'
+			  },
+			  value: 0
+			}
+
+			var volumeMeter1 = new zeu.VolumeMeter('volume-meter-1', options);
+			var volumeMeter2 = new zeu.VolumeMeter('volume-meter-2', options);
+			var volumeMeter3 = new zeu.VolumeMeter('volume-meter-3', options);
+			var volumeMeter4 = new zeu.VolumeMeter('volume-meter-4', options);
+			var volumeMeter5 = new zeu.VolumeMeter('volume-meter-5', options);
+			var volumeMeter6 = new zeu.VolumeMeter('volume-meter-6', options);
+
+			function RefreshVolume( values ) {
+
+				volumeMeter1.value = values[0]
+				volumeMeter2.value = values[1]
+				volumeMeter3.value = values[2]
+				volumeMeter4.value = values[3]
+				volumeMeter5.value = values[4]
+				volumeMeter6.value = values[5]
+			}
+
+			function CloseVolume(){
+
+				volumeMeter1.value = 0
+				volumeMeter2.value = 0
+				volumeMeter3.value = 0
+				volumeMeter4.value = 0
+				volumeMeter5.value = 0
+				volumeMeter6.value = 0
+			}
+
+		</script>		
+	ENDTEXT 			
+
+retu nil 
+
+// SYSTEM ----------------------------------------------------------- //
+
+function SensorSystem( o )
+
+	DEFINE CARD oCard CLASS 'mypanel' STYLE 'width:240px;' OF o 							
+	
+		HEADER CODE "<h5>System Status" OF CARD oCard							
+		
+		BODY oBody  OF CARD oCard 
+		
+			ROWGROUP oBody 
+				SAY VALUE '<h5>System</h5>' GRID 12 ALIGN 'center' OF oBody	
+			ENDROW oBody
+			
+			HTML oBody 		
+				<div class="system">
+					<canvas id="system" width="200" height="120" ></canvas>										
+				</div>
+			ENDTEXT			
+			
+		CARD ENDBODY oBody																
+		
+	ENDCARD oCard
+	
+	HTML o 		
+		<script>
+
+			var systemStatus = new zeu.ScoreBoard('system', {
+				viewWidth: 200,
+				viewHeight: 120,
+				order: 'desc',
+				rowHeight: 20,
+				space: 2,
+				speed: 4,
+				font: '10px Arial'
+			});
+		  
+		    for (var i = 1; i <= 5; i++) {
+			
+				var score = 0
+					systemStatus.add({
+						id: 'p' + i,
+						score: score,
+						bgColor: getBlinkColor(),
+						text: {					
+							value:  'NODE-' + i + '    CPU: ' + score + '%' + '    MEMORY: ' + score + '%',
+							color: 'rgba(255, 255, 255, 0.7)',
+							xOffset: 8,
+							yOffset: 14
+						}
+					});
+			}
+
+			function RefreshSystem( values ) {
+
+				for (var i = 1; i <= 5; i++) {
+					var score = values[ i ];
+				  
+					systemStatus.update({
+						id: 'p' + i,
+						score: score,
+						text: {
+							color: 'rgba(255, 255, 255, 0.7)',
+							value: 'NODE-' + i + '    CPU: ' + score + '%' + '    MEMORY: ' + score + '%',
+						}
+					});				  
+				}	  
+			}
+
+		</script>		
+	ENDTEXT 			
+
+retu nil 
+
+
+// CPU ----------------------------------------------------------- //
+
+function SensorCpu( o )
+	
+	DEFINE CARD oCard CLASS 'mypanel' STYLE 'width:280px;' OF o 							
+	
+		HEADER CODE "<h5>Server" OF CARD oCard							
+		
+		BODY oBody  OF CARD oCard 
+			
+			HTML oBody 		
+				<div class="system">
+					<canvas id="cpu" width="250" height="130" ></canvas>										
+				</div>
+			ENDTEXT			
+			
+		CARD ENDBODY oBody																
+		
+	ENDCARD oCard
+	
+	HTML o 		
+		<script>
+
+			var options = {
+				value: 1,
+				displayValue: 'TEST',
+				arrowColor: '#007bfb',
+				marker: {
+				bgColor: '#343a42',
+				fontColor: '#ffffff'
+			  },
+			  bar: {
+				speed: 5,  
+				fillColor: '#dc3547',  
+				bgColor: '##f8f8ff',  
+				borderColor: '#343a42'
+			  }
+			}
+
+			var textMeter = new zeu.TextMeter('cpu', options);
+
+			textMeter.value = 0;
+			textMeter.displayValue = 'Charge';
+			textMeter.speed = 5;
+			textMeter.fillColor = '#dc3547';
+			textMeter.bgColor = '#f8f8ff';
+			textMeter.arrowColor = '#007bfb';
+			textMeter.markerFontColor = '#ffffff';
+			textMeter.markerBgColor = '#343a42';
+
+			function RefreshCPU( values ) {		
+				textMeter.value = values[ 0 ]		  		
+			}
+			
+			function CloseCPU(){ 
+				textMeter.value = 0			
+			}		
+
+		</script>	
+		
+	ENDTEXT 			
+
+retu nil 
+
+// CIRCLE ----------------------------------------------------------- //
+
+function SensorCircle( o )
+	
+	DEFINE CARD oCard CLASS 'mypanel' STYLE 'width:240px;' OF o 							
+	
+		HEADER CODE "<h5>CPU" OF CARD oCard							
+		
+		BODY oBody  OF CARD oCard 
+			
+			HTML oBody 		
+				<div class="circle">
+					 <canvas id="speed-circle" width="200" height="200"></canvas>										
+				</div>
+			ENDTEXT			
+			
+		CARD ENDBODY oBody																
+		
+	ENDCARD oCard
+
+	HTML o 		
+		<script>
+
+			var options = {
+			  text: {
+				value: 'UT',
+				color: '#007bfb'
+			  },
+			  circle1: {
+				speed: 1,
+				color: '#007bfb'
+			  },
+			  circle2: {
+				speed: -1,
+				color: '#007bfb'
+			  },
+			  circle3: {
+				speed: 1,
+				color: '#007bfb'
+			  },
+			  circle4: {
+				speed: -1,
+				color: '#007bfb'
+			  }
+			}
+
+			var speedCircle = new zeu.SpeedCircle('speed-circle', options);
+
+			speedCircle.speed1 = 0;
+			speedCircle.color1 = '#007bfb';
+			speedCircle.speed2 = 0;
+			speedCircle.color2 = 'red';
+			speedCircle.speed3 = 0;
+			speedCircle.color3 = 'green';
+			speedCircle.speed4 = 0;
+			speedCircle.color4 = 'black';
+
+			speedCircle.textValue = 'UT';
+			speedCircle.textColor = 'black';
+
+			function RefreshCircle( values ) {		
+				speedCircle.speed1 = values[ 1 ]		  		
+				speedCircle.speed2 = values[ 2 ]		  		
+				speedCircle.speed3 = values[ 3 ]		  		
+				speedCircle.speed4 = values[ 4 ]		  		
+			}
+			
+			function CloseCircle() {
+				speedCircle.speed1 = 0		  		
+				speedCircle.speed2 = 0		  		
+				speedCircle.speed3 = 0		  		
+				speedCircle.speed4 = 0		
+			}
+
+		</script>		
+	ENDTEXT 			
+
+retu nil 
+
+// Sensor Listen ----------------------------------------------------------- //
+
+function SensorLog( o )
+
+	LOCAL oCard, oBody
+	
+	DEFINE CARD oCard CLASS 'mypanel' STYLE 'width:280px;' OF o 										
+		
+		BODY oBody  CLASS 'mylog_body' OF CARD oCard 	
+			ROW oBody 
+				SAY VALUE '<h5>Log Inputs</h5>' GRID 12 ALIGN 'center' OF oBody	
+			ENDROW oBody		
+			GET MEMO ID 'log' VALUE '' READONLY GRID 12 ROWS 16 CLASS 'mylog' OF oBody			
+		CARD ENDBODY oBody																
+		
+	ENDCARD oCard
+	
+	HTML o 		
+		<script>
+
+			function RefreshLog( values ) {		
+			
+					$('#myform-log').val(  $('#myform-log').val() + values[0] + '\\n' );	
+					$('#myform-log').animate({ scrollTop:$('#myform-log')[0].scrollHeight - $('#myform-log').height() })				
+			}
+			
+			function CloseLog(){ 
+				$('#myform-log').val( '' )
+			}
+
+		</script>		
+	ENDTEXT 			
+	
+retu nil 
+?>

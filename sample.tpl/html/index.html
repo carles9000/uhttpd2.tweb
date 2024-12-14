@@ -8,8 +8,11 @@
 		DEFINE FORM o ID 'myform' API 'myapi' ON INIT 'hello' OF oWeb							
 
 		INIT FORM o					
-			SAY VALUE '<h1>Welcome to TWeb !' ALIGN 'center' GRID 12  OF o									
-			SAY VALUE '<h4>Engine loaded, version {{ TWebVersion() }}<hr>' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h1>Welcome to UT, engine was loaded !' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>Harbour compiler {{ HB_COMPILER() }}' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>Version {{ Version() }}' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>Version UT {{ UVersion() }}' ALIGN 'center' GRID 12  OF o									
+			SAY VALUE '<h4>Version TWeb {{ TWebVersion() }}<hr>' ALIGN 'center' GRID 12  OF o									
 			
 			BUTTON ID 'btn' LABEL 'Click me!' ALIGN 'center' GRID 12 ACTION 'clickme' OF o
 		ENDFORM o			

@@ -85,23 +85,12 @@ margin: 0;
   visibility: visible;
 }
 
-/*
-.dropdown-menu {
-  display: block;
-  max-height: 0;
-  visibility: hidden;
-  transition: all 0.2s ease-in-out;
-  overflow: hidden;
-}
-*/				
-
-/* cAF */
 .sidebar-dropdown-menu {
 	/*width:100%;*/ 
 	max-width:100%;
 }	
 
-/* CAF */
+
 .nav-item.sidebar-nav-item a {
 	color:gray;
 	padding: 5px 10px;

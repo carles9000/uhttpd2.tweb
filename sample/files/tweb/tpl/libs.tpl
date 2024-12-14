@@ -18,7 +18,13 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
 	
 	
-	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/bootstrap-notify.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+	
+	
+	<!--<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/bootstrap-notify.js"></script>-->
+	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/notify.js"></script>
+	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/notify-runnerxbase.js"></script>
+	
 	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/bootbox/bootbox.all.min.js"></script>
 	
 			

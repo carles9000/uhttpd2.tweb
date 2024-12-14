@@ -1,9 +1,9 @@
 /*
 **	module.....: uhttpd2tabulator.js -- Tabulator for uhttpd2 (Harbour)
-**	version....: 1.02
-**  last update: 27/04/2023
+**	version....: 1.05
+**  last update: 11/11/2023
 **
-**	(c) 2022-2023 by Carles Aubia
+**	(c) 2022-2024 by Carles Aubia
 **
 */
 
@@ -13,7 +13,8 @@ class UTabulator {
 
 	id = null 
 	table = null
-	cargo = null 			
+	cargo = null 	
+	init = null
 	
 	constructor( id ) {  // Constructor
 		this.id = id;
@@ -24,7 +25,7 @@ class UTabulator {
 	Init( options, events, filter, cargo ) {		
 
 	
-		UTabulatorValidOptions( options )
+		// UTabulatorValidOptions( options )
 	
 
 		//	IMPORTANTE. Miramos si existe ya un tabulator en el selector que queremos
@@ -49,6 +50,16 @@ class UTabulator {
 			});		
 		
 			table.on("tableBuilt", function(){
+			
+				if ( typeof init == 'string' ) {
+				
+					var fn =  window[ init ]			
+			
+					if ( typeof fn == "function") {					
+						var u = fn.apply(null, [] );						
+					}
+				}
+				
 				//console.log( 'tableBuilt!!!' )
 				//lReady = true 
 				//console.log( 'tableBuilt2!!!', lReady )
@@ -83,7 +94,7 @@ class UTabulator {
 								var oPar = new Object()
 								
 								switch ( events[i][ 'name' ] ) {
-								
+							
 									case 'cellEdited':							
 								
 										var oCell = new Object()
@@ -98,9 +109,30 @@ class UTabulator {
 										oPar[ 'cell' ] = oCell 
 								
 										break;
+										
+									case 'cellClick':	
+									
+										//	https://tabulator.info/docs/5.5/components#component-cell
+										
+										var oCol = o.getColumn();
+									
+										var oCell = new Object()
+											oCell[ 'index' ] = table.options.index
+											oCell[ 'field' ] = o.getField()
+											oCell[ 'title' ] = oCol.getDefinition().title 
+											oCell[ 'value' ] = o.getValue()
+											oCell[ 'oldvalue' ] = o.getOldValue()
+											oCell[ 'cargo' ] = cargo
+											oCell[ 'row' ] = o.getData()
+
+										oPar[ 'cell' ] = oCell 
+										
+										
+
+										break;
 								}								
 
-								MsgApi( cApi, events[i][ 'proc' ], oPar ) 
+								MsgApi( cApi, events[i][ 'proc' ], oPar, id_parent ) 
 							})														
 						} else {
 							console.error( "Don't exist api for " + events[i][ 'proc' ])
@@ -109,7 +141,7 @@ class UTabulator {
 					} else {
 					
 						var fn =  window[ events[i][ 'function' ] ]
-						
+				
 						if (typeof fn === "function") {															
 							table.on( events[i][ 'name' ], fn )												
 						}
@@ -134,25 +166,6 @@ class UTabulator {
 			return null 
 		}
 
-		/*
-		while ( !lReady ) {
-			console.log( 'wait lready')
-		}
-		*/
-		
-/*		
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
-
-console.log("Hello");
-sleep(2000);
-console.log("World!");
-*/		
 		
 		switch ( cCmd ) {
 				
@@ -388,9 +401,32 @@ function UTabulatorValidOptions( o ) {
 	
 		if ( typeof oCols[i] == 'object'  ) { 
 		
-			//	Checking formatter options...
-			
-			
+			//	Buscaremos en todas las claves de la columna (propiedades) si hay alguna que 
+			//	empirze por '@'. Si es el caso, comprobaremos que exista la funcion en javascript 
+			//  y la asignaremos como valor de la key.
+			//
+			//  Ejemplos de propierdades que pueden ser functions: formatter, editable, ...							
+	
+
+				for (var key in oCols[i] ) {								
+					
+					if ( typeof oCols[i][ key ] == 'string' && oCols[i][ key ].substr(0, 1) == '@' ) { 
+						
+						var cFunc = oCols[i][ key]						
+						
+						cFunc = cFunc.substr( 1, cFunc.length - 1 )						
+
+						var fn =  window[ cFunc ]
+						
+						if (typeof fn === "function") {			
+					
+							oCols[i][ key ] = fn
+						}						
+					}
+					
+				} 
+				
+			//	Casos especiales...													
 				if ( 'formatter' in oCols[i]) {
 
 					if ( typeof oCols[i].formatter == 'string' ) {	
@@ -403,28 +439,24 @@ function UTabulatorValidOptions( o ) {
 					}		
 				}
 				
-			
-			
-			//	Checking validator options...
-				if ( 'validator' in oCols[i]) {						
+				if ( 'validator' in oCols[i]) {
 				
-					var aValidator = []
+					//	console.log( oCols[i].title )
 					
+					if ( typeof oCols[i].validator.type == 'string' ) {	
+			
+						var fn =  window[ oCols[i].validator.type ]
+						
+						if (typeof fn === "function") {
+							oCols[i].validator.type = fn 
+						}												
+					}		
+				}				
 				
-					if ( oCols[i].validator != null ) {										
-				
-							var fn =  window[ oCols[i].validator.type ]
-								
-							if (typeof fn === "function") {
-
-								oCols[i].validator.type = fn
-								
-							}																
-					}				
-				}	
-
 		}
-	}		
+	}
+
+	
 }
 
 

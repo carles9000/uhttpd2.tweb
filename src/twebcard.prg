@@ -91,12 +91,21 @@ METHOD Activate() CLASS TWebCard
 
 RETU cHtml
 
-METHOD AddHeader( cCode ) CLASS TWebCard
+METHOD AddHeader( cCode, cClass, cStyle ) CLASS TWebCard
 
-	local cHtml 	:= '<div class="card-header">' + CRLF
-	local oHeader	:= nil 
+	local cHtml, oHeader	
 
 	hb_default( @cCode, '' )
+	hb_default( @cClass, '' )
+	hb_default( @cStyle, '' )	
+	
+	cHtml := '<div class="card-header ' + cClass + '" '
+	
+	if !empty( cStyle )
+		cHtml += 'style="' + cStyle + '" >' 	
+	endif	
+	
+	cHtml += '>' + CRLF		
 	
 	if !empty( cCode )
 	
@@ -114,12 +123,21 @@ METHOD AddHeader( cCode ) CLASS TWebCard
 
 RETU oHeader 
 
-METHOD AddBody( cCode ) CLASS TWebCard
+METHOD AddBody( cCode, cClass, cStyle ) CLASS TWebCard
 
-	local cHtml := '<div class="card-body">' + CRLF
-	local oBody 
-
+	local cHtml, oBody 
+	
 	hb_default( @cCode, '' )	
+	hb_default( @cClass, '' )
+	hb_default( @cStyle, '' )
+	
+	cHtml := '<div class="card-body ' + cClass + '" '
+	
+	if !empty( cStyle )
+		cHtml += 'style="' + cStyle + '" >' 	
+	endif	
+	
+	cHtml += '>' + CRLF	
 	
 	if !empty( cCode )
 	
@@ -138,12 +156,21 @@ METHOD AddBody( cCode ) CLASS TWebCard
 RETU oBody 
 
 
-METHOD AddFooter( cCode ) CLASS TWebCard
+METHOD AddFooter( cCode, cClass, cStyle ) CLASS TWebCard
 
-	local cHtml 	:= '<div class="card-footer">' + CRLF
-	local oFooter 	:= nil 
+	local cHtml, oFooter 	
 
 	hb_default( @cCode, '' )
+	hb_default( @cClass, '' )
+	hb_default( @cStyle, '' )
+
+	cHtml := '<div class="card-footer ' + cClass + '" '
+	
+	if !empty( cStyle )
+		cHtml += 'style="' + cStyle + '" >' 	
+	endif	
+	
+	cHtml += '>' + CRLF		
 	
 	if !empty( cCode )
 	

@@ -143,6 +143,7 @@ function WebServer()
 		oServer:Route( 'hide'			, 'controls/hide.html' ) 
 		oServer:Route( 'autocomplete'	, 'controls/autocomplete.html' ) 
 		oServer:Route( 'auto_productos', 'doauto_productos' ) 
+		oServer:Route( 'progress'		, 'controls/progress.html' ) 
 
 	//	Charset
 	

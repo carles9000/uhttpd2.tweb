@@ -23,6 +23,7 @@ return nil
 
 function DoButton( oDom )
 
-	oDom:Set( 'btn', 'Hello from server Harbour at ' + time() )
+	oDom:SetMsg( 'Hello from server Harbour at ' + time() )
+	oDom:Set( 'btn', 'Done !' )
 
 return nil  

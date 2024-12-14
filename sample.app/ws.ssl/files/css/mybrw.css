@@ -1,0 +1,12 @@
+.tabulator-table .tabulator-row-even {
+	background-color: #b6d6ff; /* filas pares */
+}
+
+.tabulator-table .tabulator-row-odd {
+	background-color: #e4f6ff; /* filas impares */
+}
+
+.tabulator-table .tabulator-row:hover {
+	background-color: red !important;
+	color: white;
+}

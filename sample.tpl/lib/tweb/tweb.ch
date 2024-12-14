@@ -96,16 +96,16 @@
 
 #xcommand GET [<oGet>] [ ID <cId> ] [ VALUE <uValue> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ ALIGN <cAlign> ] [ <col:GRID, COL> <nGrid>] ;
 	[ <ro: READONLY, DISABLED> ] [TYPE <cType>] [ PLACEHOLDER <cPlaceHolder>] ;
-	[ <btn: BUTTON, BUTTONS> <cButton,...> ] [ <act: ACTION, ACTIONS> <cAction,...> ] [ <bid: BTNID, BTNIDS> <cBtnId,...> ] ;
+	[ <btn: BUTTON, BUTTONS> <cButton,...> ] [ <act: ACTION, ACTIONS> <cAction,...> ] [ <bid: BTNID, BTNIDS> <cBtnId,...> ] [ BTNCLASS <cBtnClass> ];
 	[ <rq: REQUIRED> ] [ AUTOCOMPLETE <uSource> [ SELECT <cSelect>] [CONFIG <aConfig>] [ PARAM <hParam> ] ] ;
 	[ <chg: ONCHANGE,VALID> <cChange> ];
 	[ CLASS <cClass> ] [ FONT <cFont> ] [ FONTLABEL <cFontLabel> ] ;
 	[ LINK <cLink> ] [ GROUP <cGroup> ] [ DEFAULT <cDefault>] ;
 	[ <spn: SPAN> <cSpan,...> ] [ <spnid: SPANID> <cSpanId,...> ] ;
-	[ STYLE <cStyle> ] [ PROP <cProp> ] [ <hi: HIDE, HIDDEN> ];
+	[ STYLE <cStyle> ] [ PROP <cProp> ] [ <hi: HIDE, HIDDEN> ] [ <rt: RETURN, INTRO, ENTER>];
 	OF <oForm> ;
 => ;
-	[<oGet> := ] TWebGet():New( <oForm>, [<cId>], [<uValue>], [<nGrid>], [<cLabel>], [<cAlign>], [<.ro.>], [<cType>], [<cPlaceHolder>], [\{<cButton>\}], [\{<cAction>\}], [\{<cBtnId>\}], [<.rq.>], [<uSource>], [<cSelect>], [<cChange>], [<cClass>], [<cFont>], [<cFontLabel>],[<cLink>], [<cGroup>], [<cDefault>], [\{<cSpan>\}], [\{<cSpanId>\}], [<cStyle>], [<cProp>], [<.hi.>], [<aConfig>], [<hParam>] )
+	[<oGet> := ] TWebGet():New( <oForm>, [<cId>], [<uValue>], [<nGrid>], [<cLabel>], [<cAlign>], [<.ro.>], [<cType>], [<cPlaceHolder>], [\{<cButton>\}], [\{<cAction>\}], [\{<cBtnId>\}], [<.rq.>], [<uSource>], [<cSelect>], [<cChange>], [<cClass>], [<cFont>], [<cFontLabel>],[<cLink>], [<cGroup>], [<cDefault>], [\{<cSpan>\}], [\{<cSpanId>\}], [<cStyle>], [<cProp>], [<.hi.>], [<aConfig>], [<hParam>], [<cBtnClass>], [<.rt.>] )
 	
 #xcommand GET [<oGetMemo>] MEMO [ ID <cId> ] [ VALUE <uValue> ] [ LABEL <cLabel> ] [ ALIGN <cAlign> ] [GRID <nGrid>] [ STYLE <cStyle>] ;
 	[ <ro: READONLY, DISABLED> ] [ ROWS <nRows> ] ;	
@@ -155,7 +155,7 @@
 => ;
 	[ <oBtn> := ] TWebButtonFile():New( <oForm>, [<cId>], <cLabel>, <cName>, <cAction>, <cValue>, <nGrid>, <cAlign>, <cIcon>, [<.ro.>], [<.sb.>], [<cClass>], [<cFont>], [<cWidth>], [<cConfirm>], [<cStyle>], [<hProp>], [<.mu.>] )	
 
-#xcommand DEFINE BUTTON GROUP OF <o> => <o>:Html( '<div class="btn-group ">' )
+#xcommand DEFINE BUTTON GROUP [ CLASS <cClass>] OF <o> => <o>:Html( '<div class="btn-group ' + [<cClass>] + '">' )
 
 #xcommand BUTTON GROUP [<oBtn>] [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ ACTION <cAction> ] [ NAME <cName> ] [ VALUE <cValue> ] ;
     [ GRID <nGrid> ] [ ALIGN <cAlign> ]  ;
@@ -237,6 +237,23 @@
 => ;
 	[<oIcon> := ] TWebIcon():New( <oForm>, [<cId>], [<cSrc>], [<nGrid>], [<cAlign>], [<cClass>], [<cFont>], [<cLink>], [<cStyle>] )
 
+	
+#xCommand PROGRESS [<oProgress>] [ ID <cId> ] [ VALUE <uValue> ] [ LABEL <cLabel> ] [ <pr: PERCENTAGE> ] ;
+	[GRID <nGrid>] [ CLASS <cClass> ] [ FONT <cFont> ] [ STYLE <cStyle>] [ PROP <cProp> ] [ <hi: HIDE, HIDDEN> ] ;
+	[ HEIGHT <nHeight> ] OF <oForm> ;
+=> ;
+	[<oProgress> := ] TWebProgress():New( <oForm>, [<cId>], [<uValue>], [<cLabel>], [<.pr.>], [<nGrid>], [<cClass>], [<cFont>], [<cStyle>], [<cProp>], [<.hi.>], [<nHeight>] )
+	
+	
+//	WEBSOCKETS -----------------------------------
+
+
+#xCommand DEFINE WEBSOCKETS [ SCOPE <cScope> ] [ TOKEN <cToken> ] [ <tr: LOG, TRACE> ] ;
+	[ ONOPEN <cOnOpen> ] [ ONMESSAGE <cOnMessage> ] [ ONCLOSE <cOnClose> ] [ ONERROR <cOnError> ] OF <oForm> ;
+=> ;
+	<oForm>:Html(  UWS_Define( [<cScope>], [<cToken>], [<cOnOpen>], [<cOnMessage>], [<cOnClose>], [<cOnError>], [<.tr.>] ) )	
+
+
 //	NAV Menu -------------------------------------
 	
 #xcommand NAV [<oNav>] [ ID <cId> ] [ TITLE <cTitle> ] [ LOGO <cLogo> [ WIDTH <nWidth>] ;
@@ -245,6 +262,7 @@
 	[<oNav> := ] TWebNav():New( <oWeb>, [<cId>], [<cTitle>], [<cLogo>], [<nWidth>], [<nHeight>], [<cRoute>], [<.bl.>], [<.sd.>], [<cSide>], [<cClass>] )
 
 //	SIDEBAR --------------------------------------
+
 #xcommand MENU GROUP <cItem> OF <oNav>  			=> <oNav>:AddMenuItem( <cItem>, nil, nil      , nil, .t., .f., .t. )
 #xcommand MENU <cItem> [ ICON <cIcon> ] OF <oNav>  	=> <oNav>:AddMenuItem( <cItem>, nil, [<cIcon>], nil, .t., .f., .f. )
 #xcommand ENDMENU GROUP OF <oNav>  					=> <oNav>:AddMenuItem( nil    , nil, nil      , nil, .t., .t., .t. )
@@ -258,7 +276,9 @@
 => ;
 	<oNav>:AddMenuItem( <cItem>, [<cRoute>], [<cIcon>], nil   , .f.  , .f.     , .f.   ,.f.        ,[<lActive>], [<cConfirm>], .t.   , .f.    )
 
+
 #xcommand MENUITEM HEADER <cItem> OF <oNav> => <oNav>:AddMenuItemHeader( <cItem> )
+
 #xcommand MENUITEM SEPARATOR OF <oNav>  => <oNav>:AddMenuItemSeparator()
 
 #xcommand HTML MENUITEM OF <oNav> ;
@@ -275,14 +295,14 @@
 
 #xcommand NAVBAR NAVITEM [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ <act: ACTION,LINK> <cAction> ]  ;
         [ CLASS <cClass> ] [ <ac: ACTIVE, ACTIVED> ] [ <ds: DISABLE, DISABLED> ] ;
-        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ] [ ICON <cIcon> ] ;
+        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ] [ ICON <cIcon> ];
         OF <oNav> ;
 => ; 
 	<oNav>:AddMenuNav( 'navitem', .F.   , [<cId>], [<cLabel>], [<cAction>], [<cClass>], [<.ac.>], [<.ds.>] , [<cConfirm>], [<cCustom>], [<.menu.>], [<.sm.>], [<cIcon>] )
 
 #xcommand NAVBAR MENUITEM [ ID <cId> ] [ <prm: PROMPT,LABEL> <cLabel> ] [ <act: ACTION,LINK> <cAction> ]  ;
         [ CLASS <cClass> ] [ <ac: ACTIVE, ACTIVED> ] [ <ds: DISABLE, DISABLED> ] ;
-        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ] [ ICON <cIcon> ] ;
+        [ CONFIRM <cConfirm>] [ CUSTOM <cCustom> ] [ <menu: MENU> ] [ <sm: SUBMENU> ] [ ICON <cIcon> ];
         OF <oNav> ;
 => ; 
 	<oNav>:AddMenuNav( 'menuitem', .F.  , [<cId>], [<cLabel>], [<cAction>], [<cClass>], [<.ac.>], [<.ds.>] , [<cConfirm>], [<cCustom>], [<.menu.>], [<.sm.>], [<cIcon>] )
@@ -293,12 +313,14 @@
 
 #xcommand NAVBAR MENUITEM SEPARATOR OF <oNav> => <oNav>:AddMenuNav( 'separator' )
 
+
 #xcommand HTML NAVBAR OF <oNav> ;
 => ;
 	#pragma __cstream |<oNav>:AddNavBarCode( %s )		
+//	-------------------------------------------------------------
 
-
-// FOLDER -------------------------------		 
+// FOLDER --------------------------------------------- //
+		 
 #xcommand FOLDER [<oFolder>] [ ID <cId> ] ;
 		[ <tabs: TABS> <cTab,...> ] ;		
 		[ <prm: PROMPT, PROMPTS, ITEMS> <cPrompt,...> ] ;		
@@ -342,29 +364,29 @@
 #xcommand ENDCARD <oCard> => <oCard>:EndCard()
 	
 	
-#xcommand HEADER <oHeader> OF CARD <oCard> ;
+#xcommand HEADER <oHeader> [ CLASS <cClass> ] [ STYLE <cStyle>] OF CARD <oCard> ;
 => ;
-	<oHeader> := <oCard>:AddHeader()
+	<oHeader> := <oCard>:AddHeader( nil ,  [<cClass>], [<cStyle>])
 	
-#xcommand HEADER [ CODE <cCode> ] OF CARD <oCard> ;
+#xcommand HEADER [ CODE <cCode> ]  OF CARD <oCard> ;
 => ;
 	<oCard>:AddHeader( [<cCode>] )
 
 #xcommand CARD ENDHEADER <oHeader> => <oHeader>:End()
 
-#xcommand BODY <oBody> OF CARD <oCard> ;
+#xcommand BODY <oBody> [ CLASS <cClass> ] [ STYLE <cStyle>] OF CARD <oCard> ;
 => ;
-	<oBody> := <oCard>:AddBody()
+	<oBody> := <oCard>:AddBody( nil ,  [<cClass>], [<cStyle>])
 	
-#xcommand BODY [ CODE <cCode> ] OF CARD <oCard> ;
+#xcommand BODY [ CODE <cCode> ]OF CARD <oCard> ;
 => ;
-	<oCard>:AddBody( [<cCode>] )
+	<oCard>:AddBody( [<cCode>])
 
 #xcommand CARD ENDBODY <oBody> => <oBody>:End()
 
-#xcommand FOOTER <oFooter> OF CARD <oCard> ;
+#xcommand FOOTER <oFooter> [ CLASS <cClass> ] [ STYLE <cStyle>] OF CARD <oCard> ;
 => ;
-	<oFooter> := <oCard>:AddFooter()
+	<oFooter> := <oCard>:AddFooter( nil ,  [<cClass>], [<cStyle>])
 	
 #xcommand FOOTER [ CODE <cCode> ] OF CARD <oCard> ;
 => ;

@@ -1,0 +1,133 @@
+Vrs. 1.14
+=========
+- UGetMethodsRoute() -> return string with methods defined in route
+- UGetMethod() -> return method (GET,POST,...)
+- Review OPTIONS 
+- _t() Output var DbWin trace
+
+Vrs. 1.13
+=========
+- UGetTokenApiKey( cKey )   --> cToken 
+- UGetTokenBearer()         --> cToken
+- UGetTokenBasic()          --> aPair -> aPair[ 'user' ], aPair[ 'password' ]
+- UJWT() class for management Json Web Token. Finally i ported from mercury
+- UTokenData()
+- Image message error embbeded
+
+
+Vrs. 1.12c
+==========
+- uhttpd2.js -> Set Combobox 
+	h := { 'x' => 'Type X', 'z' => 'Type Z','y' => 'Type Y'}			
+	o
+	h := { 'Type X', 'Type Z', 'Type Y' }
+
+	oDom:Set( 'combo', h ) 
+
+Vrs. 1.12b
+==========
+- draggable
+- set id into modal-dialog
+
+Vrs. 1.12
+=========
+- RouteDelete(cRoute) method
+- Bug UGetHeader(u)
+
+Vrs. 1.11b
+==========
+- bug with * 
+
+Vrs. 1.11
+=========
+- Big performance. Now  you can use friendly urls
+
+Vrs. 1.10
+=========
+- Valid method request. OPTIONS now is ok
+
+Vrs. 1.09
+=========
+- Preprocessador. Add new commands.
+
+Vrs. 1.06
+=========
+- Server method :SetErrorStatus(), now you can config error pages depending on the status. Check \samples\21-routeerror 
+
+
+Vrs. 1.05
+=========
+- Review Sessions system.
+- Add <udefault> parameter -> Get( <cKey>, <uDefault> )
+
+Vrs. 1.04
+=========
+- Review error system 
+
+Vrs. 1.03
+=========
+oDom:MsgApi() 
+Managment screens
+ * oDom:SetPanel( cId, cHtml )
+ * oDom:SetDialog( cId, cHtml, cTitle, cargo )
+ * oDom:SetWindow( cUrl, cTarget, cSpecs )
+Managment Table
+ * oDom:TableDownload()
+ * oDom:TableDestroy()
+ * oDom:MsgApi() -> 4th param idform
+oDom:SetScope( cId ) same than :SetDlg( cIdDlg )
+oDom:SetJs->eval() ready if dont exist function
+SetTable() -> confirm updated
+tabulator.js -> Init, destroy old tabulator
+_c() The same _d() but it return cString to send to console
+Init prototype ws. Not ready yet
+
+Vrs. 1.02
+=========
+New tag [data-pbs] Process Before Send. Check example 19-pbs
+
+Vrs. 1.01
+=========
+revised sessions module
+
+Vrs. 1.0
+========
+Suport SSL
+
+Vrs. 0.93d
+==========
+Add oDom methods:
+- SetDlg( cIdDlg ) 
+When we define a form it has an id. If we define a dialog it also has its id. Each form has its scope or scope of variables.
+All the parameters of the form form this scope by default. If we want to act with a method of another form loaded on the 
+screen, we must specify that id. With :SetDlg(cIdDlg) we can change the scope. See examples dialogs pagos
+
+- DialogClose( cIdDlg ) We can close an open dialogue. See examples dialogs pagos
+
+
+Vrs. 0.92
+=========
+Add new server properties: 
+
+- lDbfAutoClose := .t./.f.  // by default .t. 
+When we establish a connection we use "keep alive" this allows us to have if we want a dbf table open. 
+By default, whenever we leave the thread, the server closes all open areas. Putting the alias in a 
+static thread variable and setting the data lDbfAutoClose := .f. , every time we enter the thread if 
+we are still in the same connection, we can recover the alias and we won't have to reopen the table.
+
+- nSession_Timeout , value in seconds. 30sec by default.
+
+It is the time that our "keep alive" connection will be open
+
+
+Vrs. 0.91a
+==========
+Minor changes: Add UReplaceBlocks to UExecutePrg and UExecuteHtml
+
+Vrs. 0.91
+=========
+Ready index list. Now you can execute *.prg and *.html onfly. Very usefully for testing
+
+Vrs. 0.90g
+==========
+Bug dbcloseareas. Solved

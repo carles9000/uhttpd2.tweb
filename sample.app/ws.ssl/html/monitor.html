@@ -1,0 +1,61 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'UT Websockets' 					
+	
+		Menu( oWeb, 'Monitor' )
+		
+		DEFINE FORM o ID 'myform' API 'api_monitor' OF oWeb 
+		
+		INIT FORM o 
+
+			ROWGROUP o 	HALIGN 'center' CLASS 'mt-5'
+				SAY LABEL '<h1><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Monitoring</h1><hr>' ALIGN 'center' GRID 12 OF o			
+			ENDROW o		
+
+			ROWGROUP o 	HALIGN 'center' CLASS 'mt-5'
+				DEFINE BUTTON GROUP OF o			
+					BUTTON ID 'btn'  LABEL 'Open connection'  ACTION 'UWS_Init()' GRID 0 WIDTH '200px'  CLASS 'btn btn-outline-dark' OF o
+					BUTTON ID 'btn2' LABEL 'Close connection' ACTION 'UWS_Close()' PBS 'sure' GRID 0 WIDTH '200px' CLASS 'btn btn-outline-dark' OF o				
+					BUTTON ID 'btn3' LABEL 'Start'  ACTION 'start' GRID 0 WIDTH '200px' CLASS 'btn btn-outline-dark' PBS 'InitProc' OF o
+					BUTTON ID 'btn4' LABEL 'Stop'  	ACTION 'stop'  GRID 0 WIDTH '200px' CLASS 'btn btn-outline-dark' OF o
+				ENDGROUP OF o													
+			ENDROW o
+			
+			ROWGROUP o HALIGN 'center' CLASS 'w-100'
+				DIV o ID 'log' CODE ''
+			ENDROW o
+
+		ENDFORM o	
+
+		DEFINE WEBSOCKETS ONOPEN 'MyOpen' ONCLOSE 'MyClose' ONMESSAGE 'MyMessage' ;
+			SCOPE 'monitor' TOKEN 'ABC-1234' OF o 	
+		
+		
+		HTML o 		
+			<script>			
+				
+				function MyOpen() { 
+					MsgNotify( 'Open WebSocket connection !' )
+				}
+				
+				function MyClose( o ) { 
+					MsgNotify( 'Close connection', 'warn' )					
+				}
+
+				function InitProc() {	
+					MsgNotify( 'Monitor On !', 'success' )				
+					return true 
+				}				
+				
+				function MyListen( u ) {			
+					$('#myform-log').html( u )
+				}						
+				
+			</script>		
+		ENDTEXT 		
+	
+	INIT WEB oWeb RETURN 
+?>

@@ -1,38 +1,33 @@
-#define VK_ESCAPE	27
+#define VK_ESCAPE	 27
 
 request DBFCDX
 request TWEB
 
-/* WebSockets --------------------------------------------
-
-	Funciona correcto bajo protocolo ws:// y se ha conseguido que su maneja sea muy sencillo, 
-	tan solo una linea para inicializar y una para enviar mensajes. Todavia no funciona para smartphone
-	
-	It works correctly under the ws:// protocol and its handling has been made very simple,
-	just one line to initialize and one to send messages. It still doesn't work for smartphone
-*/
-
 function main()
 
-	hb_threadStart( @WebServer() )
-	hb_threadStart( @UWebSocket() )	
+	hb_threadStart( @WebServer() )		
+	hb_threadStart( @WebServerSocket() )
+
 	
 	while inkey(0) != VK_ESCAPE
 	end
 
 retu nil 
 
-//----------------------------------------------------------------------------//
+//	----------------------------------------------------------------------------//
+//	Config UT Server
+//	----------------------------------------------------------------------------//
 
 function WebServer()
 
-	local oServer 	:= Httpd2()
-	
-	oServer:SetPort( 81 )
+	local oServer 	:= Httpd2()	
 
-	//	Routing...			
+		oServer:SetPort( 81 )
 
-		oServer:Route( '/'		, 'index.html' )  												
+	//	Define Routes...			
+
+		oServer:Route( '/'		, 'index.html' ) 																																	
+		oServer:Route( 'progress'	, 'progress.html' )  												 												
 		
 	//	-----------------------------------------------------------------------//	
 	
@@ -44,5 +39,47 @@ function WebServer()
 	ENDIF
 	
 RETURN 0
+
+//	----------------------------------------------------------------------------//
+//	Config WebSockets Server
+//	----------------------------------------------------------------------------//
+
+function WebServerSocket()
+
+	local oServer := UWebSocket()	
+	
+	oServer:SetSSL( .F. )	
+	oServer:SetPort( 9000 )
+
+	oServer:bValidate := {|hParam| MyValidate(hParam) }
+	
+	//	-----------------------------------------------------------------------//	
+
+	IF ! oServer:Run()
+	
+		? "=> WebServerSockets error:", oServer:cError
+
+		RETU 1
+	ENDIF	
+	
+RETURN 0
+
+
+//	----------------------------------------------------------------------------//
+//	SECURITY: 
+//	This is where you can configure your security based on the token received.
+//	----------------------------------------------------------------------------//
+//	hParam -> Hash 
+//	hParam[ 'scope' ]
+//	hParam[ 'token' ]
+//	----------------------------------------------------------------------------//
+
+function MyValidate( hParam )
+	
+	if ! (  hParam[ 'token' ] == 'ABC-1234' )
+		retu .f.
+	endif	
+
+retu .t. 
 
 //----------------------------------------------------------------------------//

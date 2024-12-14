@@ -1,0 +1,55 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'UT Websockets' 					
+	
+		Menu( oWeb, 'Progress' )
+		
+		DEFINE FORM o ID 'myform' API 'api_websocket' OF oWeb 
+		
+		INIT FORM o 					
+
+			ROWGROUP o 	HALIGN 'center' CLASS 'mt-5'
+				SAY LABEL '<h1><i class="fa fa-database" aria-hidden="true"></i>&nbsp;Progress task</h1><hr>' ALIGN 'center' GRID 12 OF o			
+			ENDROW o
+			
+			ROWGROUP o 		
+			
+				PROGRESS ID 'myprogress' VALUE 0 LABEL 'Process...' PERCENTAGE GRID 12 ;
+					CLASS 'bg-success progress-bar-striped progress-bar-animated' ;
+					STYLE 'box-shadow: 5px 5px 5px gray;border: 1px solid #b1b1b1;' HEIGHT 50 OF o 
+					
+			ENDROW o							
+		
+			ROWGROUP o HALIGN 'center' 		
+				BUTTON ID 'btn' PROMPT 'Execute' ACTION 'my_process' GRID 12 WIDTH '150px' ;
+					CLASS 'btn btn-outline-dark' PBS 'InitProc' ALIGN 'center' OF o					
+			ENDROW o	
+
+		ENDFORM o	
+
+		DEFINE WEBSOCKETS TOKEN 'ABC-1234' OF o 		
+		
+		HTML o 		
+			<script>
+			
+				function InitProc() {
+					$('#myform-btn').html( '<i class="fas fa-spinner fa-spin"></i>&nbsp;Executing...' )				
+					$('#myform-btn').prop("disabled",true);
+					return true 
+				}					
+				
+				function ShowProcess( data ) {														
+
+					$('#myform-myprogress_label').html( data['prompt' ] )
+					$('#myform-myprogress').css({"width": data['bar' ] + '%' })	
+					$('#myform-myprogress').html( data['bar' ] + '%' )													
+				}	
+				
+			</script>		
+		ENDTEXT 		
+	
+	INIT WEB oWeb RETURN 
+?>

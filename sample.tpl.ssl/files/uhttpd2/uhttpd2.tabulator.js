@@ -1,17 +1,20 @@
 /*
 **	module.....: uhttpd2tabulator.js -- Tabulator for uhttpd2 (Harbour)
-**	version....: 0.98
-**  last update: 24/12/2022
+**	version....: 1.05
+**  last update: 11/11/2023
 **
-**	(c) 2022 by Carles Aubia
+**	(c) 2022-2024 by Carles Aubia
 **
 */
+
+
 
 class UTabulator {
 
 	id = null 
 	table = null
-	cargo = null 
+	cargo = null 	
+	init = null
 	
 	constructor( id ) {  // Constructor
 		this.id = id;
@@ -20,15 +23,47 @@ class UTabulator {
 	
 
 	Init( options, events, filter, cargo ) {		
+
+	
+		// UTabulatorValidOptions( options )
+	
+
+		//	IMPORTANTE. Miramos si existe ya un tabulator en el selector que queremos
+		//	volver ainicializar. En caso de que exista, lo matamos
+
+			var z = Tabulator.findTable('#' + this.id)[0];
+			
+			if (z) 			
+			  z.destroy()
+			  
+		//	-----------------------------------------------
 		
-		UTabulatorValidOptions( options )
 		
 		this.cargo = cargo 
 		
-		var table = new Tabulator( '#' + this.id, options ) 
-		
+		var table = new Tabulator( '#' + this.id, options ) 						
 		
 		//	Define Events...
+		
+			table.on("tableBuilding", function(){
+				//console.log( 'tableBuilding...' )
+			});		
+		
+			table.on("tableBuilt", function(){
+			
+				if ( typeof init == 'string' ) {
+				
+					var fn =  window[ init ]			
+			
+					if ( typeof fn == "function") {					
+						var u = fn.apply(null, [] );						
+					}
+				}
+				
+				//console.log( 'tableBuilt!!!' )
+				//lReady = true 
+				//console.log( 'tableBuilt2!!!', lReady )
+			});
 		
 			if ( events ) {											
 
@@ -59,7 +94,7 @@ class UTabulator {
 								var oPar = new Object()
 								
 								switch ( events[i][ 'name' ] ) {
-								
+							
 									case 'cellEdited':							
 								
 										var oCell = new Object()
@@ -74,9 +109,30 @@ class UTabulator {
 										oPar[ 'cell' ] = oCell 
 								
 										break;
+										
+									case 'cellClick':	
+									
+										//	https://tabulator.info/docs/5.5/components#component-cell
+										
+										var oCol = o.getColumn();
+									
+										var oCell = new Object()
+											oCell[ 'index' ] = table.options.index
+											oCell[ 'field' ] = o.getField()
+											oCell[ 'title' ] = oCol.getDefinition().title 
+											oCell[ 'value' ] = o.getValue()
+											oCell[ 'oldvalue' ] = o.getOldValue()
+											oCell[ 'cargo' ] = cargo
+											oCell[ 'row' ] = o.getData()
+
+										oPar[ 'cell' ] = oCell 
+										
+										
+
+										break;
 								}								
 
-								MsgApi( cApi, events[i][ 'proc' ], oPar ) 
+								MsgApi( cApi, events[i][ 'proc' ], oPar, id_parent ) 
 							})														
 						} else {
 							console.error( "Don't exist api for " + events[i][ 'proc' ])
@@ -85,7 +141,7 @@ class UTabulator {
 					} else {
 					
 						var fn =  window[ events[i][ 'function' ] ]
-						
+				
 						if (typeof fn === "function") {															
 							table.on( events[i][ 'name' ], fn )												
 						}
@@ -108,13 +164,21 @@ class UTabulator {
 		if ( $.type( this.table ) == 'undefined' ) {
 			console.error( "Table don't exist: " + this.id )
 			return null 
-		}		
-	
+		}
+
+		
 		switch ( cCmd ) {
 				
 			case 'setData':
 			
-				this.table.setData( value.data );
+				this.table.setData( value.data )
+					.then(function(){
+						//run code after table has been successfully updated
+					})
+					.catch(function(error){
+						//handle error loading data						
+					});	
+				
 				this.table.clearCellEdited();												
 			
 				break;	
@@ -127,27 +191,41 @@ class UTabulator {
 				this.table.updateData( value.data );				
 				break;		
 
-			case 'updateRow':				
+			case 'updateRow':		
+	
 				this.table.updateRow( value.index, value.row );				
 				break;					
 
-			case 'clean':				
-				this.table.setData();
-				this.table.clearCellEdited();															
+			case 'clean':	
+
+				this.table.clearData();
+				break;
+				
+			case 'title':	
+
+				var cId = this.id + '_title'
+				$('#' + cId ).html( value )
+				
 				break;
 
 			case 'getData': 		
-				
+			
 				var nIndex
 				var o 		= this.table.getRows()	
 				var oRows 	= {}				
-				
+		
 				o.forEach(function (cell) { 
 
-					nIndex = cell.getIndex()					
+					nIndex = cell.getIndex()			
 					
-					oRows[ nIndex ] = cell.getData()										
+					if ( typeof nIndex != 'undefined') {			
+						oRows[ nIndex ] = cell.getData()										
+					} else {
+						console.error( 'TWeb: Index error table' )
+					}
 				});				
+				
+				
 
 				return oRows
 				break;	
@@ -211,6 +289,11 @@ class UTabulator {
 			case 'print':				
 				this.table.print( value.par1, value.par2);														
 				break;
+				
+			case 'download':				
+				this.table.download( value.format, value.file );														
+				break;
+							
 			
 			case 'restoreOldValue':
 			
@@ -219,6 +302,11 @@ class UTabulator {
 				//	cell.getValue();
 				
 				break;
+				
+			case 'destroy': 
+			
+				this.table.destroy();																
+				break;					
 		}									
 	}
 	
@@ -309,43 +397,66 @@ function UTabulatorValidOptions( o ) {
 
 	var oCols = o.columns;	
 	
-	
 	for (let i = 0; i < oCols.length; i++) {
 	
-		//	Checking formatter options...
+		if ( typeof oCols[i] == 'object'  ) { 
 		
-			if ( 'formatter' in oCols[i]) {
+			//	Buscaremos en todas las claves de la columna (propiedades) si hay alguna que 
+			//	empirze por '@'. Si es el caso, comprobaremos que exista la funcion en javascript 
+			//  y la asignaremos como valor de la key.
+			//
+			//  Ejemplos de propierdades que pueden ser functions: formatter, editable, ...							
+	
 
-				if ( typeof oCols[i].formatter == 'string' ) {	
-		
-					var fn =  window[ oCols[i].formatter ]
+				for (var key in oCols[i] ) {								
 					
-					if (typeof fn === "function") {
-						oCols[i].formatter = fn
-					}												
-				}		
-			}
-			
-		
-		
-		//	Checking validator options...
-			if ( 'validator' in oCols[i]) {						
-			
-				var aValidator = []
+					if ( typeof oCols[i][ key ] == 'string' && oCols[i][ key ].substr(0, 1) == '@' ) { 
+						
+						var cFunc = oCols[i][ key]						
+						
+						cFunc = cFunc.substr( 1, cFunc.length - 1 )						
+
+						var fn =  window[ cFunc ]
+						
+						if (typeof fn === "function") {			
+					
+							oCols[i][ key ] = fn
+						}						
+					}
+					
+				} 
 				
+			//	Casos especiales...													
+				if ( 'formatter' in oCols[i]) {
+
+					if ( typeof oCols[i].formatter == 'string' ) {	
 			
-				if ( oCols[i].validator != null ) {										
+						var fn =  window[ oCols[i].formatter ]
+						
+						if (typeof fn === "function") {
+							oCols[i].formatter = fn
+						}												
+					}		
+				}
+				
+				if ( 'validator' in oCols[i]) {
+				
+					//	console.log( oCols[i].title )
+					
+					if ( typeof oCols[i].validator.type == 'string' ) {	
 			
 						var fn =  window[ oCols[i].validator.type ]
-							
+						
 						if (typeof fn === "function") {
-
-							oCols[i].validator.type = fn
-							
-						}																
+							oCols[i].validator.type = fn 
+						}												
+					}		
 				}				
-			}						
-	}		
+				
+		}
+	}
+
+	
 }
 
 

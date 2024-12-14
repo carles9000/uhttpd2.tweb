@@ -1,0 +1,48 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb
+
+	DEFINE WEB oWeb TITLE 'Progress' 
+	
+		HTML oWeb FILE 'tpl\header_examples.tpl' PARAMS 'Controls', 'Progress'
+		
+		DEFINE FORM o ID 'myform' API 'api_controls' OF oWeb 
+		
+		INIT FORM o 
+		
+			ROWGROUP o 
+		
+				COL o GRID 6				
+				
+					ROWGROUP o 		
+
+						PROGRESS ID 'myprogress' VALUE 50 LABEL 'Process...' GRID 12 OF o 																		
+					
+					ENDROW o
+					
+					ROWGROUP o 		
+					
+						PROGRESS ID 'myprogress-full' VALUE 50 LABEL 'Process...' PERCENTAGE GRID 12 ;
+								 CLASS 'bg-success progress-bar-striped progress-bar-animated' HEIGHT 50 OF o 																							
+					ENDROW o
+
+					ROWGROUP o 												
+					
+						PROGRESS ID 'myprogress-only' VALUE 50 GRID 12 CLASS 'bg-warning' OF o 																		
+						
+					ENDROW o					
+				
+				
+					ROWGROUP o 		
+						BUTTON ID 'btn' PROMPT 'Random Value' ACTION 'progress_value' WIDTH '100%' OF o					
+					ENDROW o
+					
+				ENDCOL o 				
+			
+			ENDROW o			
+
+		ENDFORM o
+
+	INIT WEB oWeb RETURN
+?>

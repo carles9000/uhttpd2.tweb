@@ -1,0 +1,109 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb	
+	
+	DEFINE WEB oWeb TITLE 'UT Websockets' 					
+	
+		Menu( oWeb, 'Basic' )
+		
+		DEFINE FORM o ID 'myform' API 'api_basic' OF oWeb 
+		
+		INIT FORM o 
+
+			ROWGROUP o 	HALIGN 'center' CLASS 'mt-5'
+				SAY LABEL '<h1><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Basic commands</h1><hr>' ALIGN 'center' GRID 12 OF o			
+			ENDROW o		
+
+			ROWGROUP o 	HALIGN 'center' CLASS 'mt-5'
+				DEFINE BUTTON GROUP OF o			
+					BUTTON ID 'btn'  LABEL 'Open connection'  ACTION 'UWS_Init()' GRID 0 WIDTH '200px'  CLASS 'btn btn-outline-dark' OF o
+					BUTTON ID 'btn2' LABEL 'Close connection' ACTION 'UWS_Close()' PBS 'sure' GRID 0 WIDTH '200px' CLASS 'btn btn-outline-dark' OF o				
+					BUTTON ID 'btn3' LABEL 'Send Message'     ACTION 'SendMsg()' GRID 0 WIDTH '200px' CLASS 'btn btn-outline-dark' OF o
+					BUTTON ID 'btn4' LABEL 'Info SSL'  ACTION 'info_ssl' GRID 0 WIDTH '200px' CLASS 'btn btn-outline-dark' OF o
+				ENDGROUP OF o													
+			ENDROW o
+
+			ROWGROUP o HALIGN 'center'
+				DIV o CODE '<h4>Open console inspector for show messages...</h4>' 
+			ENDROW o
+			
+			ROWGROUP o HALIGN 'center' CLASS 'w-100'
+				DIV o ID 'log' CODE ''
+			ENDROW o
+
+		ENDFORM o	
+
+		DEFINE WEBSOCKETS ONOPEN 'MyOpen' ONCLOSE 'MyClose' ONMESSAGE 'MyMessage' ;
+			SCOPE 'basic' TOKEN 'ABC-1234' OF o 	
+		
+		
+		HTML o 		
+			<script>			
+				
+				function MyOpen() { 
+					MsgNotify( 'Open WebSocket connection !' )
+				}
+				
+				function MyClose( o ) { 
+					MsgNotify( 'Close connection', 'warn' )					
+				}																
+				
+				function MyMessage( u ) { 					
+					console.log( u ) 
+				}
+
+				function SendMsg( u ) {									
+					
+					var msg = prompt( 'Open console inspector' +
+							'\\n\\nYou can try:' + 
+							'\\n/info (sockets connected)' + 
+							'\\n/time (return time server)' + 
+							'\\n/test (lot de sockets)' + 
+							'\\n\\nEnter Command', '/test' );
+					
+					if ( msg ) {
+						$('#myform-log').html( '' )					
+						UWS_Send( msg  );
+					}					
+				}				
+				
+				function MyListen( u ) {
+					console.log( u )
+				}
+				
+				function MyListenHtml( u ) {			
+					$('#myform-log').html( u )
+				}	
+				
+				function MyListenTable( u ) {								
+					$('#myform-log').html( HashToTable(u) )				
+				}
+				
+				function HashToTable(obj) {
+					const table = document.createElement('table');
+					table.setAttribute('border', '1');
+				  
+					for (const [key, value] of Object.entries(obj)) {
+						const row = table.insertRow();
+						const keyCell = row.insertCell(0);
+						const valueCell = row.insertCell(1);
+					
+						keyCell.textContent = key;
+						
+						// Check if value is an array
+						if (Array.isArray(value)) {
+							valueCell.innerHTML = value.map(item => String(item)).join('<br>');
+						} else {
+							valueCell.textContent = String(value);
+						}
+					}
+				  
+					return table;
+				}					
+				
+			</script>		
+		ENDTEXT 		
+	
+	INIT WEB oWeb RETURN 
+?>

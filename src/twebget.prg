@@ -14,6 +14,8 @@ CLASS TWebGet FROM TWebControl
 	DATA aSpanId 					INIT {}
 	DATA hConfig 					INIT {=>}
 	DATA hParam 					INIT {=>}
+	DATA cBtnClass					INIT ''
+	DATA lReturn					INIT .F.
 
 
 	METHOD New() 					CONSTRUCTOR
@@ -22,7 +24,7 @@ CLASS TWebGet FROM TWebControl
 
 ENDCLASS 
 
-METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle, cProp, lHidden, hConfig, hParam ) CLASS TWebGet
+METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlaceHolder, aBtnLabel, aBtnAction, aBtnId, lRequired, uSource, cSelect, cChange, cClass, cFont, cFontLabel, cLink, cGroup, cDefault, aSpan, aSpanId, cStyle, cProp, lHidden, hConfig, hParam, cBtnClass, lReturn ) CLASS TWebGet
 
 	DEFAULT cId TO ::GetId()
 	DEFAULT uValue TO ''
@@ -52,6 +54,8 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	DEFAULT lHidden TO .F.
 	DEFAULT hConfig TO {=>}
 	DEFAULT hParam TO {=>}
+	DEFAULT cBtnClass TO ''
+	DEFAULT lReturn TO .F.
 	
 	::oParent 		:= oParent
 	::cId			:= cId
@@ -82,6 +86,8 @@ METHOD New( oParent, cId, uValue, nGrid, cLabel, cAlign, lReadOnly, cType, cPlac
 	::lHidden		:= lHidden
 	::hConfig		:= hConfig
 	::hParam		:= hParam
+	::cBtnClass	:= cBtnClass
+	::lReturn 		:= lReturn
 
 	IF Valtype( oParent ) == 'O'	
 		oParent:AddControl( SELF )			
@@ -96,7 +102,7 @@ METHOD Activate() CLASS TWebGet
 	LOCAL cAlign 	 := ''
 	LOCAL cSizeLabel := 'col-form-label'
 	LOCAL cBtnSize 	 := ''
-	local nI, nBtn, cLabel, cAction, cBtnId, nSpan, cGrid
+	local nI, nBtn, cLabel, cAction, cBtnId, nSpan, cGrid, cCmd
 	local cIdPrefix, hParam, hConfig
 	local cSt := ''
 
@@ -264,8 +270,12 @@ METHOD Activate() CLASS TWebGet
 			else
 				cBtnId := cIdPrefix + 'btn_' + ::cId + '_' + ltrim(str(nI))
 			endif
-
-			cHtml += '<button id="' + cBtnId + '" class="btn btn-outline-secondary ' + cBtnSize + '" type="button" '
+			
+			if empty( ::cBtnClass )
+				::cBtnClass := 'btn btn-outline-secondary '
+			endif
+			
+			cHtml += '<button id="' + cBtnId + '" class="' + ::cBtnClass + ' ' + cBtnSize + '" type="button" '
 		
 			if empty( ::cLink )
 			
@@ -382,19 +392,25 @@ METHOD Activate() CLASS TWebGet
 	
 	ENDIF	
 	
-	/*
-	if nBtn == 1 
 	
-		cBtnId := 'btn_' + ::cId + '_1'
-
-		cCmd := "TWebIntro( '" + cIdPrefix + ::cId + "', function(){ $('#" + cBtnID + "').click(); } )" 
-_d( cCmd )		
-		cHtml += JS( cCmd )
-	endif
-	*/
-
 	
-	//Aadd( ::aHtml, cHtml )		
+	if nBtn > 0 .and. ::lReturn	
+	
+		if len( ::aBtnId ) == nBtn 
+			cBtnId := cIdPrefix + ::aBtnId[1] 
+		else
+			cBtnId := cIdPrefix + 'btn_' + ::cId + '_1'
+		endif	
+		
+		cCmd := "<script>"	
+		cCmd += "TWebIntroGetBtn( '" + cIdPrefix + ::cId + "', '" + cBtnID + "'  )" 
+		cCmd += "</script>"
+	
+		//cHtml += JS( cCmd )
+		cHtml += cCmd
+		
+	endif 	
+	
 
 
 RETU cHtml

@@ -1,3 +1,12 @@
+14/12/2024 Vrs. 1.3
+24/11/2024 Replace lib\tweb\notify 
+22/11/2024 Add clause GET ... BUTTON ... RETURN
+20/11/2024 Add clause class, style to CARD HERADER, BODY, FOOTER
+10/11/2024 * Support WebSockets !  -> Check sample.app\ws
+10/11/2024 Update uhttpd2.lib to V1.15
+09/11/2024 * Add new control progress. Check sample\html\controls\progress.html 	
+29/10/2024 Update uhttpd2.tabulator.js. Check sample.app\browse_combo
+17/10/2024 Update uhttpd2.lib to V1.14a  
 05/10/2024 OAuth2 authentication example, Check \sample.app\oauth2
 15/07/2024 Vrs. 1.2 
 14/07/2024 Great changes to the menu system

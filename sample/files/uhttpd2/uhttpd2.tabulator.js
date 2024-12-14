@@ -1,9 +1,9 @@
 /*
 **	module.....: uhttpd2tabulator.js -- Tabulator for uhttpd2 (Harbour)
-**	version....: 1.04
-**  last update: 23/11/2023
+**	version....: 1.05
+**  last update: 11/11/2023
 **
-**	(c) 2022-2023 by Carles Aubia
+**	(c) 2022-2024 by Carles Aubia
 **
 */
 
@@ -25,7 +25,7 @@ class UTabulator {
 	Init( options, events, filter, cargo ) {		
 
 	
-		UTabulatorValidOptions( options )
+		// UTabulatorValidOptions( options )
 	
 
 		//	IMPORTANTE. Miramos si existe ya un tabulator en el selector que queremos
@@ -415,10 +415,11 @@ function UTabulatorValidOptions( o ) {
 						var cFunc = oCols[i][ key]						
 						
 						cFunc = cFunc.substr( 1, cFunc.length - 1 )						
-						
+
 						var fn =  window[ cFunc ]
 						
 						if (typeof fn === "function") {			
+					
 							oCols[i][ key ] = fn
 						}						
 					}
@@ -437,8 +438,25 @@ function UTabulatorValidOptions( o ) {
 						}												
 					}		
 				}
+				
+				if ( 'validator' in oCols[i]) {
+				
+					//	console.log( oCols[i].title )
+					
+					if ( typeof oCols[i].validator.type == 'string' ) {	
+			
+						var fn =  window[ oCols[i].validator.type ]
+						
+						if (typeof fn === "function") {
+							oCols[i].validator.type = fn 
+						}												
+					}		
+				}				
+				
 		}
-	}		
+	}
+
+	
 }
 
 

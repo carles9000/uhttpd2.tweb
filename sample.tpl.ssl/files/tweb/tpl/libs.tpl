@@ -7,6 +7,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	<link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
 	
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
@@ -17,7 +18,13 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
 	
 	
-	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/bootstrap-notify.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+	
+	
+	<!--<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/bootstrap-notify.js"></script>-->
+	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/notify.js"></script>
+	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/notify/notify-runnerxbase.js"></script>
+	
 	<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/bootbox/bootbox.all.min.js"></script>
 	
 			
@@ -25,6 +32,13 @@
 		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/lightbox/lightbox.js"></script>
 		<link href="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/lightbox/css/lightbox.css" rel="stylesheet" >		
 		
+	<!-- SIDEBAR -->
+	
+		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/sidebar/js/jquery.sidebar.js"></script>
+		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/sidebar/js/handlers.js"></script>
+		<link href="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/sidebar/css/styles.css" rel="stylesheet" >		
+
+	
 	<!-- TWEB -->
 	
 		<script src="{{ hb_GetEnv( "ROOTRELATIVE") }}files/tweb/tweb.js"></script>

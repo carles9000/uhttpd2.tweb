@@ -49,6 +49,21 @@
     border-color: transparent !important;
 }
 
+
+
+
+.nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #114273 #dee2e6 #fff !important;
+  font-weight: bold;
+}
+
+
+.folder-link-tweb {
+	color: black !important
+}
+
 /*	Desactivar autozoom en IOS	-------- */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -79,7 +94,18 @@ legend.scheduler-border {
 	border-bottom:none;
 }
 
-/*	Gif loading en autocomplete ui */
+/*	Autocomplete ui */
+
+	.ui-autocomplete {
+		position: absolute;
+		z-index: 9999999;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		max-height: 200px;
+		overflow-y: auto;
+		overflow-x: hidden;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	}
 
 .ui-autocomplete-loading {
 	background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;

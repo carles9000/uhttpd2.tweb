@@ -1,0 +1,60 @@
+<?prg
+#include "lib/tweb/tweb.ch" 
+
+    LOCAL o, oWeb, oBrw, aOptions
+	
+	LOCAL aCargo 	:= {}
+	LOCAL aTypes 	:= { 'Hotel' => 'Hotel', 'Theater' => 'Theater' }	
+	LOCAL aData 	:= {;
+						{ 'id' => 1, 'first' => 'Homer'		,  'type' => '', 'cargo' => aCargo },;
+						{ 'id' => 2, 'first' => 'Jean-Piere',  'type' => '', 'cargo' => aCargo },;
+						{ 'id' => 3, 'first' => 'Steve'		,  'type' => '', 'cargo' => aCargo } ;
+					}			
+	
+	DEFINE WEB oWeb TITLE 'Browse - Combo Dynamic' 			
+		
+		DEFINE FORM o ID 'brw' API 'myapi' OF oWeb 
+		
+		INIT FORM o 
+
+			COL o CLASS 'p-0' GRID 12 
+			
+				//	https://tabulator.info/docs/5.4/options
+			
+				aOptions := { ;
+					'height' => '300px',				;					
+					'index' => 'id'   					;	// Default id					
+				}
+
+				aEvents := { { 'name' => 'cellEdited' , 'proc' => 'MyUpdated'} 	}									
+				
+				DEFINE BROWSE oBrw ID 'mytable' OPTIONS aOptions EVENTS aEvents TITLE '<h5>Customer list</h5>' CLASS 'mt-5' OF o 
+
+						COL oCol TO oBrw CONFIG { 'title' => 'First', 'field' => 'first', 'width' => 200, 'editor' => 'input'  }						
+						COL oCol TO oBrw CONFIG { 'title' => 'Type' , 'field' => 'type' , 'editor' => 'select', 'editorParams' => { 'values' => aTypes }  }	
+						COL oCol TO oBrw CONFIG { 'title' => 'Selection' , 'field' => 'lista', 'editor' => 'select',  'editorParams' => '@myselect' }						
+						
+				INIT BROWSE oBrw DATA aData		
+		
+			ENDCOL o					
+
+			HTML o 
+			
+				<script>			
+
+					function myselect( cell ){
+
+						var data = cell.getRow().getData();
+
+						return { values: data.cargo }
+					}						
+					
+				</script>
+				
+			ENDTEXT 
+		
+		ENDFORM o		
+
+	INIT WEB oWeb RETURN
+?>
+

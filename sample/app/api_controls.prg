@@ -23,6 +23,8 @@ function Api_Controls( oDom )
 		case oDom:GetProc() == 'set_combo_hash'	; DoSet_Combo_Hash( oDom )
 		case oDom:GetProc() == 'set_combo_array'	; DoSet_Combo_Array( oDom )
 		
+		case oDom:GetProc() == 'progress_value'	; DoProgress_Value( oDom )
+		
 		otherwise 				
 			oDom:SetError( "Proc don't defined => " + oDom:GetProc())
 	endcase
@@ -355,5 +357,20 @@ function DoSet_Combo_Array( oDom )
 	Aadd( a, 'Honda' )
 
 	oDom:Set( 'cars', a )
+
+retu nil 
+
+// -------------------------------------------------- //
+
+function DoProgress_Value( oDom )
+	local n
+
+	oDom:Set( 'myprogress',  hb_randint(1,100) )
+	oDom:Set( 'myprogress-only',  hb_randint(1,100) )
+	
+	n = hb_randint(1,100)
+		oDom:Set( 'myprogress-full',  n )
+		oDom:Set( 'myprogress-full',  n, 'Status process: ' + ltrim(str(n)) )
+	
 
 retu nil 
